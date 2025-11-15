@@ -11,17 +11,18 @@
 
 nav:
   # Navigation bar logo image
-  logo:
+  logo: /img/banner.jpg
   display_title: true
   display_post_title: true
   # Whether to fix navigation bar
-  fixed: false
+  fixed: ture
 
 menu:
   主页: / || fas fa-home
   归档: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   关于: /about/ || fas fa-user
+  案例库: //
 
 # --------------------------------------
 # Code Blocks Settings
