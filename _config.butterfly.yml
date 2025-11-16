@@ -7,18 +7,32 @@
 # --------------------------------------
 
 nav:
-  logo: /img/banner.jpg
+  logo: /img/avatar.png
   display_title: true
   display_post_title: true
   fixed: true     # ← 修复 ture → true
 
 menu:
+  # 第一个菜单项：首页，保持不变
   主页: / || fas fa-home
-  归档: /archives/ || fas fa-archive
-  标签: /tags/ || fas fa-tags
-  关于: /about/ || fas fa-user
-  案例库: /cases/ || fas fa-folder   # ← 修复原来错误的 //
-  机械设计: /categories/机械设计知识/ || fas fa-cogs 
+
+  # 第二个菜单项：页面 (这是一个下拉菜单的父级)
+  # 注意写法：文字后面直接跟图标和冒号，链接部分为空
+  页面||fas fa-file-alt:
+    # 下面是“页面”的子菜单项，注意它们有2个空格的缩进
+    归档: /archives/ || fas fa-archive
+    标签: /tags/ || fas fa-tags
+    分类: /categories/ || fas fa-folder-open
+  # 第三个菜单项：机械小课堂 (新的下拉菜单父级)
+  博客区||fas fa-blog:
+    # 子菜单项，全部链接到各自的“分类”页面
+    机械设计经验: /categories/机械设计经验/ || fas fa-drafting-compass
+    工具与效率: /categories/工具与效率/ || fas fa-tools
+    行业与成长: /categories/行业与成长/ || fas fa-chart-line
+   # 案例库: 直接链接到一个名为“案例库”的分类页面
+  案例库: /categories/案例库/ || fas fa-project-diagram
+  关于我: /about/ || fas fa-user
+  联系我: /contact/ || fas fa-envelope
 
 # --------------------------------------
 # Code Blocks Settings
@@ -45,7 +59,7 @@ social:
 # Image Settings
 # --------------------------------------
 
-favicon: /img/favicon.png
+favicon: /img/avatar.png
 
 avatar:
   img: /img/avatar.png
