@@ -24,11 +24,12 @@ menu:
     标签: /tags/ || fas fa-tags
     分类: /categories/ || fas fa-folder-open
   # 第三个菜单项：机械小课堂 (新的下拉菜单父级)
-  博客区||fas fa-blog:
-    # 子菜单项，全部链接到各自的“分类”页面
+  博客区 || fas fa-blog:
     机械设计经验: /categories/机械设计经验/ || fas fa-drafting-compass
-    工具与效率: /categories/工具与效率/ || fas fa-tools
-    行业与成长: /categories/行业与成长/ || fas fa-chart-line
+    行业发展洞察: /categories/行业发展洞察/ || fas fa-binoculars
+    斜杠技能应用: /categories/斜杠技能应用/ || fas fa-bolt
+    资源分享下载: /categories/资源分享下载/ || fas fa-cloud-download-alt
+
    # 案例库: 直接链接到一个名为“案例库”的分类页面
   案例库: /categories/案例库/ || fas fa-project-diagram
   关于我: /about/ || fas fa-user
@@ -265,8 +266,8 @@ rightside_bottom:
 
 translate:
   enable: false
-  default: 繁
-  defaultEncoding: 2
+  default: 简
+  defaultEncoding: 1
   translateDelay: 0
   msgToTraditionalChinese: '繁'
   msgToSimplifiedChinese: '簡'
@@ -280,7 +281,7 @@ darkmode:
   start:
   end:
 
-rightside_scroll_percent: false
+rightside_scroll_percent: true
 
 rightside_item_order:
   enable: false
@@ -337,8 +338,31 @@ math:
 # --------------------------------------
 
 search:
-  use:
+  use:  local_search
   placeholder:
   algolia_search:
     hitsPerPage: 6
   local_search:
+     enable: true
+
+fireworks:
+  enable: true
+  zIndex: 9999 # -1 or 9999
+  mobile: false
+
+inject:
+  head:
+    # ⚠️ 注意：下面这行前面的空白必须是空格，不能是 Tab
+    - <link rel="stylesheet" href="/css/custom.css">
+  bottom:
+    # - <script src="xxxx"></script>
+
+google_adsense:
+  enable: true
+  auto_ads: true
+  js: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+  client: # 填入個人識別碼
+  enable_page_level_ads: true
+
+
+

@@ -1,0 +1,117 @@
+/* ============================================================
+   科技极简风 V2 - 修复暗黑模式可见性 & 标题多色区分
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 粗体 (Bold) - 只改颜色，去繁就简
+   ------------------------------------------------------------ */
+#article-container strong {
+    color: #007bff;          /* 亮模式下的高亮蓝 */
+    font-weight: 900;        /* 最粗 */
+    background-color: transparent; /* 移除背景色 */
+    padding: 0;              /* 移除内边距 */
+    border-radius: 0;        /* 移除圆角 */
+    font-family: inherit;    /* 跟随正文字体，不再强制代码体 */
+}
+
+/* 暗黑模式下的粗体适配 (更亮的青色，防止看不清) */
+[data-theme="dark"] #article-container strong {
+    color: #4dd0e1;
+}
+
+/* ------------------------------------------------------------
+   2. 斜体 (Italic) - 保持低调注释感
+   ------------------------------------------------------------ */
+#article-container em {
+    color: #888;             /* 灰色 */
+    font-style: italic;
+    padding-right: 4px;
+}
+[data-theme="dark"] #article-container em {
+    color: #aaa;             /* 暗黑模式下稍微提亮灰色 */
+}
+
+/* ------------------------------------------------------------
+   3. 标题系统 (Headings) - 多色区分 & 结构化
+   ------------------------------------------------------------ */
+
+/* --- H1 文章大标题 (主色：深邃黑/纯白) --- */
+#article-container h1 {
+    color: #2c3e50;          /* 亮模式：深蓝黑 */
+    text-align: center;
+}
+[data-theme="dark"] #article-container h1 {
+    color: #ffffff;          /* 暗黑模式：纯白 */
+}
+
+/* --- H2 核心板块 (主色：科技蓝) --- */
+#article-container h2 {
+    color: #1976d2;          /* 亮模式：深科技蓝 */
+    border-left: 4px solid #1976d2; /* 左侧竖线 */
+    padding: 5px 15px;       /* 左侧留白 */
+    background: transparent; /* 去掉背景块，更极简 */
+    border-bottom: none;     /* 去掉下划线 */
+    margin-top: 2em;         /* 增加段前距离 */
+}
+/* 暗黑模式适配 */
+[data-theme="dark"] #article-container h2 {
+    color: #64b5f6;          /* 变亮蓝 */
+    border-left-color: #64b5f6;
+}
+
+/* --- H3 子板块 (主色：青碧色/Teal) --- */
+#article-container h3 {
+    color: #00897b;          /* 亮模式：青碧色 */
+    border-bottom: 1px dashed #b2dfdb; /* 底部虚线 */
+    padding-bottom: 6px;
+    padding-left: 5px;
+}
+
+/* --- H3 子板块 (主色：青碧色/Teal) - 无箭头版 --- */
+#article-container h3 {
+    color: #00897b;          /* 亮模式：青碧色 */
+    border-bottom: 1px dashed #b2dfdb; /* 底部虚线 */
+    padding-bottom: 6px;
+    padding-left: 0;         /* 去掉左边距，让它顶格显示 */
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] #article-container h3 {
+    color: #4db6ac;          /* 变亮青 */
+    border-bottom-color: #4db6ac;
+}
+
+/* --- H4 小节点 (主色：极客紫) --- */
+#article-container h4 {
+    color: #673ab7;          /* 亮模式：深紫 */
+    font-weight: bold;
+}
+#article-container h4::before {
+    content: "■";
+    margin-right: 6px;
+    color: inherit;
+    font-weight: normal;
+    opacity: 0.6;
+}
+/* 暗黑模式适配 */
+[data-theme="dark"] #article-container h4 {
+    color: #b39ddb;          /* 变亮紫 */
+}
+
+/* ------------------------------------------------------------
+   4. 链接样式 (Link) - 悬停动效
+   ------------------------------------------------------------ */
+#article-container a {
+    color: #0288d6;          /* 链接蓝 */
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+}
+#article-container a:hover {
+    color: #03a9f4;
+    border-bottom: 1px solid #03a9f4; /* 鼠标移上去出现下划线 */
+}
+[data-theme="dark"] #article-container a {
+    color: #4fc3f7;
+}
+
