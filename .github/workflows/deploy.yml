@@ -1,0 +1,39 @@
+name: Hexo Auto Deploy
+
+on:
+  push:
+    paths:
+      - 'source/_posts/**'  # 只监听文章目录的变动，避免不必要的构建
+      - 'source/img/**'     # 监听图片变动
+      - '_config.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        ref: main  # 注意：这里填你存放 Hexo 源码的分支名，通常是 main 或 master
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Hexo & Dependencies
+      run: |
+        npm install hexo-cli -g
+        npm install
+
+    - name: Build and Deploy
+      # 如果你用的是 hexo-deployer-git 插件
+      run: |
+        hexo clean
+        hexo generate
+        hexo deploy
+      env:
+        # 这里需要去仓库 Settings -> Secrets 配置一个 Token
+        # 变量名必须叫 HEXO_DEPLOY_KEY (或其他你喜欢的名字)
+        GITHUB_TOKEN: ${{ secrets.HEXO_DEPLOY_KEY }}
