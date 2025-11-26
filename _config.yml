@@ -14,7 +14,7 @@ email: 616218240@qq.com
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://402225.xyz/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -29,7 +29,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: 
   - 'baidu_verify_*.html'
   - 'README.md'
 
@@ -114,5 +114,9 @@ search:
   field: post
   format: html
   limit: 10000
+
+
+sitemap:
+  path: sitemap.xml
 
   
