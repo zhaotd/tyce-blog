@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢 · 现代思维工具100讲 第51讲｜默会知识：（但愿）AI 永远都不可能替代的技能</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2b2620;
+    --muted:#8a8173;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.09);
+    --card:#fffdf9;
+    --card-border:#e8dfd0;
+    --quote-border:#c9a063;
+    --code-bg:#f3ede2;
+    --summary-bg:#f4ead9;
+    --summary-border:#d8b98c;
+    --btn-text:#fff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e9e1d3;
+      --muted:#9d9488;
+      --accent:#c9995e;
+      --accent-soft:rgba(201,153,94,.12);
+      --card:#1f1c18;
+      --card-border:#3a342c;
+      --quote-border:#8a5a2b;
+      --code-bg:#26221d;
+      --summary-bg:#241e16;
+      --summary-border:#8a5a2b;
+      --btn-text:#1a1510;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:17px;
+    line-height:1.8;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:999;
+    transition:width .08s linear;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:32px;width:44px;height:44px;
+    border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:var(--btn-text);
+    font-size:20px;line-height:1;display:none;align-items:center;justify-content:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.22);z-index:998;
+  }
+  .container{max-width:700px;margin:0 auto;padding:32px 22px 90px;}
+  .tag{
+    display:inline-block;padding:4px 14px;border-radius:999px;
+    background:var(--accent-soft);color:var(--accent);
+    font-size:13px;font-weight:600;letter-spacing:.5px;
+  }
+  h1{font-size:25px;line-height:1.45;margin:16px 0 10px;text-align:left;}
+  .meta{font-size:14px;color:var(--muted);margin-bottom:26px;text-align:left;}
+  h3{
+    font-size:19px;line-height:1.5;margin:36px 0 14px;
+    padding-left:12px;border-left:4px solid var(--accent);
+    text-align:left;
+  }
+  p{margin:0 0 16px;}
+  strong{color:var(--accent);}
+  em{font-style:normal;border-bottom:2px solid var(--accent);}
+  .divider{
+    text-align:center;color:var(--accent);letter-spacing:8px;
+    margin:34px 0;font-size:15px;opacity:.75;
+  }
+  ul,ol{margin:0 0 18px;padding-left:24px;}
+  li{margin-bottom:12px;}
+  blockquote{
+    margin:18px 0;padding:14px 18px;
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);border-radius:0 12px 12px 0;
+    color:var(--text);
+  }
+  .card{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:18px 20px;margin:18px 0;
+  }
+  .fig{
+    text-align:center;color:var(--muted);font-size:13px;
+    font-style:italic;margin:6px 0 18px;letter-spacing:1px;
+  }
+  .qa-row{display:flex;gap:10px;margin:8px 0;align-items:flex-start;}
+  .qa-row p{margin:0;}
+  .qa-tag{
+    flex:none;font-size:12px;font-weight:700;color:#fff;
+    background:var(--accent);border-radius:6px;padding:1px 8px;
+    margin-top:4px;
+  }
+  .qa-row.a .qa-tag{background:var(--muted);}
+  .poem{
+    text-align:center;background:var(--accent-soft);
+    border-radius:12px;padding:22px 18px;margin:18px 0;
+    font-size:16px;line-height:2.1;color:var(--text);
+  }
+  .poem .poem-title{color:var(--accent);font-weight:700;letter-spacing:2px;}
+  .notes{
+    font-size:13.5px;color:var(--muted);line-height:1.75;
+    background:var(--code-bg);border:1px solid var(--card-border);
+    border-radius:12px;padding:16px 20px;margin:26px 0;
+  }
+  .notes ol{margin:8px 0 0;padding-left:22px;}
+  .notes li{margin-bottom:6px;word-break:break-all;}
+  .comment{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:16px 18px;margin:14px 0;
+  }
+  .comment-head{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+  .comment-name{font-weight:700;font-size:15px;color:var(--accent);}
+  .comment-time{font-size:12px;color:var(--muted);}
+  .comment p{margin:0;font-size:15px;line-height:1.8;}
+  #ai-summary{
+    margin:44px 0 12px;padding:24px 22px;
+    background:var(--summary-bg);border:1.5px solid var(--summary-border);
+    border-radius:14px;
+  }
+  #ai-summary h2{
+    margin:0 0 14px;font-size:20px;color:var(--accent);
+    text-align:center;letter-spacing:2px;
+  }
+  #ai-summary .one-liner{font-weight:700;font-size:16.5px;margin-bottom:18px;}
+  #ai-summary h4{
+    margin:20px 0 8px;font-size:16px;color:var(--accent);
+    border-bottom:1px dashed var(--summary-border);padding-bottom:6px;text-align:left;
+  }
+  #ai-summary li{margin-bottom:10px;}
+  .summary-note{
+    margin-top:16px;font-size:12px;color:var(--muted);
+    text-align:center;border-top:1px dashed var(--summary-border);padding-top:12px;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="container">
+
+  <div class="tag">万维钢 · 现代思维工具100讲 · 第51讲</div>
+  <h1>默会知识：（但愿）AI 永远都不可能替代的技能</h1>
+  <div class="meta">作者：万维钢　·　来源：《现代思维工具100讲》第51讲</div>
+
+  <p>随着 AI 智能体（AI Agents）大行其道，网上流传一个有点惊悚的玩法，听着就像是电视剧《黑镜》里的情节。</p>
+  <p>有人在 GitHub 上发布了一个程序，叫“同事.skill”。它能为你已经离职的同事做一个数字分身：只要上传这位同事的飞书消息、钉钉文档、微信聊天记录、邮件、各种截图以及任何带有他痕迹的东西，再加上你对他的描述，程序就能利用这些素材生成一个 AI Skill——然后就可以据此构建一个智能体替他干活儿。</p>
+  <p>同事已经离职了，他的工位是空的。可是代表他的智能体却正在公司里兢兢业业地加班，甚至比以前还勤奋。</p>
+  <p>这岂不是可悲吗？人们难免会想下一个是不是自己。甚至下一次，公司会不会先提取我的 skill，再把我直接裁掉？</p>
+  <p>这一讲也许带给你一颗定心丸，我不认为你对公司的价值真的可以蒸馏成一个 skill 文档。就算 AI 能模仿你的语调、能复现你的流程，它依然无法彻底替代你——因为它拿不走你身上最核心的一块资产，它叫做「默会知识（Tacit Knowledge）」。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>什么是默会知识</h3>
+  <p>所谓默会知识，简单说就是那些“只可意会，不可言传”的知识，你知道这个事儿怎么做但是你说不明白，你不能把它写成手册教给别人。与之相对，可以言传的则叫「显性知识（Explicit Knowledge）」。</p>
+  <p>比如你学炒菜，得到一本菜谱，上面写着：“中火热油，葱姜爆香，收汁至挂勺。”</p>
+  <p>每个字你都认识，可你还是不知道怎么炒。到底啥叫“中火”？它不是煤气灶的旋钮，它跟锅、灶、油量、食材含水量都有关系。“爆香”是葱姜和油在第 12 秒发生的化学反应吗？那是一个必须根据声音、气味和颜色一起判断的时机。还有“挂勺”是啥意思？</p>
+  <p>必须有个师傅在现场教你。他也说不清具体的判断标准，但是他会指给你：“现在可以翻。”“再等一秒。”“闻到了吗？就是这个点。”你自己用心体会。</p>
+  <p>菜谱上写的是显性知识，菜谱写不出来的功夫是默会知识。用英国分析哲学家吉尔伯特·赖尔（Gilbert Ryle）的说法，前者是“知道是什么”（knowledge-that），后者是“知道怎么做”（knowledge-how）；前者是标准操作流程（SOP），讲究定义、步骤和配方，后者讲究的则是手感、火候、分寸和节奏。</p>
+  <p>显性知识有时候会被人保密起来，但默会知识无需保密。厨师就在你旁边颠勺，医生就在你面前下刀，老程序员就在你屏幕共享时改 bug。你全程都看见了，可你还是学不会。</p>
+  <p>如果你的所有知识都是来自于文本的显性知识，让你上手实操就是非常危险的。实操必须有默会知识。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>概念的由来：波兰尼与「冰山」</h3>
+  <p>默会知识这个概念最早是由匈牙利裔英国哲学家迈克尔·波兰尼（Michael Polanyi）在 1958 年提出的。</p>
+  <div class="fig">［图］迈克尔·波兰尼（Michael Polanyi）</div>
+  <p>波兰尼有一句招牌式名言：「我们能知道的比我们能说出来的多。」（We can know more than we can tell.）他把知识比作浮在海面上的冰山：露在上面的那一小角是显性知识，而沉在水面下的巨大冰山主体，就是默会知识。</p>
+  <p>波兰尼成为哲学家之前原本是个做物理化学的科学家。早年在实验室里，他就意识到真正让科学家做出判断的，绝不只是论文里那些公开的方法，还有一整套说不尽的直觉、手感、经验和信念。</p>
+
+  <h3>为什么难以言说：整合与「内居」</h3>
+  <p>为什么默会知识难以言说呢？波兰尼说，因为那是一种「整合（Integration）」：我们并不是孤立地看待事物，而是从许多细小线索出发，朝向一个整体意义进行整合。</p>
+  <p>比如你看一位熟人的脸，并不是先测量眉毛长度、鼻梁角度、眼距比例然后算出“这是张三”；你是一下子就认出来了。钢琴家不是先盯住每根手指，再把它们拼成音乐；恰恰相反，他得把手指“忘掉”，音乐才能出来。</p>
+  <p>这就如同你拿锤子钉一颗钉子。你的注意力在钉头上，但你的手部肌肉、握锤的力量、手臂的角度，都在进行极其复杂的实时修正——这些微小的修正不但是难以言说的，而且也是不应该言说的。如果你试图把那些动作拆解成语言说出来，你反而不会钉钉子了。</p>
+  <p>虽然不能言说，但是那些后台细节——它们构成了默会知识——恰恰是你理解和发挥的基础。</p>
+  <p>而要掌握默会知识，就必须把那些细节给“内化”，用波兰尼的说法叫做“内居”（indwelling）：先是你住进工具、技能和细节里，随后它们长进你身上，你们合二为一，就如同盲人的手杖不再只是手里的木棍，而成了他身体和感知的一部分。你不是因为记住了动作要领而会骑自行车，是自行车已经部分住进了你的身体。</p>
+  <p>用现在的语言来说，掌握默会知识就是对大脑神经网络进行参数更新和微调——你说不清神经网络的哪些参数怎么变了，但它们的确变了。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>默会知识与显性知识的四个根本区别</h3>
+  <p>默会知识跟显性知识有四个根本区别，使得它难以被写进 SKILL.md。</p>
+  <ul>
+    <li><strong>第一，默会知识是复杂的模式识别。</strong>资深医生看一眼病人的气色就能直觉性地判断出某种罕见病，你说他是怎么看出来的？是哪个像素点告诉他的？说不清。这种直觉是对长期实践的内化，是对一万次试错的高维压缩。</li>
+    <li><strong>第二，默会知识强烈依赖情境。</strong>你可以写一大堆规则，说遇到这种情况应该怎样、那种情况应该怎样，可是现实世界总是有例外。一个顶尖销售在不同文化、不同情绪、甚至不同天气下跟客户交流的策略都不一样，讲究一个随环境变化的“分寸感”，那些变化你写不完。新手医生看的是指南，高手医生看的却是“这个病人现在适不适合按照指南办”；值班经理看的不是流程图，而是这个异常到底是不是异常。</li>
+    <li><strong>第三，默会知识经常是一个集体共同的财产，是长在人与人之间的知识。</strong>一个团队在一起待久了，就会形成什么时候“先别说”、什么时候该追问、什么程度算越界、哪种玩笑能开、哪种表态要慎重、什么叫“这句话技术上正确但政治上错误”，什么叫“这个会今天最好别开”……这些不是个人的脑内小剧场，而是整个共同体长期磨出来的默契。</li>
+    <li><strong>第四，默会知识往往需要身体的参与。</strong>认知科学中有个「具身认知（Embodied Cognition）」理论，就是说很多知识不仅仅在大脑里，也在你的肌肉纤维和神经末梢里。火候、手感、平衡、语气、节奏、停顿、抬眼的时机，这些是毫秒级整合，不是自然语言那种线性带宽能完整承载的。</li>
+  </ul>
+  <p>请问你怎么蒸馏这些知识？人必须在现场才行。SKILL.md 只能迁移一个员工的显性知识，却无法还原他的灵魂。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>怎么学默会知识：到现场「内居」</h3>
+  <p>那我们怎么学习默会知识呢？这不用担心，只要是知识，它就能被传授；问题是不能只靠手册传授——你必须到现场内居。</p>
+  <p>今天，哪怕互联网如此发达，像外科医生、飞行员、甚至木匠这些职业，依然保留着最古老的知识传承制度：学徒制。你最好有个师傅在旁边指导。</p>
+  <p>首先是在场看。你不能指望通过看视频就学会做手术。你得在现场，站在师傅旁边，看他如何拿刀，感受他处理突发大出血时的冷静氛围，看他如何跟护士配合。</p>
+  <p>然后是你跟着他一起做。师傅示范你模仿，他随时给反馈纠错，一遍没看明白师傅就把后台的细节拉到前台让你仔细再看一遍，一点一点地刻意练习，直到这些细节慢慢注进你的身体，长成身体图式。</p>
+  <p>如果你没有正式的导师，可以观察身边那些处理复杂人事、复杂危机的高手。看他们在正式会议之外是怎么说话的，看他们的微表情和节奏感。然后自己在实践中揣摩。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>AI，有没有可能吃掉人的默会知识？</h3>
+  <p>好，现在最重要的问题来了：AI，有没有可能吃掉人的默会知识呢？</p>
+  <p>波兰尼 1976 年就去世了，他没有看见我们看见的 AI。他当年最爱举的例子——人脸识别，现在已经被 AI 轻松攻克了。机器人可以学会骑自行车，甚至自行车自己都能稳定前进。机器并不需要你写出显性的识别规则，它自己通过足够多的数据和训练，默默吸收无数个细节，就能抓住那些规则无法言说的东西。</p>
+  <p>说到底，AI 是神经网络，人脑不也是个神经网络吗？</p>
+  <p>如果文本记录不能代表一个同事的一切，那我结合影像记录，把其所有的动作、说过的每一句话、每一个微表情都记录下来，够不够呢？现在手术室就已经被搞成了数据原生环境，多模态信息流支持实时决策、预测建模和个性化流程，我们怎么就不能训练一个机器人医生呢？</p>
+  <p>现实是 AI 已经在吃掉默会知识的外圈。AI 的诊断准确率已经超过人类医生。医生正越来越接纳，甚至依赖 AI 诊断。我们正在见证 AI 员工的水平超过人类员工。</p>
+  <p>不可言传，不等于不可训练 AI。不能写进 SKILL.md，不等于不能融入大模型的参数……</p>
+  <p>但是前人对默会知识的思考，还是会给我们一点底气。也许 AI 终究不能穷尽所有的默会知识，我们至少有三个理由——</p>
+
+  <h3>三个理由：为什么 AI 终究不能穷尽默会知识</h3>
+  <ol>
+    <li><strong>第一个理由，还是来自波兰尼：</strong>他认为一种完全显性的知识是不可思议的，因为任何显性的规则应用，一定是建立在更深一层无法言说的默会内化背景之上。你这个定理背后是一个更深的定理，最终归结于几个公理。而那些公理背后没有别的公理，它们只能是不讲理的，是我们的体悟和信仰。AI 敢做出跃迁式的信仰吗？</li>
+    <li><strong>第二个理由，来自科学社会学家哈里·柯林斯（Harry Collins）：</strong>正是他提出了咱们前面说的“集体的默会知识”。这个洞见是人类的互动是一个<em>动态演化</em>的过程——你机器就算能完全捕捉昨天的统计规律，你也没有办法预测我们明天涌现出来的新默契。小李离职了，我们跟他的数字分身的互动，和跟现在这个小李的互动，怎么可能一样呢？也许公司的竞争力就来自那个不一样的地方。</li>
+    <li><strong>第三个理由是具身认知：</strong>为什么 AI 下国际象棋、做数学题都已经比人厉害，但是让机器人收拾碗筷却这么难呢？这叫「莫拉维克悖论（Moravec's paradox）」。答案可能是因为跟物理世界互动的这种默会知识是人类亿万年肉身演化的结果。它也许不是那么容易被快速数据化的。</li>
+  </ol>
+  <p>平心而论，我认为这些理由并不是绝对的。但这些是非常有用的思考点。至少暂时来说，如果我们人类还有一点优势，这些默会知识就是我们的优势。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>身处 AI 时代，如何靠默会知识建立竞争力</h3>
+  <p>那么身处 AI 时代，我们应该如何靠默会知识建立自己的竞争力呢？直观的想法可能是让我的手艺尽量不要数据化，不让人看见我这个活儿是怎么干的，我只呈现结果不解释步骤，这样才能避免被人写成 skill……但这是没有前途的。</p>
+  <p>你放心，只要“把人变成智能体”这件事有利可图，就一定会有一个比你手艺更好的同行，先把这套手艺卖给智能体公司。你与其藏着掖着，还不如把能写出来的流程都写出来，变成你的杠杆，提高工作效率。</p>
+  <p>如果昨天的默会注定要被自动化，那我们就要把精力投放到明天的新默会上。这首先意味着抢占高情境、高例外、高责任的位置。这里异常多、反馈快，边界和责任归属难以界定，容易发生价值冲突。你在这里的操作是难以标准化的。诊断、谈判、架构、选题、审稿、用人、危机应对、品牌判断……每一个微决策都会沉淀成你的新手感。</p>
+  <p>如果暂时抢不到那样的位置，也一定要进现场内居，而绝不能纸上谈兵或者什么都让 AI 替你做。你甚至不是为了把事儿做对，你是为了积累复利，你得把技能长在自己身上。AI 会的都是公共基础设施，默会知识才是你的私有资本，否则将来凭什么给你更重要的位置？</p>
+  <p>长期看，任何人都最值得积累的默会知识，是自己的独特审美、人设和信任关系。</p>
+  <p>你的语言节奏、你的判断风格和幽默感、你的价值函数、你和众人之间的默契，AI 就算能 100% 模仿也没用，因为人们想看到的是动态的你，想知道你下一步会给人什么惊喜。有人可以很成功地让 AI 用鲁迅的笔法写今天的时评，但那并不是我们想要的。</p>
+  <p>我们想要的是：如果鲁迅活在今天，有切身的经历，见证了这么多年新的历史，他会如何评价今天的事情？我们想调用真鲁迅，而不是鲁迅的数字分身。</p>
+  <p>归根结底，到了物质极大丰富的那一天，人与人之间互相关心的肯定不是对方的技能包，而是对方本人。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>附：《庄子》· 轮扁斫轮</h3>
+  <div class="card">
+    <p style="margin-bottom:10px;">说到默会知识，我们不能不提《庄子》里的一个小故事，叫“轮扁斫轮”。齐桓公在堂上读书，有个叫轮扁的木匠在堂下制作轮子。</p>
+    <div class="qa-row">
+      <span class="qa-tag">问</span>
+      <p>轮扁问齐桓公：“您读的是什么书啊？”桓公说：“圣人之言。”轮扁冷笑一声说：“那是古人的糟粕啊！”</p>
+    </div>
+    <div class="qa-row a">
+      <span class="qa-tag">答</span>
+      <p>齐桓公怒了，说你不说出个道理来我就宰了你。轮扁说了一番话，两千年后的波兰尼也不能超越——</p>
+    </div>
+    <blockquote>就拿我制作轮子这个事儿来说，手慢了不行，手快了不行，这个劲儿到底怎么用，我无法用语言表达，我都没法传授给我的儿子。所以我今年七十了还在这儿当木匠。那你说，古人的手艺又怎么能都写在书上呢？你读的这些显性知识，岂不就是糟粕吗？</blockquote>
+    <p style="margin:0;">如果你听说前公司把你写成了 SKILL.md，你完全可以对他们说一句：<strong>你们蒸馏的，是我的糟粕。</strong></p>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">【收束小诗】</div>
+    能说的是规则，<br>
+    会做的是火候。<br>
+    模型能背下你的句子，<br>
+    分寸只长在你走过的路上。
+  </div>
+
+  <h3>注释</h3>
+  <div class="notes">
+    <ol>
+      <li>https://github.com/titanwings/colleague-skill</li>
+      <li>Ryle, Gilbert. “Knowing How and Knowing That: The Presidential Address.” <em>Proceedings of the Aristotelian Society</em> 46 (1946): 1–16.</li>
+      <li>Polanyi, Michael. <em>Personal Knowledge: Towards a Post-Critical Philosophy.</em> Chicago: University of Chicago Press, 1958.</li>
+      <li>Hadjimichael, Demetris, Rodrigo Ribeiro, and Haridimos Tsoukas. “How Does Embodiment Enable the Acquisition of Tacit Knowledge in Organizations? From Polanyi to Merleau-Ponty.” <em>Organization Studies</em> 45, no. 4 (2024).</li>
+      <li>Collins, Harry. <em>Tacit and Explicit Knowledge.</em> Chicago: University of Chicago Press, 2010.</li>
+      <li>Shapiro, Lawrence. “Embodied Cognition.” <em>The Stanford Encyclopedia of Philosophy</em>, 2021.</li>
+      <li>Liu, Jinghao, et al. “Coordinated Trajectory Tracking and Self-Balancing Control for Unmanned Bicycle Robot Against Disturbances.” <em>Actuators</em> 15, no. 1 (2026): 49.</li>
+      <li>Kudsi, Omar Y., et al. “Reimagining Surgery in a World Powered by Intelligence, Connectivity, and Code.” <em>npj Digital Surgery</em> (2026).</li>
+    </ol>
+  </div>
+
+  <h3>用户留言</h3>
+  <div class="comment">
+    <div class="comment-head"><span class="comment-name">至尊女宝</span><span class="comment-time">昨天 · 内蒙古</span></div>
+    <p>如果把默会知识理解为「噪声」，那 AI 的死穴就清楚了。假设把人做事的流程建模成：输出 = f(输入; 参数) + ε，那显性知识就是 f 的函数体，你写得出伪代码。默会知识就是那个 ε——它看起来像噪声，但根本不是高斯白噪声。它是你几十年肉身和所有的经历碰撞留下的系统偏差。所以这个东西不可能写在我的工作报表和图纸里，甚至我们没有意识到它的存在。它只在你做决策的那几十毫秒里悄悄运作，然后你以为你是「直觉」。就像有些老专家在现场听压缩机的声音就知道哪里有故障，这完全替代不了。即便是模型再大，数据再多，我上传的资料和留存的记录它最多能记住我的风格，只能说最大可能的学会了过去的我，它学不会未来的我，因为我的默会知识是在线更新的。比如我今天就看到了沙漠赛车，这是我第一次看见，还有点震撼，以前只是见过视频没见过真实场景，感受完全是不一样的，这叫不可观测的协变量。我们所有人的默会知识不是一个 bug，它是一个 feature。它是我作为一个物理实体、在社会网络里、在时间轴上不断试错留下的私有参数。这个参数没法上传，因为上传的那一刻，它就冻结了。没人完全替代得了我，哪怕是克隆，我就是我，永远在变化，我希望虽然我在变老变秃变丑，但脑子是在变进步。</p>
+  </div>
+  <div class="comment">
+    <div class="comment-head"><span class="comment-name">常觉不住</span><span class="comment-time">昨天 · 美国</span></div>
+    <p>万老师这篇说默会知识 AI 拿不走，我想往前推一步：能被 AI 拿走的，恰恰是默会知识里偏低层的那部分——“这个命令怎么打、这段代码在哪里改”。这种东西今天叫手感，明天就叫 SKILL.md。真正拿不走的，是更上一层的判断：我知道客户表面上买的是格式转换，实际上买的是风险转移；我知道这个系统现在能改，但三个月后会撞上另一个流程；我知道什么时候说“可以”，什么时候必须说“不行”。这不是单一手艺，而是对人、对结构、对边界的同时握持。但默会知识不是护身符。它如果长期不被表达、不被组织化，就会困死在一个人身上，变成手艺人的宿命——轮扁七十岁了还在堂下做轮子，不也正说明这一点吗？所以，与其守住“别人学不会我”，不如反过来：把低层的默会交出去，让 AI 和团队接手，自己腾出手进入下一层现场。真正的安全感，不是守住一段别人学不会的手艺，而是让自己持续进入那些还没有被写成流程的现场。</p>
+  </div>
+  <div class="comment">
+    <div class="comment-head"><span class="comment-name">刘嘉</span><span class="comment-time">13小时前 · 江苏</span></div>
+    <p>AI 训练不管监督学习还是强化学习，本质上都是做题，拟合答案，它不可避免的和现实工程环境存在巨大差异。1）做题环境的输入是清晰、完整、无歧义的；目标是明确的；边界是封闭的。而工程环境拥有无数历史包袱和隐形约束；2）做题环境本质一个收敛性问题。无论中间过程多复杂，它最终有一个“标准答案”（能跑通测试用例）。真实的工程环境是一个发散性的多方博弈。3）在做题环境中，AI 面对的是完美的题目。但在真实的工程中，最大的困难往往不是“怎么实现需求”，而是“弄清楚客户到底想要什么”。再好的编码器也无法取代工程师，因为工程师是为了解决现实的复杂性而存在的……而解决复杂就必然会存在万老师说的那种默会知识。写这段的时候，我女儿晚上受凉了，我在伺候她吃药，并和她说了万老师文章和我的观点……她忍着喉咙的咳嗽反驳了我一句：“不要用人类一直解决问题的方式，去限制 AI 解决问题的想象力。”她喝口药继续补刀，说就像三体中人类倾尽所有构建的复杂的武器系统、作战序列与指挥网络，在水滴面前毫无意义。水滴没有战术没有火力，仅凭绝对密度和绝对光滑，用最原始的物理冲撞就搞定了。在更高的维度下，你所坚持的复杂也许不堪一击。我顿时呆在原地……好嘛，你好好书不读英语单词不背，你看三体？你是不是又背着我看小视频了？是不是小美小帅十分钟读完三体？说，是不是！！！</p>
+  </div>
+
+  <div id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <p class="one-liner">一句话概括：默会知识是“只可意会、不可言传”的真功夫；AI 虽然正在吞噬它的外圈，但依赖现场、身体、集体默契与动态演化的部分难以被蒸馏，普通人真正的护城河，是把精力投向“明天的新默会知识”，积累属于自己的审美、人设与信任。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li>默会知识（Tacit Knowledge）指“只可意会、不可言传”的知识，与之相对的是显性知识。赖尔称之为“知道怎么做”（knowledge-how）对“知道是什么”（knowledge-that）：菜谱写得出的步骤是显性知识，写不出的火候、分寸与手感才是默会知识。</li>
+      <li>该概念由波兰尼于 1958 年提出，招牌名言是「我们能知道的比我们能说出来的多」。他的冰山比喻点明：显性知识只是露出水面的一小角，沉在水下的巨大主体才是默会知识。</li>
+      <li>默会知识难以言说，是因为它本质是一种“整合”与“内居”：认脸、弹琴、钉钉子靠的是整体性的实时修正，一旦拆成语言反而不会做了；用今天的话说，掌握默会知识就是对神经网络参数的更新与微调。</li>
+      <li>默会知识有四个根本区别：一是复杂模式识别（医生看气色断病），二是强烈依赖情境（分寸感写不完），三是常是集体默契（长在人与人之间），四是往往需要身体参与（具身认知、毫秒级整合）。</li>
+      <li>学习默会知识没有捷径，只能“到现场内居”：学徒制、站在师傅旁边看、跟着做、即时纠错反馈、刻意练习；没有导师时，就观察身边处理复杂人事和危机的高手，在实践中揣摩。</li>
+      <li>AI 已经在吃掉默会知识的外圈：人脸识别被攻克、机器人会骑自行车、AI 诊断准确率超过人类医生——不可言传不等于不可训练，写不进 SKILL.md 的东西可以融进大模型参数。</li>
+      <li>但至少有三个理由让人保留底气：完全显性的知识不可思议（公理最终靠体悟与信仰）；集体默会知识是动态演化的（明天的新默契无法被昨天的数据预测）；与物理世界互动的默会知识来自亿万年肉身演化（莫拉维克悖论）。</li>
+      <li>应对策略很明确：别藏手艺，把能写出的流程都写成杠杆；抢占“高情境、高例外、高责任”的位置；进现场内居、积累复利；长期最值得积累的是独特审美、人设与信任关系——我们想调用真鲁迅，而不是鲁迅的数字分身。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li>本周挑一件你最拿手的小事，试着写一份“操作手册”，把写不出来的步骤单独列出来——那就是你的默会知识清单，也是你值得刻意经营的核心资产。</li>
+      <li>找一位高手“跟一天现场”：观察他在真实例外、冲突和压力下怎么做判断，注意那些说不出口的分寸与节奏，当晚记成三条复盘笔记。</li>
+      <li>从今天起，保留至少两成核心工作亲自做、不交给 AI 代劳——比如写关键方案、谈关键客户、审关键稿件——让技能继续长在自己身上。</li>
+      <li>主动认领一个“高情境、高例外、高责任”的小任务（一次危机沟通、一次跨部门谈判、一次带新人），哪怕很小，也是在为默会知识存复利本金。</li>
+      <li>反过来把能标准化的流程写出来，交给 AI 和团队接手，自己腾出手进入下一层“还没被写成流程的现场”，而不是守着手艺藏着掖着。</li>
+      <li>建立每周一次的微决策复盘：记录几个“我当时为什么这么判断”的时刻，让直觉显影，沉淀成你自己的判断风格与“新手感”。</li>
+      <li>在团队里刻意练习默契：什么时候“先别说”、什么时候该追问、哪种表态要慎重——这些集体默会知识，正是你人设与信任关系的来源。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <ul>
+      <li>「我们能知道的比我们能说出来的多。」——波兰尼</li>
+      <li>AI 会的都是公共基础设施，默会知识才是你的私有资本。</li>
+      <li>你们蒸馏的，是我的糟粕。（轮扁斫轮）</li>
+      <li>能说的是规则，会做的是火候。模型能背下你的句子，分寸只长在你走过的路上。（收束小诗）</li>
+    </ul>
+
+    <div class="summary-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </div>
+
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+const bar=document.getElementById('progress'),topBtn=document.getElementById('toTop');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  bar.style.width=(p*100)+'%';
+  topBtn.style.display=h.scrollTop>360?'flex':'none';
+},{passive:true});
+topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>

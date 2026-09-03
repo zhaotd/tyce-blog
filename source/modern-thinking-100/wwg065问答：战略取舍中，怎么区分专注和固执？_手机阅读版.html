@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>问答：战略取舍中，怎么区分专注和固执？｜万维钢·现代思维工具100讲·第65讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#fffdf8;
+    --text:#2b261f;
+    --text-soft:#6f6658;
+    --accent:#8a5a2b;
+    --accent-strong:#7a4d22;
+    --accent-soft:rgba(138,90,43,.10);
+    --border:#e5dbc7;
+    --quote-border:#c9a26b;
+    --summary-bg:#f3ebd9;
+    --summary-border:#d9c59c;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d18;
+      --text:#eae4d8;
+      --text-soft:#a89f8f;
+      --accent:#d3a468;
+      --accent-strong:#e0b57e;
+      --accent-soft:rgba(211,164,104,.13);
+      --border:#37322a;
+      --quote-border:#a9803f;
+      --summary-bg:#241f16;
+      --summary-border:#4a3d28;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    line-height:1.82;
+    font-size:17px;
+    padding:0;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:100;
+    box-shadow:0 0 6px var(--accent);
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));
+    width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fffdf8;font-size:22px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:99;
+  }
+  #toTop:hover{background:var(--accent-strong);}
+  .wrap{
+    max-width:700px;margin:0 auto;padding:28px 20px 64px;
+  }
+  /* ---------- 文档头 ---------- */
+  header.doc-head{padding:14px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+  .tag{
+    display:inline-block;font-size:13px;letter-spacing:.5px;
+    color:var(--accent);background:var(--accent-soft);
+    border:1px solid var(--quote-border);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;color:var(--text);}
+  .meta{
+    margin-top:12px;font-size:14px;color:var(--text-soft);
+    display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;
+  }
+  .meta .dot{opacity:.5;}
+  .lead{
+    font-size:15.5px;color:var(--text-soft);
+    background:var(--accent-soft);border-radius:12px;padding:14px 16px;margin-bottom:26px;
+  }
+  /* ---------- 问答卡片 ---------- */
+  .qa{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;
+    padding:20px 18px;margin-bottom:34px;
+    box-shadow:0 1px 4px rgba(0,0,0,.04);
+  }
+  .qa-title{
+    font-size:17px;font-weight:700;color:var(--accent);
+    margin-bottom:16px;line-height:1.5;
+  }
+  .qa-title .src{display:block;font-size:13px;font-weight:400;color:var(--text-soft);margin-top:4px;}
+  .q-block{
+    background:var(--accent-soft);
+    border-left:3px solid var(--quote-border);
+    border-radius:10px;padding:14px 16px;margin-bottom:18px;
+  }
+  .label{
+    display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.5px;
+    border-radius:6px;padding:2px 9px;margin-bottom:8px;
+  }
+  .label.q{background:var(--accent-soft);color:var(--accent);border:1px solid var(--quote-border);}
+  .label.a{background:var(--accent);color:#fffdf8;}
+  .q-block p{font-size:16px;color:var(--text);}
+  .a-block p{margin:0 0 14px;text-align:justify;}
+  .a-block p:last-child{margin-bottom:0;}
+  .a-block h3{
+    font-size:16.5px;font-weight:700;color:var(--accent-strong);
+    margin:20px 0 8px;
+  }
+  .a-block ul{margin:0 0 14px;padding-left:22px;}
+  .a-block li{margin-bottom:8px;text-align:justify;}
+  .a-block li::marker{color:var(--accent);}
+  blockquote{
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);
+    border-radius:8px;padding:12px 16px;margin:14px 0;
+    color:var(--text);font-size:16.5px;
+  }
+  blockquote p{margin:0;text-align:justify;}
+  /* ---------- 分隔线 ---------- */
+  .divider{
+    text-align:center;color:var(--quote-border);font-size:15px;
+    margin:6px 0 30px;letter-spacing:8px;user-select:none;
+  }
+  .divider::before,.divider::after{
+    content:"";display:inline-block;vertical-align:middle;
+    width:56px;height:1px;background:var(--border);margin:0 10px;
+  }
+  /* ---------- 注释 ---------- */
+  .notes{
+    background:var(--card);border:1px dashed var(--border);border-radius:12px;
+    padding:18px;margin-bottom:34px;font-size:13.5px;color:var(--text-soft);
+  }
+  .notes h2{font-size:15px;color:var(--text);margin-bottom:10px;}
+  .notes ol{padding-left:20px;}
+  .notes li{margin-bottom:6px;text-align:justify;word-break:break-all;}
+  .notes a{color:var(--accent);word-break:break-all;}
+  /* ---------- AI 总结 ---------- */
+  .ai-summary{
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+    border-radius:14px;padding:24px 20px;margin-top:8px;
+  }
+  .ai-summary .badge{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:1px;
+    color:#fff;background:var(--accent);border-radius:999px;padding:4px 14px;margin-bottom:14px;
+  }
+  .ai-summary h2{font-size:20px;color:var(--accent-strong);margin-bottom:14px;}
+  .ai-summary h3{font-size:16.5px;color:var(--accent-strong);margin:20px 0 10px;}
+  .ai-summary .one-liner{font-size:16.5px;line-height:1.75;text-align:justify;}
+  .ai-summary ol{padding-left:22px;}
+  .ai-summary ol li{margin-bottom:9px;text-align:justify;}
+  .ai-summary ol li::marker{color:var(--accent);font-weight:700;}
+  .ai-summary blockquote{
+    border-left-color:var(--accent);background:var(--card);
+    margin:8px 0 6px;
+  }
+  .disclaimer{
+    margin-top:18px;padding-top:12px;border-top:1px solid var(--summary-border);
+    font-size:12.5px;color:var(--text-soft);text-align:center;
+  }
+  .end{text-align:center;color:var(--text-soft);font-size:14px;letter-spacing:6px;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第65讲</span>
+    <h1>问答：战略取舍中，怎么区分专注和固执？</h1>
+    <div class="meta">
+      <span>作者：万维钢</span><span class="dot">·</span>
+      <span>《现代思维工具100讲》问答合辑</span><span class="dot">·</span>
+      <span>共五组问答</span>
+    </div>
+  </header>
+
+  <p class="lead">本期为问答合辑。万维钢老师从五讲课程中选出五组读者提问，逐一回复：从战略取舍中的专注与固执、内容创作的完美主义卡点，到 To B 行业的叙事构建、AI 风口下的自我判断，再到「什么都自己做」的外包边界。每一问都落到具体的判断方法与操作上，值得反复读。</p>
+
+  <!-- ===== 问答一 ===== -->
+  <section class="qa">
+    <div class="qa-title">问答一 · 怎么区分专注和固执？<span class="src">来自《阿尔法：优势战略意识》</span></div>
+    <div class="q-block">
+      <span class="label q">读者提问 · 奇·哈斯</span>
+      <p>请问老师，战略取舍中，怎么区分专注和固执？文中讲到，Alpha 来自战略定位，而战略定位必须有取舍，不能什么都要。但现实中，一个人或一家公司坚持某个方向时，有时候是在做正确的长期主义，有时候也可能只是陷入错误方向上的路径依赖。那么有没有一种判断方法，可以帮助我们区分，我是在坚持一个有 Alpha 潜力的战略定位，还是只是在固执地守着一个已经被证明不成立的方向？</p>
+    </div>
+    <div class="a-block">
+      <span class="label a">万维钢 · 回复</span>
+      <p style="margin-top:10px;">这是一个非常好的问题。风险投资（VC）对创始人也经常提出这样的要求，这是一个看似自相矛盾的要求：你既要有韧性（tenacity），能坚持既定战略，遇到困难也不放弃，坚韧不拔；同时又要有适应性（adaptability），能随时根据市场调整航向。遇点挫折就变向，那肯定啥事都干不成；但是「不撞南墙不回头」，甚至「撞了南墙也不回头」，一条道走到黑，那肯定也不对。</p>
+      <p>你抽象地看，坚持和固执的确是矛盾；但是你具体地看，这两者其实不矛盾。</p>
+      <blockquote><p>真正的专注不是拒绝改变，而是坚持一个可检验的战略假设。</p></blockquote>
+      <p>战略一定是你选择什么、放弃什么——你假设：因为你放弃了那些东西，所以你选择的东西将会得到加强。比如你选择高端市场，那就意味着你预期会牺牲规模。对这个战略的检验，就是在你订单减少的同时，你应该换来更高的客单价、更高复购、更低价格敏感、更强口碑。这些应该作为你的「前置信号」，应该是你在实施这个战略之前就想好的。</p>
+      <p>在这个战略开始之后，如果这些前置信号在变好，哪怕总收入暂时不好看，那也值得坚持，这叫专注。可是如果那些指标并没有变好，你的战略没有奏效，你还坚持，那就是固执。</p>
+      <p>固执是你一开始说要高端，后来高端没人买，你说市场还没成熟；低端也打不过，你说用户不懂价值；团队撑不住了，你说这是黎明前的黑暗……任何坏信号都不能证明你错，只能证明世界错——这就是固执。</p>
+      <h3>分辨坚持和固执的两个标准</h3>
+      <ul>
+        <li><strong>第一个标准：</strong>你坚持的到底是「战略定位」，还是「既有的打法」？战略定位可以不变，但打法必须不断学习。如果你坚持服务「最挑剔的高端客户」，同时不断调整产品、渠道、定价，这是专注；如果你坚持「当初我就是这么想的，所以方案不能改」，这是固执。</li>
+        <li><strong>第二个标准：</strong>看你有没有「X 因素」[1]。哪怕一开始并没有很多人喜欢你的产品，但是有一小撮人特别喜欢——他们会要求你把它坚持下去。这是一个很强的信号，有这个信号在，你就是有希望的。反过来说，如果你放弃的那部分原本还能带来一点现金流，现在没了；而你坚持的这部分，市场又没有什么反应，大家对你的战略选择无所谓，那看来就没啥希望了。</li>
+      </ul>
+      <h3>取舍，必须换来累积优势</h3>
+      <p>战略首先是取舍。放弃一些东西，一定要能让另一些东西更强才行：品牌更清晰，能力更积累，客户更精准，成本结构更独特……如果你只是不断失去机会，却没有换来任何累积优势，那不是取舍，是亏损。</p>
+      <p>而这一切应该在开始的时候就想好。为了防止到时候被沉没成本所困，最好给自己设定几个指标，出发前先说好：哪一堵墙，撞上去就说明路走错了。</p>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <!-- ===== 问答二 ===== -->
+  <section class="qa">
+    <div class="qa-title">问答二 · 过不去心里那道「完美」的关，怎么办？<span class="src">来自《商业杠杆：把一个创造卖一百万次》</span></div>
+    <div class="q-block">
+      <span class="label q">读者提问 · 杜不圆</span>
+      <p>万老师，我明白杠杆的道理，但一直卡在执行上。之前做视频，现在想写文章，总有个过不去的坎：如果成品没达到我心中那个「想要的效果」，我就会一直改，改一遍又一遍，直到最后自己都泄气了，不了了之。我想问，在这个眼看就要放弃的节点上，怎么才能把自己拉回来，继续创作下去？内容创作，是不是真得过自己心里那道「完美」的关才行？</p>
+    </div>
+    <div class="a-block">
+      <span class="label a">万维钢 · 回复</span>
+      <p style="margin-top:10px;">你想要完美，说明你有高标准，用得到的话说就是你头脑中有一条「金线」。这是非常可贵的品质。</p>
+      <p>我看到一些号称做内容的人对自己毫无要求。有人把书稿发给我，让我写推荐语，我说你这书写得太差了，为了保全你的名声，这书不应该出版——可是他们不听我的，还是出版了，等于是甘于平庸。这样的人有啥前途？</p>
+      <p>做内容必须知道什么叫好东西。如果你写的东西不够好，你应该感到非常难受。你绝不能说：「这就是我的作品，所以就算别人不喜欢，我也喜欢！」你应该比别人更强烈地不喜欢它才行。</p>
+      <p>所以了不起的作家都是痛苦的。我从来没听说过哪个好作家能轻轻松松，拿手机录一段，让助手给整理整理就是好作品。我看到的更多是「两句三年得，一吟双泪流」。阿西莫夫写作，如果没有灵感，就去电影院看电影，有时候看着看着灵感自己就来了。作家为了得到好东西，为了让作品不差那一口气，就得千方百计、苦苦追寻。</p>
+      <p>所以我非常赞赏你宁可白费力气也不上线这个态度。世界不缺另一个平庸的作品，世界缺少的是真正的洞见和高妙的表达。</p>
+      <h3>金线之下，还要有一条「交付线」</h3>
+      <p>但是话说回来，金线不是一日就能达到的。眼高手低也是很正常——首先要眼高——但是你经过训练才能做到手高。而训练就需要一定的反馈，需要有一点初步的成就感作为刺激，不然岂不是陷入了习得性无助吗？</p>
+      <p>为了训练，在金线之下，你还可以有一条「交付线」：这是一个作品能不能拿出去接受反馈的最低标准。交付线是满足你这个作品所在场域的基本达标线。这起码要求它的观点应该清楚，应该说了一个对观众有用的东西，并且绝对不能有明显的硬伤——而且一定要有一个有你个人特色的东西：可能是你独特的一个洞见，可能是你想要对现实做一次纠正，也可能是你曾经做过的一个梦。这个东西，就是你需要出来创作的理由。</p>
+      <p>对照这些最基本的标准，看看你的作品哪些地方没达标，你就用工程化的方式让它达标。然后先拿出来看看观众或者读者的反应，接受一下反馈。也可能它没你想的那么差，也可能没你想的那么好。好坏都不是对你的终极审判，这只是一次训练，而且可以用笔名。</p>
+      <h3>表达欲，要配得上内容的价值</h3>
+      <p>再有一点，表达欲很重要。这一屋子人正在讨论一个什么事，你有没有迫切想要站起来对大家说的？如果你想说的这个事足够重要，你的表达欲足够强，你完全可以忽略表达的方式。</p>
+      <p>表达欲应该跟想要表达的东西的价值成正比。在当今这个时代，写作已经不是一个技术问题，而是每个人认知存量、判断水平和审美标准的较量：如果你没有足够高明的见识，你需要先去长见识，再回来研究怎么写作。</p>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <!-- ===== 问答三 ===== -->
+  <section class="qa">
+    <div class="qa-title">问答三 · To B 企业如何构建有感召力的行业叙事？<span class="src">来自《机会窗口：是盲目跟风，还是顺应大势？》</span></div>
+    <div class="q-block">
+      <span class="label q">读者提问 · 赵能祥</span>
+      <p>万老师，在制造业等偏向传统的 To B 领域，真实需求（D）往往比较明确，但极度缺乏强有力的叙事（N）。作为企业，如何主动构建有感召力的行业叙事，从而吸引资源并开启自己的机会窗口？</p>
+    </div>
+    <div class="a-block">
+      <span class="label a">万维钢 · 回复</span>
+      <p style="margin-top:10px;">在 To B 尤其是制造业里，叙事不能是宣传话术，而是降低别人对未来的不确定性，最好能提供一个方向，这意味着把自家产品跟行业大势联系在一起。</p>
+      <blockquote><p>理想的叙事是：他不是在买你的产品，他是在进入一个新阶段。</p></blockquote>
+      <p>所以要把一个采购需求，升级成一个行业转型问题。比如你们卖的是一种检测设备，低级叙事是「更准、更快、更便宜」。高级叙事是：制造业正在从「事后质检」进入「过程质量时代」。未来竞争不是谁返工少，而是谁能把缺陷消灭在生产过程中——而我们这个产品，……如何如何。这样一来，你卖的就不是设备，而是一个新生产范式的入口。</p>
+      <h3>高级叙事的诀窍：「命名」与「给身份」</h3>
+      <p>高级叙事的一个诀窍是「命名」，给趋势命名，给客户一个身份，调动对方的身份认同。比如你可以把客户的具体痛点命名成行业共同命运——</p>
+      <ul>
+        <li>不要说「我们帮你节省 8% 人工」。要说「人工红利结束以后，制造业必须从人力密集转向知识密集」。</li>
+        <li>不要说「我们让设备联网」。要说「工厂正在从设备孤岛进入可观测生产系统」。</li>
+      </ul>
+      <p>To B 采购不是一个人在买东西，你的说服对象必须说服他自己的老板、财务、生产、IT、质量部门。他需要你给他一套语言帮他解释：为什么现在必须做，为什么不是乱花钱，为什么选你不是个人偏好。所以好的行业叙事一定会给客户一个身份——</p>
+      <ul>
+        <li>我们不是在买软件，我们是在建设下一代工厂。</li>
+        <li>我们不是在买传感器，我们是在补上工业数据底座。</li>
+        <li>我们不是在上自动化，我们是在把老师傅经验变成组织能力。</li>
+      </ul>
+      <h3>证据第二，叙事第一</h3>
+      <p>当然你光给这些虚的叙事不行，还必须有过硬的证据，应该事先就准备好一系列数字：节拍改善、良率提升、停机减少、库存周转、单位成本、回本周期……最好还有行业白皮书、标杆客户、示范产线等等。但这些是第二位的。你得先有叙事，人家才对你这些东西感兴趣。</p>
+      <blockquote><p>我们知识服务者写文章从来不是向读者证明我们有多厉害，而是帮助读者变厉害。同样道理，好的产品叙事不是让客户觉得你厉害，而是让客户觉得：我参与这件事，我就会很厉害。</p></blockquote>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <!-- ===== 问答四 ===== -->
+  <section class="qa">
+    <div class="qa-title">问答四 · 怎么判断自己是在积累入场能力，还是消费风口兴奋感？<span class="src">来自《效果推理：不知道该干什么的时候该干什么》</span></div>
+    <div class="q-block">
+      <span class="label q">读者提问 · 咚咚锵</span>
+      <p>普通人判断机会窗口时，最大困难可能不是看不懂趋势，而是看不清自己。比如 AI 很热，我也知道可能还有窗口，但我不确定自己究竟是有能力适配，还是只是被叙事推着走。对个人来说，有没有一种比较朴素的「自测方法」，能判断自己是在积累入场能力，还是只是在消费风口带来的兴奋感？</p>
+    </div>
+    <div class="a-block">
+      <span class="label a">万维钢 · 回复</span>
+      <h3 style="margin-top:10px;">简单的标准：AI 有没有改变你的工作流</h3>
+      <p>简单的判断标准就是：AI 是否改变了你的工作流，让你进入了一个新的工作状态。它有没有让你用更少时间做出原来做不出的东西？有没有让你接触到新客户？有没有让你形成新作品？有没有让你多一个可复用的工具链？有没有让你的单位时间产出变高？</p>
+      <h3>更深的标准：摘掉光环，你还愿不愿意干</h3>
+      <p>更深的标准则是，如果摘掉光环，假设 AI 明天不热了、没人再谈了，你手上那些具体的使用 AI 的活儿——调试、获得反馈、比较结果、迭代智能体版本——你还愿不愿意干？愿意，你是真入场了；不愿意，你爱的是风口的光，不是这件事本身。</p>
+      <h3>终极的测试：拿出一个别人愿意用的东西</h3>
+      <p>终极的测试，是你有没有拿这个风口做出一个别人愿意使用、愿意转发、愿意托付甚至愿意付费的小东西来。可以是一个自动化流程、一个行业报告、一个客户方案、一个内部效率工具。关键是这个东西让你对世界造成了一点改变。你不再是个旁观者，而是局面的参与者。</p>
+      <blockquote><p>理解是观看，产出才是入场。有了自己的作品，真正体会过用 AI 这个活儿是怎么干的，你才谈得上是积累。如果只是收藏、截图、群聊，你那是消费。</p></blockquote>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <!-- ===== 问答五 ===== -->
+  <section class="qa">
+    <div class="qa-title">问答五 · 什么该自己做，什么该外包？<span class="src">来自《沃德利地图：独一无二的自己做，能外包的尽量外包》</span></div>
+    <div class="q-block">
+      <span class="label q">读者提问 · 容我想想</span>
+      <p>关于资源是否外包的问题，除盈利维度外，也需要结合企业长期稳定发展来考量。想请教一下：如果企业手握核心技术、能够抵御市场垄断等风险，保障业务正常运转，从这个角度出发，自主搭建整套系统是否具备合理性？</p>
+    </div>
+    <div class="a-block">
+      <span class="label a">万维钢 · 回复</span>
+      <p style="margin-top:10px;">据我观察，中国的大公司的确有这样的心理，希望什么东西——包括一些很通用的工具——都用自家开发的。</p>
+      <p>表面上看，这里有防止「卡脖子」的心理。可是「卡脖子」是国家与国家之间的事情，因为国家之间有地缘政治、安全冲突和制裁工具需求，对方有时确实会宁可不赚钱也要限制你。但在一个国家内部，「卡脖子」这种事，到底怎么才可能发生？一家供应商，凭什么为了「让你死」，放着你的钱不挣？就算这一家真跟你有仇，那别的供应商呢？难道大家都约好了？他们图什么？这种事情我闻所未闻。</p>
+      <p>所以我更相信「什么都自己做」背后的心理是一种控制焦虑，是默默地把所有友商都当成潜在的敌人。</p>
+      <p>有个说法特别有意思，说在中国做 to B 业务是没有前途的——因为大公司都有一个执念：只要让别人赚到了我的钱，我就算输了；只要还有一块利润流进了友商兜里，我就没赢透。表现出来就是没有麻烦也要给人制造麻烦，明明有这个钱，也要拖几个月再给人付款。</p>
+      <p>这是非常短视的心态。要知道市场不是零和的。你让供应商赚钱，他才有动力把那一块做到极致，将来你才能拿到更好更便宜的服务。整个行业的饼一起做大，你分的也更多。你非把所有人的活都干了、所有的钱都挣了，到头来是把自己赖以生存的那个生态给饿死，这不是以邻为壑吗？</p>
+      <blockquote><p>美国人宁可自己不赚钱也不让中国人赚钱，也就算了，怎么中国人还不让中国人赚钱呢？</p></blockquote>
+      <h3>沃德利地图：什么是真正的安全</h3>
+      <p>要说安全感，沃德利地图恰恰就告诉我们，什么是真正的安全。如果这个能力只有你能做，需要你的差异化服务，那你就应该自己做，没有任何问题。但如果这个东西其实跟你的战略一点关系都没有，比如它就是个笔记系统、AI 大模型，或者内部通讯工具，这些东西市场上有稳定的供应、标准接口和可替换方案，谁能卡你脖子呢？</p>
+      <p>你看 Netflix 那么大，但它就敢把整个流媒体服务都托管在亚马逊云上——而且亚马逊自己还有 Prime Video 跟它正面抢生意。Netflix 不怕亚马逊翻脸，因为云计算早就是公用事业了，有市场、可迁移、真要断供亚马逊自己亏得更多。但 Netflix 并没有把一切都交出去。它自己做了 Open Connect，也就是内容分发网络，因为视频分发质量、成本和体验是它的关键控制点 [2]。</p>
+      <p>我们多次讲，主动声明自己不做什么，不但是一种战略选择，而且是一个很好的博弈姿态，能让合作伙伴放心，增加对你的好感和信任，你在核心业务上反而能得到更多。</p>
+    </div>
+  </section>
+
+  <!-- ===== 注释 ===== -->
+  <section class="notes">
+    <h2>注释</h2>
+    <ol>
+      <li>[1] 《精英日课》第 4 季，X 因素</li>
+      <li>[2] Netflix Open Connect。Netflix 自建 Open Connect CDN，用于提升全球视频分发体验；Netflix 官方也说明其使用 AWS 云做通用、可扩展计算，同时用 Open Connect 做内容分发。<br><a href="https://openconnect.netflix.com/" target="_blank" rel="noopener">https://openconnect.netflix.com/</a><br><a href="https://about.netflix.com/news/how-netflix-works-with-isps-around-the-globe-to-deliver-a-great-viewing-experience" target="_blank" rel="noopener">https://about.netflix.com/news/how-netflix-works-with-isps-around-the-globe-to-deliver-a-great-viewing-experience</a></li>
+    </ol>
+  </section>
+
+  <!-- ===== AI 阅读总结 ===== -->
+  <section class="ai-summary" id="ai-summary">
+    <span class="badge">AI 阅读总结</span>
+    <p class="one-liner"><strong>一句话概括：</strong>本期问答围绕「战略取舍」展开五组问答——专注与固执、完美主义卡点、To B 叙事、风口自测、外包边界，核心方法是一致的：先想清楚自己要检验什么、放弃什么，再用前置信号、作品和反馈来判断对错，而不是靠情绪和执念硬撑。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>专注与固执统一于「可检验的战略假设」：</strong>战略就是选择什么、放弃什么——因为放弃了 A，所以预期 B 会更强；事前定好「前置信号」（如选高端市场，应换来更高客单价、更高复购、更低价格敏感、更强口碑），信号向好值得坚持，指标未兑现仍坚持就是固执。</li>
+      <li><strong>两个判断标准：</strong>第一，区分「战略定位」与「既有打法」——定位可不变，打法必须不断学习，坚持「当初就是这么想的所以不能改」是固执；第二，看有没有「X 因素」——哪怕喜欢的人少，只要有一小撮人特别喜欢并要求你坚持下去，就是有希望；反之放弃的没了现金流、坚持的市场毫无反应，就没希望。</li>
+      <li><strong>取舍必须换来累积优势：</strong>放弃的东西要让另一些更强——品牌更清晰、能力更积累、客户更精准、成本结构更独特；只失去机会没换来任何累积优势，不是取舍，是亏损。出发前先定好指标：「哪一堵墙，撞上去就说明路走错了」，以此对抗沉没成本。</li>
+      <li><strong>完美主义的解法是「金线 + 交付线」：</strong>高标准（金线）可贵，但金线不是一日达成；在它之下设一条交付线——观点清楚、对观众有用、无硬伤、有一个个人特色——用工程化方式达标后先发出去接受反馈，好坏都不是终极审判，只是一次训练，还可以用笔名。</li>
+      <li><strong>创作的本质：</strong>好作家都是痛苦的（「两句三年得，一吟双泪流」）；表达欲应与内容价值成正比，表达欲够强时可以忽略表达方式；当今写作是认知存量、判断水平和审美标准的较量，见识不足就先长见识，再研究怎么写。</li>
+      <li><strong>To B 叙事的要诀：</strong>叙事不是宣传话术，而是降低别人对未来的不确定性——把采购需求升级成行业转型问题（低级叙事是「更准、更快、更便宜」，高级叙事是「从事后质检进入过程质量时代」）；诀窍是「命名」与「给客户身份」（「我们不是在买软件，我们是在建设下一代工厂」）；数字、白皮书、标杆客户等证据重要，但排在叙事之后。</li>
+      <li><strong>风口自测三问：</strong>AI 是否改变了你的工作流（更快做出原做不出的东西、接触新客户、形成新作品、单位产出变高）？摘掉光环后那些调试、迭代的活儿还愿不愿意干？终极测试是做出一个别人愿意使用、转发、托付甚至付费的小东西——「理解是观看，产出才是入场」，收藏、截图、群聊只是消费。</li>
+      <li><strong>外包的边界：</strong>市场不是零和的，让供应商赚钱你才能拿到更好更便宜的服务，「什么都自己做」多是控制焦虑；只有只有你能做、需要差异化服务的能力才自己做——Netflix 敢把流媒体托管给正面竞争自己的 AWS，却自建 Open Connect CDN 守护关键控制点；主动声明自己不做什么，是好的博弈姿态，能让合作伙伴放心。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ol>
+      <li>本周挑一个你正在坚持的方向，写下三行：「我放弃了什么 / 预期换来什么 / 3 个可检验的前置信号」，贴在显眼处；以后每周对照一次——信号变好就继续，没变好就调整打法，而不是换一套「市场没成熟」的借口。</li>
+      <li>为手头搁置的作品或项目定一条「交付线」：观点清楚、对别人有用、没有硬伤、有一点个人特色，达标就发出去（可用笔名），把这次发布只当作一次训练和反馈收集，而不是终极审判。</li>
+      <li>下次遇到坏消息（订单少、没人看、被拒绝）时，先问自己一句：「我坚持的是战略定位，还是既有打法？」如果是打法，列出两个本周就能调整的变量（产品、渠道、定价、表述），试一次再下结论。</li>
+      <li>如果你在追 AI 等风口，做一次「摘光环测试」：假设明天没人再谈 AI，你手上这些调试、获得反馈、迭代的活儿还愿不愿意干？并争取本周做出一个可复用的小工具或小作品，而不是只收藏、截图、群聊。</li>
+      <li>如果你是销售、产品或 To B 从业者，为你的产品写一句「给客户的身份」（例如「我们不是在买 X，我们是在建设 Y」），配一个具体数字（良率、节拍、回本周期），本周在真实客户沟通中试讲一次，观察对方的反应。</li>
+      <li>盘点一件你「非要自己做」的事务（工具、系统、服务），问它是否与核心战略直接相关；如果市场有稳定供应和标准接口，本周联系一家供应商询价，把省下的时间投到只有你能做的差异点上。</li>
+      <li>写作或表达卡壳时先不硬写：本周读一篇高水平的材料，带着「我想纠正现实中的什么」这个问题再动笔，让表达欲配得上内容的价值。</li>
+    </ol>
+
+    <h3>三、金句摘录</h3>
+    <blockquote><p>「固执是你一开始说要高端，后来高端没人买，你说市场还没成熟……任何坏信号都不能证明你错，只能证明世界错——这就是固执。」</p></blockquote>
+    <blockquote><p>「战略定位可以不变，但打法必须不断学习。」</p></blockquote>
+    <blockquote><p>「理解是观看，产出才是入场。」</p></blockquote>
+    <blockquote><p>「好的产品叙事不是让客户觉得你厉害，而是让客户觉得：我参与这件事，我就会很厉害。」</p></blockquote>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <p class="end">— 完 —</p>
+</div>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),
+      btn=document.getElementById('toTop');
+  function onScroll(){
+    var h=document.documentElement,
+        max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+    var show=h.scrollTop>500;
+    btn.style.opacity=show?'1':'0';
+    btn.style.pointerEvents=show?'auto':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

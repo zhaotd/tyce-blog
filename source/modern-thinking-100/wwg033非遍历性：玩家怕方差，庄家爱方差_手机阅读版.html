@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第33讲 非遍历性：玩家怕方差，庄家爱方差</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#fffdf8;
+    --text:#2e2a24;
+    --sub:#8a857b;
+    --accent:#8a5a2b;
+    --accent-soft:#eee2cd;
+    --border:#e6ddcc;
+    --quote-border:#c9a06a;
+    --divider:#b8ab94;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201c17;
+      --text:#e9e3d8;
+      --sub:#a29a8c;
+      --accent:#c99a63;
+      --accent-soft:#3a2f22;
+      --border:#3b3429;
+      --quote-border:#c99a63;
+      --divider:#6f6554;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  /* 顶部阅读进度条 */
+  #progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#d9a56a);
+    z-index:999;border-radius:0 3px 3px 0;
+    transition:width .1s linear;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+  }
+  /* 文档头 */
+  .doc-header{padding:36px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+  .course-tag{
+    display:inline-block;
+    font-size:13px;letter-spacing:.5px;color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:4px 12px;margin-bottom:16px;
+  }
+  h1{
+    font-size:27px;line-height:1.4;text-align:left;
+    font-family:"Songti SC","STSong","Noto Serif SC",Georgia,serif;
+    font-weight:700;letter-spacing:.5px;
+  }
+  .meta{
+    margin-top:12px;font-size:13.5px;color:var(--sub);text-align:left;
+    display:flex;flex-wrap:wrap;gap:6px 14px;
+  }
+  .lead{
+    font-size:17.5px;line-height:1.85;color:var(--text);
+    border-left:3px solid var(--quote-border);
+    padding:4px 0 4px 16px;margin:0 0 28px;
+  }
+  section{margin-bottom:34px;}
+  h3{
+    font-size:19.5px;line-height:1.5;margin:34px 0 14px;text-align:left;
+    font-family:"Songti SC","STSong","Noto Serif SC",Georgia,serif;
+    color:var(--accent);font-weight:700;
+    padding-left:12px;position:relative;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:5px;bottom:5px;width:4px;
+    background:var(--accent);border-radius:2px;
+  }
+  h4{
+    font-size:16.5px;margin:20px 0 8px;text-align:left;color:var(--text);
+  }
+  p{margin:0 0 14px;}
+  ul,ol{margin:0 0 16px;padding-left:1.4em;}
+  li{margin-bottom:8px;}
+  li::marker{color:var(--accent);}
+  strong{color:var(--accent);font-weight:700;}
+  em{font-style:normal;border-bottom:1px dashed var(--divider);}
+  /* 金句引用块 */
+  blockquote{
+    margin:20px 0;padding:14px 18px;
+    border-left:4px solid var(--quote-border);
+    background:var(--card);
+    border-radius:0 12px 12px 0;
+    color:var(--text);
+    font-size:16.5px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+  blockquote p{margin:0 0 6px;}
+  blockquote p:last-child{margin-bottom:0;}
+  /* 居中装饰分隔线 */
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    margin:30px 0;color:var(--divider);font-size:15px;letter-spacing:6px;
+    user-select:none;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--border);margin:0 18px;
+  }
+  /* 卡片：思想实验 / 策略 */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:20px 0;
+    box-shadow:0 1px 4px rgba(0,0,0,.04);
+  }
+  .card .card-title{
+    font-size:14px;letter-spacing:2px;color:var(--accent);
+    margin-bottom:12px;text-align:left;font-weight:700;
+  }
+  .calc{
+    background:var(--accent-soft);
+    border-radius:8px;padding:10px 14px;
+    font-family:ui-monospace,Consolas,"Courier New",monospace;
+    font-size:15px;margin:10px 0;text-align:left;overflow-x:auto;
+  }
+  .img-caption{
+    text-align:center;font-size:13px;color:var(--sub);margin:14px 0 0;
+  }
+  /* 注释 */
+  .notes{
+    background:var(--card);
+    border:1px dashed var(--border);
+    border-radius:12px;
+    padding:18px 20px;margin:30px 0;
+  }
+  .notes h3{margin-top:0;}
+  .notes ol{padding-left:1.3em;font-size:13.5px;color:var(--sub);line-height:1.7;}
+  .notes li{margin-bottom:6px;text-align:left;}
+  /* 用户留言 */
+  .comment{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;margin:16px 0;
+  }
+  .comment-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .avatar{
+    width:40px;height:40px;border-radius:50%;flex:none;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;font-weight:700;border:1px solid var(--border);
+  }
+  .comment-name{font-size:15px;font-weight:700;text-align:left;}
+  .comment-meta{font-size:12.5px;color:var(--sub);margin-top:2px;text-align:left;}
+  .comment-body p{font-size:15.5px;line-height:1.8;margin-bottom:10px;text-align:justify;}
+  .comment-body p:last-child{margin-bottom:0;}
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin:40px 0 20px;
+    border:1.5px solid var(--accent);
+    border-radius:14px;
+    background:linear-gradient(180deg,var(--accent-soft),var(--card));
+    padding:22px 22px 16px;
+  }
+  .ai-badge{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:1px;
+    color:#fff;background:var(--accent);border-radius:6px;padding:4px 10px;margin-bottom:14px;
+  }
+  #ai-summary h3{margin:18px 0 10px;padding-left:0;}
+  #ai-summary h3::before{display:none;}
+  #ai-summary h3:first-of-type{margin-top:0;}
+  #ai-summary p,#ai-summary li{font-size:15.5px;line-height:1.8;}
+  .summary-1{
+    font-weight:700;font-size:16px;line-height:1.8;
+    border-left:4px solid var(--accent);padding-left:14px;margin-bottom:8px;
+  }
+  .quote-line{
+    border-left:3px solid var(--quote-border);
+    padding-left:12px;margin:8px 0;font-style:normal;text-align:left;
+  }
+  .ai-foot{
+    margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);
+    font-size:12.5px;color:var(--sub);text-align:center;
+  }
+  /* 回到顶部按钮 */
+  #back-top{
+    position:fixed;right:20px;bottom:calc(28px + env(safe-area-inset-bottom));
+    width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+    display:none;align-items:center;justify-content:center;
+    z-index:998;opacity:.95;
+  }
+  #back-top:active{transform:scale(.94);}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-header">
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第33讲</div>
+    <h1>非遍历性：玩家怕方差，庄家爱方差</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>思维工具 · 概率论与投资</span>
+      <span>手机阅读版 · 仅供个人学习</span>
+    </div>
+  </header>
+
+  <p class="lead">我们已经讲过很多关于复利的原理和方法，这一讲咱们说一个反鸡汤：积累复利不是你懂道理就行。</p>
+
+  <!-- 开场：比特币往事 -->
+  <section>
+    <h3>开场：我拿不住的那 16 个比特币</h3>
+    <p>我曾经拥有过 16 个比特币。那是在 2013 年买的，我记得当时是 700 多美元一个。如果我能拿到 2025 年，单价超过了 10 万美元，那可就是 160 万美元……</p>
+    <p>但正如你能想到，我没拿住。我拿了可能不到一个月，它不但没涨反而跌了一点点，我就直接给卖了。我选择了更刺激的游戏，拿那笔钱去买了股票期权，结果又失败，最后直接清零了。</p>
+    <p>我跟好几个人说过这番经历，并没有人笑话我。因为大家都有同感：<strong>没有人能拿住</strong>。</p>
+    <p>2015 年底，比特币大约才 300 美元。如果你那时候买下，拿到今天的确是一笔巨款。但你经历的是什么呢？</p>
+    <ul>
+      <li>2017 年底，比特币就已经到了 19,000 美元。<strong>你能面对 60 倍的收益不卖吗？</strong></li>
+      <li>2018 年底，比特币暴跌到 3,200 美元。如果你前一年真没卖，这时候能不后悔吗？</li>
+      <li>2021 年底，价格达到 69,000 美元。如果你曾经为没卖而后悔，现在又是什么滋味呢？</li>
+      <li>2022 年底，价格又跌回到了 15,000 多美元……然后就这样涨涨跌跌：2025 年 10 万美元、2026 年又跌回到 6 万多美元……</li>
+    </ul>
+    <p>只有两种人能拿住这么长时间：一种是被关进监狱没有办法交易的人，另一种是自己钱太多、根本用不上那笔钱所以毫不在意的人。</p>
+    <p>这一讲说的思维工具叫「<strong>非遍历性（non-ergodicity）</strong>」。它告诉你为什么后一种人最适合做投资——以及适合应对其他乘法风险——以及如果你不是那种人，你该怎么办。</p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- 方差 -->
+  <section>
+    <h3>复利的天敌：方差</h3>
+    <p>很多炒股高手的年化收益率都超过 15%，但是世界上没有任何一个基金敢向你承诺每年至少 15% 的收益率。长期看也许涨了这么多，但中间的过程是有时候涨、有时候跌。用概率论的语言说，收益率有很大的「<strong>方差</strong>」。</p>
+    <p>阻碍你积累复利的因素只有两个：<strong>一个是最初的本钱，一个是方差。</strong></p>
+    <p>要理解这一点，咱们做一个思想游戏。</p>
+
+    <div class="card">
+      <div class="card-title">思想实验 · 掷硬币赌局</div>
+      <p>这是一个简单的掷硬币赌局，硬币正反面的概率都是 50%，游戏要求玩 100 把：每一把如果掷出正面，你的总财富就增加 50%；如果是反面，你的总财富就减少 40%。<strong>请问你要不要玩？</strong></p>
+      <p>简单的概率论告诉你每一把的数学期望是 0.5 × (+50%) + 0.5 × (−40%) = <strong>+5%</strong>。这是一个正的收益，谁能说不玩呢？</p>
+      <p>好，现在你带着 100 万进场了。我们假设你的运气不好也不坏，正好有一半时候掷出正面，一半反面：</p>
+      <div class="calc">第一次，正面：100 × 1.5 = 150 万<br>
+      第二次，反面：150 × 0.6 = 90 万<br>
+      第三次，正面：90 × 1.5 = 135 万<br>
+      第四次，反面：135 × 0.6 = 81 万</div>
+      <p>你一看不对啊！每次经历一正一反，你的财富就变成了原来的 1.5 × 0.6 = 0.9 倍，也就是<strong>缩水了 10%</strong>！这样连玩 100 次，你的 100 万本金会变成不到 1 万块。<strong>你破产了。</strong></p>
+      <p>可你仔细想，还是不对！这明明是一个每次期望值都是 +5% 的游戏，按理说赌场也是输钱的，那到底谁赢钱了呢？答案是——<strong>那些运气特别好的人。</strong></p>
+    </div>
+
+    <p>想象有 10 万人同时玩这个游戏，第一把之后，有 5 万人的财富变成了 150 万，有 5 万人变成了 60 万。这 10 万人的总财富确实增加了 5%——这个 +5% 的期望值，是这 10 万人的「<strong>集合平均（ensemble average）</strong>」，有时候翻译成「系综平均」。很多轮下来，10 万人中会有一些运气特别好的人，赢了很多次、输了很少次。这些人将拥有天量的财富，所以集合平均总是在增长。</p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- 集合平均 vs 时间平均 -->
+  <section>
+    <h3>集合平均 vs 时间平均：谁赢走了你的钱</h3>
+    <p>但不幸的是，作为一个运气一般的普通人，你的财富却是不涨反降。这是因为个体所经历的是「<strong>时间平均（time average）</strong>」。从数学上来讲，你的成长系数是涨跌次数的<strong>几何平均值</strong>——也就是 1.5 × 0.6 再开根号，很遗憾这个数小于 1。</p>
+    <p>作为个体，你在这个乘法游戏中沿着时间线一步一步往下走，只要偶尔出现几次连续的亏损，你的本金就会遭到毁灭性打击，可能账户直接就清零退出游戏了……这叫遭遇「<strong>吸收壁（absorbing barrier）</strong>」。</p>
+    <p>你的作用是给「集合平均」增加了一个分母，而分子上的贡献是由那些运气特别好的人提供的。</p>
+    <p>简单说，如果一个系统的集合平均等于个体的时间平均，我们就说这个系统具备「<strong>遍历性（ergodicity）</strong>」；而如果整体的期望值不能代表个体的长期命运，那就是「<strong>非遍历性（non-ergodic）</strong>」系统。</p>
+    <p>比如你每天上班的路上有时候会遭遇大堵车，有时候却是一路绿灯，但只要经历的次数多，你的经历跟其他人的经历都差不多，这就是「遍历性」系统——这个城市的平均通勤时间对你是个很有意义的数字。</p>
+    <p>而对于像投资那样的非遍历性系统，平均值可就意义不大了——<strong>你没必要跟马斯克一起算平均财富。</strong></p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- 学术与股市 -->
+  <section>
+    <h3>学术界的警告与股市的真相</h3>
+    <p>遍历性这个概念在统计学上早就不新了，但是在经济学上的应用却绝非常识。就在 2016 年，伦敦数学实验室的物理学家<strong>奥勒·彼得斯（Ole Peters）</strong>还专门提出 <a href="#notes">[1]</a>：传统经济学常常未经证明就默认人类经济活动是遍历的，使得很多人可能过分乐观，盲目上场，殊不知一个期望值为正的游戏里，却有很多单一玩家必然走向破产。</p>
+    <p>纳西姆·塔勒布（Nassim Taleb）也专门在《非对称风险》（Skin in the Game: Hidden Asymmetries in Daily Life）一书中，对非遍历性风险提出过警告 <a href="#notes">[2]</a>。</p>
+    <blockquote><p>数学期望值是上帝视角的平均；时间平均才是凡人视角的命运。</p></blockquote>
+    <p>可能这些警告听起来有点抽象，我跟你说个现实的事儿。无论哪个国家的股市里，绝大多数散户的长期收益，都跑不过大盘指数。不仅个体跑不赢大盘，就连很多华尔街的专业投资基金，都很难打败标准普尔指数 <a href="#notes">[3]</a>。</p>
+    <p>有些股评家会说这是因为散户不懂技术分析、不懂价值投资、心态不好云云——但真正的机制是数学：<strong>股市是一个典型的非遍历系统</strong>。大盘指数，比如标普 500，是个集合，它享受所有重要股票的集合平均，而且它还有一个定期剔除垃圾股、纳入优质股的机制。而散户手里只有那么几只股票，你经历的是时间平均 <a href="#notes">[4]</a>。</p>
+    <p>这是一个相当反直觉的现象，但它与前面那个掷硬币实验是一个道理。那作为个体，我们怎么应对非遍历性风险呢？咱们说<strong>四个策略</strong>。</p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- 四个策略 -->
+  <section>
+    <h3>策略一：减少交易次数</h3>
+    <p>这就是那个监狱里的比特币持有者的策略。如果你真有信心，要想锁定长期收益，你就得把它<strong>拿住别动</strong>。</p>
+    <p>加州大学的金融学家布拉德·巴伯（Brad Barber）和特兰斯·奥迪恩（Terrance Odean）分析了六万多个散户账户，发现<strong>交易越频繁的散户，收益率越低</strong> <a href="#notes">[5]</a>。而那些买入之后就因为各种原因（比如忘了密码）再也没看过账户的人，反而平均收益最好。</p>
+    <p>这背后有心理上的因素：频繁交易的人特别容易因为情绪波动而追涨杀跌。这里还有股市涨落自身特点的原因：大部分股票的长期收益，其实是由极其稀少的几个暴涨日贡献的，要想锁定那几天的收益，你就得一直拿着……</p>
+    <p>但在最根本上，这还是因为股市的非遍历性。<strong>你每多交易一次，就是多投掷了一次硬币</strong>：你交易的次数越多，你的结局就越接近于时间平均，你就是在增加撞向吸收壁的概率；还不如交易次数少，没准儿真蒙对了。</p>
+    <blockquote><p>江湖险恶，本钱小没有资格乱折腾。看准了就赌定，用时间磨平剧烈的方差，是穷人的生存智慧——这大约就是长期主义的数学原理，也是「忠诚」作为一种美德的适用范围。</p></blockquote>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <section>
+    <h3>策略二：杠铃策略</h3>
+    <p>塔勒布著名的「<strong>杠铃策略（barbell strategy）</strong>」<a href="#notes">[6]</a>，也就是把 90% 的资产放在风险极低的领域，比如现金、国债和无杠杆的不动产；把 10% 放在激进的高风险领域捕捉重尾红利。</p>
+    <p>杠铃策略主张<strong>忽略那些中等风险的项目，只要两端</strong>：要么低风险，要么高风险。它的好处是既保留了暴富的可能性又确保永远不触碰吸收壁。</p>
+    <p>你可能问，这个策略的科学性在哪里？其实杠铃策略就是我们上一讲说的「<strong>凯利公式</strong>」的一种变体。</p>
+    <p>前面说的那个掷硬币思想实验，最大的问题就是每一次你都 all-in。杠铃策略要求你每次只下注一个微小的比例，凯利公式也恰恰是反对 all-in。咱们不妨算一算：</p>
+    <div class="calc">概率 p = 0.5，赔率 b = 50 / 40 = 1.25<br>
+    套入凯利公式：f* = (bp − q) / b = 10%<br>
+    —— 完全符合杠铃策略。</div>
+    <p>你猜怎么着？2011 年，前面提到的那个奥勒·彼得斯在理论上证明，如果你每一把都采用凯利公式下注，你就可以<strong>打败非遍历性</strong> <a href="#notes">[7]</a>！</p>
+    <p class="img-caption">（原文配图：Ole Peters，奥勒·彼得斯）</p>
+    <p>听着挺简单，那可是学术界的一件大事。但咱们直观理解，其实杠铃策略和凯利公式的数学作用，都是<strong>把交易的方差缩小</strong>。只要你下注比例小、不 all-in，就有类似的效果。比如你可以每个月从工资里拿出固定的一小笔钱来投入股市，塔勒布和凯利都不会反对。</p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <section>
+    <h3>策略三：成为庄家</h3>
+    <p>既然大多数散户都跑不赢大盘指数，那你为什么不做大盘指数呢？你为什么不享受集合平均呢？</p>
+    <p>当然自己布局的前提是你很有钱。咱们想想风险投资人（VC）和创业者的关系 <a href="#notes">[8]</a>。</p>
+    <p>创业公司是个高度非遍历性的领域。如果你是个个体创业者，只能押一家公司，甚至押上信誉、房产和全部现金，而你会有极大的可能性创业失败。但 VC 的模式是分散投资几十上百家企业：就算多数归零，只要有一两家成功乃至于成为「独角兽」，那就足以覆盖其他家的损失，还有丰厚盈余。</p>
+    <p>VC 不但不怕个别项目的死亡，他们反而<strong>渴望极端的方差</strong>！他们希望你冒险。<strong>平庸的公司对 VC 毫无意义。</strong></p>
+    <p>这就如同你是一个踢足球的孩子的家长，你恐怕不太希望孩子的成长路线有很大的方差：你希望孩子平安就好，哪怕不出人头地，也别受伤落下残疾。但如果你是一家青训足球学校，你会希望你队里的方差越大越好：哪怕 100 个人里面有 99 个都受伤退役，只要有一个能成为超级球星你就赚翻了。</p>
+    <blockquote><p>个体玩家怕方差，而庄家爱方差。</p></blockquote>
+    <p>这是巨大的不对称性。不过作为普通人，你可以用<strong>定投指数基金</strong>的方法选择跟庄家站在一起。</p>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <section>
+    <h3>策略四：风险共担（Risk Pooling）</h3>
+    <p>既然个体从非遍历性中吃亏，而庄家能从非遍历性中受益，那我们为什么不把个体联合起来，成立一个<strong>集体的庄家</strong>呢？</p>
+    <p>这其实就是<strong>保险</strong>。对于保险公司来说，你房屋着火的数学期望肯定比它收的保费要少，所以保险生意是赚钱的。那你为什么还是买保险？根本原因就在于：房屋着火这种事对你个人来说，是一个<strong>all-in 的风险</strong>。</p>
+    <p>重大灾难是非遍历性的，这就是保险公司存在的合理性。</p>
+    <p>其实风险投资也可以理解成一种保险。创业者大胆地去做生意，赔钱赔的也是 VC 的钱，相当于庄家在为你兜底。</p>
+    <p>这也正是「<strong>有限责任公司</strong>」这种制度的伟大之处！生意人大胆去闯，赢了大伙分钱；输了，你只要承担有限责任就行，不用牵连家人、不必倾家荡产，更不至于去当奴隶……</p>
+    <p>再往深了说，人类社会中的家庭、宗族、各种互助网络都可以理解为<strong>用合作把世界「强行遍历化」</strong>。</p>
+    <blockquote><p>总而言之，乘法世界中充满了非遍历性风险，它对个体很不利但是对庄家很有利，于是个体就必须少投入、少操作、尽量控制方差，最好能联合起来用结构对抗命运，用规模换稳定。</p></blockquote>
+  </section>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- 结尾吐槽 -->
+  <section>
+    <h3>最后吐槽：成熟的社会保护个体</h3>
+    <p>因为非遍历性风险的高度不对称性，成熟的社会都是<strong>尽量保护个体，让机构去承担风险</strong>。</p>
+    <p>比如在有些国家，你买房，是等房子先盖好、你住进去之后才开始还贷款。如果在还贷期间房价暴跌，而你因为失业之类的原因实在还不起了，你还可以申请个人破产，直接走人，获得一个重新开始的机会。</p>
+    <p>可是有的地方，却是保护银行和开发商，把风险下移给老百姓：房子还没盖好你就得开始还贷，万一房子烂尾了你还得继续还贷；而且不管未来发生什么，这笔债永远跟着你……我知道的<strong>现代思维工具里可没有主张这么干的</strong>。</p>
+  </section>
+
+  <!-- 注释 -->
+  <div class="notes" id="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Peters, Ole, and Murray Gell-Mann. 2016. "Evaluating Gambles Using Dynamics." Chaos 26(2): 023103.</li>
+      <li>精英日课第二季，《利益攸关》8. "遍历性"和"尾部风险"。</li>
+      <li>John Paulos, A Mathematician Plays The Stock Market, 2004. 另见《精英日课》第二季，数学题：为什么绝大多数投资者都会输给市场。</li>
+      <li>Bessembinder, Hendrik. 2018. "Do Stocks Outperform Treasury Bills?" Journal of Financial Economics 129(3): 440–457.</li>
+      <li>Barber, Brad M., and Terrance Odean. 2000. "Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors." Journal of Finance 55(2): 773–806.</li>
+      <li>Taleb, Nassim Nicholas. 2012. Antifragile: Things That Gain from Disorder. New York: Random House.</li>
+      <li>Peters, Ole. "Optimal leverage from non-ergodicity." Quantitative Finance 11, no. 11 (2011): 1593-1602.</li>
+      <li>Hall, Robert E., and Susan E. Woodward. 2010. "The Burden of the Nondiversifiable Risk of Entrepreneurship." American Economic Review (Papers &amp; Proceedings).</li>
+      <li>Cronk, Lee, and Athena Aktipis. 2021. "Design Principles for Risk-Pooling Systems." Nature Human Behaviour 5: 825–833.</li>
+    </ol>
+  </div>
+
+  <!-- 用户留言 -->
+  <section>
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <div class="comment-head">
+        <span class="avatar">至</span>
+        <div>
+          <div class="comment-name">至尊女宝</div>
+          <div class="comment-meta">昨天 · 河北</div>
+        </div>
+      </div>
+      <div class="comment-body">
+        <p>我用我的角度重新理解这件事，先画一张图：横坐标是时间，纵坐标是财富。个体玩家的轨迹是一条随机游走的折线，但这条线有一个可怕的特点，它只能往下走有限步，因为归零就是终点。一旦碰到，游戏结束。而系统的轨迹是无数条这样的折线叠加在一起，只要还有新玩家加入，它就能一直往上走。所以，个体和系统的博弈，本质上是有限步随机游走和无限玩家集合的博弈。个体的命运取决于路径，系统的命运取决于概率。</p>
+        <p>可靠性工程里说的串联系统和并联系统我是真看了不少：个体的财富积累是串联系统，每一个环节都不能出大错，一旦某个环节断裂，整个系统崩溃。而大盘指数是并联系统，几百只股票里，只要有一部分涨，整体就能撑住。你让一个串联系统去跟并联系统比可靠性，那简直不靠谱。</p>
+        <p>它不像坚持就能成功那样热血，也不像相信时间的力量那样温暖。它甚至有点残酷，它告诉你：你的失败可能不是因为你不够努力，而是因为你本来就不该上场。但我觉得，这反而是一种解脱。既然我知道自己玩的是个非遍历性的游戏，那我就不该用遍历性的思维去要求自己。我不需要跟大盘比，不需要跟马斯克比，不需要跟那个连赢十把的幸运儿比。我只需要确保自己别碰到那个吸收壁，然后慢慢往前走。</p>
+        <p>昨天有学友居然还在给我留言让我炒股，嘿，休想。我的炒股经历仇人看了心软、债主看了捐款，不碰股票大概是我这种「失败者」最后的倔强——既然拼不过概率，那我就不玩。最近几年不乱投资以后，我都能存钱了！</p>
+      </div>
+    </div>
+
+    <div class="comment">
+      <div class="comment-head">
+        <span class="avatar">左</span>
+        <div>
+          <div class="comment-name">左星星</div>
+          <div class="comment-meta">昨天 · 上海</div>
+        </div>
+      </div>
+      <div class="comment-body">
+        <p>去年失业过很长一段时间，想做自媒体。平台不断给你看成功案例：头部博主收入惊人，赛道还在增长，内容行业前景巨大。这其实是一种「集合平均」——少数爆款账号把整体数据拉得很好看。但落到个人身上，你面对的是「时间平均」：如果连续几个月没有起量、没有广告、没有稳定现金流，房租和生活成本不会等你。<strong>行业可以是对的，但你未必能撑到那个属于你的拐点。</strong></p>
+        <p>后来我又考虑过做网约车司机或外卖骑手。平台同样会展示「月入三万」的样本，这当然是真的，但那往往是集合平均里的亮点样本。个体真正经历的，是每天的时间平均：油价波动、补贴调整、平台规则变化、身体消耗、淡旺季差异。你可能每个月都还能赚一点，但一两次罚款、一场小病，或者一次车辆大修，就足以把之前的积累吃掉。这类工作的残酷之处在于，它不会一下子把你击倒，而是让你在看似还能坚持的过程中，慢慢逼近「吸收壁」。</p>
+        <p>很多叙事都在讲平均回报，却很少提醒你个体路径的不可逆性：一旦中途退出，就没有机会再参与后面的增长。<strong>非遍历性最狠的地方，不是你看不懂规则，而是你明明知道长期可能有收益，却未必有资格活到那个「长期」。</strong></p>
+      </div>
+    </div>
+
+    <div class="comment">
+      <div class="comment-head">
+        <span class="avatar">左</span>
+        <div>
+          <div class="comment-name">左星星</div>
+          <div class="comment-meta">20小时前 · 上海</div>
+        </div>
+      </div>
+      <div class="comment-body">
+        <p>非遍历性风险真正可怕的地方，不在金融市场，而在它其实早就渗进了很多普通人的生活。房地产只是最醒目的一个例子，类似的问题在教育、就业、医疗里同样存在。</p>
+        <p>有些家庭把孩子的未来几乎全部押在一次中考、高考上；有些人把职业前途压在一个行业、一家公司甚至一位领导身上；还有些家庭平时为了省钱，一直拖着不做体检、不看小病，结果一次意外就把多年积蓄全部吞掉。表面看，这些都是各自独立的问题；往深处看，却有同一个结构：平时似乎一切正常，甚至还能勉强维持，可一旦某个关键节点出错，前面的积累就会被瞬间打穿。</p>
+        <p>这正是非遍历性的典型表现：集合平均看似平稳，但个体路径却无法承受连续试错。系统可以用「平均结果」解释自己，个人却必须用一次次真实经历去承受后果。</p>
+        <p>一个社会是否成熟，不只看它能不能创造机会，更要看它有没有能力把这种「输一次就很难翻身」的风险分散掉。很多鸡汤喜欢强调个人努力、长期主义和坚持到底，可如果一个人的处境本身就是高度非遍历性的，那么他真正需要的，往往不是再咬牙坚持一点，而是<strong>更低的单次失败成本，更强的兜底机制，和更多可以重新开始的路径</strong>。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <p class="summary-1">一句话概括：在乘法世界里，复利的天敌不是「不懂道理」而是「方差」——平均值是上帝视角、属于庄家，个体走的却是随时可能撞上吸收壁清零的时间平均；所以普通人的出路不是硬扛，而是少折腾、控方差，或联合起来当庄家。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><strong>「拿不住」是人性常态，不是认知缺陷。</strong>作者用自己 16 个比特币（2013 年 700 多美元买入、不到一个月就卖掉、最终归零）开场：比特币从 2015 年底约 300 美元涨到 2025 年超 10 万美元，中间却经历了 6 倍暴涨、80% 暴跌再暴涨的过山车。能拿住十几年的人只有两种：被关进监狱没法交易的人，和钱多到根本用不上那笔钱的人。</li>
+      <li><strong>阻碍复利积累的只有两个因素：本钱和方差。</strong>很多高手年化超 15%，却没有任何基金敢承诺每年至少 15%——因为过程有涨有跌，收益率有巨大的方差。</li>
+      <li><strong>掷硬币思想实验揭示了「正期望也能让人破产」。</strong>每把 50% 概率 +50%、50% 概率 −40% 的游戏，单把期望值 +5%；但一正一反下来财富只剩 1.5 × 0.6 = 0.9 倍，100 万连玩 100 次缩水到不到 1 万。因为个体经历的是几何平均，不是算术平均。</li>
+      <li><strong>集合平均属于群体，时间平均属于个体。</strong>10 万人一起玩，总财富确实增长 5%，但增长全部由极少数运气爆棚的人贡献，普通人只负责给平均增加分母；个体偶尔几次连续亏损就会撞上「吸收壁」直接清零出局。</li>
+      <li><strong>遍历性 vs 非遍历性。</strong>若集合平均等于个体时间平均（如城市通勤），平均值才有意义；投资是非遍历系统，平均期望对个体几乎无意义——「没必要跟马斯克一起算平均财富」。彼得斯 2016 年指出传统经济学默认经济是遍历的，导致许多人盲目上场；塔勒布在《非对称风险》中也专门警告过。</li>
+      <li><strong>股市是典型的非遍历系统。</strong>绝大多数散户（甚至多数华尔街基金）长期跑不赢标普 500，不是技术或心态问题，而是数学：指数是享受集合平均、还定期剔除垃圾股的「庄家」，散户只有几只股票、经历的是时间平均。</li>
+      <li><strong>策略一「减少交易次数」与策略二「杠铃策略」。</strong>六万多个账户的研究显示交易越频繁收益越低，大部分长期收益来自极少数暴涨日，多交易等于多掷一次硬币。杠铃策略（90% 低风险 + 10% 高风险）本质是凯利公式（本例算得最佳下注比例恰好 f* = 10%），作用都是缩小方差、反对 all-in；彼得斯 2011 年证明按凯利下注可以打败非遍历性。</li>
+      <li><strong>策略三「成为庄家」与策略四「风险共担」。</strong>VC 分散押注几十上百家企业、渴望极端方差、就怕平庸；普通人可用定投指数基金与庄家站在一起。保险、有限责任公司、家庭与互助网络，本质上都是用合作把世界「强行遍历化」——个体怕方差，庄家爱方差，出路是少投入、少操作、联合起来用结构对抗命运、用规模换稳定。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>本周先盘点自己的「all-in 敞口」。</strong>把那些「输一次就很难翻身」的押注写下来——单只股票、全家积蓄买一套期房、职业前途全押一家公司、健康全靠扛——然后给每一项制定降低单次失败成本的方案（如分批投入、留现金、做体检）。</li>
+      <li><strong>查一查自己的交易频率。</strong>过去一年交易超过 12 次的，把账户改成「买入后设置一年提醒」模式，减少看盘次数，用纪律对抗追涨杀跌的情绪。</li>
+      <li><strong>从下个月开始落实一个最小版杠铃。</strong>新增储蓄按「90% 低风险（国债/货币基金/存款）+ 10% 高风险（宽基指数或成长类）」分配，先从小比例起步，体会「永远不 all-in」的手感。</li>
+      <li><strong>把择时换成定投。</strong>设定每月固定日期、固定金额定投宽基指数基金，把自己从「赌个股」切换成「跟庄家站在一起」，并把它写成自动扣款，别给自己手动操作的机会。</li>
+      <li><strong>给重大灾难上保险，并留出应急金。</strong>确认医疗、房屋等大额风险有兜底，攒下 3–6 个月生活费的应急金——一次意外打穿多年积蓄，就是典型的个体吸收壁。</li>
+      <li><strong>重大选择前先问一句：「失败了能重新开始吗？」</strong>换工作、深造、给孩子报班、签长期合同之前，都过一遍这道题；尽量选择失败后仍有 Plan B、仍可退出的选项，把「吸收壁」变成「护栏」。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <p class="quote-line">「数学期望值是上帝视角的平均；时间平均才是凡人视角的命运。」</p>
+    <p class="quote-line">「个体玩家怕方差，而庄家爱方差。」</p>
+    <p class="quote-line">「江湖险恶，本钱小没有资格乱折腾。看准了就赌定，用时间磨平剧烈的方差，是穷人的生存智慧。」</p>
+    <p class="quote-line">「用结构对抗命运，用规模换稳定。」</p>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="back-top" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress-bar'),
+      btn=document.getElementById('back-top');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight,
+        p=h>0?(window.scrollY/h*100):0;
+    bar.style.width=p+'%';
+    btn.style.display=window.scrollY>300?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第43讲 超级预测：给不确定性命名，给自己打分｜万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2e2922;
+    --muted:#8a8378;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --border:#e7e0d2;
+    --quote-bg:#f6efe3;
+    --summary-bg:#f3ead8;
+    --summary-border:#c9a063;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#211e19;
+      --text:#ece6da;
+      --muted:#9c9385;
+      --accent:#d9a45f;
+      --accent-soft:rgba(217,164,95,.14);
+      --border:#3a342b;
+      --quote-bg:#241f18;
+      --summary-bg:#241e14;
+      --summary-border:#b8863f;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px calc(90px + env(safe-area-inset-bottom)) 16px;
+  }
+  #progressBar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:100;
+    transition:width .08s linear;
+  }
+  #topBtn{
+    position:fixed;right:18px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:44px;height:44px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    border:none;font-size:18px;cursor:pointer;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);
+    z-index:100;opacity:.92;
+  }
+  #topBtn:active{transform:scale(.94)}
+  .container{max-width:700px;margin:0 auto}
+  /* ---------- 文档头 ---------- */
+  header{margin:28px 0 8px}
+  .tag{
+    display:inline-block;
+    background:var(--accent-soft);color:var(--accent);
+    font-size:13px;letter-spacing:.5px;
+    padding:5px 12px;border-radius:999px;
+    margin-bottom:16px;
+  }
+  h1{
+    font-size:25px;line-height:1.45;font-weight:700;
+    margin-bottom:12px;letter-spacing:.3px;
+  }
+  .meta{
+    font-size:13px;color:var(--muted);
+    padding-bottom:18px;border-bottom:1px solid var(--border);
+    display:flex;flex-wrap:wrap;gap:4px 12px;
+  }
+  /* ---------- 正文 ---------- */
+  article{padding:6px 0}
+  p{margin:14px 0}
+  .lead{font-size:16.5px}
+  .subtitle{
+    font-size:20px;font-weight:700;margin:34px 0 6px;
+    padding-left:12px;border-left:4px solid var(--accent);
+    line-height:1.4;
+  }
+  strong{font-weight:700}
+  .em{font-weight:700;color:var(--accent)}
+  ul{margin:12px 0 12px 4px;padding-left:0;list-style:none}
+  ul li{
+    position:relative;padding-left:20px;margin:9px 0;
+  }
+  ul li::before{
+    content:"";position:absolute;left:2px;top:.72em;
+    width:7px;height:7px;border-radius:2px;
+    background:var(--accent);opacity:.75;
+  }
+  ol.steps{margin:12px 0 12px 4px;padding-left:0;list-style:none;counter-reset:step}
+  ol.steps>li{
+    position:relative;padding-left:34px;margin:12px 0;
+  }
+  ol.steps>li::before{
+    counter-increment:step;content:counter(step);
+    position:absolute;left:0;top:2px;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  blockquote{
+    margin:20px 0;padding:14px 18px;
+    background:var(--quote-bg);
+    border-left:4px solid var(--accent);
+    border-radius:0 10px 10px 0;
+    font-size:16.5px;
+  }
+  blockquote p{margin:4px 0}
+  .divider{
+    border:none;height:1px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent);
+    margin:34px auto;max-width:220px;position:relative;
+  }
+  .divider::after{
+    content:"✵";position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    background:var(--bg);padding:0 14px;
+    color:var(--accent);font-size:15px;
+  }
+  .example{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;margin:22px 0;
+  }
+  .example .ex-title{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:999px;
+    padding:2px 10px;margin-bottom:10px;
+  }
+  .poem{
+    text-align:center;font-size:16.5px;line-height:2.1;
+    color:var(--accent);margin:22px 0;
+  }
+  .poem .poem-title{font-weight:700;letter-spacing:2px;margin-bottom:6px}
+  /* ---------- 注释 ---------- */
+  .notes{
+    margin:30px 0;padding:18px 20px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;
+  }
+  .notes h3{font-size:15px;color:var(--accent);margin-bottom:10px}
+  .notes ol{padding-left:22px;font-size:13.5px;line-height:1.7;color:var(--muted)}
+  .notes li{margin:7px 0}
+  /* ---------- 用户留言 ---------- */
+  .comments{margin:30px 0}
+  .comments h3{font-size:17px;margin-bottom:14px;color:var(--accent)}
+  .comment{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin:14px 0;
+  }
+  .comment .c-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:700;flex-shrink:0;
+  }
+  .comment .c-name{font-size:14.5px;font-weight:700;line-height:1.3}
+  .comment .c-meta{font-size:12px;color:var(--muted)}
+  .comment .c-body{font-size:15.5px;line-height:1.78}
+  .comment .c-body p{margin:8px 0}
+  .comment .c-tag{
+    display:inline-block;font-size:12px;color:var(--accent);
+    background:var(--accent-soft);border-radius:999px;
+    padding:2px 10px;margin-top:10px;
+  }
+  .comment .c-stat{
+    font-size:12px;color:var(--muted);margin-top:10px;
+    padding-top:10px;border-top:1px dashed var(--border);
+  }
+  /* ---------- AI 总结 ---------- */
+  #ai-summary{
+    margin:36px 0 10px;
+    background:var(--summary-bg);
+    border:1.5px solid var(--summary-border);
+    border-radius:12px;padding:22px 22px 16px;
+  }
+  #ai-summary h2{
+    font-size:19px;text-align:center;margin-bottom:4px;
+    color:var(--accent);letter-spacing:1px;
+  }
+  #ai-summary .sum-sub{
+    text-align:center;font-size:12.5px;color:var(--muted);
+    margin-bottom:16px;
+  }
+  #ai-summary .one-liner{
+    font-size:16.5px;font-weight:700;line-height:1.7;
+    margin-bottom:18px;
+  }
+  #ai-summary h3{
+    font-size:15.5px;color:var(--accent);
+    margin:18px 0 8px;
+  }
+  #ai-summary ul li{font-size:15px}
+  #ai-summary .q{
+    font-size:15px;margin:6px 0;
+    padding-left:16px;border-left:3px solid var(--summary-border);
+  }
+  #ai-summary .disclaimer{
+    margin-top:20px;padding-top:12px;
+    border-top:1px dashed var(--summary-border);
+    font-size:12px;color:var(--muted);text-align:center;
+  }
+  footer{
+    margin-top:30px;text-align:center;
+    font-size:12.5px;color:var(--muted);
+  }
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <header>
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第43讲</span>
+    <h1>超级预测：给不确定性命名，给自己打分</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>来源：《万维钢·现代思维工具100讲》</span>
+      <span>思维工具：超级预测（Super Forecasting）</span>
+    </div>
+  </header>
+
+  <article>
+
+    <p class="lead">上一讲我们讲了「参考类预测（Reference Class Forecasting）」，核心心法是把预测从「内部视角」切换到「外部视角」——别总觉得自己这次不一样，应该先看看那些类似的项目最后都怎样了。参考类预测是对一厢情愿的巨大修正，但还是有点粗糙。</p>
+
+    <p>如果我在 2026 年 1 月问你美国会不会在三个月内打伊朗，你知道怎么预测吗？</p>
+
+    <p>你可以考察参考类，也就是历史上<em>类似</em>的危机最后有多少真打起来了……但什么叫"类似"？油价、选举周期、盟友态度、地区代理人动作、总统的风险偏好这些因素都很重要，按照哪个分类呢？你会发现，这次事件的<em>具体细节</em>可能很重要，比如说美军在中东的军力部署节奏、双方谈判窗口有没有真的关上等等。怎么把所有这些考虑都融入你的预测之中呢？</p>
+
+    <p>你可能想不到，这样的预测，以前连专家都不知道该怎么办。直到过去十几年间，才有人把预测未来这件事从一门跳大神的手艺，变成了一套硬核的工程学。</p>
+
+    <p>这一讲的思维工具叫作「超级预测（Super Forecasting）」，它是一门技术活儿，但你可以借鉴其中的心法。</p>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">我们的英雄：泰特洛克</h2>
+
+    <p>我们的英雄是宾夕法尼亚大学心理学与政治学教授菲利普·泰特洛克（Philip E. Tetlock）。</p>
+
+    <p>泰特洛克早年就做过一件了不起的事情。他用二十多年，追踪了 284 位长期评论政治和经济趋势的专家，收集了八万多条预测……发现这些人根本没有想象中那么会预测。他们的准确度还不如最简单的统计算法，有时候连黑猩猩都不如。</p>
+
+    <p>泰特洛克 2005 年出了本书叫《专家的政治判断》（<em>Expert Political Judgment</em>）<a href="#notes">[1]</a>，书中借用哲学家以赛亚·柏林（Isaiah Berlin）关于"狐狸与刺猬"的比喻，把专家分成了两类：</p>
+
+    <ul>
+      <li>「刺猬型专家」知道一件大事，抱着自己的一套大理论到处解释世界，特别容易陷入一厢情愿；</li>
+      <li>「狐狸型专家」知道很多小事，愿意接受事情的复杂度，能考虑多个线索并且随时修正自己的观点，预测水平就更好一些。</li>
+    </ul>
+
+    <p>但总体上，专家的准确度都不高。这些整天在媒体上谈论国家大事、以预测博关注的人，其实都不是很会做预测。</p>
+
+    <h2 class="subtitle">专家为什么不准？</h2>
+
+    <p>对此你容易理解。就在美国抓捕委内瑞拉总统马杜罗、打伊朗炸死哈梅内伊之前，有多少中国专家信誓旦旦地说美国根本不敢那么做？现在他们可不会承认自己预测失败。</p>
+
+    <p>但专家也不容易，他们背负了太多的包袱。</p>
+
+    <ul>
+      <li>老百姓从专家的预测中获得情绪价值，会把预测看成站队。你要说伊朗损失惨重，他们会认为你<em>希望</em>伊朗损失惨重。</li>
+      <li>专家还会自觉捍卫某个学说。你要是主张特朗普的外交策略必定失败，那他就最好在每一件事儿上都失败。预测成了观点表达，成了为基本盘站台。</li>
+      <li>人们还会把内心的脆弱带入预测之中。比如刚刚发生了一起恐怖袭击，专家和老百姓就都会成倍高估未来发生同样袭击的概率，陷入可得性偏误。</li>
+    </ul>
+
+    <blockquote><p>说白了，预测往往不是反映了那个事情如何，而是反映了预测者自身如何。</p></blockquote>
+
+    <p><span class="em">但真正的预测不是表态，是算账。</span>做预测，你得抛开立场、自尊、从众心理和安全感的影响。</p>
+
+    <p>之前人们就想了一些办法，让我们的判断更为客观：</p>
+
+    <ul>
+      <li>在内部设立「红队（Red Teaming）」——专门找人来拆你的假设、破你的自信；</li>
+      <li>「事前验尸（pre-mortem）」——让团队先设想项目已经失败，再倒推原因；</li>
+      <li>丹尼尔·卡尼曼晚年极力推崇的「决策卫生（Decision Hygiene）」——通过规范开会流程、确保大家独立判断来减少组织里的噪声 <a href="#notes">[2]</a>。</li>
+    </ul>
+
+    <p>但这些方法跟我们要说的「超级预测」相比，可就太过笼统了。</p>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">超级预测的来历</h2>
+
+    <p>「超级预测（Superforecasting）」这个词听着有点浮夸，而且还被注册了商标，但它实际上是个严肃的学术概念 <a href="#notes">[3]</a>，代表一套方法论。</p>
+
+    <p>事情的缘起是这样的。2003 年，美国情报机构信誓旦旦地声称，伊拉克拥有大规模杀伤性武器。小布什真的开战了，结果打进去把伊拉克翻了个底朝天，却什么也没找到。</p>
+
+    <p>这可是奇耻大辱。你们这些搞情报的都怎么搞的？但是当时确实没有什么好的预测方法。</p>
+
+    <p>为了雪耻，美国情报高级研究计划局（IARPA）在 2011 年举办了一场国家级的预测锦标赛，允许各个大学和机构组队参赛 <a href="#notes">[4]</a>。比赛持续了 4 年，有成千上万人参加。参赛者回答了 500 多个真实的预测问题，等事情结果出来再评分，完全是实打实。</p>
+
+    <p>泰特洛克出手了。他组建了一支队伍叫"良好判断项目"（Good Judgment Project），成员都是程序员、药剂师甚至是退休大妈之类的业余选手。而且他只给队伍进行了简单的培训……结果这支队伍以巨大优势取得冠军。比赛打到第二年，其余队伍大多已被淘汰，只剩泰特洛克团队一路留到最后。他们的预测甚至比能接触机密信息的情报分析师更准。</p>
+
+    <p>泰特洛克的打法就是「超级预测」。他把这件事儿写成了一本书就叫《超预测》（<em>Superforecasting</em>）<a href="#notes">[5]</a>。</p>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">超级预测怎么做</h2>
+
+    <p>基本思想说白了就是两件事：<span class="em">概率化 + 可检验</span>。</p>
+
+    <p>所谓概率化，就是把你的一切预测都用概率数字表示。不要说什么"美国很可能会对伊朗越来越强硬"，要说"到某年某月某日之前，美国对伊朗目标实施军事打击的概率是多少"：前者是感想，后者才是可结算的预测。</p>
+
+    <p>概率化可以分为三步——</p>
+
+    <ol class="steps">
+      <li>
+        <strong>第一步：费米化（Fermi-izing）。</strong>把大而化之的"云状问题"——就是边界模糊、无法直接判定对错的问题——拆成可操作的小问题。这个思想起源于物理学家恩里科·费米（Enrico Fermi）倡导的估算方法，所以被泰特洛克称为「费米化」。比如领导问你"中美会不会脱钩？"，这就是一个云状问题——到底什么叫"脱钩"？你根本无从下手。费米化就是要把问题拆解成"未来六个月内，某个关税法案通过的概率是多少？""两国某项核心技术贸易额下降超过 10% 的概率是多少？"这些具体的小问题。看到这些小问题的概率，你对局面才能有清晰的判断。<strong>大问题发生的概率是一系列小问题概率的综合。</strong>
+      </li>
+      <li>
+        <strong>第二步：用外部视角打底，用内部视角微调。</strong>怎么得到概率？还是从上一讲说的「参考类」出发，看看历史上类似的局面，结局都是什么。有了这个基础比率，你心里就算有底了。然后你再看看你这个特定的事件，在参考类中的位置是怎样的，再根据它的特殊性进行一定的修正。
+      </li>
+      <li>
+        <strong>第三步：贝叶斯更新。</strong>这一招我们前面也讲过。上一步得到的概率作为「先验」。随着事情的进展，局面有了新的变化，那你就在之前那个概率的基础之上，用贝叶斯公式进行微调：今天出个利好新闻，概率就从 43% 调到 46%，明天再出个利空又回到 41%——你没有听而不闻也没有听风就是雨，你非常稳健。
+      </li>
+    </ol>
+
+    <p>等到预测截止那天，这就是你提交的答案。但是事情还没完，你必须准备接受检验。</p>
+
+    <h2 class="subtitle">接受检验：校准度、区分度与布里尔分数</h2>
+
+    <p>检验看的是你一揽子预测的长期表现，不是单道题押没押中：</p>
+
+    <ul>
+      <li>一个是看「校准度（Calibration）」——你给的概率准不准：在那一系列你预测概率为 70% 的事件中，是不是真的发生了 70%？</li>
+      <li>一个是「区分度（Resolution）」——你敢不敢给出特别大或特别小的概率？别和稀泥把所有事情的概率都定为 50%。</li>
+    </ul>
+
+    <p>一个最好的检验标准叫「布里尔分数（Brier score）」<a href="#notes">[6]</a>。它测量你预测的概率与实际结果之间的误差的平方，你可以简单看一眼公式 <a href="#notes">[7]</a>——要点是它让你不能随便报概率：如果一件事的结局是没发生，而你原本预测的概率是 27%，你受到的惩罚会比你预测概率是 25% 时要高，比 30% 要低。</p>
+
+    <blockquote><p>概率和检验构成了一个完美闭环：没有概率就没有校准，没有记分就没有学习。</p></blockquote>
+
+    <p>这个系统逼着预测者剥离模糊放下我执，对一个细节问题的概率是 37% 还是 38% 斤斤计较。</p>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">例题：搬去广州，我能幸福吗？</h2>
+
+    <div class="example">
+      <span class="ex-title">例题演示</span>
+      <p>假设你在北京卷不动了，想搬去广州生活。你非常焦虑：我去广州能幸福吗？</p>
+      <p>首先我们把"幸福"这个云状问题进行费米化，拆解成四个维度：工作、居住、婚恋和生活适应，一个个算概率。拿工作来说，你真正想问的是："我能在 3 个月内，找到一份月薪不低于现在 80% 的工作吗？"</p>
+      <ul>
+        <li><strong>先看参考类：</strong>查阅同行在广州的平均求职周期和薪资水平——假设根据猎头数据，你得到概率是 <strong>40%</strong>。</li>
+        <li><strong>再看内部视角：</strong>考虑到你在这个行业有核心专利，再加上前同事内推，把概率上调到 <strong>65%</strong>。</li>
+        <li><strong>贝叶斯更新：</strong>于是你发了一圈简历。假设一周后拿到了两个面试，那你再把这个概率做贝叶斯更新，上调到 <strong>74%</strong>，看来比较乐观。</li>
+      </ul>
+      <p>对其他几个维度照此办理，你就得到了一个广州前景分布图。如果四个维度中有三项概率超过了 60%，你可能就比较稳了。你的决策将不再是人格宣言，更不是豪赌。你把人生难题变成了一个可操作、可更新的项目。</p>
+      <p>然后别忘了记分。搬到广州之后，把你得到的结果和你的预测做一番比较。当时你有没有一厢情愿的成分？好好反思，下次注意，你的预测能力将会越来越好。有研究表明，哪怕是这种短期的训练，只要计分，就能显著提高一个人的预测水平 <a href="#notes">[8]</a>。</p>
+    </div>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">实战战绩与一次惨败</h2>
+
+    <p>泰特洛克的"良好判断项目"现在已经把超级预测做成了一项服务（goodjudgment.com），你可以直接花钱请他们的团队帮你做预测。</p>
+
+    <ul>
+      <li>在预测美联储利率调整这件事上，"良好判断项目"的超级预测者从 2023 到 2025 年连续压过市场定价，布里尔分数大幅度领先 <a href="#notes">[9]</a>。</li>
+      <li>2025 年，慈善网站 GiveWell 甚至直接掏钱请他们去预测美国对外援助和全球健康资金的未来走向，因为这些概率会影响真金白银的资助决策 <a href="#notes">[10]</a>。</li>
+    </ul>
+
+    <p>不过他们也有失败的教训，比如说俄乌战争。良好判断项目在事后复盘中承认 <a href="#notes">[11]</a>，在 2022 年 1 月 21 日到 2 月 10 日之间，他们对俄罗斯全面入侵乌克兰的概率一直压在 50% 以下——可是入侵发生了。反思的结论是团队太过依赖历史参考类，毕竟这种事情很罕见；他们大大低估了普京的冒险意愿，而且也低估了美国的情报准确度。</p>
+
+    <h2 class="subtitle">超级预测 × AI</h2>
+
+    <p>2025 年，泰特洛克已经把超级预测跟 AI 结合了起来。他们的研究发现，目前单独的大语言模型的预测能力不如人类超级预测者 <a href="#notes">[12]</a>。但是，让人类预测者与大模型协作，准确率比对照组提高了 24% 到 28% <a href="#notes">[13]</a>。</p>
+
+    <p>你至少暂时还不应该把预测完全交给 AI。AI 善于搜索信息，但人擅长界定问题边界、挑选参考类、决定哪个变量该忽略、哪个异常值该认真对待……人拆解问题和编审框架的能力还是非常有用的。但 AI 能够进一步帮助人把自尊从判断里剥离出去。</p>
+
+    <hr class="divider">
+
+    <h2 class="subtitle">社会科学的工程化</h2>
+
+    <p>我最大的感慨是，超级预测让我们看到了社会科学的工程化。</p>
+
+    <p>古早的社会科学像文科，讲理念讲叙事，只要能给你一个事后解释就好。后来引入了数据，变得科学化，能使用模型和统计学给你因果关系——但都只限于一事一议。</p>
+
+    <p>现实世界中发生的事件往往受多个因素的影响，同时属于多个学科的叙事和模型，你找个专家，他只考虑一个模型，这哪行呢？</p>
+
+    <p>超级预测恰恰是使用工程化的方法，尽可能把多个关键因素纳入一个可更新、可记分的工作流，给你一个总的概率分数。</p>
+
+    <p>有意思的是它并没有用到太多模型！你只要忠诚于"参考类"和"贝叶斯更新"，就已经能做得很好了。模型可以用于解释和干预……预测可能是个更简单的事情。</p>
+
+    <p>预测是一门大业务，也许应该在大学里开设一个叫做"预测工程"的专业。<span class="em">当今世界可能不需要很多思想家和评论员，但是它需要很多调参师。</span></p>
+
+    <h2 class="subtitle">给你的建议</h2>
+
+    <p>如果你曾经被专家的预测误导，我想请你先反思一下，自己真正想要的到底是表态、是祈愿，还是预测？你想要的是情绪价值，还是决策价值。</p>
+
+    <p>而如果你是一个诚意的预测者，我觉得超级预测中最神奇的一步，是费米化。精神病学家丹尼尔·西格尔（Dan Siegel）有句话叫「Name it to tame it」，意思是给一个情绪命名，你就能驯服这个情绪——我们这里也可以说：</p>
+
+    <blockquote><p>不确定性一旦被拆解和命名、被写成概率，它就从一种令人恐慌的情绪，变成了可求解的工程问题。</p></blockquote>
+
+    <p>所以别再说什么"差不多会了""用户应该喜欢"，请说"下次模考数学上 120 分的概率是 43%""三个月后留存率超过 25% 的概率是多少"。</p>
+
+    <blockquote>
+      <p>预测不是观点的延长线，而是自我校准的工艺。</p>
+      <p>你不是在求一个神谕，你是在训练自己的判断账本。</p>
+    </blockquote>
+
+    <p>或许你可以建一个 Excel 表格，从今天起在左边写下你的焦虑（比如"明天客户会毁约"），右边写下概率（"35%"），然后定期回头去结算。</p>
+
+    <hr class="divider">
+
+    <div class="poem">
+      <div class="poem-title">【收束小诗】</div>
+      把不确定写成刻度，<br>
+      把自尊留在门外。<br>
+      不争"我早就说过"，<br>
+      只问"我当时报了多少"。<br>
+      谁能一次次修正自己，<br>
+      谁就一次次靠近真实。
+    </div>
+
+  </article>
+
+  <!-- 注释 -->
+  <section class="notes" id="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Tetlock, Philip E. <em>Expert Political Judgment: How Good Is It? How Can We Know?</em> Princeton, NJ: Princeton University Press, 2005.</li>
+      <li>《精英日课》第四季，噪声 7：集体决策必须讲卫生。</li>
+      <li>Mellers, Barbara A., Eric Stone, Terry Murray, Angela Minster, Nick Rohrbaugh, Michael Bishop, Eva Chen, Joshua Baker, Yuan Hou, Michael Horowitz, Lyle Ungar, and Philip E. Tetlock. "Identifying and Cultivating Superforecasters as a Method of Improving Probabilistic Predictions." <em>Perspectives on Psychological Science</em> 10, no. 3 (2015): 267–281.</li>
+      <li>Intelligence Advanced Research Projects Activity. "ACE: Aggregative Contingent Estimation." Accessed March 21, 2026.</li>
+      <li>Tetlock, Philip E., and Dan Gardner. <em>Superforecasting: The Art and Science of Prediction</em>. New York: Crown, 2015. 中文版叫《超预测：预见未来的艺术和科学》，中信出版社，2016。</li>
+      <li>Brier, Glenn W. "Verification of Forecasts Expressed in Terms of Probability." <em>Monthly Weather Review</em> 78, no. 1 (1950): 1–3.</li>
+      <li>如果你感兴趣的话：其中 f<sub>i</sub> 是预测者给出的概率（0 到 1 之间），o<sub>i</sub> 是实际结果（1 或 0）。布里尔分数的取值范围在 0 到 2 之间（对于二元事件的简化版为 0 到 1），分数越低代表预测越准确，0 为完美预测。</li>
+      <li>Chang, Welton, Eva Chen, Barbara Mellers, and Philip Tetlock. "Developing Expert Political Judgment: The Impact of Training and Practice on Judgmental Accuracy in Geopolitical Forecasting Tournaments." <em>Judgment and Decision Making</em> 11, no. 5 (2016): 509–526.</li>
+      <li>Good Judgment Inc. "Superforecasters Continue to Beat the Market." 2025.</li>
+      <li>GiveWell. "Good Judgment Inc. — Forecasts on U.S. Foreign Aid Funding." 2025.</li>
+      <li>Good Judgment Inc. <em>Post-Mortem: Lessons Learned in Superforecasting the Russian Invasion of Ukraine</em>. New York: Good Judgment Inc., 2022.</li>
+      <li>Karger, Ezra, Houtan Bastani, Chen Yueh-Han, Zachary Jacobs, Danny Halawi, Fred Zhang, and Philip E. Tetlock. "ForecastBench: A Dynamic Benchmark of AI Forecasting Capabilities." In <em>Proceedings of the International Conference on Learning Representations</em>, 2025.</li>
+      <li>Schoenegger, Philipp, Peter S. Park, Ezra Karger, Sean Trott, and Philip E. Tetlock. "AI-Augmented Predictions: LLM Assistants Improve Human Forecasting Accuracy." <em>ACM Transactions on Interactive Intelligent Systems</em> 15, no. 1 (2025).</li>
+    </ol>
+  </section>
+
+  <!-- 用户留言 -->
+  <section class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <div class="c-head">
+        <div class="avatar">左</div>
+        <div>
+          <div class="c-name">左星星</div>
+          <div class="c-meta">昨天 · 上海</div>
+        </div>
+      </div>
+      <div class="c-body">
+        <p>过去说找工作，常会用很模糊的话概括：市场不好、年龄不占优势、岗位竞争激烈。但从 2025 年 5 月开始，我有 9 个月集中找工作，并留下了完整数据，正好可以做一次复盘。</p>
+        <p>这 9 个月里，我平均每月投递约 250 个岗位，总投递量约 2250 个，最终获得 20 次面试，面试转化率约 0.89%。这个数字很刺眼，但也说明，对 40 多岁的财务人来说，找工作不是"投几份简历就有反馈"，而是一个低概率、高重复、长周期的过程。</p>
+        <p>不过，20 次面试带来了 2 个口头 offer 和 3 个书面 offer，面试到 offer 的转化率约 25%。这说明我的面试能力并不差，真正的瓶颈更可能在简历初筛阶段：一方面是财务岗位越来越看行业经验，另一方面是年龄因素确实会影响筛选。再往下看，2 个口头 offer 后来变卦，原因与融资和项目变化有关，说明外部环境并不稳定；3 个书面 offer 中，一个因外地放弃，一个试用期不匹配，最后一个成为现在的新工作。</p>
+        <p>这次复盘让我看到，找工作不是一次判断决定结果，而是一个漏斗：2250 次投递，换来 20 次面试，换来 5 个 offer，最后沉淀为 1 份工作。过去我可能会把这些看成挫败，但从概率视角看，它们都是漏斗中的自然损耗。</p>
+        <p>面对不确定性，不能只问"我是不是不行"，而要看每一层转化率在哪里流失。真正的复盘，不是责怪自己，而是把焦虑拆成数字，把经历变成判断账本。找工作不是命运审判，而是一场需要持续校准的长期预测。</p>
+      </div>
+      <div class="c-stat">6 · 13 · 105 · 分享</div>
+    </div>
+
+    <div class="comment">
+      <div class="c-head">
+        <div class="avatar">至</div>
+        <div>
+          <div class="c-name">至尊女宝</div>
+          <div class="c-meta">昨天 · 四川</div>
+        </div>
+      </div>
+      <div class="c-body">
+        <p>数学老师以前就给我们说，解题要先看已知条件，再找公式，最后验算。可我们很多时候都是先选立场，再找证据，最后拒绝验算。表态其实是最廉价的，对错，善恶，是非……因为它不需要承担校准的义务，这就和网暴一样没有任何约束。我们老大开会说这个项目会延期，说了就说了，没人给他记分，那谁也不会复盘。但如果项目经理说延期概率 75%，三个月后项目准时上线——这个数字就经常会反过来咬一口，毕竟有绩效。正是这种"会被咬"的风险，才逼着人认真。</p>
+        <p>大学里学的工程制图的第一课：任何复杂曲面都可以用三视图拆解。费米化就是预测问题的三视图。但也会让我警惕一件事：过度追求可检验性，会不会让我们只敢预测那些容易检验的琐事？我们可以精确预测下季度销售额，却对三年后这个岗位还有没有存在意义避而不谈。这不是预测能力的局限，是人性的局限——我们天然偏好短期、具体、可归因的问题，而对长期、模糊、系统性的问题选择性失明。</p>
+        <p>无论是工作还是生活，哪怕是打算明天晒个被子，我们不需要每次都押对，但需要知道自己的判断账本上亏在哪里、赚在哪里。这是一种职业伦理，远比准确率本身重要。不要卷别人，卷要卷自己，这跟健身一样，不记训练日志，就没有进步，天知道我为了我的腹肌付出了多少努力和汗水。我可不是为了晒肌肉，只是为了更健康。</p>
+        <p>所以，预测不是观点的延长线，而是自我校准的工艺。</p>
+      </div>
+      <div class="c-tag"># 小小的改变也很厉害</div>
+      <div class="c-stat">3 · 14 · 85 · 分享</div>
+    </div>
+
+    <div class="comment">
+      <div class="c-head">
+        <div class="avatar">常</div>
+        <div>
+          <div class="c-name">常觉不住</div>
+          <div class="c-meta">14小时前 · 美国</div>
+        </div>
+      </div>
+      <div class="c-body">
+        <p>读完万老师这一讲，我没有急着写留言。我拿了一张白纸，想试试：如果把「超级预测」从国际政治、金融市场，搬到一个普通年轻人的生活里，它到底能不能用？</p>
+        <p>我挑了三道题。它们表面上没有关系：工作、升学、伴侣。但其实都指向同一件事——那些年轻人最容易用焦虑、祈祷、自我安慰来处理的问题，能不能被拆成可以观察、可以更新、可以行动的概率？</p>
+        <p><strong>第一题：未来 12 个月，我被裁或主动离开现公司的概率是多少？</strong>这题一写下来，很多安慰自己的话就失效了。不能只说"应该没事"。你得先看参考类：你所在的行业、同规模公司，过去三年发生裁员或大幅收缩的频率是多少？这是基础率。然后再看你自己的位置。公司最近一轮融资距今多久？HC 是否冻结？你所在的业务线最近两个季度是否达标？上次部门会议，老板讲的是开拓，还是降本？你手上有没有不可替代的项目？你的薪资是不是明显高于同岗位均值？最后再看一个很诚实的信号：你最近有没有开始频繁看招聘网站？你上次更新简历是什么时候？这些问题列出来以后，「我觉得还好」就不再是一个判断，只是一种没有记分的安慰。</p>
+        <p><strong>第二题：孩子未来一次关键考试达成目标的概率是多少？</strong>很多家长不敢这样问。因为一问，就会发现自己其实不是在预测，而是在许愿。这题的参考类反而很清楚：孩子所在学校，过去几年同类目标的达成比例是多少？如果是升学，就看历年录取率；如果是某个分数线，就看同校同层次学生的实际分布。然后再看内部视角。孩子目前的校内排名是否稳定？偏科严不严重？大考心理素质如何？是偶尔考好一次，还是连续几次都站在同一个区间？一次模考的高分不能当成命运转折，一次失常也不该被当成世界末日。真正重要的是更新：一模、二模、三模，每一次大考之后，都不是用来崩溃或狂喜，而是用来修正概率。爱孩子，不是替孩子编一个乐观剧本。很多时候，敢把概率算清楚，反而是把父母自己的焦虑，从孩子身上拿回来。</p>
+        <p><strong>第三题：我和现在的伴侣，五年后还在一起，而且关系没有明显恶化的概率是多少？</strong>这题最不浪漫，也最容易被回避。可是关系从来不是默认续费的。不能只说"我们感情还可以"。你得先看参考类：同年龄段、同婚龄段、同城市、相近收入和生活压力的人，五年内分手或离婚的比例大概是多少？这不是判决，只是基础率。然后再看你们自己的信号。过去三个月里，批评、蔑视、防御、冷战出现过几次？两个人还有没有轻松说话的时刻？共同朋友圈还活不活跃？财务是否透明？亲密感是上升、持平，还是在慢慢消失？再往前看五年：父母健康、孩子升学、职业变动、房贷压力、搬迁可能性。这些都不是抽象变量，而是一场场压力测试。每经过一次，概率都要更新一次。算这些不是要吓人，而是要提醒：亲密关系不是一句"我们没事"就能自动维持。</p>
+        <p>我把这三道题写出来，不是为了制造焦虑。恰恰相反，我觉得这是这一讲最有现实感的地方。被裁、考砸、散伙，这些词放在脑子里，是恐怖片。它们越模糊，越吓人。可一旦你把它们拆成基础率、条件、信号和更新点，它们就从命运变成了项目。而项目是可以管理的。如果被裁风险偏高，就更新简历、攒应急金、维护外部机会。如果考试目标概率偏低，就别再用鼓励代替诊断，重新决定补哪一科、保哪个排名。如果关系风险升高，就不要等到冷掉以后才说要沟通，而是趁还能说话的时候，把旅行、深谈、咨询或重新分工提上日程。</p>
+        <p>这三道题表面上毫不相干，其实都在问同一件事：当人生最重要的事情没有确定答案时，我们是继续靠感觉、面子和祈祷活着，还是愿意把恐惧拆开，把希望记分，把下一步变成行动？</p>
+        <p><span class="em">焦虑做不了什么。概率能。</span>因为概率不是冷血，而是把人从空转里救出来的一种方法。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <div class="sum-sub">——通读全文后生成，帮助你三分钟抓住这一讲——</div>
+
+    <p class="one-liner">真正的预测不是表态，而是算账：把模糊的担忧"费米化"成一个个可结算的概率问题，再用参考类打底、贝叶斯更新、记分检验三步闭环，把人生难题从情绪变成可管理的项目。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li>泰特洛克用二十多年追踪 284 位长期评论政治经济趋势的专家、收集八万多条预测，发现专家普遍不会预测：准确度还不如最简单的统计算法；其中「刺猬型专家」固守单一理论、陷入一厢情愿，「狐狸型专家」愿意考虑多线索并随时修正，预测更好。</li>
+      <li>预测失真多半不是因为信息不够，而是因为预测被当成了表态和站队：老百姓从预测里要情绪价值，专家为学说与基本盘背书，恐怖袭击后的可得性偏误又让人成倍高估同类风险——预测反映的往往是预测者自身，而非事情本身。</li>
+      <li>超级预测的诞生源于 2011 年 IARPA 举办的四年期国家级预测锦标赛：泰特洛克带领由程序员、药剂师、退休大妈组成的业余队伍「良好判断项目」以巨大优势夺冠，预测甚至比能接触机密情报的分析师更准。</li>
+      <li>超级预测的核心只有两件事：概率化 + 可检验。一切判断都必须写成可结算的概率数字（如"某月某日前某事件发生的概率是 X%"），杜绝"差不多""很可能"这类感想式措辞。</li>
+      <li>概率化分三步：① 费米化——把边界模糊的"云状问题"拆成可操作、可判定的小问题，大问题概率是小问题概率的综合；② 外部视角（参考类基础比率）打底、内部视角（本事件特殊性）微调；③ 贝叶斯更新——新信息出现时小幅修正概率，既不听而不闻也不听风就是雨。</li>
+      <li>检验看一揽子预测的长期表现而非单题对错：校准度（概率 70% 的事件是否真的发生 70%）、区分度（敢不敢报极端概率、不总和稀泥报 50%），综合度量是布里尔分数；"没有概率就没有校准，没有记分就没有学习"，闭环逼人放下我执。</li>
+      <li>方法已验证也吃过亏：良好判断项目连续压过美联储利率市场定价、被 GiveWell 付费用于真金白银的资助预测；但俄乌战争复盘显示，过度依赖历史参考类、低估罕见事件与对手冒险意愿，会把入侵概率长期压在 50% 以下——参考类必须与内部视角和持续更新保持平衡。</li>
+      <li>2025 年超级预测与 AI 结合：单独的大模型不如人类超级预测者，但人机协作可使准确率提高 24%–28%；人擅长界定问题边界、选参考类、决定忽略哪个变量，AI 则帮人把自尊从判断里剥离。超级预测的本质是社会科学工程化——用可更新、可记分的工作流整合多个关键因素，得出一个总概率。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li>本周就建一个"焦虑账本"：在 Excel（或纸笔）左边写下你具体的担心（如"明天客户会毁约""月底项目延期"），右边写一个具体概率数字（如 35%），先让模糊焦虑现形，这是费米化的最小实践。</li>
+      <li>遇到"云状问题"先拆解：想"要不要跳槽""孩子能不能考上"这类大问题，先拆成三四个可判定对错的小问题（如"3 个月内找到月薪不低于现在 80% 的工作的概率"），逐个估概率再综合，避免在模糊的大问题上空转。</li>
+      <li>凡事先问参考类：先查"同类情况历史上或别人身上发生的频率"是多少，用基础比率打底，再根据自身特殊性修正——这是对"这次不一样"式一厢情愿最直接的刹车。</li>
+      <li>用贝叶斯方式小步更新：每周花 10 分钟重估手头的重要概率，出现新信息就小幅上调或下调（如 43%→46%→41%），训练自己"不慌不躁、稳健微调"的判断手感。</li>
+      <li>每月底做一次记分复盘：把上个月的预测与实际结果对照，逐条问"我当时报了多少、结果如何、有没有一厢情愿"，并记录下来——研究表明只要计分，短期训练就能显著提升预测水平。</li>
+      <li>让 AI 当助手而非替身：让大模型帮你搜集信息、整理数据，但问题边界、参考类选择、变量取舍必须自己定；也可以把"你的判断+AI 的信息"结合，享受人机协作带来的准确率提升。</li>
+      <li>消费预测前先自我审视：听专家发言时问一句"我要的是表态、祈愿还是预测？情绪价值还是决策价值？"——把一切观点都当成可检验的命题，而不是可站队的立场。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="q">"真正的预测不是表态，是算账。"</div>
+    <div class="q">"预测往往不是反映了那个事情如何，而是反映了预测者自身如何。"</div>
+    <div class="q">"不确定性一旦被拆解和命名、被写成概率，它就从一种令人恐慌的情绪，变成了可求解的工程问题。"</div>
+    <div class="q">"预测不是观点的延长线，而是自我校准的工艺。你不是在求一个神谕，你是在训练自己的判断账本。"</div>
+
+    <div class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+  <footer>万维钢 · 现代思维工具100讲 · 第43讲 ｜ 手机阅读版</footer>
+</div>
+
+<script>
+  var bar = document.getElementById('progressBar');
+  var btn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (p * 100) + '%';
+    btn.style.display = h.scrollTop > 600 ? 'flex' : 'none';
+  });
+  btn.addEventListener('click', function(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+</script>
+</body>
+</html>

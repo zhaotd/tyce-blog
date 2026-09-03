@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲 第40讲｜前景理论：让人铤而走险的不是贪婪，而是不甘</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2620;
+    --muted:#857a6a;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --card:#fffdf9;
+    --card-border:#e8dfcf;
+    --divider:#d9ccb7;
+    --quote-bg:#f5efe4;
+    --note-bg:#f2ece0;
+    --shadow:0 1px 3px rgba(90,60,20,.06), 0 4px 14px rgba(90,60,20,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d3;
+      --muted:#a39683;
+      --accent:#c08a4e;
+      --accent-soft:rgba(192,138,78,.14);
+      --card:#201d18;
+      --card-border:#39342a;
+      --divider:#4a4234;
+      --quote-bg:#242019;
+      --note-bg:#211e19;
+      --shadow:0 1px 3px rgba(0,0,0,.35), 0 4px 14px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px 96px;
+  }
+  .container{max-width:700px;margin:0 auto;padding-top:30px;}
+
+  /* 顶部阅读进度条 */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#c9a468);
+    z-index:99;
+  }
+  /* 回到顶部按钮 */
+  #topBtn{
+    position:fixed;right:18px;bottom:calc(26px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fffdf8;
+    font-size:20px;line-height:1;
+    box-shadow:0 3px 10px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease;
+    z-index:98;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* 文档头 */
+  header.doc-head{padding:6px 2px 22px;}
+  .course-tag{
+    display:inline-block;
+    font-size:13px;letter-spacing:.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:16px;
+  }
+  h1{
+    font-size:27px;line-height:1.38;font-weight:800;
+    color:var(--fg);
+    letter-spacing:.01em;
+    margin-bottom:14px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:4px 14px;
+    border-bottom:1px solid var(--divider);
+    padding-bottom:14px;
+  }
+
+  /* 正文 */
+  main{padding:10px 2px 0;}
+  main p{margin:0 0 1.1em;}
+  strong,em{color:var(--fg);}
+  em{font-style:normal;border-bottom:1px solid var(--accent);padding-bottom:1px;}
+  h3{
+    font-size:19px;font-weight:700;color:var(--accent);
+    margin:2em 0 .7em;
+    line-height:1.45;
+  }
+  h3::before{content:"◆ ";font-size:.82em;}
+
+  /* 分隔线（原文 ✵） */
+  .divider{
+    text-align:center;color:var(--accent);
+    font-size:15px;letter-spacing:.5em;
+    margin:2.4em 0;
+    display:flex;align-items:center;gap:14px;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--divider);
+  }
+
+  /* 要点列表 */
+  ul{margin:0 0 1.2em;padding-left:1.2em;}
+  ul li{margin-bottom:.55em;}
+  ul li::marker{color:var(--accent);}
+
+  /* 金句引用块 */
+  blockquote{
+    margin:1.6em 0;
+    padding:14px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    font-weight:600;
+    color:var(--fg);
+    line-height:1.8;
+  }
+  blockquote p{margin:0;}
+
+  /* 卡片（案例/问答） */
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:16px 18px;
+    margin:1.2em 0;
+  }
+  .card .card-label{
+    display:inline-block;
+    font-size:12.5px;font-weight:700;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:6px;
+    padding:1px 8px;
+    margin-bottom:8px;
+  }
+  .card p:last-child{margin-bottom:0;}
+
+  /* 注释 */
+  .notes{
+    margin:2.6em 0 1.4em;
+    padding:16px 18px;
+    background:var(--note-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    font-size:13px;line-height:1.75;
+    color:var(--muted);
+  }
+  .notes h4{
+    font-size:14px;color:var(--accent);margin-bottom:10px;
+  }
+  .notes p{margin:0 0 .5em;text-align:left;}
+  .notes p:last-child{margin-bottom:0;}
+
+  /* 用户留言 */
+  .comments{margin-top:2.6em;}
+  .comments>h4{
+    font-size:16px;color:var(--accent);
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--divider);
+  }
+  .comment{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:16px 18px;
+    margin-bottom:16px;
+  }
+  .comment .who{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:10px;
+  }
+  .comment .avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-size:15px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .comment .name{font-size:15px;font-weight:700;color:var(--fg);}
+  .comment .time{font-size:12px;color:var(--muted);}
+  .comment p{font-size:15.5px;margin:0 0 .8em;}
+  .comment p:last-child{margin-bottom:0;}
+  .comment .hashtag{
+    display:inline-block;margin-top:8px;
+    font-size:12.5px;color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:999px;padding:2px 10px;
+  }
+  .reply{
+    margin-top:12px;
+    padding:10px 14px;
+    background:var(--quote-bg);
+    border-radius:10px;
+    font-size:14.5px;
+  }
+  .reply .reply-tag{color:var(--accent);font-weight:700;}
+
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin-top:3em;
+    padding:22px 20px;
+    background:linear-gradient(180deg,var(--accent-soft),transparent 60%),var(--card);
+    border:2px solid var(--accent);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+  }
+  #ai-summary h4{
+    font-size:18px;font-weight:800;color:var(--accent);
+    margin-bottom:12px;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;color:var(--fg);
+    margin-bottom:16px;
+  }
+  #ai-summary h5{
+    font-size:15.5px;color:var(--accent);
+    margin:18px 0 8px;
+  }
+  #ai-summary ul{margin-bottom:6px;}
+  #ai-summary .quote-line{
+    margin:0 0 .6em;
+    padding-left:14px;
+    border-left:3px solid var(--accent);
+    color:var(--fg);
+  }
+  #ai-summary .disclaimer{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px dashed var(--divider);
+    font-size:12.5px;color:var(--muted);
+    text-align:left;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第40讲</span>
+    <h1>前景理论：让人铤而走险的不是贪婪，而是不甘</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>整理日期：2026年8月25日</span>
+    </div>
+  </header>
+
+  <main>
+
+    <p>我们都听说过这样的故事：一个人在赌场里输了钱，或者炒股、炒币被套牢，非但没有认赔离场，反而拼命加注。他会把积蓄都赌上，甚至没钱也要到处借钱加杠杆……结果越输越多，最后倾家荡产，甚至成了亡命之徒。</p>
+
+    <p>人们常说“利令智昏”，但是你想过没有，正常人是不会为了那种不靠谱的收益下那么大赌注的。</p>
+
+    <p>我们前面讲过凯利公式。面对一个机会你是否下注，应该只跟你在这里有没有 <em>edge</em> 有关，你的下注比例应该根据 edge 和 odds 的大小由公式决定……事实上大多数人最常犯的错误，不是过于冒险，而是不敢冒险。</p>
+
+    <p>那到底是什么，让那些赌徒近乎疯狂地铤而走险呢？</p>
+
+    <p>是心态。是输红了眼。是对之前损失的不甘。</p>
+
+    <p>人们冒险往往不是为了贪图更多，而是为了“回本”；反过来说，要是还没亏钱，人面对真正的获利机会反而容易缩手缩脚，生怕把到手的东西再吐出去。</p>
+
+    <p>这一讲的思维工具叫「前景理论（Prospect Theory）」，它能解释一大堆决策偏误。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>前景理论：决策看的是“参照点”，不是最终财富</h3>
+
+    <p>前景理论，有时候翻译成「展望理论」，是丹尼尔·卡尼曼（Daniel Kahneman）和阿莫斯·特沃斯基（Amos Tversky）1979 年提出来的 <sup>[1]</sup>，正是这个理论后来给卡尼曼带来了诺贝尔奖。</p>
+
+    <p>传统经济学认为，人决定要不要去做一件事、去冒一个险，应该由这件事带给你的「预期效用（Expected Utility）」决定，而效用取决于最终的财富值。</p>
+
+    <p>但前景理论说不是的——人决定做不做一件事不是看预期效用——而是看相对于我心里这个「参照点（Reference Point）」，我是赚还是亏。</p>
+
+    <p>参照点通常是你对现状的心理预期，也可以理解成是心理零点。通过参照点，前景理论画了一条非对称的 S 型曲线（横坐标是相对于参照点，你赚到或者损失了多少钱；纵坐标是这个结果给你带来的心理价值）——在参照点的右边，也就是收益区，曲线缓慢地上升；在参照点的左边，也就是损失区，曲线却快速地下降。</p>
+
+    <p>什么意思呢？同样是 100 块钱，损失 100 块的痛苦，比赚 100 块的快乐大得多。</p>
+
+    <p>这就是著名的「损失厌恶（Loss Aversion）」。学术界常见的说法是痛苦大约有快乐的两倍……其实这个比例因人因事而异，但重点是得与失的“不对称”。</p>
+
+    <p>参照点是你对现状的<em>心理预期</em>，而你的现状可不一定正好在参照点上。</p>
+
+    <p>如果你的现状正好在参照点上，或者在参照点的右侧——你此刻对现状满意，甚至现状已经超出了你的预期——请问你会想要冒险吗？你不会。因为只要是冒险，就有可能改变现状，就既有可能赢钱也有可能输钱。而根据这条曲线，赢钱带来的快乐远小于输钱带来的痛苦，那你何必冒这个险呢？</p>
+
+    <p>可如果你此刻站在参照点的左边呢？你对现状很不满意，你本来应该拥有比现在好得多的境遇！你已经是亏钱的状况，就算再多亏一点不也是痛苦吗？而一旦有机会回到零点，那个感觉可是太好了。所以你当然想赌一把。</p>
+
+    <p>这就是「光脚不怕穿鞋的」。古人说「哀兵必胜」，现在运动员说“我们要把包袱甩给对方，我们不能保赢怕输”，意思都是：如果你的现状不及你的心理预期，你会有更大的冒险意愿，你的打法会更激进。</p>
+
+    <blockquote><p>人不是为贪婪而疯狂，而是为不认输而疯狂。</p></blockquote>
+
+    <div class="divider">✵</div>
+
+    <p>抓住「参照点」，行为经济学里很多五花八门的“认知偏误”，你都可以用前景理论解释。咱们看最经典的四个——</p>
+
+    <h3>一、损失厌恶（Loss Aversion）</h3>
+    <p>S 曲线的不对称性告诉我们，人对失去一样东西的恐惧，远大于对得到同一样东西的渴望。</p>
+    <ul>
+      <li>这就是为什么有人为了不承认亏本宁愿被套牢十几年；</li>
+      <li>为什么有人为一段错误的关系搭上自己半辈子；</li>
+      <li>为什么有人在每平米好几万的居住空间里堆满破烂；</li>
+      <li>为什么花 20 元运费很心疼，但是改成包邮再把价格提高 20 元，大家都接受了……</li>
+    </ul>
+
+    <h3>二、现状偏见（Status Quo Bias）</h3>
+    <p>人们通常会把现状当作参照点，所以倾向于维持现状。</p>
+    <ul>
+      <li>就算大城市的条件明显更好，很多人还是宁愿待在老家；</li>
+      <li>就算工作干得很不开心也不愿意跳槽；</li>
+      <li>明知当前的银行卡套餐不划算，人们也懒得换，连自动续费都没取消；</li>
+      <li>公司流程明显是低效的，大家也还是按老办法做，因为改革让人感到不安。</li>
+    </ul>
+    <p>你说这叫“稳定压倒一切”，其实你只是习惯了。</p>
+
+    <h3>三、禀赋效应（Endowment Effect）</h3>
+    <p>一件东西一旦归你所有，它的心理价格就立刻上涨——“拥有它”已经成了你的参照点，卖掉它就成了一种损失。</p>
+    <div class="card">
+      <span class="card-label">经典实验 · 杯子实验</span>
+      <p>卡尼曼等人让一群受试者抽奖，有的人中奖得到了杯子，有的人没有。实验人员问那些没得到杯子的人愿意花多少钱买这个杯子，大家最多出价 3 美元——可是再问那些中奖得到杯子的人愿意多少钱卖掉这个杯子，人家说给 7 美元都不卖。</p>
+    </div>
+    <p>这就是为什么卖自家车的人跟买车的人特别难以达成一致。卖家卖的是跟了我这么多年的老伙计，买家买的是一辆旧车。</p>
+
+    <h3>四、框架效应（Framing Effect）</h3>
+    <p>所谓框架就是你的叙事方式——它能决定别人的参照点，从而操纵别人的选择。这里的著名案例可太多了。</p>
+    <p>比如「默认选项效应（Default Option Effect）」：人们倾向于服从表格上的默认选项……你肯定早就知道。</p>
+    <div class="card">
+      <span class="card-label">经典实验 · 亚洲疾病问题</span>
+      <p>面对一场预计导致 600 人死亡的疫情，现在有两个治疗方案。一部分受试者收到的描述是——</p>
+      <p><strong>方案 A</strong>：确定救活 200 人。<br>
+      <strong>方案 B</strong>：赌一把，1/3 概率救活 600 人，2/3 概率一个也救不了。</p>
+      <p>结果 72% 的人选了方案 A——我们不冒险，我们要确保救活这些人。</p>
+      <p>另一部分受试者看到的描述是——</p>
+      <p><strong>方案 A</strong>：确定死 400 人。<br>
+      <strong>方案 B</strong>：赌一把，1/3 概率一个也不死，2/3 概率 600 人全死。</p>
+      <p>结果就成了 78% 的人选择方案 B——我们哪能看着这么多人确定死亡呢？</p>
+      <p>可是你想想，这两种描述在数学上其实是完全等价的！同一件事儿，框架诱导你考虑存活，你就保守；诱导你考虑死亡，你就冒险。</p>
+    </div>
+    <div class="card">
+      <span class="card-label">真实场景 · 医疗决策</span>
+      <p>有研究发现，给患者选择肺癌的治疗方案：如果医生说“手术后一个月内的存活率是 90%”，绝大多数患者会选择做手术；可医生要是说“手术后一个月内的死亡率是 10%”，很多人就会吓得拒绝手术。</p>
+      <p>生死攸关的重大决策，居然取决于一句话的表述方式，叙事的魔力竟至于此。</p>
+    </div>
+
+    <div class="divider">✵</div>
+
+    <p>这可不只是心理上感觉舒不舒服，要知道错误的决策会给你带来损失。</p>
+
+    <h3>纽约出租车司机：被“每日目标”困住的人</h3>
+    <p>一个我特别喜欢的研究，是关于纽约市的出租车司机 <sup>[5]</sup>。按理说，下雨天打车的人多，生意好，司机应该趁机多拉活多赚钱；晴天生意差，可以早点收工休息——可是调查发现司机们不是这么干的。他们在下雨天早早收车回家，晴天却反而在街上苦苦转悠十几个小时。为啥呢？因为司机都给自己设定了一个“每日目标收入”，作为参照点。下雨天很容易达到参照点，司机认为完成任务了，再多干也不值得；晴天达不到目标，是男人就别回家！</p>
+
+    <h3>处置效应：散户为什么总抓不住大涨</h3>
+    <p>回头再看炒股，这里有个最经典的散户作风，叫「处置效应（disposition effect）」<sup>[6]</sup>。按理说，一只股票该不该卖，应该只由对它的期望决定，而跟你当初的买入价毫无关系。可是在现实中，买入价就是散户最强烈的参照点。</p>
+    <ul>
+      <li>股价刚涨了一点，为了体验“我在赚钱”的确定性，散户赶紧卖出，锁定利润；</li>
+      <li>股价跌了，散户心想只要我不卖就不算真正的亏损；</li>
+      <li>股价已经暴跌，散户反而被激发了冒险精神，果断加仓！</li>
+    </ul>
+    <p>这就是为什么散户总是抓不住大涨，却总能全程经历大跌。</p>
+
+    <h3>公关危机：遮掩是比错误更冒险的动作</h3>
+    <p>还有一个有意思的应用是公关危机 <sup>[7]</sup>。比如你是个公众人物，犯了个小错被人家曝光了。按理说你就直接认栽，也不会有什么太大的问题，过两天这事就过去了。可你的参照点是你有一个完美形象，所以你会想把这个事遮掩过去——殊不知遮掩是一种非常冒险的动作。</p>
+    <p>人们通常不会编造自己做过什么好人好事，但是常常会掩盖自己犯的错误。然而像尼克松水门事件、克林顿拉链门事件那样，公众会认为你的遮掩行为比当初那个错误更可恶，你连带的损失将是巨大的。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>参照点只是叙事，高手要主动选择它</h3>
+    <p>归根结底，那个参照点纯粹是你的主观想象。它是个叙事！一千万输成二十万，有的人会跳楼；可是你让另一个人拥有二十万，人家高兴还来不及。</p>
+    <p>高手应该自由设置自己的参照点。它不一定非得是现状，也不一定是你过去曾经达到过的高点，它完全也可以是你的长期目标，或者任意什么东西。</p>
+    <blockquote><p>它应该是激励而不应该是枷锁。</p></blockquote>
+
+    <h3>心理账户：把损失“外包”出去</h3>
+    <p>有一个好办法叫「心理账户（Mental Accounting）」<sup>[8]</sup>。比如你买了一张价值一百元的电影票，走到门口发现票丢了。在这种情况下，你会不会再买一张呢？很多人不会。可是我们换个角度想：你会因为刚刚弄丢了钱包里一百元，而不看这场电影吗？实验中多数人选择仍然买票。</p>
+    <p>这个区别的根本原因就在于，你把“看电影”和“总钱包”记成了两笔心理账——而其实那都是你的钱。</p>
+    <p>既然如此，我们为什么不设置一个每年两千元的“风险探索账户”或者叫“学费账户”呢？平时遇到任何意外损失，都从这个账户里扣，年底如果还有剩余就捐出去。反正这也不是“你的钱”，那么遭遇任何损失对你来说就都无所谓了。</p>
+
+    <h3>你还可以给别人设置参照点</h3>
+    <p>今年公司利润好，老板说要给每人年薪涨 5 万块钱……HR 说这可不行。这笔钱算成涨薪，员工就会认为这是本来就该拿的参照点——那万一明年公司业绩不好，你不能继续涨薪，员工就不但不会感谢你今年的慷慨，反而会有停滞感甚至剥夺感，搞不好会产生离职倾向。正确的做法是：把 2 万元作为涨薪，3 万元算作绩效奖金。</p>
+    <p>老百姓说的「升米恩，斗米仇」，其实也是参照点问题：前者是本来不该给，但是你给了，是个惊喜；后者是因为你总给，人家当成你就该给，结果你有一次不方便没给，就被怨恨。</p>
+    <p>市侩哲学会说那我们就不要帮助无关的人……但这里其实是有解的。还是管理参照点：</p>
+    <ul>
+      <li>一个是以工代赈，想要得到好处必须付出代价；</li>
+      <li>一个是把丑话说在前面降低预期；</li>
+      <li>一个是把固定底薪改成偶尔的奖励——这叫施恩去规律化。</li>
+    </ul>
+
+    <div class="divider">✵</div>
+
+    <h3>大历史案例：宣和北伐的“两个参照点”</h3>
+    <p>最后我再说个大的。北宋的宣和北伐，也就是趁着金国打辽国，搞“联金抗辽”，堪称是中国历史上最大的战略灾难之一。宋徽宗君臣首鼠两端，一会儿要打一会儿又犹豫退缩，又想收复燕云又不敢承担全面战争的代价……最后引狼入室，终成靖康之耻。这帮人到底怎么想的呢？</p>
+    <p>吉林大学的于海洋和沈朝永有一篇论文 <sup>[9]</sup> 认为，关键是大宋有的不是一个，而是<em>两个</em>参照点——</p>
+    <div class="card">
+      <p><strong>一个是“现实安全参照点”。</strong>宋辽之间已经和平了一百多年，保持现状，每年花点岁币买平安，不挺好吗？主和派说好好的何必冒险？</p>
+      <p><strong>还有一个是“历史领土参照点”。</strong>燕云十六州是汉唐故土！我们只要一天不收回来，何以面对祖宗？为了弥补这个巨大的历史亏损，现在有机会为什么不博一下呢？</p>
+    </div>
+    <p>这两个参照点让朝廷没有清晰的目标函数。一边把国家推向冒险，一边又死死拽住不许真拼命。下面将士到底该怎么执行？你既拿不出亡命徒的胆量去赢，又守不住老实人的本分去熬，结果必然是既打不疼敌人也保不住自己，是最糟糕的局面。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>结语：把参照点从默认改为主动选择</h3>
+    <p>前景理论把“人是追求利益的动物”改写成了“人是守卫参照点的动物”，从来都没有什么绝对理性。处在参照点右侧，我们就守成；处在左侧，我们就押注。</p>
+    <blockquote><p>你的勇敢和怯懦往往不是出自品格，而是出自坐标。</p></blockquote>
+    <p>这在某种意义上是合理的。一只非洲草原上觅食的动物，难道不应该像纽约出租车司机那样，每天吃饱了就停止折腾吗？反正食物也不能长期储存。</p>
+    <p>只是今天有些游戏的规则改变了。那我们就得把参照点从默认改为主动选择才行。</p>
+
+    <div class="notes">
+      <h4>注释</h4>
+      <p>[1] Kahneman, Daniel, and Amos Tversky. 1979. “Prospect Theory: An Analysis of Decision under Risk.” <em>Econometrica</em> 47 (2): 263–291.</p>
+      <p>[2] Kahneman, Daniel, Jack L. Knetsch, and Richard H. Thaler. 1990. “Experimental Tests of the Endowment Effect and the Coase Theorem.” <em>Journal of Political Economy</em> 98 (6): 1325–1348.</p>
+      <p>[3] Tversky, Amos, and Daniel Kahneman. 1981. “The Framing of Decisions and the Psychology of Choice.” <em>Science</em> 211 (4481): 453–458.</p>
+      <p>[4] McNeil, Barbara J., Stephen G. Pauker, Harold C. Sox Jr., and Amos Tversky. 1982. “On the Elicitation of Preferences for Alternative Therapies.” <em>New England Journal of Medicine</em> 306 (21): 1259–1262.</p>
+      <p>[5] Camerer, Colin F., Linda Babcock, George Loewenstein, and Richard H. Thaler. 1997. “Labor Supply of New York City Cabdrivers: One Day at a Time.” <em>The Quarterly Journal of Economics</em> 112 (2): 407–441.</p>
+      <p>[6] Shefrin, Hersh, and Meir Statman. 1985. “The Disposition to Sell Winners Too Early and Ride Losers Too Long: Theory and Evidence.” <em>The Journal of Finance</em> 40 (3): 777–790.</p>
+      <p>[7] Painter, Richard W. 2000. “Lawyers’ Rules, Auditors’ Rules and the Psychology of Concealment.” <em>Minnesota Law Review</em> 84 (6): 1399–1468.</p>
+      <p>[8] Thaler, Richard H. 1985. “Mental Accounting and Consumer Choice.” <em>Marketing Science</em> 4 (3): 199–214.</p>
+      <p>[9] 于海洋, 沈朝永, 2021. “胜利的失败：多重参考依赖与宣和北伐的决策缺陷.” <em>世界经济与政治</em> 2021 年第 12 期.</p>
+    </div>
+
+    <div class="comments">
+      <h4>用户留言</h4>
+
+      <div class="comment">
+        <div class="who">
+          <span class="avatar">C</span>
+          <div>
+            <div class="name">Christy</div>
+            <div class="time">昨天 · 广东</div>
+          </div>
+        </div>
+        <p>前两年的自己就经常陷入损失厌恶的消费心理陷阱中，在大促活动时被“不买就亏了”驱动冲动囤货，忽视了实际需求与空间成本。未做活动前商家先用锚定效应给了一个商品的“原价”，让自己觉得商品值是那么多的价格，再用限时优惠触发自己的损失厌恶——不买，就亏了，以至让你买的不是商品，是避免失去的安全感。还有“无理由退货”，看似给消费者保障，其实也利用了损失厌恶：买时想着反正能退，就更容易下单；可真到要退货时，只要觉得还行，即便商品并没有完全符合心意，有一部分人都会嫌麻烦就把商品留下来。</p>
+        <p>现在的我在购物上会关注真正的价值，而不是商家创造的“优惠感”。我会将心动物品放入购物车后设置三天冷静期，也制作后悔清单，记录冲动购买后未使用物品的详细信息，现在就更理智地购物了。断舍离也是，以前很困难，一些几年未用的新物品仍舍不得扔，因为“失去”的想象比拥有清爽空间的收益更强烈。现在需要买买买时会先自问：“如果不打折，我还会买吗？”断舍离时提醒自己，舍弃无用之物，换来的是空间、精力与心境的解放。沉没成本不算成本，买错的衣服、投入错的时间，已经是泼出去的水，纠结只会浪费更多精力，果断断舍离才是止损。</p>
+        <span class="hashtag"># 学决策算法，解人生难题</span>
+      </div>
+
+      <div class="comment">
+        <div class="who">
+          <span class="avatar">至</span>
+          <div>
+            <div class="name">至尊女宝</div>
+            <div class="time">昨天 · 四川</div>
+          </div>
+        </div>
+        <p>我们装置搞过节能改造，技术方案分两派。一派参照点是现有能耗，只要比现在低就是赚的，主张上稳妥的小改方案。另一派参照点是行业标杆，说我们离标杆差着三十个点，小改等于没改，必须上高风险的大动干戈方案。两边吵了两个月，最后老大拍板取中间值，结果新方案既没有小改的稳健，也没有大改的收益，三个月后因为一台压缩机选型失误全线停车。那帮工程师后来总结，说当初要是老老实实按小改，或者豁出去按大改，都不至于这样。两个参照点在脑子里打架，谁也说服不了谁，最后决策出来的东西是个两头不靠的怪物。</p>
+        <p>这套理论用在生活里最实用的点其实是主动挑选参照点。化工厂的设定值是可以改的，人的内心参照点也是可以改的。说到底，人脑这套控制系统不如 DCS 高级的地方在于，设定值不是总写在屏幕上。有时候是一个阀门的开度，有时候是某个压根不认识的同行刷出来的标杆。高明的人能做两件事：一是识别出当前那个隐形的参照点是谁设定的，二是判断自己此刻站在曲线的哪一侧。如果发现被一个荒谬的参照点推向了冒险或者锁在了守成，就直接走过去重写它。</p>
+        <span class="hashtag"># 小小的改变也很厉害</span>
+      </div>
+
+      <div class="comment">
+        <div class="who">
+          <span class="avatar">一</span>
+          <div>
+            <div class="name">一叶而知秋</div>
+            <div class="time">11小时前 · 内蒙古</div>
+          </div>
+        </div>
+        <p>【思维工具－前景理论】每周五，机关开例会。最后半小时，是纪检组的固定节目，放廉政教育片。本周，市纪委选的案例，是某市的市委书记，画面里他穿着号服，头发全白了，对着镜头说：“我农村出来的，走到正厅级，一开始真没想贪……就是后来不平衡了。”</p>
+        <p>听这位书记的话，我的思绪由电视的画面切回到了三十年前，那时我刚入职，该书记就是我的科长，教育我“清清白白做人，干干净净做事”的话还在耳边回响，故事怎么就翻转成了这个样子。那时，我确信他没说假话。我就亲眼见过他的一次拒贿：那是冷透的早晨，一个老板进了他所在的里屋，随手掩上了门。不一会儿，科长特别生气地拉开了门，严肃地说：“拿走”。我视线的尽头，是那个讪讪的老板忙不迭地把手里的厚信封塞回了皮包。</p>
+        <p>画面里的书记继续讲着：后来我升了副局，分管项目。转折点是某次同学聚会。一个高中没毕业、在老家当包工头的同学，开着一百多万的车，搂着我肩膀说：“老同学，你当官有啥用？住那破房子，我一年光送礼就送你这种级别的多少多少……”那天晚上我一宿没睡。那是我收的第一笔钱，两万的卡，心惊胆战好几天，没事。后来就越来越大胆，从几万到几十万，从被动收到主动要。一直到我当书记后，有个煤老板一下子就给我一千万的卡，我轻轻撕掉贴在卡上的密码条，心里连一点波澜都没起。</p>
+        <p>老科长的一句话最让我五味杂陈：“其实我不缺钱，组织上给我的高工资管够用。更何况，我当了这么大的官，家里真有事，有太多的人抢着给我鞍前马后，哪用我操心。我就是觉得，我为组织拼命工作了这么多年，我走过的每一任上，业绩顶优，凭什么我一个月的工资都不如一个小包工头一顿饭钱？我不甘心。”</p>
+        <p>“不甘心”这三个字——妥妥地撞上了万老师的“前景理论”。落马前的市委书记，最早我的科长，他原本的参照点在“清白干事、组织认可”左侧，可不知不觉，眼睛慢慢盯上了那些“不如我的人却比我阔”右侧。长期的官场浸染，让他觉得自己站在了参照点的左侧，越想越觉得收益与地位的不对等。按照前景理论的 S 型曲线，人在亏损区会怎么做？冒更大的险。因为损失带来的痛苦远大于收益带来的快乐，而唯一能消除痛苦的办法，就是把良心交出去，回到参照点。这就是为什么他明明不缺钱，却越贪越多。他不是为了享受，他是为了“回本”——挽回他心中那个“被不如自己的人比下去”的损失感。</p>
+        <p>更可怕的是，随着他地位的提升，参照点也在追涨。最初跟包工头比，后来和开发商比，再后来和煤老板比，但最大的不平衡，来自与更贪的同僚比较。永远有人在更前面，永远觉得自己亏了，永远觉得组织亏待了他。这就是“人心不足蛇吞象”的心理机制——不是胃不够大，是参照点的舌头永远够不到下一个目标。</p>
+        <p>我的老科长，也迈出了廉政片里大部分贪官统一的步伐：农村苦出身，早年拼命干活，一步步爬上来。刚提干时都想干一番事业，没一个立志当贪官。可到了高位，周围环境变了，参照点被那些“不如自己却过得更好”的人一次次拉偏，于是从“不收”到“收一点”，从“收一点”到“收很多”，从“收很多”到“疯狂敛财”……每一步在当时都觉得“合理”，回头一看，早已万劫不复。</p>
+        <p>万老师说，前景理论把“人是追求利益的动物”改写成了“人是守卫参照点的动物”。我觉得这句话简直就是在说这些落马的干部——他们不是在追求更多，他们是在死守一个不断崩塌的心理坐标。你说他们理性吗？完全不理性。就像我那个老科长，过亿的贪污款没花过一分，最后全退赃，还搭上了后半辈子。可你说他们坏吗？刚开始真不坏。他们只是被一种本能推着走：受不了自己被别人比下去。</p>
+        <p>所以我在想，前景理论那么多眼花缭乱的概念——损失厌恶、现状偏见、禀赋效应、框架效应——剥到最后，其实就一句话：人是被“比较”驱动的动物。快乐来自比别人好，痛苦来自比别人差。而为了消除这种痛苦，人可以做出任何不理性的决定。</p>
+        <p>我的老科长不是个例。我们每个人，谁敢说自己心里没有这样一个参照点？谁敢说自己从来不会因为“凭什么他行我不行”而冲动一把？区别只在于，有人赌的是钱，有人赌的是命，有人赌的是良心。以前觉得“这些人意志不坚定”，现在学了前景理论，有点不一样的想法：意志坚定固然可贵，但更靠谱的办法，是管好自己的参照点。别让它长在别人身上，别让它被那些不值得的人牵着跑。</p>
+        <p>最后，把万老师的问题再深想一层：前景理论看起来有诸多表象，实则都是统一的人性，是人性深处那个永恒的密码——不患寡而患不均，不甘人后而宁蹈火。</p>
+        <span class="hashtag"># 跟万维钢和全球精英大脑同步</span>
+        <div class="reply">
+          <span class="reply-tag">作者回复：</span>谢谢分享，非常精彩！可是我们不能总指望靠心理辅导解决贪污腐败问题。问题不在于他们“想贪”，而在于想贪就真的“能贪……
+        </div>
+      </div>
+    </div>
+
+    <section id="ai-summary">
+      <h4>📖 AI 阅读总结</h4>
+      <p class="one-liner">一句话概括：人做决策参照的不是绝对财富，而是心里的“参照点”——损失带来的痛苦远大于同等收益的快乐，所以人铤而走险往往不是因为贪，而是因为不甘心认输；真正的高手，是把参照点从默认的现状主动换成自己的目标。</p>
+
+      <h5>一、核心内容总结</h5>
+      <ul>
+        <li>前景理论（卡尼曼与特沃斯基，1979，卡尼曼因此获诺贝尔奖）推翻传统“预期效用”理论：人判断得失不是看最终财富，而是看结果相对“参照点”（对现状的心理预期、心理零点）是赚是亏。</li>
+        <li>非对称 S 型曲线揭示损失厌恶：同样 100 元，损失 100 元的痛苦远大于赚 100 元的快乐（常见说法痛苦约为快乐两倍）——所以站在参照点右侧的人守成怕输，站在左侧的人不甘心而拼命押注。</li>
+        <li>人的疯狂来自“不认输”而非贪婪：冒险往往是为了“回本”；赌徒、加杠杆者、输红眼者都是想回到参照点，而没亏钱的人面对真机会反而缩手缩脚——“光脚不怕穿鞋的”“哀兵必胜”都是同一机制。</li>
+        <li>四大经典偏误都可归结为参照点：损失厌恶（套牢十几年不肯割肉、20 元运费心疼而包邮加价 20 元接受）、现状偏见（不跳槽、不换套餐、低效流程照旧）、禀赋效应（杯子实验：得到者 7 美元不卖，未得者只愿出 3 美元）、框架效应（亚洲疾病问题：数学等价的同一方案，讲“救活 200 人”有 72% 选保守，讲“死 400 人”有 78% 选冒险；肺癌手术“存活率 90%”与“死亡率 10%”也导致相反选择）。</li>
+        <li>现实中的代价：纽约出租车司机以“每日目标收入”为参照点，雨天早收工、晴天苦转悠；散户以买入价为参照点形成“处置效应”——涨一点就卖、跌了死扛、暴跌反而加仓，于是抓不住大涨、全程经历大跌；遮掩错误（水门事件、拉链门）是比错误本身更冒险的动作。</li>
+        <li>参照点纯粹是主观叙事：一千万输成二十万有人跳楼，白得二十万有人欣喜；高手应自由设置参照点，它可以是长期目标，应该是激励而不是枷锁。</li>
+        <li>主动管理参照点的方法：心理账户（丢电影票不重买、丢 100 元照常看电影——其实是同一笔钱）、每年两千元“学费账户”把损失“外包”、涨薪拆成“底薪＋绩效”、施恩去规律化（以工代赈、丑话说在前面、固定底薪改偶尔奖励），从而避开“升米恩斗米仇”。</li>
+        <li>宣和北伐的教训：朝廷同时挂着“现实安全”与“历史领土”两个互相打架的参照点，既不敢真冒险又不肯守本分，没有清晰的目标函数，最终引狼入室、靖康之耻——勇敢与怯懦往往不是出自品格，而是出自坐标。</li>
+      </ul>
+
+      <h5>二、给个人的行动建议</h5>
+      <ul>
+        <li>本周做一次“死扛盘点”：把套牢的仓位、亏本的买卖、错的关系、舍不得扔的东西列出来，逐一问“如果今天才第一次遇到它，我还会投入吗？”不会的，就按沉没成本处理，果断止损。</li>
+        <li>设一个年度“学费账户”（比如 2000 元），日常小损失一律从账户里扣，不占用情绪额度，年底剩余捐掉——用一年时间训练自己对损失脱敏。</li>
+        <li>购物前把心动物品放购物车冷静三天，下单前划掉商家标注的“原价”，只问“不打折我还买吗？”主动绕开“不买就亏了”的框架；退货犹豫时提醒自己：留下的代价是空间和精力。</li>
+        <li>重写你的参照点：不要拿自己和“同龄人里最成功的人”比，改成和“上周的自己”比；把参照点明确写成“我的长期目标”，贴在工作台或手机备忘录，每周对照一次，判断自己今天站在曲线的哪一侧。</li>
+        <li>给别人的预期做管理：发奖励把固定部分与浮动部分分开；帮人前先“把丑话说在前面”降低预期再给惊喜；长期帮助换成“以工代赈”式的交换，避免升米恩斗米仇。</li>
+        <li>投资卖出只问“这只资产未来会怎样”，不写“我亏了多少”；提前定好止损线并机械执行，一旦触发就走，绝不为了“回本”加仓——牢记买入价只是信息，不是决策依据。</li>
+        <li>做重要决策前，先识别“此刻是哪个参照点在推着我”：是别人的标杆、过去的顶点，还是我自己的目标？如果发现被一个荒谬的参照点推向冒险或锁在守成，直接走过去，把它改掉。</li>
+      </ul>
+
+      <h5>三、金句摘录</h5>
+      <p class="quote-line">“人不是为贪婪而疯狂，而是为不认输而疯狂。”</p>
+      <p class="quote-line">“你的勇敢和怯懦往往不是出自品格，而是出自坐标。”</p>
+      <p class="quote-line">“前景理论把‘人是追求利益的动物’改写成了‘人是守卫参照点的动物’。”</p>
+      <p class="quote-line">“它（参照点）应该是激励而不应该是枷锁。”</p>
+
+      <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习。</p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const bar = document.getElementById('progress');
+  const topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+    const show = scrollY > 400;
+    topBtn.style.opacity = show ? '1' : '0';
+    topBtn.style.pointerEvents = show ? 'auto' : 'none';
+  });
+  topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

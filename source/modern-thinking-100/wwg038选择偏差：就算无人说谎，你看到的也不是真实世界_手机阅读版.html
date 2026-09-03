@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>选择偏差：就算无人说谎，你看到的也不是真实世界｜万维钢·现代思维工具100讲·第38讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2620;
+    --muted:#8a8378;
+    --accent:#8a5a2b;
+    --accent-soft:#f0e6d8;
+    --border:#e6ded0;
+    --quote-line:#c9a96a;
+    --sum-bg:#f3ead9;
+    --sum-border:#d9b98a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --text:#e8e2d8;
+      --muted:#a39a8b;
+      --accent:#c99a63;
+      --accent-soft:#33291d;
+      --border:#3a342b;
+      --quote-line:#8a6a3d;
+      --sum-bg:#241f18;
+      --sum-border:#8a6a3d;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    padding:0 16px 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* 顶部阅读进度条 */
+  #progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#8a5a2b,#c9a96a);
+    z-index:1000;transition:width .1s linear;
+  }
+  @media (prefers-color-scheme: dark){
+    #progress-bar{background:linear-gradient(90deg,#c99a63,#e8c99a)}
+  }
+  /* 回到顶部按钮 */
+  #back-top{
+    position:fixed;right:18px;bottom:28px;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--border);background:var(--card);color:var(--accent);
+    font-size:20px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.12);
+    opacity:0;visibility:hidden;transform:translateY(10px);
+    transition:all .25s ease;z-index:999;display:flex;align-items:center;justify-content:center;
+  }
+  #back-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+  .container{max-width:700px;margin:0 auto}
+  /* 文档头 */
+  header{padding:36px 0 22px}
+  .course-tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.08em;color:var(--accent);
+    border:1px solid var(--accent);border-radius:999px;padding:4px 12px;margin-bottom:16px;
+    background:var(--accent-soft);
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13.5px;color:var(--muted)}
+  .meta .dot{margin:0 8px}
+  hr.sep{border:none;border-top:1px solid var(--border);margin:26px 0}
+  /* 正文 */
+  article p{margin:0 0 16px}
+  article em{font-style:normal;font-weight:700}
+  h3{
+    font-size:18.5px;font-weight:700;color:var(--accent);
+    margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--quote-line);
+  }
+  /* 分隔装饰 ✵ */
+  .ornament{
+    text-align:center;color:var(--accent);font-size:15px;
+    margin:30px 0;letter-spacing:.4em;display:flex;align-items:center;gap:14px;
+  }
+  .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:var(--border)}
+  /* 金句引用块 */
+  blockquote{
+    margin:20px 0;padding:14px 18px;border-left:4px solid var(--quote-line);
+    background:var(--accent-soft);border-radius:0 12px 12px 0;
+    color:var(--text);
+  }
+  blockquote p{margin:0}
+  /* 要点列表 */
+  ul{margin:0 0 16px;padding-left:24px}
+  li{margin-bottom:8px}
+  /* 诗歌 */
+  .poem{
+    margin:26px 0;padding:20px 18px;text-align:center;
+    background:var(--card);border:1px solid var(--border);border-radius:12px;
+    color:var(--accent);line-height:2;
+  }
+  .poem p{margin:0}
+  /* 注释 */
+  .notes{
+    margin-top:34px;padding:18px 18px 8px;font-size:13px;line-height:1.7;
+    color:var(--muted);background:var(--card);border:1px solid var(--border);border-radius:12px;
+  }
+  .notes h3{font-size:15px;margin:0 0 12px;padding:0;border:none;color:var(--muted)}
+  .notes ol{padding-left:22px}
+  .notes li{margin-bottom:8px;text-align:left}
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin-top:40px;padding:24px 20px;
+    background:var(--sum-bg);border:2px solid var(--sum-border);border-radius:12px;
+  }
+  #ai-summary .sum-title{
+    font-size:19px;font-weight:700;color:var(--accent);
+    text-align:center;margin-bottom:18px;letter-spacing:.06em;
+  }
+  #ai-summary h4{
+    font-size:15.5px;font-weight:700;color:var(--accent);margin:20px 0 10px;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;font-size:16px;background:var(--card);
+    border:1px solid var(--sum-border);border-radius:10px;padding:12px 14px;
+  }
+  #ai-summary ul{padding-left:22px}
+  #ai-summary li{margin-bottom:9px}
+  #ai-summary .quote-list li{
+    margin-bottom:10px;font-style:normal;
+  }
+  #ai-summary .quote-list li::marker{color:var(--accent)}
+  #ai-summary .sum-foot{
+    margin-top:20px;padding-top:12px;border-top:1px dashed var(--sum-border);
+    font-size:12px;color:var(--muted);text-align:center;line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="container">
+  <header>
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第38讲</span>
+    <h1>选择偏差：就算无人说谎，你看到的也不是真实世界</h1>
+    <div class="meta">作者：万维钢<span class="dot">·</span>《现代思维工具100讲》讲稿整理<span class="dot">·</span>手机阅读版</div>
+  </header>
+  <hr class="sep">
+
+  <article>
+    <p>如果你年纪稍长还经常上网，会不会有一种社会文化"今不如昔"的感慨。现在网上充斥着博眼球的烂梗和家长里短的市侩哲学，一开口就是牛马、彩礼、出轨，连主流媒体都不会说正经中文了。偶尔把以前拍的《红楼梦》《三国演义》电视剧翻出来看看，你难免会觉得这届观众不行，中国人的文化素质在严重下降。</p>
+    <p>再看线下，很多人怀念上世纪八十、九十年代的好时光。那时候如果你是个国企职工，工作不但一点都不累，还有丰富的业余文化生活，有充分的安全感。那时候的大学生毕业就能随便找到好工作，而且素质也是真高……</p>
+    <p>可我要说的是，就算你真的经历过以前那些好日子，你这场乡愁也是幻觉。八十年代初中国人口城镇化率只有 20%，到 1990 年高等教育毛入学率才 3%……而今天，城镇化率已经达到 67%，大学入学率超过 60%。你记忆中那些快乐的工人和自豪的大学生，在以前是极少数人——绝大多数中国人居住在农村，极度贫困，他们不是文化消费者更不是叙事主体，他们连抱怨都很难被你听见。</p>
+    <p>今天的社会文化之所以俗气，是因为这些原本沉默的人上网了：他们成了收视的主体和广告的目标，是他们在决定文化的走向。</p>
+    <p>中国文化不是降级了，而是扩容了。</p>
+    <p>今天那些住在前 20% 的好地区、学历高居前 3% 的精英，可能日子过得也不错、品位甚至比过去更高级，但他们的文化存在感被淹没了：不值得专门为这么点人拍电视剧。</p>
+    <p>人们怀念的，并不是过去中国的<em>平均值</em>，而是那个被强烈过滤过的中国。你的印象不是由全体样本决定，而是由"上桌样本"决定：以前是少数城市精英样本冒充了中国总体，现在影响你的则是更普通的人，还有平台算法的推波助澜。</p>
+    <p>这个机制叫「选择偏差（selection bias）」。现实世界中有太多观念陷阱，你必须掌握这个工具，才可能做出准确的判断。</p>
+
+    <div class="ornament">✵</div>
+
+    <p>简单说，选择偏差就是进入你视野的样本，并不等概率代表真实世界。</p>
+    <p>你以为你在观察整个大海，殊不知你只是在看渔网里捞上来的鱼——而这张网的网眼大小、下网的位置，早就决定了你会看到什么。</p>
+    <p>又好比你站在急诊室门口看一整天，得出结论说"这座城市的人都在流血"——你看到的每一幕都是真的，没有人在故意对你说谎，但你的世界观是假的。</p>
+    <p>我看过一个短视频，一位在亲子鉴定机构工作的女士说，她经历了这么多案例，认为男性才是弱势群体……她可能没意识到绝大多数夫妻没有来做亲子鉴定。</p>
+    <p>学术界发现了十几种选择偏差，我把它们粗略分为四类。</p>
+
+    <div class="ornament">✵</div>
+
+    <h3>第一类：自我选择偏差（Self-selection Bias）</h3>
+    <p>就如同开一场 party，来参加的人，都是自己<em>想要</em>来参加的。</p>
+    <p>最典型的一个现象，我们不妨称之为「朋友圈悖论」：你感觉朋友圈上几乎每个人都过得比你好。小张在马尔代夫潜水，小李刚提了新车，老王的女儿拿了钢琴大赛一等奖，而你，却在吃着外卖填报表。</p>
+    <p>他们没有撒谎，但人们往往只会把自己<em>好的一面</em>展示出来——发朋友圈这个动作经过了自我选择。那对刚因为房贷吵完架的夫妻，那个刚刚被老板痛骂的打工人，正如此刻的你，是不会发朋友圈的。</p>
+    <p>朋友圈是人生的高光时刻集锦，而不是生活的随机切片。可是如果有人不懂这个道理，非得拿自己的日常去对比别人的宣传海报，那就会陷入选择偏差，感觉失落。有研究发现，使用 Facebook 越频繁的人，越容易觉得别人更幸福、日子过得更好 [1]；而如果能把社交媒体使用限制到每天 30 分钟以下，人们就会显著减少孤独感和抑郁感 [2]。</p>
+    <p>另一个例子是网络评论。为什么很多电影、商品、餐馆的评价都呈现所谓「J 型分布」：绝对的主力在五星吹爆，次高峰在一星痛骂，中间的二、三、四星极少？因为只有当一个事物激发了你强烈情绪的时候，你才有动力去打开 APP、登录、写字、发表，"还行吧"那种温和体验没有发言动力。</p>
+    <p>更细致的研究 [3] 认为评论背后有两层自我选择——除了极端者发言的漏报偏差，还有一层是购买偏差，也就是愿意买的人本来就更可能偏正面……平台为了让评论更有用绞尽了脑汁，有的搞默认好评、已购才能评、积分激励、评价提醒等等，但偏差是无法消除的。根本问题不是技术，而是动力：不是每个人都想说话，想说话的人也不是平均人。</p>
+    <p>还有，你打开国际新闻，感觉世界太乱了；你打开社会新闻，感觉人的素质江河日下；你觉得某些国家极其危险，某些地方的人都很坏……这些都是因为自我选择偏差：只有极其罕见、极其恶劣的事件，才值得上新闻；岁月静好可不会上热搜。</p>
+    <p>自我选择偏差会让人长期处在一种被极端样本包围的精神状态，容易陷入无谓的焦虑、抑郁和心态失衡。</p>
+    <blockquote><p>须知社交媒体不是生活，评论区不是民意，热搜不是人间。</p></blockquote>
+
+    <div class="ornament">✵</div>
+
+    <h3>第二类：幸存者偏差（Survivorship Bias）</h3>
+    <p>如果说自我选择偏差是"有兴趣的人才来"，幸存者偏差就是：没来的人不是因为没兴趣，而是因为根本来不了。</p>
+    <p>幸存者偏差可能是商业世界最致命的认知陷阱，因为它会帮你总结错误的成功经验。</p>
+    <p>如果你只看巨头的传记，你会认为要想成功就得有极度的激情，敢于冒险，就得打破常规甚至做个偏执狂，要对新机会"All in"，尤其是要在很年轻的时候创业：比尔·盖茨、乔布斯、扎克伯格、山姆·奥特曼都没读完大学……于是你得出结论，成功 = 辍学 + 孤注一掷。</p>
+    <p>可是你不知道同样年轻、同样孤注一掷而<em>失败了</em>的人有多少。那些人都赔光、失业、回老家了，他们没有进入你的视野。</p>
+    <p>如果把失败的数据也统计进来，你会发现大部分创业公司都在半路消失了；增长最快的公司的创始人平均年龄并不是二十多岁，而是 45 岁：他们成功不是因为他们叛逆，而恰恰是因为他们积累了行业经验 [4]。</p>
+    <p>你不能听说几个人靠买彩票发了大财，就把买彩票视为理想的发财手段。成功学往往是把幸存者的运气当成因果关系。</p>
+    <p>理财基金是另一个重灾区。你要买理财，基金公司的小姐姐打开一张图表，说你看我们的历史收益多漂亮。她很可能没有骗你。但是她不能证明这只基金的业绩好到底是因为公司能力强，还是因为在这一只上蒙对了运气——因为她没给你看失败的数据。</p>
+    <p>现实是那些业绩糟糕、早就清盘、合并、死掉的基金，根本没机会站在你面前。金融学界早就研究过这个现象：如果只看基金样本的幸存者，公司真实业绩就一定会被系统性高估 [5]。</p>
+    <blockquote><p>你看见的是冠军橱窗，却不知后院堆着一地尸体。</p></blockquote>
+    <p>有人说某个偏方能治大病、某种健身法或者饮食疗法神奇，其实只不过是感受到好转的人更愿意出来讲故事，没效果的人早就离场了。</p>
+    <p>有人看见现在坐办公室的白领动不动就抑郁、亚健康，反倒是工厂里的蓝领工人一个个都特别壮实扛造，就说体力劳动有利于身体和精神健康——其实真相是那些不健康的人根本承受不住工厂的重体力劳动，早就被淘汰了。流行病学对此甚至专门有个名词，叫「健康工人幸存效应（Healthy Worker Survivor Effect）」[6]。</p>
+    <p>还有，怀旧，也有很大的成分是幸存者偏差 [7]。要知道人的记忆有个特点：从长期来看，我们记住的往往是一些高光时刻，我们会忘记困惑和麻烦。</p>
+    <p>有人怀念以前的文艺作品，有人怀念以前的社区关系，有人怀念以前的政治局面。可是如果你能到现场考察一番，会发现以前的人也有跟我们一样的担心——他们在怀念更早的以前。以前你很年轻，而年轻总是伴随各种美好的回忆；以前的你的麻烦都解决了，所以你不再认为它们是麻烦，而现在的麻烦还没解决。</p>
+    <blockquote><p>不是时代退步了，而是时间替过去做过一轮筛选。</p></blockquote>
+
+    <div class="ornament">✵</div>
+
+    <h3>第三类：分组选拔偏差（Selection / Sorting Bias）</h3>
+    <p>问题出在事物一开始的分配环节：它根本就不是随机分组的。</p>
+    <p>这里有个最反常识、也最刺痛中产阶级神经的例子，名校效应。</p>
+    <p>你砸锅卖铁也要买学区房，牺牲所有的空闲时间领孩子去参加这个活动那个活动，只为能上重点中学和好大学，最好是常春藤名校。你相信名校代表最好的教育，能把孩子培养成高级人才……但这是一个极度忽视科学检验的幻觉。</p>
+    <p>孩子们并不是被闭着眼睛随机分配到各个学校的，他们是经过了严苛的选拔才进去的。那些被选中的本来就是又聪明又努力、家庭条件又好的孩子，他们本来就更有可能是人才——那么名校到底是培养了他们，还是沾了他们的光呢？</p>
+    <p>美国经济学家斯泰西·戴尔（Stacy Dale）和艾伦·克鲁格（Alan Krueger）做过一系列研究 [8]。他们不是简单比较"名校生"和"普通校生"的收入，而是专门看那些水平差不多、都有能力去名校，但是有的去了、有的因为种种原因没去，而选择了普通学校的学生。结果发现，名校并没有让毕业生获得明显更高的收入——尤其是如果你看长期收益，名校效应就缩水到接近于零。</p>
+    <p>戴尔和克鲁格的研究认为，只有对出生于弱势家庭——比如是少数族裔，父母受教育程度很低——的学生，名校这块牌子才有明显的帮助。可能是因为他们更需要学校这个社交平台。</p>
+    <blockquote><p>简单说，名校更像筛选器，而不是炼丹炉。</p></blockquote>
+    <p>同样道理，你不能看有些孩子补课提高成绩，就认为补课能提高成绩；也不能看有些孩子从小参加各种课外活动、长大后成了成功人士，就认为那些素质教育有利于成功。那也许只不过是因为爱学习的孩子才爱补课，富裕的家庭才有条件让孩子去学击剑和马术，他们的成功只是个人能力和家庭能力的外溢。</p>
+
+    <div class="ornament">✵</div>
+
+    <h3>第四类：门槛偏差（Threshold Bias），也叫「伯克森悖论（Berkson's Paradox）」[9]</h3>
+    <p>这里的问题是你看到的都是跨过某个门槛之后的样本。有一些民间智慧说：</p>
+    <ul>
+      <li>长得帅的男人都是渣男。</li>
+      <li>美女通常脾气差。</li>
+      <li>业务能力强的人情商低。</li>
+      <li>体育好的学生文化课差，文化课好的学生体育差。</li>
+    </ul>
+    <p>难道说老天爷讲公平，给人一个优点就必定再给他一个缺点吗？其实这些统统都是错觉。</p>
+    <p>两个原本可能完全不相关的变量，如果你非得把它们加在一起，设定一个总的门槛，然后只看那些越过门槛的样本，你就会发现这两个变量显得负相关 [10]。</p>
+    <p>就拿婚恋市场来说，我们假设女生最看重的两项男生价值一个是长得帅，一个是人品好，能两者兼具就更好，但决不能又丑又渣。你默默地设定，男性的综合吸引力 = 颜值 + 人品，给每人都计算了一个总分。</p>
+    <p>一个男生哪怕想要成为你的备胎，他的总分也得越过一个门槛。那你可以想见，门槛里边的人两项都是高分的肯定是少数，大多数人必定是一项分高，一项分低——于是你发现颜值和人品是互斥的。</p>
+    <p>其实这一切只不过是因为那些又帅又专一的男生本来就少，而且早被人抢走了，而又丑又渣的男生根本就没有成为你的样本。</p>
+    <p>同样道理，为什么业务能力强的人情商低？因为公司招的都是"业务 + 情商"超过一定门槛的人。两项都强的是极少数，两项都弱的进不来，剩下你容易看见的，就必定是一项强、一项弱的那些。</p>
+    <blockquote><p>相亲不是人口普查，招聘不是社会抽样，门槛会制造对立，筛子会伪造规律。</p></blockquote>
+
+    <div class="ornament">✵</div>
+
+    <h3>如何对抗选择偏差</h3>
+    <p>选择偏差是因为样本有问题。但有时候就算样本没问题，你的眼睛还可能出问题。你可能只注意极端的案例而对那些平凡的事物视而不见；你可能只愿意看见支持自己观点的证据——这些现象被称作「可得性偏误（Availability Bias）」和「确认偏误（Confirmation Bias）」，我们这里不必细说。</p>
+    <p>想要在真实世界中获得一点真知，那是非常困难的。</p>
+    <p>科学家为了对付选择偏差费劲了力气。最理想的办法是把人随机分组做实验。但如果你不能做实验，只能被动统计现成的结果，你就必须得确保样本是干净的——其中最重要的就是去追踪那些没有出现的人。他们可能是因为失败而退出了游戏，但他们的参与仍然很有意义：他们可以贡献知识。</p>
+    <p>我们听说任何故事，总可以先问四句话：<em>谁没来？谁来不了？分组是随机的吗？这里有没有门槛？</em></p>
+    <p>如果你听说了很多坏消息，请提醒自己真实世界可能比你想的要好一点。对于老百姓的日常经验，也请提醒自己，人有多么容易陷入偏差。</p>
+    <p>正所谓：</p>
+    <div class="poem">
+      <p>灯下看人皆匆忙，<br>瀑前观水势奔狂。<br>若问世间真面目，<br>先寻沉默与退场。</p>
+    </div>
+  </article>
+
+  <div class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Chou, Hui-Tzu Grace, and Nicholas Edge. "They Are Happier and Having Better Lives Than I Am." <em>Cyberpsychology, Behavior, and Social Networking</em> 15, no. 2 (2012): 117–121.</li>
+      <li>Hunt, Melissa G., et al. "No More FOMO: Limiting Social Media Decreases Loneliness and Depression." <em>Journal of Social and Clinical Psychology</em> 37, no. 10 (2018): 751–768.</li>
+      <li>Hu, Nan, Paul A. Pavlou, and Jie Zhang. "Why Do Online Product Reviews Have a J-Shaped Distribution? Overcoming Biases in Online Word-of-Mouth Communication." 2009.</li>
+      <li>Azoulay, Pierre, Benjamin F. Jones, J. Daniel Kim, and Javier Miranda. 2020. "Age and High-Growth Entrepreneurship." <em>American Economic Review: Insights</em> 2 (1): 65–82.</li>
+      <li>Elton, Edwin J., Martin J. Gruber, and Christopher R. Blake. 1996. "Survivorship Bias and Mutual Fund Performance." <em>Review of Financial Studies</em> 9 (4): 1097–1120；Carhart, Mark M., Jennifer N. Carpenter, Anthony W. Lynch, and David K. Musto. 2002. "Mutual Fund Survivorship." <em>Review of Financial Studies</em> 15 (5): 1439–1463.</li>
+      <li>Arrighi, H. Michael, and Irva Hertz-Picciotto. 1994. "The Evolving Concept of the Healthy Worker Survivor Effect." <em>Epidemiology</em> 5 (2): 189–196.</li>
+      <li>《精英日课》第五季，乡愁愁什么愁；Johan Norberg, <em>Open: The Story of Human Progress</em>, Atlantic Books, 2020.</li>
+      <li>Dale, Stacy Berg, and Alan B. Krueger. "Estimating the payoff to attending a more selective college: An application of selection on observables and unobservables." <em>The Quarterly Journal of Economics</em> 117.4 (2002): 1491-1527.</li>
+      <li>《精英日课》第四季，伯克森悖论</li>
+      <li>Westreich, Daniel. "Berkson's Bias, Selection Bias, and Missing Data." <em>Epidemiology</em> 23, no. 1 (2012): 159–164.</li>
+    </ol>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <div class="sum-title">AI 阅读总结</div>
+
+    <p class="one-liner">一句话概括：选择偏差，就是进入你视野的样本并不等概率代表真实世界——没人对你说谎，你看到的一切都是真的，但你的世界观是假的；学会追问"谁没来"，才能看清真相。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li><strong>怀旧是一种"上桌样本"幻觉。</strong>八十年代的工人、大学生之所以美好，是因为他们当年只占人口的极少数（城镇化率仅 20%、高等教育毛入学率仅 3%），而今天 67% 的人住进城市、60% 以上的人能上大学。文化不是降级而是扩容：沉默的大多数上网后成了收视主体，是他们在决定文化走向。</li>
+      <li><strong>选择偏差的定义。</strong>你观察到的不是全体样本，而是经过筛选的样本——渔网的网眼大小和下网位置、急诊室门口的病人、亲子鉴定机构的来访者，都决定了你会得出什么结论，而每一幕单独看都是真的。</li>
+      <li><strong>第一类：自我选择偏差。</strong>来参加 party 的都是想来的。朋友圈是高光时刻集锦而非生活随机切片（"朋友圈悖论"）；评论呈 J 型分布是因为只有强烈情绪才有发言动力；新闻只报道罕见恶劣事件。研究显示刷 Facebook 越多越觉得别人幸福，把社交媒体限制到每天 30 分钟以下能显著减少孤独和抑郁。</li>
+      <li><strong>第二类：幸存者偏差。</strong>没来的人不是因为没兴趣，而是根本来不了。只读巨头传记会得出"成功 = 辍学 + 孤注一掷"的错误结论——失败者早已离场；增长最快的公司创始人平均年龄其实是 45 岁。基金业绩、偏方疗效、蓝领身体好（健康工人幸存效应）、乃至怀旧，都是幸存者偏差的产物。</li>
+      <li><strong>第三类：分组选拔偏差。</strong>名校学生本就不是随机分配的。戴尔与克鲁格的研究对比"能力相近、有人上名校有人没上"的学生后发现，名校对收入几乎没有长期加成——只有对弱势家庭出身的学生才有明显帮助。名校更像筛选器而不是炼丹炉；补课、素质教育同理，可能只是能力与家庭条件的外溢。</li>
+      <li><strong>第四类：门槛偏差（伯克森悖论）。</strong>当两个原本无关的变量被加总成"综合分"，而你又只看越过门槛的人，两者就会显得负相关——"帅的渣、美脾气差、业务强情商低"都是门槛制造的错觉；又帅又专一的人本来就少且早被抢走，又丑又渣的人根本进不了你的样本。</li>
+      <li><strong>对抗方法。</strong>最理想是做随机分组实验；只能被动统计时，关键是追踪"没有出现的人"。听到任何故事先问四句话：谁没来？谁来不了？分组是随机的吗？这里有没有门槛？听到太多坏消息时提醒自己，真实世界可能比你想的要好一点。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>本周就给自己的社交媒体设限。</strong>把每天刷朋友圈、短视频的时间压到 30 分钟以内，并在看到"别人过得好"的动态时默念一遍"这是高光集锦，不是随机切片"，别拿自己的日常去对比别人的海报。</li>
+      <li><strong>把"四句问话"贴成备忘录。</strong>下次看到创业故事、投资神话、爆款新闻时，依次问：谁没来？谁来不了？分组随机吗？有没有门槛？问完再决定是否相信或行动。</li>
+      <li><strong>给情绪性评论和评分"降权"。</strong>看网购评价、餐厅评分时提醒自己 J 型分布是发言动力造成的：五星和一星最多，中间的"还行吧"都沉默了。少被极端评论左右，优先看有细节的中间段评价。</li>
+      <li><strong>读成功学、传记前先找失败数据。</strong>想模仿某位年轻创业者的路径时，先搜一搜同样孤注一掷却失败的案例有多少；理财决策前问基金经理"清盘和亏损的基金表现如何"，而不仅看展示给幸存者的漂亮曲线。</li>
+      <li><strong>为孩子的教育花钱前做一次"反选"思考。</strong>问自己：孩子进名校、补课、学马术击剑，收益究竟来自学校课程本身，还是来自孩子本来就好、家庭本来有条件？优先把资源投向孩子真实的兴趣与长期能力，而不是追逐"牌子"。</li>
+      <li><strong>给"人设标签"减负。</strong>相亲、招人、交朋友时，若脑中冒出"帅的必然渣""业务强必然情商低"，立刻意识到这是伯克森悖论——两项都强的人本来就少且早被抢走。用具体行为而不是标签做判断。</li>
+      <li><strong>给怀旧做一次"时间筛选"检查。</strong>怀念过去的好时光时，问问自己：记住的是不是只剩高光时刻？当年的麻烦是不是早已解决，而现在的麻烦还没解决？用 2025 年的数据（城镇化率、入学率）代替记忆里的滤镜。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul class="quote-list">
+      <li>"你以为你在观察整个大海，殊不知你只是在看渔网里捞上来的鱼。"</li>
+      <li>"须知社交媒体不是生活，评论区不是民意，热搜不是人间。"</li>
+      <li>"你看见的是冠军橱窗，却不知后院堆着一地尸体。"</li>
+      <li>"相亲不是人口普查，招聘不是社会抽样，门槛会制造对立，筛子会伪造规律。"</li>
+    </ul>
+
+    <p class="sum-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<button id="back-top" aria-label="回到顶部">↑</button>
+<script>
+  var bar = document.getElementById('progress-bar');
+  var btn = document.getElementById('back-top');
+  function onScroll(){
+    var doc = document.documentElement;
+    var total = doc.scrollHeight - doc.clientHeight;
+    var p = total > 0 ? doc.scrollTop / total : 0;
+    bar.style.width = (p * 100) + '%';
+    if (doc.scrollTop > 400) { btn.classList.add('show'); } else { btn.classList.remove('show'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  onScroll();
+</script>
+</body>
+</html>

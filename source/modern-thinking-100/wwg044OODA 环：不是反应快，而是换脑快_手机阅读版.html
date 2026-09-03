@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第44讲 OODA 环：不是反应快，而是换脑快｜万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2620;
+    --fg-soft:#5c534a;
+    --card:#ffffff;
+    --card-border:#e8e0d3;
+    --accent:#8a5a2b;
+    --accent-soft:#f3e9dc;
+    --quote-border:#c9a87c;
+    --divider:#d8cfc0;
+    --code-bg:#f1ebe1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d4;
+      --fg-soft:#a99e8e;
+      --card:#201d18;
+      --card-border:#3a342b;
+      --accent:#d4a05e;
+      --accent-soft:#2e2418;
+      --quote-border:#8a6a3f;
+      --divider:#3d362c;
+      --code-bg:#2a251e;
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#d4a05e);
+    z-index:1000;transition:width .08s linear;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px 60px;
+  }
+  .doc-header{margin-bottom:28px;}
+  .tag{
+    display:inline-block;
+    font-size:12.5px;letter-spacing:.08em;color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--quote-border);
+    padding:4px 12px;border-radius:999px;
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:26px;line-height:1.4;margin:0 0 12px;
+    text-align:left;letter-spacing:.01em;
+  }
+  .meta{
+    font-size:13px;color:var(--fg-soft);text-align:left;
+    border-top:1px dashed var(--divider);padding-top:10px;
+  }
+  h2{
+    font-size:19px;margin:34px 0 12px;padding-left:10px;
+    border-left:4px solid var(--accent);
+    line-height:1.4;text-align:left;
+  }
+  h3{font-size:17px;margin:26px 0 10px;color:var(--accent);text-align:left;}
+  p{margin:0 0 14px;}
+  ul,ol{margin:0 0 16px;padding-left:1.35em;}
+  li{margin-bottom:8px;}
+  blockquote{
+    margin:18px 0;padding:12px 16px;
+    border-left:4px solid var(--quote-border);
+    background:var(--card);
+    border-radius:0 12px 12px 0;
+    color:var(--accent);font-weight:600;
+  }
+  .divider{
+    display:flex;align-items:center;gap:12px;
+    margin:26px auto;color:var(--divider);font-size:14px;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--divider);
+  }
+  .ref-num{font-size:.75em;vertical-align:super;color:var(--accent);}
+  .notes{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:16px 18px;
+    font-size:12.5px;color:var(--fg-soft);line-height:1.7;
+  }
+  .notes p{margin:0 0 8px;}
+  .notes p:last-child{margin:0;}
+  .comments{margin-top:10px;}
+  .comment{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
+  }
+  .comment .who{
+    font-size:13.5px;color:var(--accent);font-weight:600;
+    margin-bottom:4px;text-align:left;
+  }
+  .comment .when{font-size:12px;color:var(--fg-soft);margin-bottom:10px;text-align:left;}
+  .comment p{font-size:15.5px;line-height:1.8;margin-bottom:10px;}
+  .comment h4{font-size:15.5px;margin:14px 0 8px;text-align:left;color:var(--fg);}
+  .reply{
+    margin-top:12px;padding:10px 14px;
+    background:var(--accent-soft);border-radius:10px;
+    font-size:14px;color:var(--fg-soft);
+  }
+  #ai-summary{
+    margin-top:44px;
+    background:var(--card);
+    border:2px solid var(--accent);
+    border-radius:14px;
+    padding:22px 20px;
+  }
+  #ai-summary .ai-head{
+    display:flex;align-items:center;gap:8px;
+    font-size:17px;font-weight:700;color:var(--accent);
+    margin-bottom:6px;text-align:left;
+  }
+  #ai-summary .ai-head::before{
+    content:"✦";font-size:15px;
+  }
+  #ai-summary h4{
+    font-size:15.5px;color:var(--accent);margin:20px 0 10px;
+    text-align:left;
+  }
+  #ai-summary p,#ai-summary li{font-size:15.5px;}
+  #ai-summary .ai-note{
+    margin-top:18px;padding-top:12px;
+    border-top:1px dashed var(--divider);
+    font-size:12px;color:var(--fg-soft);text-align:center;
+  }
+  #backTop{
+    position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    border:none;font-size:20px;cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    display:flex;align-items:center;justify-content:center;
+    z-index:999;
+  }
+  #backTop:hover{transform:scale(1.06);}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="container">
+
+  <header class="doc-header">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第44讲</span>
+    <h1>OODA 环：不是反应快，而是换脑快</h1>
+    <div class="meta">作者：万维钢　｜　现代思维工具100讲 · 决策与判断板块 · 第44讲（手机阅读版）</div>
+  </header>
+
+  <p>我们已经讲了很多个关于决策和判断的心法，作为这个板块的最后一讲，咱们说说怎么把决策判断和行动结合起来。</p>
+
+  <p>实战场合不会给你留下很多时间做调研，你不能指望你的决策一上来就是正确的……而且你必须迅速做出反应。就好比你是个急诊室医生，救护车推进来一个满身是血、意识模糊的病人。家属在旁边尖叫，心电监护仪疯狂报警。你该怎么操作？又或者，股市突然崩盘，你卖不卖？竞争对手发了一个颠覆性的产品，你跟不跟？</p>
+
+  <p>算好了再决策，根本就没有时间，因为你并不掌握全部的信息。手忙脚乱是大忌，可是不反应也不对。怎样才是有章法的应对呢？</p>
+
+  <p>这一讲的思维工具叫「OODA 环（OODA Loop）」，意思是「观察—定向—决策—行动（Observe–Orient–Decide–Act）」这四个动作的循环。</p>
+
+  <p>你可能在别的场合听说过 OODA，很多人把它理解成反应快——但 OODA 的精髓其实是「换脑快」：把你抛到任何一个情境之中，你能不能迅速判断这是什么局、对方要干什么、什么是重点什么是噪音，建立你的认知地图？每循环一轮，就是把地图刷新一遍。谁的地图刷新率更高，谁就越能在混乱里保持主动。</p>
+
+  <blockquote>不是快手赢慢手，而是新脑子赢旧脑子。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>OODA 的来历：博伊德的 40 秒反杀</h2>
+
+  <p>OODA 最早是美国空军传奇战斗机飞行员、被誉为“整整一代军官的战术导师”的博伊德（John R. Boyd）在 1970 年代提出来的<span class="ref-num">[1]</span>。</p>
+
+  <p>博伊德是在空战教学中悟出的这番道理。他喜欢跟人打 40 美元的赌，说自己能从劣势位置开始，在 40 秒钟之内翻到对手后方完成反杀。OODA 就是博伊德的战术秘诀，不过博伊德想的可不只是空战，而是一般意义上，人在对抗中如何持续修正理解、争夺主动权。</p>
+
+  <p>简单说，OODA 把对抗性博弈拆解成了四个循环往复的步骤——</p>
+
+  <ol>
+    <li><strong>观察（Observe）</strong>：看到对手在哪，环境发生了什么变化；</li>
+    <li><strong>定向（Orient）</strong>：搞明白“刚才看到的这些信息意味着什么”；</li>
+    <li><strong>决策（Decide）</strong>：基于刚才的判断，我决定下一步怎么做；</li>
+    <li><strong>行动（Act）</strong>：拉操纵杆、开火、或者转向。</li>
+  </ol>
+
+  <div class="divider">✵</div>
+
+  <h2>拳击比赛：要点不是快，而是有效</h2>
+
+  <p>就拿拳击比赛来说：一个最基本的 OODA 环就是你看到对手左肩微微一沉（观察）→ 你的大脑迅速匹配经验，判断他要出左勾拳（定向）→ 你决定下潜躲避并打他右肋（决策）→ 最后你弯腰出拳（行动）。</p>
+
+  <p>那你说这也太简单了，无非就是“看一看、想一想、做一做”，以快打慢呗？没这么简单。要点并不在于你的循环比对方快，而在于你的循环有效——最好你还能误导对方的循环。</p>
+
+  <p>想象两个拳击手，甲出拳很快，乙没那么快，但他很会“改写对方的判断”。前几次试探里，乙总是假装想打左侧肋部，让甲形成一个稳定预期。等甲的注意力和重心都往左偏，乙突然换节奏，一步切进中线，直接打头！</p>
+
+  <p>乙不是赢在了最后那一拳，而是赢在他误导了甲的 OODA 中的“定向”那一步。乙把甲的脑子带进了错误地图。</p>
+
+  <blockquote>这就是为什么一轮 OODA 不够，必须反复循环——就算之前的判断是对的，下一秒可能就不对了。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>用现代认知科学看 OODA</h2>
+
+  <p>用现代认知科学的视角看，OODA 环简直是再自然不过。</p>
+
+  <p>我们前面讲过「预测加工（predictive processing）」理论，你知道大脑本质上是一个预测机器，我们不是被动地接收世界的信息，而是在脑子里先有一个关于世界的模型，然后用这个模型去预测会发生什么。当现实和预测不符时，我们就必须更新模型——这不就是一轮一轮的「观察」和「定向」吗？</p>
+
+  <p>我们还讲过自由能原理中的「主动推断（active inference）」，你知道行动不是感知之后的附属品，行动本身就是获取证据、减少预测误差的方式：不是先把世界看清楚再行动，而是带着模型行动，用行动去采样世界——这不就是「决策—行动」，再开启下一轮「观察—定向」吗？</p>
+
+  <p>OODA 的深意，不是要做一次决策采取一次正确行动，而是面对时刻都在变化的局面，我们要边行动、边学习、边修正。</p>
+
+  <p>博伊德后来升级了 OODA 学说<span class="ref-num">[2]</span>，把其中的 D（决策）更多地解释成「假设（Hypothesis）」，把 A（行动）更多地解释成对世界进行一次「压力测试（Stress Test）」。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>广义的 OODA：在不确定中连续下小注</h2>
+
+  <p>博伊德的完整版本是一个带着前馈、反馈、隐性引导和环境互动的开放系统，我们简化一下，广义的 OODA 环其实是在不确定中连续地下小注、做实验、收反馈、改地图——</p>
+
+  <ul>
+    <li><strong>Observe</strong>：不是多看几眼堆信息，而是抓变化、抓异常，抓那些一旦看见就会改变下一步动作的信号；</li>
+    <li><strong>Orient</strong>：不是转个身找方向，而是重新判断“眼前这到底是什么局”；</li>
+    <li><strong>Decide</strong>：不是宣布真理，而是选一个当前最值得下注验证的假设；</li>
+    <li><strong>Act</strong>：不是结局，而是逼现实表态。</li>
+  </ul>
+
+  <p>外行以为高手的每个行动都是为了取得什么进展，但 OODA 提倡很多行动只是“拨弄”一下现实。你打出一拳，看看对手是格挡还是后退；你向市场投放一个 MVP（最小可行性产品），看看消费者的反馈。这种“拨弄感”，才是 OODA 高手的作风。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>经典案例：中途岛海战</h2>
+
+  <p>咱们来看一个经典案例：中途岛海战。</p>
+
+  <p>1942 年春天的太平洋战场，美军破译了日本通信，知道对方要袭击一个代号为 “AF” 的目标，这是<strong>「观察」</strong>。</p>
+  <p>尼米兹猜测 AF 有可能是中途岛，但是他不敢确定，这是<strong>「定向」</strong>。</p>
+  <p>于是尼米兹接受部下建议，决定验证一下，这是<strong>「决策」</strong>。</p>
+  <p>中途岛发出一份明码电报，说岛上的淡水设备坏了，缺水，这是<strong>「行动」</strong>。这个行动引发了下一轮 OODA——</p>
+  <p>日军发电报：AF 缺水。看来 AF 就是中途岛，这是美军的新<strong>「观察」</strong>。</p>
+  <p>尼米兹明确了日军要打中途岛，这是<strong>「定向」</strong>。</p>
+  <p>尼米兹决定准备伏击日军，这是<strong>「决策」</strong>。</p>
+  <p>美军航母被提前部署到中途岛东北方向，这是<strong>「行动」</strong>。</p>
+
+  <p>再看战斗当天的日军。南云忠一命令舰载机发起空袭，目标是中途岛机场和设施。他根本没想到美军航母就在附近。</p>
+
+  <p>第一波攻击后，有报告说中途岛尚未被彻底压制，需要第二波，这是南云的第一个<strong>「观察」</strong>。</p>
+  <p>南云并没有改变对局面的理解，认为应该继续压制中途岛，这是<strong>「定向」</strong>。</p>
+  <p>南云下令准备第二波攻击，这是<strong>「决策」</strong>。</p>
+  <p>日军飞机返回航母加油，再次挂载对陆地攻击炸弹，准备出发，这是<strong>「行动」</strong>。</p>
+  <p>就在这时候，日军侦察机报告发现美军战舰，然后又说对方可能有航母，这是第二轮<strong>「观察」</strong>。</p>
+  <p>南云犹豫不决：如果专心对付美军航母，就得让战机把挂载的对地攻击炸弹换成反舰的鱼雷和穿甲弹，这会很麻烦，这是失败的<strong>「定向」</strong>。</p>
+  <p>南云来回摇摆，一会儿想坚持打中途岛，一会儿想优先打航母，这是<strong>「决策」</strong>。</p>
+  <p>日军航母甲板上一团混乱，有的飞机在改挂载，有的刚回来，有的在等待起飞窗口，这是<strong>「行动」</strong>。</p>
+
+  <p>这就让美军有时间侦察到日本航母位置，开启下一轮 OODA，全力攻击航母……剩下的就是历史了。</p>
+
+  <blockquote>一个积极刷新地图，让行动产生新信息；一个把自己困在旧地图里，让行动制造负担，最后的胜负不是很合理吗？</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>现代战争：把 OODA 变成组织能力</h2>
+
+  <p>在现代指挥控制体系中，OODA 环已经不再仅仅是对一个飞行员或者指挥官的战术要求，而是上升成了对全局的综合性要求——用美军的话说就是要争取「决策优势（Decision Advantage）」<span class="ref-num">[3]</span>：谁能在这个循环里不断提出更好的假设、做更猛的压力测试、然后更快地重塑对战场的认知，谁就掌握了战争的制高点。</p>
+
+  <p>OODA 环是一个组织把经验变成更新速度的能力。过去比的是个人能不能快速换脑，今天比的是传感器、数据、通信链、算法、授权机制和前线反馈这些能不能一起快速换脑。</p>
+
+  <p>咱们说一个最新的例子，乌克兰战场。乌军和俄军的很多对抗都围绕无人机展开，而乌克兰把战场变成了一个通过 OODA 对无人机技术进行升级的平台。根据截至 2026 年 3 月的报道<span class="ref-num">[4]</span>，乌克兰正通过一个安全平台向盟友开放战场数据，用来训练无人机的 AI 系统。</p>
+
+  <p>前线每一次被干扰、每一次轰炸和射击偏离，都变成了后方机房里的预测误差，这就是<strong>「观察」</strong>。通过分析数以百万的图像，AI 更新了对俄罗斯电子战环境的理解，这就是<strong>「定向」</strong>。基于这种高频的定向，后方的工程师和指挥官会迅速做出技术路线的<strong>「决策」</strong>。然后乌克兰的前线小队带着刚刚刷入新固件、更新了算法的无人机，在真实的战火中进行测试和微调，又把反馈数据直接传给厂商，这是<strong>「行动」</strong>……并且开启下一轮 OODA。</p>
+
+  <blockquote>现代战争中，决策速度本身就是一种武器系统。而在 AI 时代，赢家恐怕是学习链最短的一方。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>最关键的第二个 O：定向</h2>
+
+  <p>你大约能看出来，OODA 四个字母里，最关键的是第二个 O，也就是「定向（Orientation）」。博伊德早在 1987 年就说过：「定向是整个 OODA 循环的“阵眼”。」（Orientation is the Schwerpunkt.）</p>
+
+  <p>在我看来，这个「定向」绝不是简单的找方向，或者产生一个什么明悟——而是「改叙事」，改叙事才是真正的换脑子。定向是你意识到局面不是你之前想的那样，原来你应该使用的是这个模型！定向给了你「归纳偏置」，你才有接下来的决策和行动。</p>
+
+  <p>博伊德说，定向是由四股力量共同塑造的：遗传背景（genetic heritage）、文化传统（cultural tradition）、既往经验（previous experiences）和正在展开的情境（unfolding circumstances）<span class="ref-num">[5]</span>。</p>
+
+  <p>换句话说，同样一条信息，落到不同人脑子里，会长出完全不同的意义。</p>
+
+  <p>或者你也可以说，定向就是给事件定性。比如职场上一个项目延期，你把它定向成“同事不努力”，和你把它定向成“这个需求本身就有问题”，你后面的决策和行动会截然不同。</p>
+
+  <blockquote>定向是指挥官最高级的本事。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>商业案例：Zara 的三轮循环</h2>
+
+  <p>咱们再看一个商业上的案例。服装销售商 Zara，被认为是快时尚的巨头，仿佛能预测潮流一般。但与其说它是一家服装公司，还不如说它是一家披着时尚外衣的高频数据处理与物流响应公司。Zara 在自家门店获得顾客反馈之后，三周之内就能完成从重新设计到新品上架，靠的正是 OODA<span class="ref-num">[6]</span>。</p>
+
+  <p>它的一个典型循环是这样的<span class="ref-num">[7]</span>——</p>
+
+  <p>Zara 推出一款春季短夹克。上架一周后，信号传回总部，有的门店卖得还可以，有的门店不行，说顾客主要嫌弃版型和长度，这是<strong>「观察」</strong>。</p>
+
+  <p>别的公司对此的「定向」可能是把数据压缩成一句话：这款卖得一般。但 Zara 的定向保持了有效的颗粒度：不是这款不行，而是它在不同气候、不同穿搭习惯的门店顾客群里，意义不一样。</p>
+
+  <p>那么接下来的「决策」和「行动」就不会是盲目砍掉或者胡乱补货，而是让设计准备一个更贴合寒冷地区需求的变体——原本卖得好的门店，继续卖原版；找几个更适合卖变体的门店，卖变体。这就是一次低成本的市场实验。</p>
+
+  <p>第二轮反馈回来，变体在原先疲软的门店开始动了，而原版在另一批门店仍然卖得更好，这是新的「观察」。</p>
+
+  <p>看来分版本是对的，这是新「定向」。于是「决策」和「行动」是让不同门店铺不同版本。</p>
+
+  <p>而且还有第三轮 OODA：等 Zara 发现这款夹克的销量有一点下降，就会快速撤场，让它在趋势变坏之前优雅地退出。</p>
+
+  <blockquote>完美预测是不可能的。但 Zara 能控制自己脑子的刷新速度。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>日常生活中怎么用 OODA</h2>
+
+  <p>我们在日常生活中也可以使用 OODA，关键还是「定向」——</p>
+
+  <ul>
+    <li><strong>学习上</strong>：在应试教育中学习，别一观察到考差了就“我再多刷两百道题！”应该先定向：自己做错的题到底是审题错、概念错，还是时间分配崩了。</li>
+    <li><strong>工作上</strong>：别一看到数据下滑就是“加班”“加功能”“加汇报”。先做一个最小探针，看问题到底出在产品、流程、叙事，还是组织协同。很多团队不是缺执行，而是缺一次能逼真相现形的小行动。</li>
+    <li><strong>关系上</strong>：夫妻吵架，最有用的 OODA 不是立刻反击，而是先问一句：对方眼里现在到底是个什么事儿？可能你以为你们在争事实，对方觉得你们在争关系。</li>
+    <li><strong>健康上</strong>：个人健康可以每周来一次 OODA 小循环：观察睡眠、饮食和精力；定向出最关键的单一变量；只改这一个；做七天。下周也许换成别的变量。</li>
+  </ul>
+
+  <div class="divider">✵</div>
+
+  <h2>总结</h2>
+
+  <p>总结来说，OODA 环——</p>
+
+  <ul>
+    <li>不是反应快，而是<strong>换脑快</strong>。</li>
+    <li>不是永远对，而是<strong>及时改</strong>。</li>
+    <li>不是求定论，而是<strong>先下小注</strong>。</li>
+    <li>不是做完一步，而是让每一步都<strong>带回下一步的情报</strong>。</li>
+  </ul>
+
+  <p>大部分人只是闷头走路，有些人偶尔抬头看天；而有极少数人，却是始终都在密切观察，努力重新审视地图。他们会用各种方法主动刺探，以期抓住微小的机会，把局面带入自己的节奏。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>注释</h2>
+  <div class="notes">
+    <p>[1] Hammond, Grant T. <em>On The Making of History: John Boyd and American Security</em>. The Harmon Memorial Lecture, United States Air Force Academy, 2012.</p>
+    <p>[2] Boyd, John R. <em>A Discourse on Winning and Losing</em>. Edited by Grant T. Hammond. Maxwell Air Force Base, AL: Air University Press, 2018.</p>
+    <p>[3] Price, Brian. “Decision Advantage and Initiative.” <em>Air &amp; Space Operations Review</em>, 2024.</p>
+    <p>[4] Hunder, Max. “Ukraine Opens Battlefield Data Access to Allies’ AI Models.” Reuters, 2026; Arhirova, Hanna. “How Ukraine’s Front Line Became a Laboratory for Drone Innovation.” Associated Press, 2026.</p>
+    <p>[5] Boyd, John R. <em>Organic Design for Command and Control</em>. Briefing, 1987.</p>
+    <p>[6] Inditex. “Our Approach.”; “Group Profile December 2024.”</p>
+    <p>[7] Reuters. “Zara Owner Inditex Sees Fast Fashion Flying Higher.” Reuters, March 15, 2017.</p>
+  </div>
+
+  <div class="divider">✵</div>
+
+  <h2>用户留言</h2>
+  <div class="comments">
+
+    <div class="comment">
+      <div class="who">一叶而知秋</div>
+      <div class="when">7小时前 · 内蒙古</div>
+      <p>【思维工具－OODA 环】今天的案例，是我在苏木挂职时的几件趣事。早就听说乡镇工作是“上面千条线，下面一根针”。可真到了基层，才发现这些干部的脑子有多活。论写材料，他们讲不出我那么多政策语言；可论解决实际问题，我那套政策理论，在乡镇基本没有施展的空间。</p>
+      <p>这几件事，都跟杨苏木长有关。我的分工就是协助他工作。他是汉族，干部们都叫他杨镇长。五十出头，初中文化，但处理起事情来，比我这个大学生利索一百倍。听完这节课，再回头对标他的工作方式，可以说是招招暗合 OODA 循环——只是当时我并不知道还有这么个理论。下面讲三件事，无一不是“观察—定向—决策—行动”的完整闭环。</p>
+      <h4>第一件：迁坟</h4>
+      <p>市里统一推进高标准农牧区建设，要求各乡镇将所有私坟迁至集体公墓。我们苏木涉及几十座坟，上面给了硬期限：一个月迁完。别的乡镇硬推，闹得老百姓堵了旗政府大门。杨镇长却不着急，先让我去摸排：每座坟是谁家的，谁说话算数。</p>
+      <p>情报回来，他发现村民嘴上说“补偿太低”，私下嘀咕的却是“谁家先动祖坟，谁家就缺德”。真正的阻力不是钱，而是没人愿意当那个“挖祖坟”的出头鸟。</p>
+      <p>杨镇长判断：这不是政策问题，也不是补偿标准问题，而是社会心理问题。老百姓需要一个“权威”来替他们做决定，而且这个权威不能是镇干部——干部代表“任务”，不代表“理”。</p>
+      <p>于是他不跟村民正面谈迁坟了，转而跟镇上一位阴阳先生打得火热。不久，这位在苏木里辈分高、嘴又滑的阴阳开始“参政议政”，挨家挨户看似闲聊，实则句句有指向——“这座坟风水不对，迁了旺子孙”“那块地压了龙脉，早迁早好”。牧民们本来心里犯嘀咕，被这么一说，反而觉得不迁才是不孝。一个月不到，所有坟全部迁完。</p>
+      <p>后来我才知道，杨镇长私下跟阴阳先生约定：动员一户、迁一座坟，就给一笔提成。只是给阴阳的钱不能走财政账目，我也不清楚他是怎么变通处理的。这事不好问，但我知道他有办法。年底苏木财务结算时，迁坟费用比其他乡镇硬补硬赔省了一大截。</p>
+      <p>我说：“镇长，你这是搞封建迷信啊。”他白我一眼：“你管它黑猫白猫？老百姓信阴阳，我就用阴阳。事办了，钱省了，上面对结果满意，下面没上访。哪条规矩说我不能请阴阳？规矩是死的，人是活的。”</p>
+      <h4>第二件：补偿款</h4>
+      <p>旗里在我们苏木新建了一处工业园区。苏木政府负责征地补偿，涉及几户牧民。因为占地不同，补偿款也有差异。其中一户拿的最少，三十八万。他把钱领了——注意，是先领了钱——但因为心里不平衡，合同一直不签。杨镇长让嘎查支书催了好几次，那户人家今天说“在外地”，明天说“再想想”。后来传话：不加到跟其他户一样的七八十万，就不签合同。这一道手续不完备，项目开不了工，企业主很着急。</p>
+      <p>杨镇长判断：领了钱、不签合同、拖延、放出加价风声——这不是普通的犹豫，而是一场有预谋的博弈。问题不是补偿标准（钱已经按谈好的领了），也不是沟通不畅，而是对方“占着钱当筹码”。常规的讲政策、做工作，只会助长他拖下去的底气。</p>
+      <p>于是他不再谈价钱，而是从旗公安局“假装”报了案，把问题从“合同纠纷”重新定向为“涉嫌不当得利甚至诈骗”。先定性，再谈合同。</p>
+      <p>民警来了，直接去了那户人家，说有人报案，调查他们没签征地合同就冒领三十八万补偿款的事，涉嫌诈骗，调查期间要把钱退回去。牧民一看，可能鸡飞蛋打，当晚就跑到镇政府把合同签了，再没提加钱的事。</p>
+      <p>后来我说：“镇长，你这招是不是太狠了？”他说：“狠什么？他先不守规矩。我只不过把他做的事重新‘定性’一下。你跟他讲道理，他跟你耍无赖；你跟他说‘诈骗’，他就跟你讲道理了。这叫先换定向，再谈价钱。”</p>
+      <h4>第三件：应付检查</h4>
+      <p>自治区来督查“农村人居环境整治”。别的乡镇提前半个月大扫除、刷墙、雇人，忙得鸡飞狗跳。杨镇长呢？</p>
+      <p>他先给去年迎检优秀的乡镇打电话，问检查组都看了哪些地方、问了哪些人、挑了哪些毛病。情报显示：检查组不会挨家挨户查，而是沿着主干道随机抽查几个“示范户”，并且一定会问老百姓“厕所用了没”。</p>
+      <p>他判断：上面要的是“效果好”这个结果，而不是“全村都干净”这个完整过程。只要主干道和显眼的几户不出问题，检查组大概率满意，偏远角落被发现的风险很低。</p>
+      <p>于是他不搞全镇大整治，只做三件低成本、高回报的小事：①把主干道两侧最显眼的十户人家收拾利索，每户送一盆花放门口；②嘎查干部提前跟这几户打好招呼，统一口径说“厕所一直用，好用得很”；③偏远的嘎查暂时不动，集中人力守住主干道和示范户。</p>
+      <p>检查组来了，沿着主干道走了一圈，看了那十户人家，拍了照，问了几个人，都说“好”。满意走人。隔壁乡镇花了十几万刷墙，检查组随机拐进一条巷子发现垃圾成堆，被通报批评。</p>
+      <p>我跟镇长说：“您这不就是上有政策下有对策吗？”他说：“你错了。上面要的是‘效果好’，不是‘过程好看’。我用最小的成本把效果做出来了，就是对上负责。你让我把全镇几十个村子全部搞一遍，钱呢？人呢？老百姓不放牧了？”</p>
+      <p>挂职结束那天，我跟杨镇长道谢。他送了我一包干羊肉，慢悠悠地说：“你们市局的人，脑子好使，就是太‘正’。记住，上面给的永远是一张大图，但到你这一亩三分地，你得自己画小图。啥叫小图？就是看清楚三样东西——老百姓怕啥、想要啥、你能给啥。”</p>
+      <p>现在，我写材料、跑企业、处理纠纷，总会想起这番话。然后问自己三个问题：1. 这件事真正的“局”是什么？是钱、是面子、是怕，还是赌一口气？ 2. 我能不能换一个定向，让对手的牌瞬间变废牌？ 3. 有没有一个成本最低、见效最快的“探针”，先打出去看看反应？</p>
+      <p>这就是我从一个初中文化的镇长身上学到的 OODA。他不会说这四个字母，但他每一招都在循环。</p>
+      <div class="reply"><strong>作者回复：</strong>非常有意思，谢谢分享！</div>
+    </div>
+
+    <div class="comment">
+      <div class="who">Leslie Ko</div>
+      <div class="when">6小时前 · 台湾</div>
+      <p>社群網站演算法，就是我們現代人每天都在接觸的高頻 OODA 環。你打開手機，滑過第一支影片。你以為這只是一次無意識的動作，但對演算法來說，這是一筆情報。你停留，它記下來；你滑走，它也記下來；你留言，它更要記下來。因為這些訊號，都在幫它回答一個問題：此刻的你，想要什麼？這就是觀察。</p>
+      <p>接下來，演算法開始定向：你不是單純喜歡美食，你可能喜歡深夜療癒型美食；你不是單純關心職場，你可能正在被焦慮型成長內容吸引。它不是只看內容分類，而是在重建你的心理地圖。</p>
+      <p>然後，它決定下一則推什麼。你一反應，它又進入下一輪循環。這就是 OODA 的可怕之處：它不是靠神機妙算，而是靠密集試錯。它不怕猜錯，因為下一秒就能修正。</p>
+      <p>所以，社群演算法給我們最大的提醒是：在今天這個世界，誰能更快完成「觀察—定向—決策—行動」，誰就能更深地影響人的選擇。你刷到的不是內容，是一套正在高速理解你的系統。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">李盈</div>
+      <div class="when">2小时前 · 天津</div>
+      <p>OODA 环告诉我们不要本能反应，无脑行动。如果方向不对，越努力失败得越快。对于商业用户来说，始终要对大众需求保持敏锐的嗅觉，去捕捉那些尚未满足的需求。</p>
+      <p>例如，大部分商业店铺在工作日的下午三四点钟都是比较冷清的，但是如果某些商铺毗邻学校，那情况就不一样了，那个时候可能反而是一天当中最热闹的时候。有心的商铺在发现这个情况之后就会采取一些措施，通过推出一些吸引孩子的产品，以及额外的第三空间，来让家长获得片刻的安静，把自己打造成周围最好的亲子社交空间。</p>
+    </div>
+
+  </div>
+
+  <section id="ai-summary">
+    <div class="ai-head">AI 阅读总结</div>
+    <p><strong>一句话概括：OODA 环不是比“反应快”，而是比“换脑快”——通过观察—定向—决策—行动的连续循环，在混乱中不断刷新认知地图、争夺主动权，而一切的关键在于那个“改叙事”的定向。</strong></p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li>OODA 环由美国空军传奇飞行员博伊德在 1970 年代从空战教学中提出，把对抗性博弈拆成「观察—定向—决策—行动」四个循环往复的步骤，博伊德本人靠它打赌 40 秒内从劣势位置反杀对手。</li>
+      <li>它的精髓不是手快，而是“换脑快”：每循环一轮就是把认知地图刷新一遍，谁的地图刷新率更高，谁就越能在混乱中保持主动——不是快手赢慢手，而是新脑子赢旧脑子。</li>
+      <li>四个字母中最关键的是第二个 O「定向」：它不是找方向，而是“改叙事”、给事件重新定性（如项目延期定向成“同事不努力”还是“需求有问题”，后续决策截然不同）；定向由遗传、文化、经验与当下情境四股力量塑造，同一条信息在不同人脑中意义完全不同。</li>
+      <li>有效的循环胜过快的循环，更高明的是误导对方的循环：拳击手乙通过反复假动作改写甲在“定向”一步的预期，把甲的脑子带进错误地图——所以一轮 OODA 永远不够，必须反复循环。</li>
+      <li>博伊德后期把 D 升级为「假设」、A 升级为「压力测试」，广义的 OODA 就是在不确定中连续地下小注、做实验、收反馈、改地图；很多高手的行动只是“拨弄”一下现实（打一拳看对手怎么格挡、投一个 MVP 看市场反应），而不是追求一步到位。</li>
+      <li>它与认知科学高度自洽：大脑是预测机器，现实与预测不符就要更新模型（观察—定向）；行动本身就是采样世界、获取证据的方式（决策—行动），人要边行动、边学习、边修正。</li>
+      <li>经典案例形成鲜明对照：中途岛海战中尼米兹用“假电报”验证假设、积极刷新地图而取胜；南云忠一困在旧地图里、在“打中途岛还是打航母”之间反复摇摆而失败。现代战争里 OODA 已上升为组织能力（美军的“决策优势”），乌克兰用战场数据闭环训练无人机 AI 即是当代缩影。</li>
+      <li>商业与日常同样适用：Zara 三周完成从门店反馈到新品上架、靠三轮 OODA 让不同门店铺不同版本并在趋势变坏前优雅撤场；个人层面可用于考后复盘、工作数据下滑时打“最小探针”、夫妻吵架时先问“对方眼里的局是什么”、以及每周一次只改一个变量的健康小循环。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>本周就给一次“翻车”重新定性</strong>：把最近考砸、被批评或数据下滑的事写下来，先回答“这到底是什么局”——是能力问题、流程问题、还是预期错位，再决定动不动作，别一上来就加大动作量（刷题、加班、加功能）。</li>
+      <li><strong>练习打“最小探针”</strong>：拿不准时，用最小成本、最快速度做一个试探性小行动逼现实表态——发一个测试版本给少数用户、给关键客户打一个电话、先做一页方案给对方看，而不是闷头调研到完美。</li>
+      <li><strong>给每个重要决定配一个“反馈触发器”</strong>：行动前写下一个可检查的信号（如“如果一周内某指标不变，就说明假设错了”），到点就核对并更新判断，让这一步的行动带回下一步的情报。</li>
+      <li><strong>冲突时先换叙事再开口</strong>：下次和家人、同事争执，先停三秒问一句“对方眼里现在到底是个什么事”——是把问题定向成“争事实”还是“争关系”“争面子”，再决定怎么回应，往往比立刻反击有效得多。</li>
+      <li><strong>建立每周 15 分钟的个人 OODA</strong>：固定时间观察 1–2 个关键变量（睡眠、精力或一个工作指标），定向出唯一最重要的单一变量，只改这一个、做满七天，下周再换，形成节律。</li>
+      <li><strong>复盘时定位“断在哪一环”</strong>：把最近一次失败按观察/定向/决策/行动四步标注出来，多数问题会断在“定向”（信息理解错了或叙事故了），针对性地补情报、换视角，而不是笼统地怪自己不够努力。</li>
+      <li><strong>夺回自己的“定向”主动权</strong>：意识到社群算法正在对你做高频 OODA——它记录你的停留、滑走与留言来重建你的心理地图。每周留一次主动观察时间（清理信息源、写下自己为何被某条内容吸引），别让别人替你完成定向。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul>
+      <li>“不是快手赢慢手，而是新脑子赢旧脑子。”</li>
+      <li>“不是反应快，而是换脑快。不是永远对，而是及时改。不是求定论，而是先下小注。”</li>
+      <li>“定向是指挥官最高级的本事。”</li>
+      <li>“一个积极刷新地图，让行动产生新信息；一个把自己困在旧地图里，让行动制造负担，最后的胜负不是很合理吗？”</li>
+    </ul>
+
+    <div class="ai-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('backTop');
+  function onScroll(){
+    var d=document.documentElement;
+    var max=d.scrollHeight-d.clientHeight;
+    var y=d.scrollTop||document.body.scrollTop;
+    bar.style.width=(max>0?(y/max*100):0)+'%';
+    var show=y>300;
+    btn.style.opacity=show?'1':'0';
+    btn.style.pointerEvents=show?'auto':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

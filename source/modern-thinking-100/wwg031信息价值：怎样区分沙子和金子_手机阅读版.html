@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲·第31讲 | 信息价值：怎样区分沙子和金子</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#fffdf9;
+    --text:#2b2621;
+    --muted:#7a7268;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.12);
+    --border:#e5ddd0;
+    --quote-bg:#f4ece0;
+    --summary-bg:#eef3ec;
+    --summary-border:#b9cdb2;
+    --summary-head:#4d6b44;
+    --divider:#d8cfc0;
+    --shadow:0 2px 10px rgba(90,70,40,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#1f1c18;
+      --text:#ece5da;
+      --muted:#a89f92;
+      --accent:#c9935f;
+      --accent-soft:rgba(201,147,95,.16);
+      --border:#38322b;
+      --quote-bg:#262019;
+      --summary-bg:#1c241b;
+      --summary-border:#4c6b47;
+      --summary-head:#a8c69c;
+      --divider:#3a332c;
+      --shadow:0 2px 10px rgba(0,0,0,.35);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    transition:background .3s,color .3s;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,#8a5a2b,#c9935f);
+    z-index:99;border-radius:0 2px 2px 0;
+  }
+  .wrap{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 18px 90px;
+  }
+  .course-tag{
+    display:inline-block;
+    font-size:12.5px;
+    letter-spacing:.12em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:23px;
+    line-height:1.4;
+    font-weight:700;
+    letter-spacing:.01em;
+    margin-bottom:10px;
+  }
+  .meta{
+    font-size:13px;
+    color:var(--muted);
+    padding-bottom:18px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:22px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px 18px;
+    box-shadow:var(--shadow);
+  }
+  .card + .card{margin-top:16px}
+  p{margin:0 0 1em;text-align:justify}
+  p:last-child{margin-bottom:0}
+  h3{
+    font-size:18px;
+    font-weight:700;
+    margin:30px 0 12px;
+    padding-left:10px;
+    border-left:4px solid var(--accent);
+    line-height:1.45;
+  }
+  ul{margin:0 0 1em;padding-left:1.3em}
+  li{margin-bottom:.55em;text-align:justify}
+  li::marker{color:var(--accent)}
+  .quote{
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    padding:14px 16px;
+    margin:18px 0;
+    font-style:normal;
+  }
+  .quote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    margin:26px 0;color:var(--accent);
+    font-size:18px;letter-spacing:.6em;text-indent:.6em;
+    opacity:.85;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--divider);
+  }
+  .divider::before{margin-right:12px}
+  .divider::after{margin-left:12px}
+  .poem{
+    text-align:center;
+    padding:22px 16px;
+    border:1px dashed var(--accent);
+    border-radius:12px;
+    background:var(--accent-soft);
+  }
+  .poem .poem-title{
+    font-weight:700;color:var(--accent);
+    letter-spacing:.15em;margin-bottom:12px;font-size:15px;
+  }
+  .poem p{margin:0;text-align:center;line-height:2}
+  .notes{
+    margin-top:26px;
+    font-size:12.5px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .notes h4{
+    font-size:13px;color:var(--text);
+    margin-bottom:8px;letter-spacing:.1em;
+  }
+  .notes a{color:var(--accent);word-break:break-all}
+  #ai-summary{
+    margin-top:34px;
+    background:var(--summary-bg);
+    border:1.5px solid var(--summary-border);
+    border-radius:14px;
+    padding:22px 20px;
+    box-shadow:var(--shadow);
+  }
+  #ai-summary .ai-head{
+    font-size:17px;font-weight:800;
+    color:var(--summary-head);
+    letter-spacing:.06em;
+    margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  #ai-summary .ai-head::before{
+    content:"";display:inline-block;width:10px;height:10px;
+    border-radius:50%;background:var(--summary-head);
+  }
+  #ai-summary .one-liner{
+    font-weight:700;
+    background:rgba(255,255,255,.4);
+    border:1px solid var(--summary-border);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:16px;
+  }
+  @media (prefers-color-scheme: dark){
+    #ai-summary .one-liner{background:rgba(255,255,255,.05)}
+  }
+  #ai-summary h5{
+    font-size:15px;color:var(--summary-head);
+    margin:18px 0 8px;
+  }
+  #ai-summary ul{margin-bottom:4px}
+  #ai-summary .gold{
+    border-left:3px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 8px 8px 0;
+    padding:10px 14px;
+    margin:6px 0;
+  }
+  #ai-summary .gold p{margin:0;text-align:left}
+  #ai-summary .ai-foot{
+    margin-top:16px;padding-top:12px;
+    border-top:1px dashed var(--summary-border);
+    font-size:12px;color:var(--muted);
+    text-align:center;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fffdf7;
+    border:none;font-size:20px;line-height:1;
+    cursor:pointer;z-index:99;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s,transform .25s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #toTop.show{opacity:1;pointer-events:auto}
+  #toTop:active{transform:scale(.92)}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+
+  <header>
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第31讲</span>
+    <h1>信息价值：怎样区分沙子和金子</h1>
+    <div class="meta">作者：万维钢 ｜ 决策科学 ｜ 信息价值（VOI）</div>
+  </header>
+
+  <section class="card">
+    <p>你每天花好几个小时刷手机。你关注了所有的行业大 V。你在上下班路上还要用降噪耳机以 1.5 倍速播放硬核商业播客。你加入了十几个微信交流群。你每个月花好几百元订阅 AI 服务。因为你想知道下一个风口在哪，你必须率先用上最新的工具，你需要了解政策走向，你得跟上热点……</p>
+    <p>这种情绪听起来挺积极，但其实那是害怕 —— 英文甚至有个专门的词，叫 FOMO（Fear of Missing Out），也就是"害怕错过"。你怕自己没用过那个最具颠覆性的新模型，你怕听不懂同事嘴里蹦出的新词，你怕被时代抛弃。</p>
+    <p>可是接收了这么多信息，你难道不应该变得更强大、更从容吗？怎么还成了惶惶不可终日呢？</p>
+    <p><strong>因为那些信息没有价值。</strong></p>
+    <p>「信息价值（Value of Information，简称 VOI）」是决策科学里的一个专门理论，我希望它能帮你区分沙子和金子。</p>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>什么是信息价值：能改变行动才有价值</h3>
+  <section class="card">
+    <p>VOI 理论起源于 20 世纪中叶，相当于是统计学和管理科学的一次范式转移 [1]。以前学者们都是关注判断信息真假、如何取得信息之类的问题，可是真实的信息不一定对你有用。是 VOI 理论第一次关心信息的价值，而且它对价值的定义非常严格：</p>
+    <div class="quote"><p><strong>只有当一条信息能够改变你的实际行动时，它才有价值。</strong>说白了就是对决策有用，才有价值。</p></div>
+    <p>VOI 是有这条信息时你能做出的最佳选择，比没它时你能做出的最佳选择，平均能多赚多少。</p>
+  </section>
+
+  <h3>经典案例：一份勘测报告值多少钱</h3>
+  <section class="card">
+    <p>一个经典的学术案例是这样的。想象你是一家石油公司的老板，你面前有一块地，在这儿打一口油井的成本是 1000 万美元。如果地下有油，打好的油井值 5000 万美元，等于净赚 4000 万；如果没油，1000 万美元就算打水漂。地质学家一番分析，说这块地有油的概率是 20%。</p>
+    <p>现在有一家勘测公司找到你，说他们可以搞一次精确的地震波扫描，告诉你这儿到底有没有油。那么请问，你最多愿意为这份勘测报告付多少钱？VOI 理论要求我们先算一算预期收益。</p>
+    <p>如果你不看报告现在就选择打井，那就是要么损失 1000 万，要么赚 4000 万，预期收益是 20% × 4000 万 - 80% × 1000 万 = 0，所以理性的决策是没必要打。而有了这份报告，如果报告说"有油"，你会决定打井，稳赚 4000 万；如果报告说"没油"，你就不打井，一分钱不亏：既然"有油"的先验概率是 20%，那么报告的期望价值就是 20% × 4000 万 = 800 万美元。</p>
+    <p>那么 VOI 理论说，把你的收益从 0 提高到 800 万，这就是这份信息的价值。</p>
+    <div class="quote">
+      <p>多想想石油公司这个例子会让你在面对新信息的时候多一分定力。人家的报告值 800 万美元，而你昨天晚上看的那篇《万字长文解析 AI 革命》，也许 VOI 等于 0。</p>
+      <p><strong>没有决策对象的信息，其价值接近于零。</strong></p>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>反驳：不是说要终身学习吗？</h3>
+  <section class="card">
+    <p>那你说不对啊，不是说要终身学习吗？不是说要为自己赋能吗？不是说"无用之用方为大用"吗？</p>
+    <p>在 VOI 理论看来，有价值的信息一定跟你要做的决策 —— 或者是现在，或者是将来 —— 有关才行。当然你也可以把注意力成本花费在跟决策无关的信息上，但那是消费价值，不是决策价值。</p>
+    <p>想想那些让我们整天陷入 FOMO 的热点信息，恐怕大多数都跟决策没有关系。你其实是在寻求一种"我在变强，我在跟上"的自我满足感，或者说是在确认身份认同：我是懂行的人、是站在时代前沿的人、最好还是比别人更早知道的人。</p>
+    <p>人们常常把消费信息等同于一种行动，但这完全是两回事。<strong>能改变行动的才是有价值信息。</strong></p>
+    <p>陷入信息焦虑绝不是因为缺少信息，而是因为决策没有落地。用咱们前面讲 WOOP 时候的话说，那些整天消费信息而没有用信息做出实质决策的人，其实是处在"漂流（drifting）"的状态，正所谓夜晚千条路白天磨豆腐。要想打破漂流状态，你必须得有一个计划，一个可执行的动作。</p>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>高价值信息的三个特点</h3>
+  <section class="card">
+    <p>价值理论听起来很枯燥，但其实特别刺激，因为它能告诉你什么是好东西。在 VOI 的视角下，高价值信息往往有三个特点。</p>
+    <ul>
+      <li><strong>第一是目标导向。</strong>先想做一件事，有一个目标，才谈得上追逐高价值信息。你到底想优化什么？你现在所做事情的瓶颈是什么？好的信息应该是一个杠杆，它能改变你的动作，对你的目标有实际的推动作用。而这样的信息往往是本地的、是专门对你的，而不是热搜新闻。日本首相说了什么跟你没啥关系。你应该关心你们团队的真实产能分布，到底谁在扛事、谁是瓶颈、谁在假忙。</li>
+      <li><strong>第二，它带有痛感。</strong>我们的大脑都有「确认偏误（Confirmation Bias）」，我们喜欢看那些能印证自己原有观点的信息。但真正有价值的信息，一定是不符合你之前认知模型的信息，它会改变你的先验。这种信息不仅会让你惊讶，而且往往让你不舒服。它可能是负反馈，可能证伪你的观念。</li>
+      <li><strong>第三个特点是它出现在「决策边界」上。</strong>只有当你正好在两个选项之间摇摆，选这个还是选那个拿不定主意的时候，来一个关键信息让你的选择立即倾斜，这才是高 VOI。比如说你已经打定主意要买一款新能源车，钱都准备好了，就等周末出手了。今天又看到一份关于电动车的分析报告，你很感兴趣，但其实不会左右你的决定，这就是低 VOI。反过来说，如果你现在手里有两份工作 offer，各有利弊正拿不定主意呢，突然有个朋友给你透露了一个消息：其中一家公司正在酝酿，可能一两年内上市！这个消息对你就是价值千金。</li>
+    </ul>
+    <p>对比之下，我们整天 FOMO 的那些信息，一是人人都能看见，二是主要提供情绪价值，三是跟你的决策基本无关，所以 VOI 都是很低的。</p>
+  </section>
+
+  <h3>实战案例：Polymarket 套利</h3>
+  <section class="card">
+    <p>我说一个实战例子 [2]。有一个预测市场叫 Polymarket，你可以在它网站上对各种公共事件下注。2026 年 1 月到 2 月间，有个博士生在上面对各大体育赛事下注了大约三千次，总共获利将近三百万美元。他是怎么做到的呢？</p>
+    <p>预测市场在比赛之前都会提供赔率，那些赔率经过精心计算，基本上能反映双方球队的真实实力 [3]。这哥们发现，亚洲博彩市场对赔率的更新，会比 Polymarket 提前两三个小时。也就是说在这两三个小时之内，亚洲博彩市场有比 Polymarket 更新、因而也可能是更精准的预测。</p>
+    <p>这就相当于在你拿不定主意的时候，有人告诉你：专业人士刚刚根据最新情况做的判断，把那个队赢球的概率稍微提高了一点点。</p>
+    <p>这一点点足以让天平倾斜。当然如果你只做一两次这样的操作，你肯定有输有赢 —— 但只要做的量大，那精准一点点的概率差异，就能让你平均而言稳定地盈利。这哥们用了一个跟单机器人，实时抓取亚洲市场和 Polymarket 的赔率，利用两者的差异在 Polymarket 自动下注，等于是用系统赚钱。</p>
+    <div class="quote">
+      <p>请问这里的高 VOI 是什么？不是赌球市场有这些项目，也不是比赛赔率本身，而是<strong>两个市场之间的赔率差异</strong>。没有人会把那个差异专门写出来告诉你。</p>
+    </div>
+    <p>而且它稍纵即逝。我们可以想见，如果有很多人模仿这哥们的玩法，两个市场的差异就会被拉平，套利空间也就不存在了。</p>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>做信息狙击手，不做信息漫游者</h3>
+  <section class="card">
+    <p>要获取高价值信息，你应该做一个信息狙击手，而不是信息漫游者。你得先想好自己要做什么决定，你现在距离决策边界是近还是远，这条新信息有没有可能对你的决定产生重大影响，然后你还得看看它的成本是多少才行。</p>
+    <p>VOI 理论并不主张我们取得所有相关的信息。你不需要不停地调研，该拍板就得拍板：信息有强烈的边际效用递减，调研适可而止也是一种技能 [4]。</p>
+    <p>但是这里的确有更高级的操作，为了高 VOI 信息有时候你就是得舍得成本才行。那么我们需要了解两个概念：EVPI 和 EVSI [5]。</p>
+    <ul>
+      <li><strong>EVPI</strong> 是「完全信息期望价值（Expected Value of Perfect Information）」，它能彻底消除这件事儿的不确定性，相当于是上帝视角的信息。前面说的那个用地震波扫描勘测石油的服务，给的就是 EVPI，因为它能明确告诉你这个地方到底有没有油。再比如你想买辆二手车，花钱请个专业师傅彻底检查一遍，也是获取 EVPI。</li>
+      <li><strong>EVSI</strong> 是「样本信息期望价值（Expected Value of Sample Information）」。EVSI 是你通过做实验、抽样调查或者主动干预的方式获取的"部分信息"。虽然 EVSI 保留了一定的不确定性，但只要能让你的概率更精确、更新了你的先验，它也很有价值。</li>
+    </ul>
+    <p>研发新药做临床实验，互联网公司搞个 A/B 测试，搞创新先弄一个最小可行产品（MVP）扔到市场上看看反馈，这些都是获取 EVSI 的方法。</p>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>日常生活中的高价值信息：其实并不多</h3>
+  <section class="card">
+    <p>这些原则都很简单。咱们再看看日常生活中的高价值信息都有哪些 —— 其实并不多。</p>
+    <ul>
+      <li><strong>职场普通员工</strong>往往会高估行业宏观趋势的价值。他们喜欢谈论所谓"风口"，关心行业巨头的融资新闻 —— 其实那都是公司高层才需要操心的事儿，或者干脆就是老板给画的大饼。你最应该关心的是：你们公司这个特定场域的奖励函数是什么？升职提拔看的核心指标是什么？你眼前的工作流程哪一步最卡？有没有优化的余地？</li>
+      <li><strong>学生</strong>往往会高估升学和名校的信息，比如"未来十年最热门专业预测"、"清华学霸的日程表"等等。其实你更应该关心你自己的薄弱点在哪里：哪些概念你没搞懂？哪些题型你总丢分？哪些原本应该是你的必拿分？先把成绩搞上去，再考虑针对你的具体情况，看看怎么报志愿。</li>
+      <li><strong>有些科研人员</strong>喜欢谈论国家大事和最近震惊世界的科学发现，但那些都没什么用。大部分科研人员更喜欢谈论"江湖八卦"，比如说哪个教授跟哪个教授有矛盾、哪个大牛刚评上了院士云云，其实也帮不了你。你真正应该关心的是：你这个细分领域里的当前热门问题和主流打法是什么？你自己那个实验为什么总做不出来？你那台仪器的底噪是多少？隔壁研究组为啥能申请到一大笔经费？</li>
+      <li><strong>最有意思的是公司的老板们</strong>，他们很喜欢去商学院大谈特谈什么"第二曲线"、"颠覆式创新"之类时髦的概念，有的还专门研究《周易》玄学。但是他们更应该知道的是：你们那个最好的销售，为啥上个月离职了？你们供应链里那个总是拖延两天交货的供应商，内部到底出了什么问题？你需要摸清楚约束、反馈和因果关系。</li>
+    </ul>
+    <p>等等等。简单说，各路公开的报道、宏大的叙事、什么宏观大趋势预测，都是被高估的信息，看着极为华丽但实际上都是沙子。</p>
+    <div class="quote">
+      <p>而高 VOI 信息往往是比较细碎、不耀眼、甚至听起来有点无聊的东西，绝不会出现在媒体的头条。它可能是一些枯燥的先验概率，一些来自用户的负反馈、两个圈子之间的"结构洞"透露的内部消息、最重要的是你自己的数据。</p>
+    </div>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <section class="card">
+    <p>有的人谈起国际形势头头是道，但是对本单位的政治不屑一顾；有的人天天追踪 AI 革命新闻，但是连最简单的自动化工作流都没实操过；有的人在网上买个几十块钱的小玩意儿都会货比三家、看遍评测，但是对买房、跳槽、甚至结婚这种关乎一生的重大决策却没有做过尽职调查……</p>
+    <p>有些人如饥似渴地吸收知识只是为了满足自己的好奇心 —— 我非常尊重好奇心 —— 但有些人搜集信息是为了决策。</p>
+    <p><strong>做个"知道分子"也挺好，但如果你想做点实事儿，你得有 VOI 意识。</strong></p>
+  </section>
+
+  <div class="divider">✦</div>
+
+  <h3>收束小诗</h3>
+  <div class="poem">
+    <div class="poem-title">收束小诗</div>
+    <p>先设选项，再探情报。<br>不改动作，徒增消耗。<br>何必全知？焦虑作妖。<br>支点之外，皆为闲草。</p>
+  </div>
+
+  <div class="notes card">
+    <h4>注释</h4>
+    <p>[1] Howard, Ronald A. "Information Value Theory." IEEE Transactions on Systems Science and Cybernetics 2, no. 1 (1966): 22–26.</p>
+    <p>[2] 参见：区块链行情研究（@qkl2058）的 X 推文，2026 年 2 月 17 日。<br><a href="https://x.com/qkl2058/status/2023757218932552134?s=12&t=cBYTMvCM9D0ac23JcB2osA">https://x.com/qkl2058/status/2023757218932552134</a><br>主人公账号页面在 <a href="https://polymarket.com/@432614799197">https://polymarket.com/@432614799197</a></p>
+    <p>[3] 精英日课第二季，老球迷怎样科学投注</p>
+    <p>[4] Pirolli, Peter, and Stuart Card. "Information Foraging." Psychological Review 106, no. 4 (1999): 643–675.</p>
+    <p>[5] Raiffa, Howard, and Robert Schlaifer. Applied Statistical Decision Theory. 1961</p>
+  </div>
+
+  <section id="ai-summary">
+    <div class="ai-head">AI 阅读总结</div>
+    <div class="one-liner">一句话概括：信息的价值不在于多少、新旧或真假，而在于它能否改变你的实际行动 —— 能改变决策的才是金子，其余大多是沙子。</div>
+
+    <h5>一、核心内容总结</h5>
+    <ul>
+      <li>VOI（信息价值）理论起源于 20 世纪中叶，是决策科学里第一次严格定义"信息价值"的理论：只有当一条信息能够改变你的实际行动时，它才有价值，说白了就是对决策有用才有价值；真实的信息不一定对你有用。</li>
+      <li>VOI 可以定量计算：等于"有这条信息时能做的最佳选择"比"没它时能做的最佳选择"平均多赚多少。石油打井案例中，一块有油概率 20% 的地，不勘测时最佳决策是不打井（期望收益为 0），而一份能确定有没有油的勘测报告期望价值高达 800 万美元 —— 这就是从 0 到 800 万的提升。</li>
+      <li>没有决策对象的信息价值接近于零。人们整天刷手机、追热点背后的情绪是 FOMO（害怕错过），那是在寻求"我在变强、我在跟上"的自我满足和身份认同；把消费信息当成行动是两回事，信息焦虑的根源是决策没有落地，人会陷入"漂流"状态。</li>
+      <li>高价值信息有三个特点：一是目标导向，它服务于一个具体目标、是本地且专门针对你的（而非热搜新闻）；二是带有痛感，它挑战你的确认偏误、改变你的先验，往往让你不舒服；三是出现在决策边界上，正好在你两个选项之间摇摆时让选择立即倾斜。</li>
+      <li>Polymarket 套利实战：一位博士生发现亚洲博彩市场更新赔率比 Polymarket 早两三个小时，用跟单机器人抓住两个市场间的赔率差异大量自动下注，约三千次下注获利近三百万美元 —— 高 VOI 信息是"赔率差异"而非赔率本身，而且稍纵即逝。</li>
+      <li>要做"信息狙击手"而非"信息漫游者"：先想好自己要做什么决定、距离决策边界多远、新信息能否影响决定、成本多少；VOI 不主张取尽所有信息，信息边际效用递减，该拍板就得拍板，调研适可而止也是技能。</li>
+      <li>两个进阶概念：EVPI（完全信息期望价值，如地震勘测、二手车彻底检查，消除全部不确定性）与 EVSI（样本信息期望价值，如临床试验、A/B 测试、MVP，用部分信息更新先验）—— 需要高 VOI 信息时值得为此付出成本。</li>
+      <li>各类人群都在高估宏观信息：员工追风口、学生追热门专业预测、科研人员谈国家大事与江湖八卦、老板谈"第二曲线"和玄学；真正的高 VOI 信息细碎、不耀眼、不上头条 —— 是你自己的数据、奖励函数、薄弱点、用户的负反馈和结构洞里的内部消息。</li>
+    </ul>
+
+    <h5>二、给个人的行动建议</h5>
+    <ul>
+      <li>本周做一次"信息盘点"：把关注的公众号、订阅的播客、加入的群列成清单，逐个问"它改变过我哪个具体决定？"，把三个月内没改变过任何决策的信息源取关、退订、退群。</li>
+      <li>给每天的信息消费设一道"决策门"：打开一篇长文或热点前，先写下你当前最想做的三个决定（换工作、买房、报课等），问自己"这条信息能帮我推进哪个决定？"答不上来就放下。</li>
+      <li>把至少七成信息时间花在"本地信息"上：你们团队的真实产能分布、谁在扛事谁在假忙、你工作流程里最卡的一步、客户对你的负反馈 —— 这些才贴近你的决策边界。</li>
+      <li>挑一个正在摇摆的重大决策（比如两份 offer、买不买车），明确写出"什么信息一出现我就会立刻倒向一边"，然后只去搜集这类信息，而不是泛泛调研。</li>
+      <li>给重大决策做尽职调查：对买房、跳槽这类人生大事，至少投入和网购比价同等甚至更多的认真劲儿；同时对几十块钱的小事，别再用货比三家耗掉决策力。</li>
+      <li>每月底做一次"决策复盘"：列出这个月真正改变了你行动的 3 条信息，以及你消费了却没改变行动的 10 条信息，对比后调整你的信息食谱。</li>
+      <li>用 EVSI 思维代替无限调研：想验证一个想法，别查三个月资料，先做最小可行版本（哪怕是个小实验、小测试）拿到反馈再迭代，给调研设硬性截止时间。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <div class="gold"><p>"只有当一条信息能够改变你的实际行动时，它才有价值。"</p></div>
+    <div class="gold"><p>"要获取高价值信息，你应该做一个信息狙击手，而不是信息漫游者。"</p></div>
+    <div class="gold"><p>"陷入信息焦虑绝不是因为缺少信息，而是因为决策没有落地。"</p></div>
+    <div class="gold"><p>"何必全知？焦虑作妖。支点之外，皆为闲草。"</p></div>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (p * 100) + '%';
+    btn.classList.toggle('show', h.scrollTop > 600);
+  }, {passive: true});
+  btn.addEventListener('click', function(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+</script>
+</body>
+</html>

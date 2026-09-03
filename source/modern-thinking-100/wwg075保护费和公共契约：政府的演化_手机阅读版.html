@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲 第75讲：保护费和公共契约：政府的演化</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2b2620;
+    --muted:#6f6557;
+    --accent:#8a5a2b;
+    --accent-soft:#f0e6d5;
+    --card:#ffffff;
+    --card-border:#e8dfcc;
+    --quote-bg:#f4eddc;
+    --quote-bar:#c9a468;
+    --summary-bg:#f2ead9;
+    --summary-border:#c9a468;
+    --shadow:0 1px 3px rgba(80,60,30,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e8e0d2;
+      --muted:#a29680;
+      --accent:#d09a5f;
+      --accent-soft:#3a2f21;
+      --card:#201d18;
+      --card-border:#3b352a;
+      --quote-bg:#26211a;
+      --quote-bar:#a97b45;
+      --summary-bg:#272017;
+      --summary-border:#a97b45;
+      --shadow:0 1px 3px rgba(0,0,0,.4);
+    }
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress-bar{
+    position:fixed; top:0; left:0; height:3px; width:0;
+    background:var(--accent); z-index:99;
+    transition:width .1s linear;
+  }
+  .container{
+    max-width:700px; margin:0 auto;
+    padding:28px 20px calc(90px + env(safe-area-inset-bottom));
+  }
+  /* 文档头 */
+  .doc-header{ margin-bottom:30px; text-align:left; }
+  .course-tag{
+    display:inline-block;
+    font-size:13px; color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--card-border);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:16px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:26px; line-height:1.4; font-weight:700;
+    color:var(--text); margin-bottom:12px;
+  }
+  .meta{
+    font-size:14px; color:var(--muted);
+    border-bottom:1px solid var(--card-border);
+    padding-bottom:18px;
+  }
+  /* 正文小节 */
+  h2{
+    font-size:21px; font-weight:700; color:var(--accent);
+    margin:40px 0 14px; line-height:1.45;
+  }
+  h3{
+    font-size:17px; font-weight:700; color:var(--text);
+    margin:28px 0 10px; line-height:1.5;
+  }
+  p{ margin:0 0 14px; }
+  strong{ color:var(--text); font-weight:700; }
+  em{ font-style:normal; color:var(--accent); }
+  /* 分隔线 */
+  .divider{
+    text-align:center; color:var(--accent);
+    margin:34px auto; font-size:14px; letter-spacing:8px;
+    opacity:.85;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+  }
+  .divider::before,.divider::after{
+    content:""; flex:1; max-width:80px; height:1px; background:var(--card-border);
+  }
+  /* 金句引用块 */
+  blockquote{
+    background:var(--quote-bg);
+    border-left:4px solid var(--quote-bar);
+    border-radius:0 12px 12px 0;
+    padding:16px 18px;
+    margin:22px 0;
+    font-size:16.5px; line-height:1.8;
+    color:var(--text);
+  }
+  blockquote .attr{
+    display:block; margin-top:10px;
+    font-size:13.5px; color:var(--muted); text-align:right;
+  }
+  /* 要点列表 */
+  ul,ol{ margin:0 0 16px; padding-left:1.4em; }
+  li{ margin-bottom:8px; }
+  li::marker{ color:var(--accent); }
+  /* 卡片（留言、AI总结共用底子） */
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:18px 18px 16px;
+    margin:16px 0;
+  }
+  /* 注释 */
+  .notes{
+    font-size:13.5px; line-height:1.75; color:var(--muted);
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px;
+    margin:34px 0;
+  }
+  .notes h2{ margin:0 0 12px; font-size:16px; }
+  .notes p{ margin:0 0 10px; }
+  .notes p:last-child{ margin-bottom:0; }
+  /* 用户留言 */
+  .comments-title{
+    font-size:19px; font-weight:700; color:var(--text);
+    margin:40px 0 14px;
+  }
+  .comment .c-head{
+    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .comment .c-name{ font-size:15px; font-weight:700; color:var(--text); }
+  .comment .c-time{ font-size:12.5px; color:var(--muted); }
+  .comment .c-body{ font-size:15.5px; line-height:1.8; }
+  .reply{
+    margin-top:12px; padding:12px 14px;
+    background:var(--quote-bg); border-radius:10px;
+    font-size:14.5px; color:var(--text);
+  }
+  .reply .r-label{ color:var(--accent); font-weight:700; margin-right:6px; }
+  /* AI 总结 */
+  #ai-summary{
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+    border-radius:14px;
+    padding:24px 20px 18px;
+    margin:46px 0 0;
+  }
+  #ai-summary .as-head{
+    display:flex; align-items:center; gap:8px;
+    font-size:19px; font-weight:700; color:var(--accent);
+    margin-bottom:14px;
+  }
+  #ai-summary .as-head::before{
+    content:""; width:8px; height:20px; border-radius:4px;
+    background:var(--accent); display:inline-block;
+  }
+  #ai-summary .as-one{
+    font-size:16px; font-weight:700; color:var(--text);
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:20px;
+    line-height:1.7;
+  }
+  #ai-summary h3{
+    font-size:16px; color:var(--accent); margin:20px 0 10px;
+  }
+  #ai-summary ul{ padding-left:1.35em; }
+  #ai-summary li{ font-size:15.5px; margin-bottom:9px; line-height:1.75; }
+  #ai-summary .as-quote{
+    border-left:3px solid var(--quote-bar);
+    padding-left:12px; margin:10px 0;
+    font-size:15.5px; line-height:1.75; color:var(--text);
+  }
+  #ai-summary .as-foot{
+    margin-top:22px; padding-top:14px;
+    border-top:1px dashed var(--summary-border);
+    font-size:12.5px; color:var(--muted); text-align:center;
+  }
+  /* 回到顶部 */
+  #back-top{
+    position:fixed; right:18px; bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px; height:46px; border-radius:50%;
+    border:none; cursor:pointer;
+    background:var(--accent); color:#fff;
+    font-size:20px; line-height:1;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:98;
+  }
+  #back-top:hover{ transform:translateY(-2px); }
+  #back-top.show{ opacity:1; pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar" role="progressbar" aria-hidden="true"></div>
+
+<article class="container">
+
+  <!-- ===== 文档头 ===== -->
+  <header class="doc-header">
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第75讲</div>
+    <h1>保护费和公共契约：政府的演化</h1>
+    <div class="meta">文 / 万维钢　|　选自《万维钢 · 现代思维工具100讲》</div>
+  </header>
+
+  <!-- ===== 一、政府起源于强盗 ===== -->
+  <h2>一、政府起源于强盗</h2>
+  <p>上一讲我们讲到，要解决大范围的「外部性」问题，终究离不开强制，而执行这个强制力的组织就是政府。我们的推演很有逻辑。那你说政府是不是就这么来的？</p>
+  <p>是不是一群讲逻辑的读书人，辩论很久之后发现自治能解决的问题的确是有局限的，于是坐在一起开了个会，在祥和的气氛中达成共识，说我们还是得有个政府，于是才有了政府？</p>
+  <p><strong>不是。政府可不是读书人的发明。历史的真相更接近于……政府起源于强盗。</strong></p>
+  <blockquote>政府的历史，就是把保护费改造成税收，把统治者改造成代理人，把臣民改造成公民的历史。</blockquote>
+  <p>从人类学会聚集财富那天开始，就有人发现抢劫是比劳动更快的敛财方法。但如果你抢多了，你就会发现抢劫不是一个长远的生财之道。</p>
+  <p>村民好不容易生产这么点粮食，你来了直接给人抢光，连种子都没留下。村民只好饿死。到了第二年，你再想抢都没得抢。用我们上一讲提到过的美国经济学家曼瑟·奥尔森（Mancur Olson）的话说 [1]，你这种抢法太低级，你是个「流动强盗（roving bandit）」，说得文雅一点叫"流寇"。</p>
+  <p>奥尔森的洞见是：流动强盗早晚会演化成「定居强盗（stationary bandit）」，也就是"坐寇"：干脆我把这个村占了，给村民留口活路，让他们继续种地，我每年只从他们身上抽三成的收入。做强盗也不一定非得打打杀杀，细水长流岂不是更好？</p>
+  <p>有了长期主义思维，你就发生了一次观念跃迁：你不再是"寇"了——你是统治者。你会把那些村民视为自己的子民，而且要为他们提供保护服务，确保别的流寇不来抢劫。这可是你的专属经济区。</p>
+  <p><strong>奥尔森说，这，就是政府的起源。</strong></p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 二、今天的坐寇 ===== -->
+  <h2>二、今天的坐寇</h2>
+  <p>我们甚至都不用去远古找证据，这种事情到现在仍然在发生。无论是黎巴嫩真主党武装，还是意大利西西里黑手党，还是墨西哥北部某些地区的毒贩集团，都是一边干着杀人越货的买卖，一边给当地百姓提供基本秩序服务。</p>
+  <p>他们不但管治安，而且管判案，甚至还修学校。甚至老百姓家里有个红白喜事你都得出面。</p>
+  <p>请注意，这不是说坐寇变成了好人。他们改变的只是时间偏好。</p>
+  <blockquote>强盗一旦学会长期主义，就开始像统治者；统治者一旦忘记约束，也随时能退回成强盗。</blockquote>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 三、不要强盗行不行：利维坦 ===== -->
+  <h2>三、不要强盗行不行：利维坦</h2>
+  <p>那你说，不要强盗行不行？我们一群村民快乐地生活在一起不好吗？本来是可以的。我们在《精英日课》专栏讲过人类学家大卫·格雷伯（David Graeber）和考古学家大卫·温格罗（David Wengrow）的《人类新史》（The Dawn of Everything）一书 [2]，其中最新的考证就是说很多先民社会有复杂的自治能力，甚至比后来的国家社会更自由。但那些先民并没有进入规模化农业，没有多少私人财产，说白了就是没有太多可抢的东西。</p>
+  <p>一旦值得抢，人间就必定充满争斗，如果没有统治者就会陷入英国哲学家霍布斯（Thomas Hobbes）在《利维坦》（Leviathan）一书中说的那个「一切人对一切人的战争（war of all against all）」的状态。在那个状态里你会盼望有个利维坦出来主持一切，大家签个契约：我们给他交保护费就好。那么就必定会发生从流寇到坐寇的演变——</p>
+  <p>复仇会变成法院，黑帮会变成警察，保护费会变成税收，私人强制会变成公共强制……最终总会有一股坐寇强大到威震四方，像张作霖从"赵家庙保险队队长"变成"东三省保安总司令"一样建立长久而有效的统治，这就是国家机器（State）。</p>
+  <p>德国社会学家马克斯·韦伯（Max Weber）给的定义直指人心 [3]：</p>
+  <blockquote>国家，就是在一定疆域内成功主张「合法物理暴力垄断（monopoly of legitimate violence）」的人类共同体。<span class="attr">——马克斯·韦伯</span></blockquote>
+  <p>而政府，则是国家机器的执行面。所以政府的起源是收保护费的坐寇。政府的根本是暴力，是最终强制权。</p>
+  <ul>
+    <li>公司可以开除你，但不能关押你。</li>
+    <li>平台可以收费，但不能征税。</li>
+    <li>学校可以教课，但不能规定哪个学说是正统。</li>
+    <li>教会可以逐出教籍，但不能绞死异端——至少在现代社会不能了。</li>
+  </ul>
+  <p>政府跟所有这些组织的区别，不在于它服务更好、不在于它更仁慈、甚至不在于它更"为人民"——而在于它拥有最终强制权。</p>
+  <p>理解了从流寇到坐寇和利维坦的逻辑，你才能理解什么叫"人民需要政府，政府也需要人民"。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 四、战争制造国家 ===== -->
+  <h2>四、战争制造国家</h2>
+  <p>其实如果只是供养统治者，让统治者能够提供基本的保安服务，老百姓也花不了多少钱。一家出个 10% 的保护费，一百家就能供养一个生活水准是普通人 10 倍的坐寇。你稳稳当当收租还有啥不满意的？</p>
+  <p>的确，早期的部落和宗族联盟没有稳定的国家机器，老百姓负担也很低，严格说来都不能称之为国家。</p>
+  <p><strong>国家，其实是战争制造出来的。</strong></p>
+  <p>一旦坐寇之间开始打仗，统治者就被逼着建立正规军队，而建军队就得多收税，多收税就得养官僚。哪个坐寇社团这三件事干得好，哪个就赢。输的被吞并，胜的变得更强。</p>
+  <p>你看中国春秋时代各国打仗还讲礼法，只有贵族才上阵，作战充满仪式感，杀戮极其有限。可是到了战国，各国为了战争就必须不断加强国家机器的力量，也就是所谓变法。五百年军备竞赛演化出来的秦，可谓是一台武装到牙齿的国家机器：郡县、官僚、编户齐民、统一税收……到了这一步，老百姓的负担可就是极重了。</p>
+  <p>用美国社会学家查尔斯·蒂利（Charles Tilly）的话说，这就是「战争制造国家，国家制造战争。」他那篇发表于 1985 年的论文标题，就叫《作为有组织犯罪的战争制造和国家制造》[4]。</p>
+  <p>其实你说这是犯罪也不太公平。你不主动打仗就是等着被打，唯一的解决方案就是出现一个大一统帝国，作为唯一的利维坦。</p>
+
+  <!-- ===== 五、谷物：帝国的燃料 ===== -->
+  <h2>五、谷物：大一统帝国的燃料</h2>
+  <p>但大一统帝国也不是想要就能有的，你还需要一种关键的燃料，那就是谷物。这是耶鲁人类学家詹姆斯·斯科特（James C. Scott）的洞见 [5]：谷物，是一种特别理想的征税对象。</p>
+  <p>谷物为什么理想？</p>
+  <ul>
+    <li>谷物都是长在地里的，你家的地有多大、收成大概能有多少，政府一眼能估个八九不离十。</li>
+    <li>谷物有固定的收获季节，税务官知道什么时候来。</li>
+    <li>谷物是高度可量化的，几斗就是几斗。</li>
+    <li>谷物还可储存，经得起运输。</li>
+    <li>更重要的是，种谷物的农民只能被绑定在土地上，想跑都没地方去。</li>
+  </ul>
+  <p>这管理起来可就太方便了。对比一下游牧民族，今天在这里明天到那里，你想征税或者抓个壮丁都找不着人。谷物真是统治者的法宝啊。</p>
+  <p>有研究者用计算机模拟「历史动力学（cliodynamics）」[6]，发现只要是农业核心地区，适合低成本征税养兵，那么战争就会变得便宜而且平常：最初不管是分裂成多少个小国，最终一定会有一个大国统一天下——统一战争是可以打得起的。</p>
+  <p>这就是为什么古代中国、两河流域、印度、埃及这些农业核心区都走向了大一统帝国。</p>
+  <p>而对比之下，欧洲为什么这么难以统一呢？很多人认为是地理因素，欧洲被山脉和海洋切成无数碎片，不适合调兵打仗。但是更根本的，恐怕还是在于欧洲没有一个像华北平原那样的单一农业心脏。欧洲人在谷物之外还有畜牧、葡萄、橄榄、城市贸易等等的财富来源，政府征税非常困难，统一战争对他们来说太贵了。</p>
+  <p>西方传教士最初来到中国的时候，往往会感到文明震撼，震惊于中国是一个如此统一而富裕的国家。利玛窦赞叹说，欧洲出产的东西几乎在中国这一个国家全都能找到 [7]。</p>
+  <p>没错，中国从秦开始就已经不再是一个"早期国家"或者"古国"，而是一个有着完善的官僚、税收、军队和各项制度的真正的国家。但这种国家跟现代国家还是不一样，只能叫「前现代国家」。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 六、前现代国家：家产制 ===== -->
+  <h2>六、前现代国家：家产制</h2>
+  <p>前现代国家最大的特点，是它把老百姓视为用于汲取的资源。政府不是什么公共服务公司，而是统治者的家产。</p>
+  <p>皇上连"我是为人民服务的"这种漂亮话都不屑于说。《商君书》直接主张"弱民"：「民弱国强，国强民弱。有道之国，务在弱民。」《韩非子》说的就更直白了：「君上之于民也，有难则用其死，安平则尽其力。」后来的人可能稍微委婉一些，但也是毫不掩饰的：什么「朕即国家」、什么「为民父母」、「食君之禄，忠君之事」、「皇恩浩荡」……你再怎么讲，这也只能说是文雅的坐寇。</p>
+  <p>前现代政府的形态是「家产制（patrimonialism）」。你跟政府所能指望的良好关系是"我投靠你、你庇护我"的依附关系；安全和机会不是由制度平等提供，而是由权贵私人分配 [8]。</p>
+
+  <!-- ===== 七、皇帝的悲剧与黄宗羲定律 ===== -->
+  <h2>七、皇帝的悲剧与「黄宗羲定律」</h2>
+  <p>你可以想象，在这样的国家当老百姓是很苦的……但你也别觉得当皇帝就很好。据历史作家张宏杰统计 [9]，中国历史上全部 611 位皇帝之中，死于疾病和衰老的只有 339 人，自杀和他杀的有 272 人，非正常死亡率高达 44%，平均寿命只有 39.2 岁。世界上还有比这更危险的职业吗？</p>
+  <p>关键在于，家产制把一个不受任何外部约束的巨大权力，交给一个普通肉身去掌握，这件事本身就特别危险。权力越大，所有人都想接近它、操纵它、替代它，皇帝就越不安全，就越猜忌；越猜忌，就越依赖私人忠诚；越依赖私人忠诚，制度就越坏。这是一个死循环。</p>
+  <p>比家产制更可怕的是另一个死循环，也就是秦晖先生总结的「黄宗羲定律」，最早出自明清思想家黄宗羲对历代赋税的观察 [10]，基本上是这么一个过程——</p>
+  <ol>
+    <li>王朝建立之初，统治者吸取前朝教训，要让百姓休养生息，于是宣布轻徭薄赋。</li>
+    <li>但官僚集团有自我扩张的本能，皇上有好大喜功的冲动。毕竟花的不是自己的钱，谁不想招几个亲戚进来一起办大事呢？于是各项花费上涨，统治成本越来越高，财政开始吃紧。</li>
+    <li>那么只能加税——可是正税名义上不好涨，各级官僚就发明了附加费、临时摊派、火耗、徭役折银等等各种名目，老百姓负担越来越重。</li>
+    <li>到了某一时刻，朝廷中会有一位像张居正这样的改革者站出来，说这种乱收费不行啊，等于纵容腐败，老百姓哪受得了呢？于是把杂税并入正税，说从此不再乱收。</li>
+    <li>可是没过几年，财政又不够花，就只好发明新的杂税。</li>
+  </ol>
+  <p>就这样反复循环，每一次改革都说减负，长期看却是把负担固化下来，形成"积累莫返之害"。最终农民发现种地要交的税已经大于土地的产出，就开始逃亡。于是流民增多 → 民变 → 王朝崩溃 → 新王朝重建 → 再来一遍。</p>
+  <p>当然中国有些皇帝是好皇帝，有大量的官员是清官。但这跟明君清官没关系：秦制两千年之下，只要家产制和汲取机制不变，老百姓没有合法的手段制衡政府的权力和税收扩张，历代王朝就只能把这个循环重演。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 八、现代国家的三个节点 ===== -->
+  <h2>八、现代国家的三个节点</h2>
+  <p>那你说前现代国家有这么多毛病，是不是统治者自己意识到自己的结构性问题，于是跟读书人讨论一番，设计出了更好的制度，这才有了现代国家呢？</p>
+  <p><strong>不是。千万别高估思想家对坐寇的影响力。</strong>从前现代国家到现代国家的演化主要有三个节点——</p>
+
+  <h3>节点一：1215 年英格兰《大宪章》</h3>
+  <p>第一个节点是 1215 年的英格兰《大宪章》，第一次承认「王在法下」。但那可不是因为国王仁慈。</p>
+  <p>1215 年，英格兰国王约翰对外打仗连续失败，不得不对国内贵族大幅加税、强征军役、甚至没收财产。贵族忍无可忍，联合起来用武力控制了伦敦。约翰王在被逼之下，才签署了《大宪章》。</p>
+  <p>《大宪章》里最值得品的是第 61 条：贵族可以选出 25 人监督国王履约；如果国王不纠正违约，贵族可以扣押城堡、土地、财产以强制执行。</p>
+  <p>这相当于把"造反"变成了一种制度化的权利——这是宪政的开始。我们事后看，合法造反权不但保障了贵族权益，而且对国王也有好处，大家都有安全感。但这可不是思想家推动的结果，这是力量对比逼出来的制度。</p>
+
+  <h3>节点二：1688 年光荣革命</h3>
+  <p>第二个节点是 1688 年的光荣革命。它的起因也不是思想革命，而是英国上层精英为了保住自己的权力、财产和宗教地位，联手把一个不受约束的国王换掉。它的结果是《权利法案》，把几项关键限制明文规定下来——国王未经议会同意，不能停止法律的施行，不能征税，不能在和平时期维持常备军。</p>
+  <p>一个君主被剥掉这三样，就不再是家产制的主人，而开始变成制度里的角色。</p>
+
+  <h3>思想家的角色：科克与洛克</h3>
+  <p>你看啊，从《大宪章》签字到议会真的能限制住国王，用了整整 473 年。那是几代人持续博弈出来的。在这期间有两位思想家可能起到了一定的作用，但是并不大。</p>
+  <p>一个是 17 世纪的法学家爱德华·科克（Edward Coke），他把《大宪章》从一份中世纪的封建文件，解释成了英国人原本就有的自由根基。等于是把很久以前贵族的一次反抗，给翻译成了"英国自古以来国王就不能凌驾于普通法之上"，然后又得寸进尺，推导出"臣民拥有古老的权利，征税和拘押必须受法律约束。" [11]</p>
+  <p>另一个是哲学家约翰·洛克（John Locke）。他的《政府论》一书反对君权神授，主张政府的目的不是维护君主荣耀，而是保护人的生命、自由和财产；政府权力来自人民同意，本质上是一种受托权力（fiduciary power）；如果政府违背托付，人民就有权改变甚至推翻它 [12]。洛克这本书是光荣革命之前写的，却是光荣革命之后才出版的。</p>
+  <p>我们回头看，科克和洛克改变了政治叙事，这极为重要，因为它从此改变了人们的观念。但他们更多地是把历史变局通过叙事合法化，而不是直接推动历史变局。等到卢梭出版《社会契约论》，那已经是 1762 年的事了。</p>
+
+  <h3>节点三：1787 年美国制宪</h3>
+  <p>真正有思想家顶层设计味道的是现代国家演变的第三个节点，也就是 1787 年的美国制宪。</p>
+  <p>美国人把英国传统、罗马共和的记忆、孟德斯鸠的分权理论揉成了一套全新的制度。这个制度在技术上的先进之处，是它解决了中央政府到底应该有多强的问题。制宪者很清楚政府太弱不行，外敌、债务、贸易、内部秩序都处理不了。可是如果政府太强，你怎么防备它不压迫人民呢？</p>
+  <p>答案是双重的「分权制衡（checks and balances）」——横向立法、行政、司法三权分立；纵向联邦和州分享权力。这套设计的核心思想就是麦迪逊那句「用野心对抗野心」：不指望任何人有道德，只指望每个人有利益，然后让这些利益互相牵制。</p>
+  <p>但美国宪法也不能完全归功于思想家。华盛顿之所以不称帝，有他思想先进的一面，但也有他权力不够的一面：他领导的原本就是一支由各州民兵和大陆军拼出来的革命军，财政要靠大陆会议和各州供给，军官和士兵效忠的也不是华盛顿个人，而是各州、议会和革命事业……</p>
+  <p>简单说，很多国家有宪法，但很多有宪法的国家没有「宪政」，这是为什么呢？因为<strong>限制权力不是写在纸上，而是写在权力分布里。</strong></p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <!-- ===== 九、结语：把坐寇工程化 ===== -->
+  <h2>九、结语：把坐寇工程化</h2>
+  <blockquote>人民需要政府建立秩序，但政府的出身是坐寇。而现代化，就是哪怕你是个坐寇，也要把你工程化。</blockquote>
+  <p>现代人必须学会从问"这个人好不好"、"这个政府好不好"，改为问"我们这个制度行不行"。前现代政府是统治者的政府；现代政府是制度化的政府。</p>
+  <p>可能因为前现代传统太深，今天很多人觉得那些质疑政府的知识分子是在给国家"找麻烦"、是"刺头"、是"不识大体"……可如果你是个读书人，质疑政府其实是你的本分。</p>
+  <p>要知道，即便是现代政府，即便它提供了很多正外部性，它也是最大的负外部性制造者。咱们下一讲再说。</p>
+
+  <!-- ===== 注释 ===== -->
+  <div class="notes">
+    <h2>注释</h2>
+    <p>[1] Olson, Mancur. "Dictatorship, Democracy, and Development." American Political Science Review 87, no. 3 (1993): 567–576.</p>
+    <p>[2] David Graeber and David Wengrow, The Dawn of Everything, 2021. 《人类新史》1：高贵的先民。</p>
+    <p>[3] Weber, Max. "Politics as a Vocation." 1919. In From Max Weber: Essays in Sociology, translated and edited by H. H. Gerth and C. Wright Mills. Oxford University Press, 1946.</p>
+    <p>[4] Tilly, Charles. "War Making and State Making as Organized Crime." In Bringing the State Back In, edited by Peter B. Evans, Dietrich Rueschemeyer, and Theda Skocpol, 169–191. Cambridge University Press, 1985.</p>
+    <p>[5] Scott, James C. Against the Grain: A Deep History of the Earliest States. Yale University Press, 2017.</p>
+    <p>[6] Turchin, Peter, Thomas E. Currie, Edward A. L. Turner, and Sergey Gavrilets. "War, Space, and the Evolution of Old World Complex Societies." Proceedings of the National Academy of Sciences 110, no. 41 (2013): 16384–16389.</p>
+    <p>[7] 《利玛窦中国札记》。Matteo Ricci / Nicolas Trigault, China in the Sixteenth Century: The Journals of Matthew Ricci, 1583-1610，Louis J. Gallagher 英译，1953。</p>
+    <p>[8] 当然中国发明了伟大的科举制度，给人一种强烈的公平感。但在皇上眼中，那只是一个对聪明人维稳、对权贵制衡的手段而已。如果你考察隋唐以来科举选官的面，会发现普通人做官的比例远低于权贵。</p>
+    <p>[9] 中新网：《张宏杰：中国历史上 600 多个皇帝近一半死于非命》 https://www.chinanews.com.cn/m/cul/2015/06-07/7327283.shtml</p>
+    <p>[10] 秦晖，《并税式改革与"黄宗羲定律"》。</p>
+    <p>[11] Sir Edward Coke, The Second Part of the Institutes of the Laws of England, 1642.</p>
+    <p>[12] John Locke, Two Treatises of Government, 1689/1690.</p>
+  </div>
+
+  <!-- ===== 用户留言 ===== -->
+  <div class="comments-title">用户留言</div>
+
+  <div class="card comment">
+    <div class="c-head">
+      <span class="c-name">左星星</span>
+      <span class="c-time">昨天 · 上海</span>
+    </div>
+    <div class="c-body">
+      <p>我们很容易把问题看成非黑即白：要么觉得管理越少越好，要么觉得管得越严越好。但现实往往不是这样。真正困难的，从来不是选择秩序还是自由，而是在两者之间找到平衡。</p>
+      <p>共享单车刚出现时，很多人感受到的是便利。可如果完全没有规则，车辆随意堆放，占用道路和公共空间，便利很快就会变成混乱。于是人们开始期待管理。但如果管理不断加码，审批越来越多，创新空间越来越小，原本充满活力的新事物也可能逐渐失去生命力。</p>
+      <p>类似的情况在很多领域都存在。食品安全需要监管，因为普通消费者很难判断生产过程是否合规。但如果监管变成层层填表、反复检查，企业把大量精力花在应付流程上，反而可能偏离最初保障安全的目标。</p>
+      <p>在公司管理中也是如此。没有预算和审批，资源容易失控；但如果每一笔支出都要经过层层签字，组织的效率也会迅速下降。好的制度不是事无巨细地控制一切，而是在关键环节建立约束，在其他地方保留空间。</p>
+      <p>人们往往在混乱时呼唤权力，在权力扩张时呼唤自由，可问题在于，两者都不可或缺。一个成熟的组织、公司乃至社会，应该让权力始终待在它该待的位置上。真正值得追求的，不是绝对的秩序，也不是绝对的自由，而是在两者之间保持长期而稳定的平衡。</p>
+    </div>
+  </div>
+
+  <div class="card comment">
+    <div class="c-head">
+      <span class="c-name">一叶而知秋</span>
+      <span class="c-time">11小时前 · 内蒙古</span>
+    </div>
+    <div class="c-body">
+      <p>【思维工具－保护费】讲个父母生意中的税收史——从红章换成二维码，简直是"国家是怎么进化的"的微观本。</p>
+      <p>上世纪 90 年代末，父母把农村的土地承包了出去，随我落户城里，开了间小店，做起了小生意。那时候本小利薄，最怕穿制服的人上门。</p>
+      <p>当时的税务干部没有硬性税收任务，一家店定多少税，全凭他们一张嘴。看你生意还行，就直接划到规定的上限。就我父母的店而言，真按那个数交，一个月白干。怎么办？要么关门走人，要么"表示到位"。</p>
+      <p>父亲后来跟我说，税务干部第一次上门时，他按农村的最高礼节，恭恭敬敬递上了好烟。结果那干部却奇怪父母如此不知他们的"礼节"，狠狠地把烟打到了地上，厉声呵斥："少和我来这套。"</p>
+      <p>那时的税务干部，真的可用流寇来形容——抢秤盘、翻摊子，逮着一个商家就往死里薅，薅跑了算完，根本不考虑明年。这种腐败的特征是：无规则、无预期、一次性榨取最大化，没有长期关系，只有赤裸裸的掠夺。因这条街"压迫"太狠，许多商家关了门或者迁去了别处，该所税收总额全局垫底。</p>
+      <p>父亲生意做了三年后，掌管他们街道的那个税务所长因腐败进去了。局里给新所长下了死命令：两年内任务不达标，他也下岗走人。相比贪污，位置当然更重要。于是，新所长对制度进行了第一次升级：分片包干、定额任务。一个关键的约束出现了：不能把商家逼走，逼走了任务完不成。</p>
+      <p>父母敏锐地发现了变化。以前干部上门是突击式的、一开口就是"开价"；现在变成了定期走访，说话从"你交这个数"变成了"咱们商量着来"。父母的应对也变了——以前是提前准备好红包，现在是坐下来算算这个月利润多少、留多少余地。生意好的多担点，不好的少担点。税收有了一个浮动区间——不再是不送礼就面临天价税额，而是有了一条可协商的底线。</p>
+      <p>因为干部开始算账了：这家店这个月能交多少，下个月还能不能交，明年还在不在。他把分管的那片区域当成了私人领地，税额优先，"贿赂调节"，商家对税务干部，有了博弈的选项。这对应的是"坐寇"的形成——权力开始讲长期主义，掠夺变成了"可持续收租"。但权力仍然是私人的，商家依然是"羊群"。这正是万老师讲的"家产制"。父母逢年过节还是要"表示"，只是从"保命"变成了"保额度"。权力仍然有巨大的自由裁量空间。</p>
+      <p>真正的转折，发生在金税工程和电子化申报的普及。申报不用找专管员签字了，自己在电脑上填数，系统自动算税，银行直接扣划。定额公开透明，超额申报系统自动预警。那个"上下浮动"的区间，被透明化、固定化了。关键不是干部变好了，而是制度锁死了权力的自由裁量度。这次改革之后，商家从"羊群"变成了有明确权利和义务的纳税人。</p>
+      <p>父母把生意转出的前几年，税额相比利润已降到可以忽略的程度，也不再需要给这些干部送礼了。他们常感慨："现在交税，比过去请人吃饭心里还踏实。"</p>
+      <p>回望父母小店经历的三段税务史：<strong>流寇式腐败</strong>——想定多少定多少，无规则、无预期，对应前国家状态。<strong>坐寇式腐败</strong>——有定额但自由裁量权仍在，权力从"一次性掠夺"变成"可持续收租"，对应前现代国家（家产制）。<strong>制度化征管</strong>——系统算税、公开透明，权力从"私人领地"变成"公共服务流程"，对应现代国家。</p>
+      <p>万老师在文中写道："权力的本质，是让暴力学会算账，让算账变成制度，让制度最终约束暴力。"父母税本上从手写红章到机打二维码的变迁，就是这句话最朴素的注脚。</p>
+      <p>当然我也知道，税务领域的小腐败是治住了，但更多父母生意触达不到的领域，腐败不是变少了，只是变得更隐蔽了。这意味着，杜绝腐败，只有把那些"隐蔽的自由裁量"一个一个锁进制度的笼子里。反腐的真正出路，从来不是找到更多好人，而是设计出一个坏人也没机会的制度。这是政治文明的底色，也是人类文明的方向。</p>
+    </div>
+    <div class="reply"><span class="r-label">作者回复：</span>十分精彩，谢谢！</div>
+  </div>
+
+  <div class="card comment">
+    <div class="c-head">
+      <span class="c-name">李盈</span>
+      <span class="c-time">5小时前 · 北京</span>
+    </div>
+    <div class="c-body">
+      <p>在昨晚徐弃郁老师的直播中有同学提问，在这次的美伊以冲突当中，伊朗这个国家的体制会不会改变，就是从现在的神权内核的国家变成一个真正意义上的现代国家。</p>
+      <p>徐弃郁老师明确表示，在目前这种冲突的状态之下，伊朗的内部的凝聚力其实是提高了，大家会集中精力应对外部威胁。战争带来的伤亡，让原本反对神权的人转为支持政府抵抗。</p>
+      <p>有人说美国这次攻打伊朗是为了配合伊朗内部的暴动，但是战争的推进，把伊朗推向了卫国战争的状态，产生了适得其反的效果。这也恰恰能说明战争对国家塑造的作用。</p>
+    </div>
+  </div>
+
+  <!-- ===== AI 阅读总结 ===== -->
+  <section id="ai-summary">
+    <div class="as-head">AI 阅读总结</div>
+
+    <div class="as-one">一句话概括：政府并非源于读书人的共识设计，而是从收保护费的"坐寇"演化而来——经由战争、征税与制度博弈，最终被"工程化"为现代国家；理解这条演化链，才能学会用制度而非道德来评价权力。</div>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><strong>政府起源于强盗。</strong>奥尔森区分"流寇"与"坐寇"：流寇抢光一切、没有明天；坐寇留下活路、每年抽成，因长期主义而开始保护领地、稳定收租——这就是政府的雏形。真主党、黑手党、毒贩集团至今仍在重复这一模式，可见坐寇与统治者的差别只是时间偏好。</li>
+      <li><strong>政府的本质是最终强制权。</strong>韦伯定义国家为"在特定疆域内成功主张合法物理暴力垄断的人类共同体"。公司能开除你不能关押你，平台能收费不能征税，学校能教课不能定正统——政府的独特之处不在于更仁慈或服务更好，而在于垄断了最终强制。</li>
+      <li><strong>战争制造国家。</strong>蒂利的名言"战争制造国家，国家制造战争"：打仗要建正规军，建军要多收税，收税要养官僚，三者做得好就吞并对手。春秋讲礼法、战国搞变法，五百年军备竞赛炼出了秦这台"武装到牙齿的国家机器"。</li>
+      <li><strong>谷物是大一统帝国的燃料。</strong>斯科特的洞见：谷物可估产、可量化、可储存、有固定收获季，还把农民绑定在土地上，是最理想的征税对象。农业核心区（中国、两河、印度、埃及）因此统一战争"打得起"而走向大一统；欧洲因财富来源多元、征税困难而难以统一。</li>
+      <li><strong>前现代国家是"家产制"。</strong>政府视百姓为汲取资源，靠"我投靠你、你庇护我"的依附关系运行。《商君书》的"弱民"、《韩非子》的"尽其力"都是文雅坐寇的宣言，安全和机会由权贵私人分配，而非制度平等提供。</li>
+      <li><strong>家产制有两个死循环。</strong>其一，不受约束的巨大权力交给普通肉身，导致猜忌、私人忠诚、制度败坏（611 位皇帝中 44% 非正常死亡、平均寿命 39.2 岁）；其二，黄宗羲定律——每次"减负"改革都只是把杂税并正税，负担反而固化，最终农民逃亡、王朝崩溃、循环重演，与明君清官无关。</li>
+      <li><strong>现代国家的三个节点都是力量博弈逼出来的。</strong>1215 年《大宪章》第 61 条把"造反"变成制度化的合法权利；1688 年光荣革命用《权利法案》剥掉国王停法、征税、建军三项权力；1787 年美国制宪用横向三权分立加纵向联邦分权的双重制衡解决"政府该多强"的问题，核心是麦迪逊的"用野心对抗野心"。</li>
+      <li><strong>思想家的作用是把变局合法化，现代化则是"把坐寇工程化"。</strong>科克、洛克改变了政治叙事，但历史变局是几代人博弈的结果；华盛顿不称帝也有权力不够的一面。宪政的关键是"限制权力写在权力分布里"而非纸上，所以读书人的本分是质疑政府、问"制度行不行"而非"人好不好"。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>把评价对象从"人"换成"制度"。</strong>本周遇到公司、社区或公共服务中的乱象时，先问"什么样的规则导致了这种结果、什么规则能改变它"，把对个人的抱怨写成对机制的观察，练习本讲的核心思维转换。</li>
+      <li><strong>给身边的小团体安装"反坐寇"约束。</strong>合租、家庭、兴趣小组的公共支出，约定透明账目与定期公开，让经手人失去"自由裁量"空间——就像金税工程锁死税务干部的裁量权一样。</li>
+      <li><strong>用"明年还在不在这个局里"检验自己的行为。</strong>坐寇之所以从良，是因为要长期收租。凡是以透支信任为代价的短期占便宜（一锤子买卖、过度砍价、甩锅），都主动避免，把长期关系当成自己的"专属经济区"来经营。</li>
+      <li><strong>花一小时读一段原著，建立概念锚点。</strong>从霍布斯《利维坦》、洛克《政府论》或奥尔森《独裁、民主与发展》中任选一小节精读，把"合法暴力垄断""受托权力""流寇与坐寇"这些概念用自己的话复述一遍。</li>
+      <li><strong>像留言里的"一叶而知秋"一样做一次三段式观察。</strong>挑一件身边正在变化的事（办证流程、平台规则、社区管理），写一小段"流寇→坐寇→制度化"的演变笔记，这比空谈理论更能巩固理解。</li>
+      <li><strong>参与公共讨论时，至少给出一条机制性论据。</strong>对任何治理话题表态前，先检查"权力有没有自由裁量空间""约束写在哪里、由谁执行"，用机制分析替代单纯的好恶站队。</li>
+      <li><strong>在自己能影响的小范围里供给秩序。</strong>把团队或家庭中模糊的口头约定书面化、把例会结论写下来公示——降低大家的不确定性成本，就是在做"制度化的正外部性"。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="as-quote">「政府的历史，就是把保护费改造成税收，把统治者改造成代理人，把臣民改造成公民的历史。」</div>
+    <div class="as-quote">「强盗一旦学会长期主义，就开始像统治者；统治者一旦忘记约束，也随时能退回成强盗。」</div>
+    <div class="as-quote">「国家，就是在一定疆域内成功主张『合法物理暴力垄断』的人类共同体。」</div>
+    <div class="as-quote">「人民需要政府建立秩序，但政府的出身是坐寇。而现代化，就是哪怕你是个坐寇，也要把你工程化。」</div>
+
+    <div class="as-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</article>
+
+<button id="back-top" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar=document.getElementById('progress-bar');
+  var topBtn=document.getElementById('back-top');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+    bar.style.width=(p*100)+'%';
+    if(h.scrollTop>600){ topBtn.classList.add('show'); } else { topBtn.classList.remove('show'); }
+  },{passive:true});
+  topBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+</script>
+
+</body>
+</html>

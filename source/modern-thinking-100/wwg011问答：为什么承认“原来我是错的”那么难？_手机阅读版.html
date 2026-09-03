@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第11讲 · 问答：为什么承认“原来我是错的”那么难？｜万维钢·现代思维工具100讲</title>
+<style>
+  :root {
+    --bg: #faf7f1;
+    --card: #ffffff;
+    --text: #2b2620;
+    --muted: #8a8378;
+    --accent: #8a5a2b;
+    --on-accent: #fffdf9;
+    --accent-soft: #f3e9dc;
+    --border: #e5dccd;
+    --quote-line: #c9a86a;
+    --summary-bg: #f5ead6;
+    --shadow: rgba(90, 70, 40, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --card: #211d18;
+      --text: #ece5da;
+      --muted: #9a9184;
+      --accent: #d4a05f;
+      --on-accent: #221a10;
+      --accent-soft: #3a2f22;
+      --border: #3a342b;
+      --quote-line: #8a6a3f;
+      --summary-bg: #2b2118;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.85;
+    text-align: justify;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 90px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ---- 顶部阅读进度条 ---- */
+  #progress {
+    position: fixed; top: 0; left: 0;
+    width: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), #c99a63);
+    z-index: 999;
+  }
+
+  /* ---- 回到顶部按钮 ---- */
+  #toTop {
+    position: fixed; right: 18px; bottom: calc(20px + env(safe-area-inset-bottom));
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; cursor: pointer;
+    background: var(--accent); color: var(--on-accent);
+    font-size: 20px; line-height: 1;
+    box-shadow: 0 4px 14px var(--shadow);
+    opacity: 0; pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 998;
+  }
+  #toTop.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 20px 40px;
+  }
+
+  /* ---- 文档头 ---- */
+  .doc-head { margin-bottom: 28px; }
+  .course-tag {
+    display: inline-block;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 26px; line-height: 1.45; font-weight: 700;
+    text-align: left; letter-spacing: 0.01em;
+    margin-bottom: 12px;
+  }
+  .meta {
+    font-size: 14px; color: var(--muted);
+    text-align: left;
+  }
+  .meta b { color: var(--text); font-weight: 600; }
+
+  /* ---- 讲次来源标题 ---- */
+  .src {
+    display: flex; align-items: center; gap: 12px;
+    margin: 36px 0 8px;
+    font-size: 14.5px; font-weight: 600;
+    color: var(--accent); letter-spacing: 0.05em;
+    text-align: center;
+  }
+  .src::before, .src::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  /* ---- 问答卡片 ---- */
+  .qa {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 20px 18px;
+    margin: 14px 0;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+  .q, .a { margin: 0; }
+  .q { margin-bottom: 6px; }
+  .qa-sep {
+    height: 1px; background: var(--border);
+    margin: 14px 0 16px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 13px; font-weight: 600;
+    padding: 2px 11px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .badge-q { background: var(--accent-soft); color: var(--accent); }
+  .badge-a { background: var(--accent); color: var(--on-accent); }
+  .who {
+    font-size: 14.5px; color: var(--muted);
+    margin-bottom: 6px; text-align: left;
+  }
+  .q p, .a p { margin: 0 0 0.8em; }
+  .q p:last-child, .a p:last-child { margin-bottom: 0; }
+
+  /* ---- 金句引用块 ---- */
+  blockquote {
+    margin: 14px 0;
+    padding: 10px 16px;
+    border-left: 3px solid var(--quote-line);
+    background: var(--accent-soft);
+    border-radius: 0 10px 10px 0;
+    color: var(--text);
+  }
+  blockquote p { margin: 0; }
+  blockquote .quote-src { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); text-align: right; }
+
+  /* ---- 要点列表 ---- */
+  ul.list { margin: 10px 0 12px; padding-left: 22px; }
+  ul.list li { margin: 6px 0; }
+
+  /* ---- 分隔线 ---- */
+  .divider {
+    text-align: center;
+    color: var(--quote-line);
+    font-size: 14px;
+    letter-spacing: 0.7em;
+    margin: 30px 0;
+    text-indent: 0.7em;
+  }
+
+  /* ---- 用户留言 ---- */
+  .comments-title { margin: 36px 0 4px; }
+  .comment {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px 14px;
+    margin: 14px 0;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+  .c-meta {
+    font-size: 13.5px; color: var(--muted);
+    margin-bottom: 8px; text-align: left;
+  }
+  .c-meta b { color: var(--accent); font-size: 14.5px; }
+  .comment p { margin: 0 0 0.8em; }
+  .comment p:last-child { margin-bottom: 0; }
+  .c-stats { font-size: 12.5px; color: var(--muted); margin-top: 12px; text-align: right; }
+
+  /* ---- AI 阅读总结 ---- */
+  #ai-summary {
+    margin: 44px 0 20px;
+    background: var(--summary-bg);
+    border: 1.5px solid var(--accent);
+    border-radius: 12px;
+    padding: 26px 22px 20px;
+    font-size: 16px;
+  }
+  .as-title {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .as-title span {
+    display: inline-block;
+    background: var(--accent); color: var(--on-accent);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 6px 20px; border-radius: 999px;
+  }
+  #ai-summary h4 {
+    font-size: 16.5px; color: var(--accent);
+    margin: 18px 0 8px;
+    text-align: left;
+  }
+  #ai-summary .one-liner { margin-bottom: 4px; }
+  #ai-summary ol { margin: 6px 0 8px; padding-left: 24px; }
+  #ai-summary ol li { margin: 7px 0; }
+  #ai-summary .golden { list-style: none; margin: 6px 0 10px; padding: 0; }
+  #ai-summary .golden li {
+    position: relative;
+    padding-left: 22px; margin: 10px 0;
+  }
+  #ai-summary .golden li::before {
+    content: "「";
+    position: absolute; left: 0; top: 0;
+    color: var(--accent); font-weight: 700;
+  }
+  .ai-note {
+    margin-top: 16px; padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    font-size: 12.5px; color: var(--muted);
+    text-align: center;
+  }
+
+  em { font-style: normal; color: var(--accent); font-weight: 600; }
+  @media (max-width: 420px) {
+    body { font-size: 16px; }
+    h1 { font-size: 23px; }
+    .qa, .comment { padding: 16px 16px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第11讲</span>
+    <h1>问答：为什么承认“原来我是错的”那么难？</h1>
+    <p class="meta"><b>作者：万维钢</b>　｜　来源：现代思维工具100讲 · 第11讲读者问答　｜　形式：一问一答 · 含用户留言</p>
+  </header>
+
+  <!-- 正文：第一组问答 -->
+  <h3 class="src">选自《约束：先尊重，再行动》</h3>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 黄猫儿</p>
+      <p>请问万老师，我们在生活工作中，怎么判断一个事物的硬约束条件是不能改变的呢？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>我觉得判断标准是：如果有人改变了一个“硬约束”，那改变硬约束本身就会成为这个叙事唯一重要的主题，而你原来想做的那个事已经不重要了。</p>
+      <p>比如对古人来说，我们现在做的很多事情在他们看来都是不可能的，古人心目中的很多硬约束已经被我们突破了。但是，突破硬约束的时刻，绝不是一个古人本来想干什么事，然后想：“原来这里有个硬约束，我突破了它，我这个事终于干成了，我该庆祝我干成了那个事。”——不是的。</p>
+      <p>是有一个科学家或者工程师发明创造，或者一场革命强行扭转了社会格局，才让那个硬约束得以突破。那个发明、那场革命才是这里真正的新闻。这一次突破使得很多以前做不了的事现在能做了，但那些事可不是新闻。</p>
+      <p>比如你的一个朋友说要在本县开个小卖部，说肯定能赚钱。你说这里有硬约束，你这项目成不了。那打破硬约束是什么概念呢？——你要是为了做成这件事真的突破了硬约束，总理会接见你。</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 一日三餐四季</p>
+      <p>万老师，我平时也会用 GPT，而且不是没思考，相反是想法很多、问题很多。可一接上 GPT，我就容易越聊越多、越整理越烦，最后不是没内容，而是内容太多、接口太乱，反而难落地。如果按你的工具思维框架看，我这种情况属于哪一类典型问题？我最该改进的，是提问方式、约束习惯，还是整个工作流？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>我认为你不需要改变任何事情，你现在感到烦乱只是因为问得还不够多。</p>
+      <p>只要你问出足够多的问题，对各个领域全面地跟 GPT 聊过，你就会逐渐发现它的思路会在每个领域都收敛于几个特定的心智模型——也可以说就是我们说的「思维工具」。当你掌握了这些底层的思维工具，你就会发现后面它聊的东西已经是你可以预期的了。那么恭喜你，你已经能够使用当今主流的模型思考那个领域问题。</p>
+      <p>要想加速这个过程，一个好办法是把你和 AI 的对话找另外一个地方存起来作为笔记。对这些笔记分门别类管理——它这次说的跟你以前问的类似的问题，说法有什么区别？别的 AI 又是怎么说的？这些东西有什么共同点？</p>
+      <p>就好像读书和做研究一样，自己总结，提炼其中的心智模型。</p>
+      <p>哪怕是一只猴子看人下棋，看 20 年也学会了。一个人跟高级智能聊天，聊个一年两年，怎么也能学到真东西。我刚跟 o1 Pro 聊的时候，惊为天人；现在面对 GPT-5.4 Pro，却常常能占据主动。</p>
+      <blockquote><p>功夫是可以练的。</p></blockquote>
+    </div>
+  </div>
+
+  <!-- 第二组问答 -->
+  <h3 class="src">选自《可能：不确定性是意义的燃料》</h3>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 Ella</p>
+      <p>在“主动创造不确定性”与“尊重约束、避免盲目冒险”之间，是否存在更底层的判断原则？该如何区分，自己是在扩大可能性，还是仅仅在增加无效风险？</p>
+      <p class="who">读者 angie焕捷</p>
+      <p>当一个人开始尝试“制造不确定性”，但又不确定自己是否配得上、是否走在对的方向上时，应该怎么和这种状态相处？以及怎么判断自己是不是应该继续往前走？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>制造不确定性，绝不是没事儿在自己家后院玩火。它必须有可能给你带来好处才算。最常见的好处，一个信息上的增益，或者像「能耐寻求定理」说的那样，给你带来未来的选择权。即使有这样的好处，也要问一下值不值，特别是冒险的潜在损失不能是毁灭性的。</p>
+      <p>所以最理想的制造不确定性，是对世界做一个「试探」，也就是有枣没枣打一竿子再说。比如：</p>
+      <ul class="list">
+        <li>创造一个最小可行产品（MVP）投向市场</li>
+        <li>写一篇文章扔到论坛</li>
+        <li>找谁打听一个什么信息</li>
+        <li>学习一个新技能</li>
+      </ul>
+      <p>这些事就算失败也不会给你带来多大损失，你付出的成本很小，但是潜在的收获很大。</p>
+      <p>好，如果你真的试探出来一个机会，事情变得严肃起来，需要你投入更多才有可能获得真正的收获——这个时候到底该怎么投？一个最基本的思维工具是「凯利公式」，我们后面专门讲。</p>
+    </div>
+  </div>
+
+  <!-- 第三组问答 -->
+  <h3 class="src">选自《内核：你的三个「自我」》</h3>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 alan jr87694289</p>
+      <p>我只想问，日省有没有直接省到底层自我的方法？成天看日志，换界面也没什么大效果。</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>日志和界面都是一些事后编出来的故事，作用确实不大。「内核自我」是神经网络的一大堆参数，你不会直接感受到它——要想触动和改变它，你需要的不是解释，而是训练。</p>
+      <p>你必须先发现需要改进的“苗头”，然后在苗头再次发生的时刻进行有意识的训练。</p>
+      <p>苗头，就是看你平时遇到某种情况的第一反应是什么。</p>
+      <p>比如别人一质疑你，你立即就反驳，又或者你一遇到任务就想拖延。这些不是什么大事儿，但如果这是你的固有模式，这就是毛病。发现这些固有模式，就是你自省到了内核。</p>
+      <p>想要改变这些模式，训练的方法是主动做一个“反向动作”：下次别人质疑你的时候，能不能忍住，先不反驳，先确保你听清楚了对方的诉求和逻辑合理性？下次遇到一个任务，你能不能立即展开第一步行动？</p>
+      <p>只有这样坚持做反向训练，打破自己的怪圈，才能修改内核自我的参数。</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 杜不圆</p>
+      <p>万老师，当“计划自我”明明制定了正确决策，却总被“体验自我”的即时痛苦和“记忆自我”对过往失败的恐惧联手“罢免”时，有没有一个关键的抓手动作，能快速打破这个死循环？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>要战胜习得性无助，最好的办法就是取得一个最小的胜利。</p>
+      <blockquote><p>真正的信心只能通过做成一件事来获得，而不是给自己凭空鼓劲、搞精神力量。</p></blockquote>
+      <p>哪怕每天早上起来按时洗脸刷牙，呈现一个整洁的面貌——一开始你可能连这些都不做，但后来你把它们做好了，这也是一个小小的成功。</p>
+      <p>先从自己的小事做起；然后尝试对其他人产生正面的影响，比如帮人一个小忙；然后独立完成一个任务；再往后完成关键的任务。</p>
+      <p>这样一点一点地承担更多的责任，不仅你会对自己更有信心，他人也会对你更有信心。</p>
+      <blockquote><p>哪怕那个任务没有任何难度和悬念，做与不做，完成与没完成，感觉完全不同。</p></blockquote>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 梅朵（偏远县中教师）</p>
+      <p>万老师，我是一名老师，我和学生们交流的时候曾经用过“内核”这个词，我想表达的就是类似于“内核自我”的概念，只是我的表达没有这么深刻清晰。我个人认为，现在许多孩子抑郁或焦虑很大程度上是和没有“内核自我”，或者是不会不断更新“内核自我”相关。我想问的是，在我们这种偏远县中的环境下，如何帮助孩子们建立稳定的“内核自我”呢？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>最好的办法是通过叙事，帮他们建立一个身份认同。</p>
+      <p>我们后面会详细讲「身份认同」这个武器和它的局限性，也会讲到叙事的方法。但关键在于：身份认同是人变成熟的第一个标志。</p>
+      <p>一个成年人在社会上立足，并不是整天计算利益得失，而是在扮演自己的社会角色。这种角色可以是某种职业，也可以是某种关系。比如说我是一个学生家长、我是一个老师、我是一个消防队员。人是为了满足这个角色的设定，而做出各种动作。</p>
+      <p>你对学生的点拨，是早一点帮他们设定一个<em>稍微高级一点</em>的身份认同：我不只是在这家医院里有个稳定工作、每月拿这几千块钱的护士，我是一个救死扶伤的医护人员。这能提升他们的上限。</p>
+      <blockquote><p>当然，身份认同只能让人走这么远。到了一定程度，身份就变成了限制。</p></blockquote>
+      <p>但那是后话，只有悟性很高的人才能到达那个层次，那就不是你作为一个中学老师的责任了。</p>
+    </div>
+  </div>
+
+  <div class="divider">✵ ✵ ✵</div>
+
+  <!-- 本篇主题问答 -->
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 荣新</p>
+      <p>请问万 sir，对于一个被灌输了几十年垃圾数据的大脑，让他承认“原来我是错的”，打碎整个价值观，会不会适得其反，引起系统崩溃呢？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>的确，很难让一个成年人承认自己的观念是错的，而且往往会有所谓的「逆火效应」：你一旦指出他是错误的，他反而更加坚定地相信那个错误。</p>
+      <p>并不是说他的大脑拒绝更新。这背后的根本原因，是他把自己的观念与自己的身份认同、社会归属感和自我叙事联系在了一起。比如：“你非让我承认中医不如西医，难道我这么多年爱国爱错了吗？”</p>
+      <blockquote><p>你质疑他这个观念就等于是在质疑他这个人的存在合理性，那他当然是无法接受的。</p></blockquote>
+      <p>但我们也不能说，对成年人就都得“只筛选不教育”。人当然是可以改变的，而且很多时候有必要改变。改变的方法，还得是先让他把一个观念和自己的身份认同给解离开：你就算相信西医，也不等于不爱国——中国之可爱不一定非得用中医来背书。</p>
+      <p>你需要让他增长更多的见识，让他更全面的了解世界是怎么回事……但最关键的是让他理解：自己以前的错误观念的形成是可以谅解的，当初有当初的不得已——但是自己这个<em>人</em>，仍然是可爱的。</p>
+      <p>当然这一切很困难，还得看这个人有没有机缘才行。</p>
+    </div>
+  </div>
+
+  <!-- 第四组问答 -->
+  <h3 class="src">选自《能耐寻求定理：君子不器》</h3>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 芊阅</p>
+      <p>万 sir，请问我如何确保这些“增加可能性”的探索，最终没有变成另一种“器”——一种用“忙碌地尝试各种可能性”来逃避“锚定一个使命并为之深耕”的自我欺骗？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>咱们回到能耐寻求定理，并不是说一个 Agent 应该一味地只寻求增加可能性——它是说：如果你眼前没有立即可见的奖励，你就应该去可能性更大的地方；可是如果你眼前就有一个奖励，那当然不妨碍你先把奖励捡起来，然后再去探索别的地方。</p>
+      <p>探索和利用是一个矛盾，你得动态平衡。如果现场有可利用的东西，为什么不利呢？</p>
+      <blockquote><p>增加可能性，相当于是购买了一个期权——而这里还有一个关键设定：期权有到期时间。</p></blockquote>
+      <p>过了那个时间点，它就没有用了。所以该行权就得行权。我们后面还会专门讲期权。</p>
+    </div>
+  </div>
+
+  <!-- 第五组问答 -->
+  <h3 class="src">选自《供给侧心态：怎样在正和的世界合作（以及竞争）》</h3>
+
+  <div class="qa">
+    <div class="q">
+      <span class="badge badge-q">问</span>
+      <p class="who">读者 sinky</p>
+      <p>非常愿意用供给侧心态去工作，但是有时候会被打脸，尤其是在体制内，工作面临边界不清晰、职责不明确、多做并不会升职加薪的情况，多付出多关心一点，就可能让别人产生“你行，你上”，就容易多做多错。有时候，在多次反复博弈中，容易产生多一事不如少一事的心态，不愿意多付出价值，怎么克服这样的心态？</p>
+    </div>
+    <div class="qa-sep"></div>
+    <div class="a">
+      <span class="badge badge-a">答 · 万维钢</span>
+      <p>你需要一个清晰的目标函数：到底想要做大，还是想要自保。</p>
+      <p>在和平年代，一个没有背景的人想要在体制内做大是极为困难的。你看见的那些阻力都还只是小事，再往上还有更大的凶险。除非有特别的机遇，“做大”似乎不是一个非常值得指望的事情——这就是为什么那么多英雄豪杰不愿意进体制内。但如果你就想做大，这些都不叫事儿，都是你必须接受的。</p>
+      <p>而如果你想自保，那你就本着一个尽职尽责、为人民服务的心态去做，不求有功，但求心安，把更多的内心戏留给家庭和自己的某一项业余爱好。</p>
+      <blockquote>
+        <p>马斯洛说：“向前一步求发展，或者后退一步求安全。”</p>
+        <p>世界上不存在又安全又发展的好事儿。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="divider">✵ ✵ ✵</div>
+
+  <!-- 用户留言 -->
+  <h3 class="src">用户留言</h3>
+
+  <div class="comment">
+    <p class="c-meta"><b>左星星</b> · 19小时前 · 上海</p>
+    <p>我的上一份工作虽然不在体制内，但我一直也是用一种“供给侧”的心态在做事：跨部门协作时主动去补位，承担联络和协调的角色；遇到问题时，也会尽量站在老板的角度去思考，想把事情往前推进。我以为只要持续提供价值，时间久了总会被看见。可现实却是，很多建议没有反馈，有人觉得我多管闲事，直接领导也常常不置可否。慢慢地，我不再提建议，逐渐变成了一个冷漠的旁观者。后来我亲眼看着公司越来越人浮于事，业绩不断下滑，直到开始裁员，而我也最终离开。</p>
+    <p>所以我特别认同“目标函数”这个说法。很多痛苦，并不是因为我们不够努力，而是因为一开始就没有想清楚：我到底是要在这个系统里做大，还是只求自保。如果想做大，就要接受阻力、误解甚至反噬，把这些当成必要成本；如果只想自保，就不要一边追求安全，一边又对环境抱有过高期待。最消耗人的，往往是两种目标都想要，结果卡在中间。</p>
+    <p>其实我们在任何组织中，都不必一开始就急着“多做一点”，而是先判断这个系统值不值得投入热情，自己又愿意承担什么代价。供给侧心态当然可贵，但它不等于无条件地消耗自己。一个人最怕的不是一时不被看见，而是在错误的环境里长期透支热情，最后连自己都变得冷掉。</p>
+    <p class="c-stats">赞 6 · 评论 14 · 转发 109</p>
+  </div>
+
+  <div class="comment">
+    <p class="c-meta"><b>常觉不住</b> · 15小时前 · 美国</p>
+    <p>我跟 AI 工作两年了。一开始也是这样——聊得兴奋，觉得每句都有启发，三小时过去，屏幕上一大片对话，关掉以后什么都没留下。</p>
+    <p>后来我摸到一个规律：乱，不是因为问得太多，是因为没有交付物。</p>
+    <p>我现在每次开聊之前，心里都有一句话：这次结束我要拿到什么。不是“搞清楚某个问题”这种模糊的东西，是具体的——这篇文章的开头定稿，客户分类的标准写出三条，或者一段代码能跑起来。有了这个锚，AI 说什么我都能判断：这条留，这条砍。没有这个锚，它每个回答都在打开新分支，你的好奇心会追每一条，然后你就淹死在自己的好奇心里。</p>
+    <p>第二件事：对话不是草稿纸，对话是你的外部记忆。我每次跟 AI 工作，所有踩过的坑、解决过的问题、定下来的规则，全部留在记录里。下次开工，第一件事是把这份记忆喂回去，让 AI 从我上次停下的地方接着走，而不是从零开始猜。时间长了，这份记忆比 AI 本身更值钱——它是你自己的经验库，AI 只是拿着它替你干活的那双手。</p>
+    <p>第三件事：如果聊了二十分钟还没收敛，问题不在 AI，在你自己还没想清楚。这时候该做的不是继续问，是关掉屏幕，自己坐十分钟，想清楚你到底卡在哪，再回来。</p>
+    <p>所以我以为要有效地使用 AI——不是提问方式，不是工作流，是按下回车之前先问自己一句：这次我要拿走什么。</p>
+    <p class="c-stats">赞 11 · 评论 5 · 转发 107</p>
+  </div>
+
+  <div class="comment">
+    <p class="c-meta"><b>王弈冬</b> · 昨天 · 北京</p>
+    <p>对荣新的回复，万老师的回复核心在最后一句：“自己以前的错误观念的形成是可以谅解的，但自己这个人，仍然是可爱的。”</p>
+    <p>我观察到一个关键——价值观崩不崩溃，不取决于“新观念多对”，而取决于“旧自我能不能活下来”。</p>
+    <p>有个朋友，从小被教育“男人必须扛住一切”。后来抑郁了，医生告诉他“你要学会示弱”。他听完不是豁然开朗，而是暴怒：“那我不是白活了几十年？”这不是逆火效应，这是生存危机。他的全部自我叙事——“我靠硬撑活到现在”——如果“硬撑”是错的，那“我”算什么？一个笑话？</p>
+    <blockquote><p>后来帮他松动的是另一句话：“你当年必须硬撑才能活下来，那是真的。现在环境变了，你可以多一个工具了，那也是真的。”</p></blockquote>
+    <p>这句话的逻辑是：旧观念不是“错的”，而是“当时有用，现在过期了”。</p>
+    <p>这让他的自我叙事从“我被否定了”变成“我升级了”。硬撑的那个他没被抛弃，只是被邀请多带一件行李上路。</p>
+    <p>所以我的洞见是：让人改变的关键，不是证明“你原来错了”，而是帮他把旧观念从“身份认同”挪到“曾经有效的工具”。工具可以换，人不需要死。</p>
+    <p>这个逻辑，对成年人之间的沟通也同样适用。别告诉他“你错了”，告诉他“你当时那样想是有道理的，现在情况不一样了，可以多一种办法”。</p>
+    <p>这样他不需要否定过去的自己，只需要给自己“加个新功能”。</p>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <div class="as-title"><span>AI 阅读总结</span></div>
+
+    <p class="one-liner"><strong>一句话概括：</strong>承认“原来我是错的”之所以那么难，是因为观念常常与身份认同绑在一起；真正能让人改变的，不是证明他错了，而是帮他把旧观念从“我是谁”挪到“曾经有用的工具”——工具可以换，人不需要死。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>硬约束的判断标准：</strong>如果真有人突破了某个“硬约束”，突破本身会成为叙事唯一重要的新闻，而你原来想做的事反而变得不重要——所以日常项目里遇到的大多数“硬约束”，既打不破、也不该指望靠打破它来成事。</li>
+      <li><strong>跟 AI 越聊越乱不是病，是问得不够多：</strong>在各个领域问得足够多之后，AI 的思路会收敛到少数几个心智模型（思维工具）；掌握这些底层模型，你就能预期它的回答、反过来驾驭它。</li>
+      <li><strong>加速之法是把对话沉淀成笔记：</strong>把与 AI 的对话另存、分门别类，比较不同说法与共同点，像读书做研究一样提炼心智模型——“功夫是可以练的”，从 o1 Pro 时的惊为天人，到面对 GPT-5.4 Pro 时能占据主动。</li>
+      <li><strong>制造不确定性要有收益且损失可控：</strong>最理想的形态是低成本“试探”（MVP、发帖、打听信息、学新技能），有枣没枣打一竿子；确认机会、需要认真投入时，再用「凯利公式」这类工具决定下注多少。</li>
+      <li><strong>改变“内核自我”靠训练而非解释：</strong>日志和界面都是事后编的故事；要发现“苗头”（固有第一反应），在苗头再次发生时做“反向动作”（被质疑先忍住不反驳、遇任务立即展开第一步），才能修改内核参数。</li>
+      <li><strong>最小的胜利战胜习得性无助：</strong>信心只能靠做成事获得，从洗脸刷牙、帮人一个小忙开始，逐步承担更多责任；帮青少年建立内核，最好的办法是通过叙事设定“稍微高级一点”的身份认同，但身份到了一定程度也会变成限制。</li>
+      <li><strong>逆火效应的根源是观念与身份绑定：</strong>质疑观念等于质疑“这个人存在的合理性”，于是越反驳越坚定；改变之道是把观念与身份解离（信西医不等于不爱国），让他谅解旧观念的形成、同时确信“人”仍然是可爱的。</li>
+      <li><strong>探索与利用要动态平衡：</strong>眼前有奖励就先捡起来；增加可能性相当于购买有到期时间的期权，该行权就得行权，别用“忙碌地探索”逃避深耕。在体制内则要先想清目标函数——想做大就接受阻力与凶险，想自保就尽职尽责、但求心安，不存在又安全又发展的好事。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li>本周把最近一次和 AI 的对话存进一个专门笔记，问自己三个问题：它这次的说法与你以前的想法有何不同？别的 AI 怎么说？共同点是什么？——开始积累你自己的“心智模型库”。</li>
+      <li>下次打开 AI 前先写下一句话：“这次结束我要拿到什么”，要具体到可交付（一段定稿文字、三条分类标准、一段能跑的代码），用它当锚来砍掉跑题的对话分支。</li>
+      <li>列一张“苗头清单”：写下你最容易的条件反射（一被质疑就反驳、一遇任务就拖延），选其中一条，本周内每次苗头出现时就做一次反向动作，并在当天记录结果。</li>
+      <li>本周做一件成本很小、失败了也无所谓的小试探：发一篇文章、向一个人打听一条信息、或报名学一个新技能，先给自己定好“最多损失”的上限。</li>
+      <li>每天完成一个“最小胜利”并记录：按时起床洗漱、把房间收拾整洁、帮同事一个小忙——用完成的事实喂给信心，而不是靠给自己打气。</li>
+      <li>想说服别人（或说服自己）改变旧观念时，把话术从“你错了”换成“你当时那样想有当时的道理，现在情况变了，可以多一个办法”——先保人，再换工具。</li>
+      <li>在组织里行动前先回答“目标函数”：我是要在这个系统里做大，还是求自保？只选一个，并接受它对应的代价，避免两种目标都想要、卡在中间空耗自己。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <ul class="golden">
+      <li>哪怕是一只猴子看人下棋，看 20 年也学会了。一个人跟高级智能聊天，聊个一年两年，怎么也能学到真东西。</li>
+      <li>真正的信心只能通过做成一件事来获得，而不是给自己凭空鼓劲、搞精神力量。</li>
+      <li>你质疑他这个观念就等于是在质疑他这个人的存在合理性，那他当然是无法接受的。</li>
+      <li>向前一步求发展，或者后退一步求安全。世界上不存在又安全又发展的好事儿。——马斯洛</li>
+    </ul>
+
+    <p class="ai-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress');
+  var top = document.getElementById('toTop');
+  function onScroll() {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    var p = max > 0 ? (d.scrollTop / max) * 100 : 0;
+    bar.style.width = p + '%';
+    if (d.scrollTop > 500) { top.classList.add('show'); } else { top.classList.remove('show'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+})();
+</script>
+</body>
+</html>

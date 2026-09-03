@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第47讲 · 问答：我们能不能加大自己的「内存」？</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#faf7f1; --card:#fffdf8; --text:#2b2723; --muted:#8a7f72;
+  --accent:#8a5a2b; --accent-soft:rgba(138,90,43,.10); --border:#e6dccb;
+  --quote-border:#c9a06b; --quote-bg:#f6f0e2;
+  --summary-bg:#f3ecdf; --summary-border:#d8c49a;
+  --shadow:0 1px 4px rgba(90,60,20,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#171512; --card:#201c18; --text:#e8e2d8; --muted:#a29688;
+    --accent:#c89a6a; --accent-soft:rgba(200,154,106,.13); --border:#3a332b;
+    --quote-border:#a97e4e; --quote-bg:#241f19;
+    --summary-bg:#2a2218; --summary-border:#6b5533;
+    --shadow:0 1px 4px rgba(0,0,0,.35);
+  }
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  font-size:17px; line-height:1.82; text-align:justify;
+  -webkit-font-smoothing:antialiased; overflow-wrap:break-word;
+}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:99;transition:width .08s linear}
+.container{max-width:700px;margin:0 auto;padding:26px 20px 64px}
+
+/* 文档头 */
+.doc-header{margin-bottom:22px}
+.tag{display:inline-block;font-size:13px;letter-spacing:.5px;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:3px 12px;margin-bottom:14px;background:var(--card)}
+h1{font-size:clamp(24px,6vw,30px);line-height:1.4;letter-spacing:.5px;margin-bottom:12px;text-align:left}
+.meta{font-size:14px;color:var(--muted);text-align:left}
+.lead{font-size:15.5px;color:var(--muted);background:var(--card);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:10px 16px;margin:6px 0 26px;text-align:left}
+
+/* 小节标题 */
+.sec-head{margin:34px 0 14px}
+.sec-head .kicker{font-size:13px;color:var(--accent);margin-bottom:4px;text-align:left}
+h3{font-size:19px;color:var(--accent);line-height:1.5;text-align:left}
+
+/* 问答卡片 */
+.qa-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 18px 16px;margin:16px 0;box-shadow:var(--shadow)}
+.qa-label{display:inline-block;font-size:13px;font-weight:600;border-radius:999px;padding:2px 12px;margin-bottom:10px;text-align:left}
+.qa-label.ask{background:var(--accent-soft);color:var(--accent)}
+.qa-label.reply{background:var(--accent);color:#fdf8f0}
+.q{background:var(--accent-soft);border-radius:10px;padding:13px 15px;margin-bottom:15px}
+.q p{text-align:left}
+.a p{margin:10px 0}
+strong{color:var(--accent);font-weight:600}
+blockquote{
+  border-left:3px solid var(--quote-border);background:var(--quote-bg);
+  border-radius:0 10px 10px 0;padding:10px 15px;margin:14px 0;
+  color:var(--text);font-size:16px;
+}
+blockquote p{margin:0}
+
+/* 分隔线 */
+.divider{display:flex;align-items:center;gap:12px;color:var(--accent);margin:30px 0;font-size:14px}
+.divider span{flex:1;height:1px;background:var(--border)}
+
+/* 留言 */
+.topic-tag{display:inline-block;font-size:12.5px;color:var(--muted);border:1px dashed var(--border);border-radius:999px;padding:2px 10px;margin-bottom:12px}
+.comment{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:var(--shadow)}
+.comment-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.comment-name{font-size:15px;font-weight:600;color:var(--accent)}
+.comment-loc{font-size:12.5px;color:var(--muted)}
+.comment p{margin:8px 0}
+
+/* AI 总结 */
+#ai-summary{
+  background:var(--summary-bg);border:2px solid var(--summary-border);
+  border-radius:12px;padding:24px 20px 18px;margin-top:36px;
+}
+#ai-summary h2{font-size:20px;color:var(--accent);margin-bottom:14px;text-align:left}
+#ai-summary .one-liner{font-weight:700;margin:0 0 18px;text-align:left}
+#ai-summary h4{font-size:16px;color:var(--accent);margin:18px 0 8px;text-align:left}
+#ai-summary ul{margin:0 0 6px;padding-left:1.3em}
+#ai-summary li{margin:7px 0}
+#ai-summary .quote-list{list-style:none;padding-left:0}
+#ai-summary .quote-list li{margin:8px 0;padding-left:1em;border-left:3px solid var(--quote-border)}
+#ai-summary .disclaimer{font-size:12.5px;color:var(--muted);margin-top:18px;padding-top:12px;border-top:1px dashed var(--border);text-align:left}
+
+/* 回到顶部 */
+#toTop{
+  position:fixed;right:18px;bottom:26px;width:44px;height:44px;border-radius:50%;
+  background:var(--accent);color:#fdf8f0;border:none;font-size:20px;line-height:1;
+  display:none;align-items:center;justify-content:center;cursor:pointer;z-index:99;
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="container">
+
+  <header class="doc-header">
+    <div class="tag">万维钢 · 现代思维工具100讲 · 第47讲</div>
+    <h1>问答：我们能不能加大自己的「内存」？</h1>
+    <div class="meta">作者：万维钢 ｜ 现代思维工具100讲 · 问答合集</div>
+  </header>
+
+  <p class="lead">本讲是一期问答合集：万维钢集中回应了读者关于多重参照点困境、力量有限如何搜集外部样本、AI 智能体与 OODA、工作记忆能否通过训练「加大」、插图会不会增加认知负荷等五个问题，文末附有三位读者的精彩留言。</p>
+
+  <!-- 问答一 -->
+  <div class="sec-head">
+    <div class="kicker">来自《前景理论：让人铤而走险的不是贪婪，而是不甘》</div>
+    <h3>一问 · 多重参照点困境：怎样跳出外界的比较？</h3>
+  </div>
+  <section class="qa-card">
+    <div class="q">
+      <span class="qa-label ask">读者 Damon 问</span>
+      <p>万老师，文章结尾的北宋案例，本质是「两个参照点同时撕扯」导致的灾难。但在现实生活中，我们常常不是只有一个错误的参照点，而是同时被「历史高点」「社会比较」「自我预期」等多重参照点撕扯，就像散户既盯着买入价、又盯着别人的收益率、还盯着自己曾赚到过的最高点。当多个参照点同时存在时，「自由设置」常常失效，因为无论你怎么设，总有另一个参照点在刺痛你。面对这种多重参照点困境，您会给出什么不同于「各自设置心理账户」的解法？</p>
+    </div>
+    <div class="a">
+      <span class="qa-label reply">万维钢回复</span>
+      <p>像社会比较、历史高点这些由外界给出的参照点，是我们最自然的一种比较心理。这种比较其实是有用的，它能让我们看见现状，知道自己大概处于什么位置。就如同学生考试，你最好知道自己在班上排第几，这次考试比上次是进步了还是退步了。当然不好的一面是，它会带来焦虑，可是比较心理是不可遏制的。</p>
+      <p><strong>关键在于，你能不能跳出这些表面上的比较，主动选择把一些更本质的东西作为参照点。</strong></p>
+      <p>就拿写文章来说，读者的反应肯定是重要的，但是其中有很多偶然性。可能正好赶上一个流行话题，文章就成了爆款；也可能这个话题只有小众感兴趣，写出来就没什么反响。但是不管外界的反应怎样，这篇文章相对于你自己来说水平怎么样，其实你是知道的。比如：这里面是否有更深入的思考、更重要的信息？你是否做了足够好的调研？相对于过去，现在的写法有没有进步？这些内在的评价会更可控。</p>
+      <blockquote><p>简单说，你希望把可以积累复利的资产，而不是偶然性更大的果实，当作参照点。</p></blockquote>
+      <p>但是果实也很重要，因为内部资产往往是难以测量的——你不能明明水平不行还以为自己很行。这还是卡尼曼说的内部视角和外部视角的问题。现实是，人既需要内部视角，也需要外部视角。</p>
+      <p>如果一个没有经历过什么风浪的人说：「我根本不看外界评价，我只在乎我自己内心的评价。」他一定是站着说话不腰疼。现实是，哪怕是有一定社会经验的人，也会非常在意各种指标和评价。</p>
+      <blockquote><p>理想的状态，是你经历过风浪，好的坏的被评价很多次，以至于锻炼出一个特别强大的自我内核，你的心态超越了那些外在的参照点：指标和评价对你来说只是可供参考的信号，而且只是各种参考信号中的一小部分——它们不是你的目标，不是你的指引，更不是诱饵。</p></blockquote>
+    </div>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- 问答二 -->
+  <div class="sec-head">
+    <div class="kicker">来自《超级预测：给不确定性命名，给自己打分》</div>
+    <h3>二问 · 力量有限的个人，如何搜集外部样本？</h3>
+  </div>
+  <section class="qa-card">
+    <div class="q">
+      <span class="qa-label ask">读者 大太阳 问</span>
+      <p>我感觉有时外部信息挺难搜集，个人力量有限，就拿例子里说的找工作问同行师兄师姐这种，没认识一定的人也不行，作为力量有限的个人该如何搜集外部样本，用好参考类预测这个工具呢？</p>
+    </div>
+    <div class="a">
+      <span class="qa-label reply">万维钢回复</span>
+      <p><strong>找参考类的关键并不是要找跟你相似的「人」，而是找相似的机制，或者说是相似的结构。</strong>你真正想问的问题是：过去那些跟你有相似结构的人、项目、产品或者选择之中，有多少比例走到了你想要的结果？现在你有什么证据，足以让你偏离那个比例？</p>
+      <p>如果你非要问，像我这个年龄、背景、所在地区、拥有这些技能的人，如果做这么一个产品，成功的可能性有多高，那显然你很难找到参考类。但你真正想知道的是「现在市面上用 AI 编辑短视频的 App 是否已经足够成熟，如果做出来，能不能好卖」这样的问题。</p>
+      <blockquote><p>一旦你把一个关于人的问题变成一个关于机制的问题，你就把它给一般化了。</p></blockquote>
+      <p>这样你就可以利用公开信息，比如用 AI 直接帮你从各种行业报告、学术数据中获取信息，还可以观察各个平台的公开数据，比如直接在淘宝这样的平台搜索，看看你感兴趣的商品销量。这些公开的信息总能告诉你一些事情。</p>
+      <p>如果你想知道自己所在大学、所在专业的毕业生就业前景，最好的办法当然是问问已经毕业的师兄师姐，或者问辅导员老师。但那个信息对你来说也许并不是那么重要。一切分类都是主观的，你完全可以把自己放到另外一个参考类里。也许你的志向并不是你现在所在的专业，你想知道的是另外某个行业在未来几年的总体需求，那这就又是一个公开信息。</p>
+      <p>有些人问：「如果我是这个参考类里的特例怎么办？」那你就是选错了参考类。也许你的参考类不在本地，在远方；不在同龄人中，而在古往今来跟你共同志向和爱好的人里。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- 问答三 -->
+  <div class="sec-head">
+    <div class="kicker">来自《OODA 环：不是反应快，而是换脑快》</div>
+    <h3>三问 · AI 智能体应该用 OODA 吗？人的位置在哪里？</h3>
+  </div>
+  <section class="qa-card">
+    <div class="q">
+      <span class="qa-label ask">读者 刘朔 问</span>
+      <p>请问万老师，AI 现在的学习机制符合 OODA 的逻辑吗？或者我要改进自己的智能体助手，可以让它用 OODA 方式来优化自己的工作流吗？</p>
+    </div>
+    <div class="a">
+      <span class="qa-label reply">万维钢回复</span>
+      <p>是的，AI 智能体应该用 OODA。如果 AI 只是按照你定好的动作，第一步、第二步、第三步干什么，把事情做完，那它只能说是一个自动化脚本。<strong>真正的智能体应该体现 OODA，也就是说，在它开动之后，能根据观察到的结果进行重定向，现场自己决定该怎么办，然后采取下一步行动。</strong></p>
+      <p>从 OpenAI 的 o3 这个模型开始，AI 就有这个意思了。最早的时候，你问模型一个问题，它只是凭直觉给回答；后来它有了思考模式，会先想一想，把语言组织组织再给你答案。但 o3 完全不同。o3 是自己先去做一番调研，它会根据自己调研的结果加以判断，然后再想一想下一步：是做一番计算，还是给你画个示意图，或者怎么办。然后它再重新组织语言，给你生成一个答案。它最后生成的答案，是根据现场调研出来的结果决定的。</p>
+      <blockquote><p>OODA 的精神就是：我们不能在自己的心内世界中完成闭环——你必须接触现实。通过问讯、收到反馈、重新定向、然后再决定你怎么办，并且反复做这个循环。</p></blockquote>
+      <p>这就引出了一个问题：在智能体 OODA 环之中，人的位置在哪里？</p>
+      <p>我最近跟硅谷一些在一线做 AI 智能体应用的工程师有些交流，我感觉整个硅谷的氛围是把人排除在循环之外——人只起到一个监督的作用，尽量让 AI 从头做到尾，这叫「Human-on-the-Loop」。有些工程师认为当前模型的能力已经够用了：如果你发现某个工作任务模型还做不好，那不是模型的问题，而是你的问题——是你没有把智能体安排好！我感觉这些工程师的想法非常激进，就是尽可能让 AI 承担所有的事情，最好人一点都不参与，甚至可以说叫「Human-out-of-the-Loop」。</p>
+      <p>当前空气就是这样，但我对此充满疑虑。我觉得现在的智能体应用，包括龙虾在内，都是用 AI 在计算机上频繁操作一些小事，而不是做少数的大动作。我很难相信应该把大动作也完全交给 AI。</p>
+      <p>就拿写作来说，不用说整个写作过程，就单纯是调研这一步，也不可能完全 Human-on-the-Loop，而是要「Human-in-the-Loop」，让人的参与成为循环中的一个关键步骤。</p>
+      <p>第一轮调研可以让 AI 自己去发现什么东西有意思、什么重要、当前的科学理解是什么。等结果返回之后，你会发现其中对你来说更重要、更有意思的东西，然后你会让它发起第二轮、第三轮调研。也就是说，每一轮循环都是一个小小的 OODA，AI 可以自行完成——但是，这些循环之上还有一个大循环，<strong>人在这个大循环中的作用就是第二个 O，定向。</strong></p>
+      <p>这个道理听起来很明白，但当前硅谷的精神是：不管你说人应该在哪儿起作用，最终都应该把那个作用交给 AI。我赞赏这个激进的态度，但我的确希望人仍然有用。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- 问答四 -->
+  <div class="sec-head">
+    <div class="kicker">来自《认知负荷理论：因为文具多，所以是差生》</div>
+    <h3>四问 · 工作记忆这个「内存」，能通过训练加大吗？</h3>
+  </div>
+  <section class="qa-card">
+    <div class="q">
+      <span class="qa-label ask">读者 理科没试过及格 问</span>
+      <p>万 sir，有没有研究说，可以加大我们的「内存」？</p>
+    </div>
+    <div class="a">
+      <span class="qa-label reply">万维钢回复</span>
+      <p>这是一个非常有意思的问题，我这次又专门做了一番调研，结果可以说是既在情理之中，又很让人无奈。</p>
+      <p>首先，工作记忆确实是一个很重要的头脑指标，不同的人工作记忆的大小确实有差别。它跟一个人的流体智力（特别是智商）有将近 0.5 的相关性。工作记忆容量大的人，也更容易排除干扰、集中注意力。它确实有好处。</p>
+      <p>工作记忆落实到脑神经科学上，是由若干个脑区共同协调决定的。但是它是可以测量的，你把这个人请过来，做一番测试，你大概就可以测量出来他的工作记忆水平怎么样。测量的方法有多种：比如给你一组数字，让你短时间扫一眼，然后尝试复述，看能复述出来几个；再比如让你一边处理某些任务，一边给你一些干扰，看你的抗干扰能力怎么样；还有在你面前播放一组信号，看你能不能听出来新信号是之前的第几步信号，等等等等。</p>
+      <p>那你说，这个工作记忆能不能通过训练提高呢？有意思的事情发生了：以上所有这些测试任务都可以通过训练提高——但问题是，你训练的是哪个任务，你提高的就是做那个任务的水平。如果你换一个没训练过的任务，你的迁移能力非常小。而且我们前面刚说工作记忆跟智商有比较强的相关性，可是你通过做那些训练任务，并不能提高智商。</p>
+      <blockquote><p>换句话说，训练提高的只是做特定任务的水平，而不是大脑的硬件本身。</p></blockquote>
+      <p>这是怎么回事呢？研究者的推测是，人们在训练过程中其实是发现了解题技巧，也就是把它「分块」——说白了，也就是增加了大脑里的「图式」。所以我们《精英日课》专栏讲过好几次：智力游戏不能真正提高智力水平。</p>
+      <p>但这并不是一个非常坏的消息，这里的好消息是：做每个具体的任务的水平都可以提高，只要你进行有针对性的训练。</p>
+      <blockquote><p>所以练习真的很有效，但是我们也真的不能不服天赋。</p></blockquote>
+      <p>我理解，这是因为大脑是一个软硬结合的东西：你希望练硬件，也就是绝对脑力，但其实你是在练软件，也就是解题方法；但你说是练软件吧，这个软件其实又是用硬件实现的。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- 问答五 -->
+  <div class="sec-head">
+    <div class="kicker">来自《认知负荷理论：因为文具多，所以是差生》</div>
+    <h3>五问 · 插图会增加认知负荷吗？——风格与工程</h3>
+  </div>
+  <section class="qa-card">
+    <div class="q">
+      <span class="qa-label ask">读者 shooting Liu 问</span>
+      <p>万 sir，您的课程里面会有很多漫画配图，结合着漫画看文章，就会觉得内容好理解一些。您在内容中介绍一些教学动漫会增加孩子们的认知负荷，请问这为啥不会增加认知负荷呢？</p>
+    </div>
+    <div class="a">
+      <span class="qa-label reply">万维钢回复</span>
+      <p><strong>请把这理解成一种「艺术」，而不是严格的工程。</strong>有时候，女老师打扮得漂亮一点，可能会影响同学的注意力，但我们不能剥夺女老师打扮得漂亮一点的权利。</p>
+      <p>其实我在文稿里加了更多的漫画和插图，但有时候主编认为画得不是那么好，或者会干扰读者阅读，就给砍掉了一些。但最终还是保留了不少。这些插图也许会对有些人有用，也许对有些读者来说是个干扰，我们双方互相试错而已。</p>
+      <p>这就如同拍电影。有些导演的画面中没有一个元素是多余的，所有的事物都跟剧情密切相关。但也有一些导演，会一边描写一场激烈的街头打斗，一边还有闲情逸致拿出几秒钟，去描写路边一只鸟在如何喝水。</p>
+      <p>那个画面跟剧情没啥关系，但是会让你有一种更身临其境的感觉，仿佛自己也穿越到了那个历史现场。这只是风格而已。有些观众会有更多的闲情逸致，有些观众则更愿意把注意力集中在主线上。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- 用户留言 -->
+  <div class="sec-head">
+    <h3>用户留言</h3>
+    <div class="topic-tag"># 小小的改变也很厉害</div>
+  </div>
+
+  <section class="comment">
+    <div class="comment-head">
+      <span class="comment-name">至尊女宝</span>
+      <span class="comment-loc">四川</span>
+    </div>
+    <p>我十二岁才第一次见到螃蟹，还是姨妈家里的罐头；十八岁上大学才见到凉席和蚊帐，我们青海年平均气温只有三度，那种东西在我们那儿没人需要，我甚至被同学嘲笑；二十四岁第一次坐飞机；二十七岁第一次看见大海；甚至到了四十岁，我才知道兔子喝很多不干净的水会死。你看，我这一辈子的参考样本，跟大多数人都对不上。如果非要用一个固定的参考类来框我，那我应该一辈子在高原上，没见过凉席没坐过飞机，更不应该知道兔子这种常识。可是我没有。我后来还是见到了螃蟹，用上了蚊帐，站到了海边。</p>
+    <p>我想起我老师讲过一个东西叫放大效应，在实验室烧瓶里做得漂漂亮亮的反应，搬到工业反应器里就不行了，温度场不一样，浓度分布不一样，传热传质全变了。不能说烧瓶里的数据是假的，它只是不能直接搬到塔器里用。人这一辈子其实也这样。出生在青海那个年平均气温三度的地方，那就是我的实验室烧瓶。我揣着那套数据走进更大的世界，发现好多东西都对不上。这些不是我的错，是我碰到了一个完全不同的操作条件。我需要的是重新做小试，重新摸参数。</p>
+    <p>一个东西能不能成，不取决于你这个人是谁，而取决于你面对的那个结构是什么。就像我们做工程设计，你不可能找到一座跟你一模一样的装置工艺去照抄，但是你可以查那个类似装置的工艺设计。那些规范、那些案例、那些失效分析的报告，它们不认识你，但它们能告诉你事情。</p>
+    <p>我当年想知道外面到底有多热，我不必非要找一个从青海去过广东的人，我只需要花几块钱买个温度计，或者上网搜一下广东夏天平均气温。数据不挑人，结构也不挑人。这就是工科的底子：你关心的不是那一个样本，而是样本背后的规律和参数。</p>
+    <p>人这一生，说到底就是在用自己的腿丈量自己的相平衡边界。每一步都不白走，每一个迟到的物性数据都不丢人。力量有限就有限吧，但只要还能迈腿，还能往里加新料，那些所谓的参考类就困不住你。你的操作弹性比你想象的大得多。</p>
+  </section>
+
+  <section class="comment">
+    <div class="comment-head">
+      <span class="comment-name">左星星</span>
+      <span class="comment-loc">上海</span>
+    </div>
+    <p>我在 2025 年失业过一段时间，当时我在得到有 4.5 万粉丝，曾认真思考：如果把这些粉丝迁移到自己的自媒体账号，是不是能靠内容养活自己？我还设想过，前期流量不足时，可以一边送外卖补贴收入，一边慢慢运营账号。</p>
+    <p>但我没有只凭热情做决定，而是去找「参考类」。我发现，行业资料显示短视频创作者数量非常庞大，主播收入分化明显，超过九成主播月收入低于 5000 元。这说明自媒体不是没有机会，而是高度竞争、头部集中的行业。</p>
+    <p>再看外卖，骑手收入确实能提供一定现金流，有资料显示时薪大约在 20 到 30 元区间，高于不少蓝领岗位。但这份收入依赖时间、体力和持续在线。一旦白天跑单，晚上再做内容，很可能不是「双线发展」，而是两头消耗。自媒体最需要稳定思考和持续输出，而外卖只能解决短期现金流，无法支撑长期职业积累。所以我最后放弃了这个方案，决定继续找工作。</p>
+    <p>这也让我明白，做选择时，不要只找和自己相似的人，而要找相似的机制。所谓相似机制，是指观察事情背后的运行规律是否相同：流量从哪里来，收入如何转化，成本由谁承担，失败概率多高，以及自己能否持续投入资源。真正有价值的调研，不是为了鼓舞自己，而是帮自己清楚判断概率、成本和风险。</p>
+  </section>
+
+  <section class="comment">
+    <div class="comment-head">
+      <span class="comment-name">Christy</span>
+      <span class="comment-loc">广东</span>
+    </div>
+    <p>健康的比较应该从评判传向参考。比较的真正价值不是分出高下，而在于提供认知的视角和成长的路径。当将比较从评判转向参考，实质是将焦点从外部定论移向内在建构，不再执着于「谁更好」，而是关注「能从哪里学到什么」。</p>
+    <p>哪怕是知道「不同的人没有可比性」的观点，可是在生活里践行的时候，依然会不可遏制地要和别人比较。不是不能攀比，而是换一个攀比对象。如果你的攀比的参照物永远在外部：房子、车子、收入、孩子成绩、伴侣、身材。它带来就是焦虑、嫉妒、失衡，因为人的比较是无止境的。这也是内耗来源，因为你永远看见别人光鲜的一面，却拿来对照自己不完美的一面。还不如把攀比的对象变成爱拖延、害怕改变、敏感、容易被情绪操控的那个「旧的你」。你不需要赢过别人，而是「我要不再被过去的自己拖住」。前者消耗能量，后者积累力量。</p>
+    <p>比较是本能，但沉溺于比较，则是选择了一场内耗的游戏。因为你永远在拿自己生活的「幕后花絮」与别人生活的「精修海报」去比较。真正的幸福是在放下评分表，全情投入到属于自己的、不完美却真实的生活剧本里的那一刻。健康的比较应像镜子而非标尺，照见可能性而不是丈量成败。</p>
+  </section>
+
+  <div class="divider"><span></span>✵<span></span></div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <h2>📖 AI 阅读总结</h2>
+    <p class="one-liner">一句话概括：本讲是一场问答合集——面对多重参照点撕扯、个人力量有限、AI 智能体该把人放在哪里、工作记忆能否「加大」等困惑，万维钢的主张始终一致：把能积累复利的资产当参照点，把「关于人的问题」翻译成「关于机制的问题」，用外部反馈校准内部判断，同时牢牢保住人在循环里的位置。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li>比较心理不可遏制，外界参照点只是「看清位置」的工具：关键不是消灭比较，而是主动跳出表面的社会比较，把更本质、更可控、更能积累的东西（思考深度、调研质量、写法进步）选作参照点。</li>
+      <li>内部视角与外部视角缺一不可：没经历过风浪就宣称「只在乎内心评价」是站着说话不腰疼；理想状态是经历足够多的好坏评价后练出强大的自我内核，让指标和评价降格为众多参考信号之一，而不是目标、指引或诱饵。</li>
+      <li>参考类预测的用法是找「相似的机制／结构」，不是找相似的人：真正要问的是——有相似结构的人、项目、产品里，多少比例走到了你想要的结果？你凭什么证据偏离这个比例？</li>
+      <li>把关于人的问题变成关于机制的问题，就等于把它一般化：于是可以利用公开信息（行业报告、学术数据、平台销量）估算概率；一切分类都是主观的，参考类可以自己选，甚至可以选到古往今来与你有共同志向的人里。</li>
+      <li>真正的 AI 智能体应该体现 OODA：不是按预设步骤跑完的自动化脚本，而是根据观察到的结果现场重定向、自己决定下一步；OpenAI 的 o3 标志着「先调研、再判断、后作答」这一模式。</li>
+      <li>人在智能体循环里的位置：硅谷流行 Human-on-the-Loop 乃至 Human-out-of-the-Loop，但万维钢主张 Human-in-the-Loop——AI 可以自行完成每一轮小 OODA，人负责大循环里的第二个 O「定向」，并坦言「希望人仍然有用」。</li>
+      <li>工作记忆是可测的头脑指标，与流体智力相关约 0.5，但训练只能提高「特定任务的水平」：迁移很小、提不了智商——训练练的是分块与图式（软件），不是大脑硬件；好消息是针对性训练对具体任务确实有效。</li>
+      <li>插图与认知负荷的关系是「艺术」而非严格工程：插图对有些读者有帮助、对有些读者是干扰，双方互相试错即可；如同电影里与剧情无关的一只鸟喝水的镜头，那只是风格。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li>本周做一次「参照点审计」：把你最近最在意的比较对象（收入、排名、他人评价）写下来，逐个问「这里面有没有我能积累复利的部分」，然后把注意力锚定在作品质量与自身进步上。</li>
+      <li>下次做选择前，先写下一个「关于机制的问题」：不要问「我能不能做好自媒体」，而问「类似背景的人做内容，多大比例能养活自己」——再用行业报告、公开平台数据给自己估个概率再决定。</li>
+      <li>给 AI 工作流加一道「人定向」关卡：让 AI 先独立跑完一轮调研，你审阅结果、指出方向，再让它发起第二轮；把「小 OODA + 大 OODA」变成日常用法，而不是让 AI 一步做到尾。</li>
+      <li>停止购买「脑力训练」类课程：想提升什么，就针对那个具体任务做每日小剂量训练（写作就每天写、外语就每天读）；心里清楚练的是任务水平，不指望它提高智商。</li>
+      <li>把工作记忆留给「思考」，不留给「记东西」：重要信息立即外化——写清单、存文档、建图谱，减少脑子里的待办与数字负担，这比任何记忆训练都立竿见影。</li>
+      <li>把攀比对象换成「三个月前的自己」：每当忍不住和别人比时，改问「现在的我是否比过去更少拖延、更敢改变、更能抗干扰」，把比较从消耗转为积累。</li>
+      <li>建立每周一次的「外部反馈仪表盘」：固定记录一两个客观指标（阅读量、练习时长、身体数据），把它当参考信号而非评价，防止单次结果绑架情绪。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul class="quote-list">
+      <li>「你希望把可以积累复利的资产，而不是偶然性更大的果实，当作参照点。」</li>
+      <li>「一旦你把一个关于人的问题变成一个关于机制的问题，你就把它给一般化了。」</li>
+      <li>「所以练习真的很有效，但是我们也真的不能不服天赋。」</li>
+      <li>「比较是本能，但沉溺于比较，则是选择了一场内耗的游戏。」</li>
+    </ul>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('toTop');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+    btn.style.display=window.scrollY>300?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+</body>
+</html>

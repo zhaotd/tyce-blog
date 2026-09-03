@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第66讲 杰文斯悖论：AI 会增加人的工作岗位</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2620;
+    --muted:#8a8378;
+    --accent:#8a5a2b;
+    --accent-soft:#8a5a2b14;
+    --border:#e8e0d2;
+    --quote-line:#c9a86a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#1f1c18;
+      --text:#e9e2d5;
+      --muted:#9a9184;
+      --accent:#d4a35c;
+      --accent-soft:#d4a35c26;
+      --border:#33302a;
+      --quote-line:#8a6a3a;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:1000;
+    transition:width .1s linear;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));
+    width:48px;height:48px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    display:none;align-items:center;justify-content:center;
+    font-size:22px;line-height:1;
+    border:none;box-shadow:0 4px 14px rgba(0,0,0,.25);
+    cursor:pointer;z-index:1000;
+  }
+  #toTop:hover{opacity:.88;}
+  .wrap{max-width:700px;margin:0 auto;padding:0 20px 60px;}
+  header.doc-head{padding:34px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+  .course-tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    background:var(--accent-soft);border:1px solid var(--accent);
+    padding:3px 12px;border-radius:999px;margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{font-size:26px;line-height:1.4;text-align:left;margin-bottom:12px;}
+  .meta{font-size:14px;color:var(--muted);text-align:left;}
+  .meta b{color:var(--accent);font-weight:600;}
+  p{margin:0 0 18px;}
+  h3{
+    font-size:19px;margin:34px 0 14px;line-height:1.5;text-align:left;
+    padding-left:12px;border-left:4px solid var(--accent);color:var(--accent);
+  }
+  .divider{
+    display:flex;align-items:center;gap:14px;margin:36px 0;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--border);
+  }
+  .divider span{color:var(--accent);font-size:16px;line-height:1;}
+  blockquote{
+    margin:20px 0;padding:14px 18px;
+    border-left:4px solid var(--quote-line);
+    background:var(--accent-soft);border-radius:0 12px 12px 0;
+    color:var(--text);font-style:normal;
+  }
+  blockquote p{margin:0;}
+  ul{margin:0 0 18px;padding-left:6px;list-style:none;}
+  ul li{
+    margin:0 0 12px;padding-left:24px;position:relative;text-align:justify;
+  }
+  ul li::before{
+    content:"";position:absolute;left:6px;top:.72em;
+    width:7px;height:7px;border-radius:2px;background:var(--accent);
+  }
+  ul li strong{color:var(--accent);}
+  .arrow-chain{
+    background:var(--accent-soft);border:1px solid var(--border);
+    border-radius:12px;padding:14px 18px;margin:18px 0;
+    text-align:center;
+  }
+  .arrow-chain p{margin:0;}
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:18px 20px;margin:18px 0;
+  }
+  .card .card-title{
+    font-weight:700;color:var(--accent);margin-bottom:10px;text-align:left;
+  }
+  .qa .q{font-weight:700;color:var(--accent);margin-bottom:6px;}
+  .qa .a{margin-bottom:6px;}
+  .notes{
+    font-size:13px;color:var(--muted);line-height:1.7;
+    margin:34px 0 10px;
+  }
+  .notes h3{font-size:16px;margin:0 0 12px;padding-left:0;border-left:none;color:var(--muted);}
+  .notes ol{padding-left:22px;}
+  .notes li{margin:0 0 8px;text-align:left;}
+  .notes a{color:var(--accent);word-break:break-all;}
+  .comments h3{font-size:18px;margin-top:36px;}
+  .comment .c-head{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:8px;text-align:left;
+  }
+  .comment .c-name{font-weight:700;color:var(--text);}
+  .comment .c-time{font-size:12px;color:var(--muted);}
+  .comment p{margin:0 0 10px;}
+  .comment .c-subhead{font-weight:700;margin:4px 0 8px;text-align:left;}
+  .author-reply{
+    margin-top:12px;padding:12px 14px;border-radius:10px;
+    background:var(--accent-soft);border:1px solid var(--border);
+    font-size:15px;
+  }
+  .author-reply .ar-label{font-weight:700;color:var(--accent);margin-bottom:6px;text-align:left;}
+  .author-reply p{margin:0;}
+  #ai-summary{
+    margin:44px 0 10px;padding:24px 22px;
+    background:linear-gradient(160deg,var(--accent-soft),transparent 55%),var(--card);
+    border:2px solid var(--accent);border-radius:12px;
+  }
+  #ai-summary h2{
+    font-size:21px;color:var(--accent);text-align:center;
+    margin-bottom:6px;letter-spacing:2px;
+  }
+  #ai-summary .s-tag{
+    text-align:center;font-size:13px;color:var(--muted);margin-bottom:18px;
+  }
+  #ai-summary .one-line{
+    font-weight:700;background:var(--accent);color:#fff;
+    border-radius:10px;padding:12px 16px;margin-bottom:20px;
+    text-align:justify;
+  }
+  #ai-summary h4{
+    font-size:16px;color:var(--accent);margin:18px 0 10px;
+    text-align:left;letter-spacing:.5px;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:24px;margin-bottom:0;}
+  #ai-summary ol li,#ai-summary ul li{
+    margin:0 0 10px;padding-left:0;text-align:justify;
+  }
+  #ai-summary ul li::before{display:none;}
+  #ai-summary .q-quote{
+    font-style:normal;color:var(--text);margin-bottom:10px;padding-left:14px;
+    border-left:3px solid var(--quote-line);
+  }
+  #ai-summary .disclaimer{
+    margin-top:20px;padding-top:14px;border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);text-align:center;
+  }
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第66讲</span>
+    <h1>杰文斯悖论：AI 会增加人的工作岗位</h1>
+    <div class="meta">作者：<b>万维钢</b> ｜ 写作时间：2026 年 5 月</div>
+  </header>
+
+  <p>在我写这期文章的时候（2026 年 5 月），硅谷正弥漫着一股末世之感。虽然 AI 带动经济火热，街头歌舞升平，但很多有识之士相信这一切都是暂时的……因为他们认为 AI 会很快干掉大量的人类工作岗位。</p>
+
+  <p>Anthropic 的 CEO 达里奥·阿莫迪（Dario Amodei）最近就像个末日先知。他在几个场合表示 <sup>[1]</sup>，AI 将在一到五年内消灭<em>一半</em>初级白领岗位，把失业率推到 10%—20%；科技、金融、法律、咨询，尤其是其中的入门级岗位，都会中招。阿莫迪还像为民请命一般呼吁：AI 公司和政府不要再继续粉饰太平了！</p>
+
+  <p>而你对此可能也有些体感。过去两年间，硅谷连续有几家大厂打着 AI 的名义裁员。有美国名校计算机专业的大学生，毕业没找着工作。有人认为初级程序员岗位已经都消失了……</p>
+
+  <p>但是这一讲，我要说一个暴论：<strong>AI 不但不会减少，而且会大大增加人的就业岗位。</strong></p>
+
+  <p>事实上，现在已经出现了早期信号。请看下面这张图，出自城堡证券（Citadel Securities）发表于 2026 年 2 月的一份报告 <sup>[2]</sup>——</p>
+
+  <p>图中用 Indeed 岗位发布数据比较了软件工程师和整体招聘岗位的走势，其中最显眼的是，<strong>软件工程师岗位在 2025 年五、六月间，已经实现了触底反弹</strong>。</p>
+
+  <p>当然，新岗位发布的数目仍然比疫情前、比 2021—2022 年的科技泡沫高点都低一些，但是，这是一个很好的迹象。不是说 AI 最先干掉的就是编程这项工作吗？怎么软件工程师的岗位反而最先反弹了呢？</p>
+
+  <p>这很可能不是反常，而是一个经济学规律的一次完美展示，叫做「杰文斯悖论（Jevons Paradox）」。但要在理解前先说清楚——这讲要讲的核心，就藏在下面这个故事里。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>回到 1865 年的英国</h3>
+
+  <p>要理解其中的逻辑，咱们先回到 1865 年的英国。</p>
+
+  <p>英国正处于工业革命的巅峰，可是当时的人也有一种末日焦虑：支撑帝国心跳的是煤炭，蒸汽机、铁路、工厂、轮船，全都吃煤。那煤炭要是挖完了怎么办？各路天才想方设法改进技术，把蒸汽机效率提高了好几倍，都比以前省煤，于是人们设想，煤炭总消耗量肯定会降下来。</p>
+
+  <p>可是就在此时，一个叫威廉·斯坦利·杰文斯（William Stanley Jevons）的 30 岁经济学家出了一本书，叫《煤炭问题》（The Coal Question）<sup>[3]</sup>，说，你们想得太简单了。</p>
+
+  <div class="arrow-chain">
+    <p>蒸汽机越省煤，煤动力就越便宜 → 煤动力越便宜，更多行业就会用它 → 更多行业用它，英国总煤耗反而会<strong>上升</strong>。</p>
+  </div>
+
+  <p>这就是杰文斯悖论。而历史上事实果然如此。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>这是一个普遍规律</h3>
+
+  <p>而且这是一个普遍规律。咱们说一个发生在中国新疆的类似的事儿。</p>
+
+  <p>你知道新疆很多地方是干旱的。在上世纪 90 年代，天山地区推广了农业“滴灌”技术。过去浇一亩地需要用很多水，现在省了不少。那你说，总用水量是不是就应该下降了？并没有。</p>
+
+  <p>农民一看既然每亩用水少了，那我为什么不多种一点？而且既然滴灌提高了单产，那我能不能再种点更赚钱的经济作物？既然收益上来了，我是不是应该多开垦一些耕地？</p>
+
+  <p>结果是天山地区从 1996 年推广滴灌以来，20 年间用水反弹超过 115% <sup>[4]</sup>。也就是说总用水量是以前的两倍还多。</p>
+
+  <p>现在 AI 消耗电力不也是同样的逻辑吗？AI 公司的算法越来越高效，英伟达的芯片一代比一代省电，单次推理越来越便宜——可是数据中心的总耗电量却在疯狂飙升。</p>
+
+  <p>这些故事的结局应该都会很好，毕竟人没有那么容易被资源限制死。但这个道理是，原来效率不是刹车，而是油门。</p>
+
+  <blockquote><p>原来效率不是刹车，而是油门。</p></blockquote>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>生活中的杰文斯悖论</h3>
+
+  <p>一旦你有了杰文斯悖论这个眼光，你会发现生活中到处都是它的影子。</p>
+
+  <p>比如说写作。十年前没有 AI，我自己调研、有时候甚至是读纸质书，用铅笔画大纲，然后纯手打输入，再用眼睛盯着屏幕逐行修改……如果我这一天能保持很好的工作纪律，大约要花 6—7 个小时才能写好一篇文章。那你说现在有了 AI，我可以用 AI 调研、跟 AI 讨论、用语音输入、用 AI 审稿，每一步都能省下时间，我能不能用 4 个小时写篇文章呢？</p>
+
+  <p>结果是出一篇文章的时间一点都没缩短，往往是更长。这是因为 AI 让我对文章有了更多的要求：我会探索更多的想法，调研更多的文献，可选的案例更丰富，文章逻辑密度更高，篇幅也更长了，我变得更计较遣词造句，偶尔还要加入插图和漫画。</p>
+
+  <p>如果你也用 AI 做过自己以前做的工作，你会有同感。老板不会因为 AI 帮你提速了，就说太好了，早做完早休息！老板只会说既然十分钟就能出一版，那我们先做三版看看……你左一个需求右一个想法，最终把所有工作时间填满还不够。</p>
+
+  <p>别的事情不也是如此吗？你用上了一个购物就返现的省钱 App，每笔消费的确都能给你省钱……结果因为购买门槛降低，你更想买买买，总花费反而增加了不少。</p>
+
+  <p>再比如说，现在有微信、飞书、AI 会议纪要这些应用，人与人之间的沟通成本大大降低了，那我们的会议时间是不是应该减少呢？也没有。又是拉群，又是同步，又是对齐，发起会议的门槛近乎为 0，使得会议数量反而比以前多了。</p>
+
+  <p>这个洞见是：当你提高效率、降低了单位资源消耗的时候，你同时降低了行动的门槛。<strong>门槛一降，原本被抑制的、甚至你都想不到的需求就会像洪水一样释放出来。</strong></p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>自动化会增加人的工作</h3>
+
+  <p>杰文斯悖论原本说的是效率越高就越消耗资源——但你只要把“提高效率”改成“自动化”，把“资源”改成“人的工作”，这个悖论就变成了：<strong>自动化会增加人的工作</strong>。</p>
+
+  <p>历史已经一再验证了这个规律——</p>
+
+  <ul>
+    <li><strong>纺织机械与卢德分子：</strong>19 世纪纺织机械刚出现的时候，有所谓“卢德分子”担心织布工要失业，就去砸机器。哪里想到布料价格暴跌的结果是普通人从只有一套衣服变成了有十几套，纺织工的数量反而大大增加了。</li>
+    <li><strong>ATM 与银行柜员：</strong>1970 年代，自动取款机（ATM）普及，大家都预测银行柜员将会消失。事实上单个网点需要的柜员人数的确减少了，但是因为运营成本降低，银行开始在每个街角疯狂开设新分行，柜员的总数不降反升。更重要的是，柜员不再只是“数钱的机器”，他们被解放出来去处理更复杂、更有价值的像开户、理财咨询这些工作。</li>
+    <li><strong>AI 读片与放射科医生：</strong>快进到几年前，计算机视觉刚刚普及的时候，有学者断言放射科医生要失业了。后来的现实却是因为 AI 让看片成本大幅下降，医院开始给患者开出大量的预防性核磁共振和 CT 检查，导致扫描量激增。AI 帮医生筛选了 90% 的正常片子，而剩下的 10% 疑难杂症和最终的签字担责依然需要人类。于是现在全球范围内的放射科医生不是失业了，而是严重短缺 <sup>[5]</sup>。</li>
+    <li><strong>电子表格与搜索引擎：</strong>类似地，电子表格没有消灭会计，而是让财务分析、预算管理、商业建模的业务扩张。搜索引擎没有消灭研究员，反而制造了 SEO、内容运营、数据分析和数字营销这些新岗位……等等等。</li>
+  </ul>
+
+  <h3>一个最新的例子：米画师</h3>
+
+  <p>一个最新的例子来自中国。有个美术外包平台叫“米画师”，运作模式是需求方发布订单，比如说“我想要一个头像”“我想要一个什么样的动漫人物”，然后由画师在平台上接单。你说现在每个人都可以用 AI 画画了，是不是这门业务就不存在了呢？</p>
+
+  <p>恰恰相反。2022 年 10 月，因为一次知名的 AI 绘图模型泄露事件，几乎免费的 AI 绘画能力突然降临到大众手中，导致米画师上的单张图像平均价格下降了 64%——但是订单数量，却增加了 121%，结果是总收入增加了 56% <sup>[6]</sup>。原有的创作者没有被挤走，他们保留了大部分的市场份额，增长则主要来自过去“不值得做”的低端个人订单。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>AI 干掉的是任务，而不是岗位</h3>
+
+  <p>这个规律不只是「价格下降 → 订单增加 → 总市场变大」，还有一个重要特点是「任务改变」。</p>
+
+  <p>一个岗位不是一个动作，岗位是一组任务的组合。会计不是“输入数字”，医生不是“看化验单”，律师不是“查法条”，程序员不是“敲代码”……这些岗位都包含判断、审美、责任等等不可被 AI 取代的任务，还可以包含各种因为 AI 而产生的新任务。</p>
+
+  <p>AI 干掉的是任务，而不是岗位。劳动经济学里早就有个「任务模型（task-based model）」<sup>[7]</sup>，说自动化确实有「替代效应（displacement effect）」，会把某些原来由人做的任务交给机器——但新技术也会创造新任务，让劳动重新进入生产过程，这叫「复职效应（reinstatement effect）」。</p>
+
+  <p>就在 2025 年，世界经济论坛（World Economic Forum）发布一份就业报告 <sup>[8]</sup>，认为到 2030 年，全球宏观趋势预计创造 1.7 亿个新岗位、替代 9200 万个旧岗位，等于净增加 7800 万个岗位。美国劳工统计局（Bureau of Labor Statistics）也明确说 <sup>[9]</sup>，AI 可能降低软件产品价格、从而增加软件开发、AI 商业解决方案和维护 AI 系统的需求，所以预测美国软件开发人员 2023—2033 年就业增长 17.9%。</p>
+
+  <p>当然我们还要拭目以待。但是，站在此刻看，AI 的确在改变世界，也很有可能带来奇点——但是，经济学理论和过往的历史经验并不支持“AI 会导致大失业”这个末日假说。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>AI 会创造哪些新岗位</h3>
+
+  <p>如果要顺应杰文斯悖论的历史大势，我们就不能站在旧任务那一边，而要站在新需求这一边。咱们不妨大胆畅想一下，AI 会创造哪些新岗位。</p>
+
+  <p>历史经验仍然可以帮我们。简单说，当新技术把门槛降下来之后，那些过去不会做、做不起和不值得做的任务，就成了新的生意。</p>
+
+  <h3>第一类：直接与 AI 相关的岗位</h3>
+  <ul>
+    <li><strong>「AI 工作流架构师」：</strong>不只是写提示词，而是把一个公司的销售、客服、数据、法务、财务流程改造成 AI 可执行、可审计、可追责的系统。</li>
+    <li><strong>「智能体监督员」：</strong>管理一群 AI agents，让它们分工、协作、升级、复盘，像以前管理实习生一样管理机器员工。</li>
+    <li><strong>「模型评测师」和「红队测试员」：</strong>专门找 AI 的幻觉、偏见、越权、漏洞和危险行为。未来模型越多，验收模型的人越值钱。</li>
+    <li><strong>「知识库园丁」：</strong>维护企业内部数据、权限、语义结构、版本和来源。AI 吃数据，数据就需要厨师，还需要食品安全检查员。</li>
+    <li><strong>「机器人舰队管家」：</strong>当清洁机器人、配送机器人、巡检机器人、护理机器人进入城市，总要有人负责调度、维修、异常处理和人机冲突调解。</li>
+  </ul>
+
+  <h3>第二类：生活增强岗位</h3>
+  <ul>
+    <li><strong>「个人学习导演」：</strong>这不是传统家教，而是用 AI 给一个学生定制长期学习路径、每日反馈、错题追踪和项目挑战。</li>
+    <li><strong>「老人生活增强师」：</strong>用 AI、传感器和机器人帮老人管理用药、运动、社交、家庭联系和紧急响应。不是替代亲情，而是让亲情少一点鸡飞狗跳。</li>
+    <li><strong>「微型体验策划人」：</strong>给一个家庭、一场生日、一段旅行、一个社区节日生成剧本、音乐、视觉、路线和互动游戏。过去只有大活动才值得策划，未来小生活也值得定制。</li>
+    <li><strong>「个人数字档案馆员」：</strong>帮人整理照片、视频、聊天记录、文章、家族故事，做成可搜索、可传承、可展示的数字生命档案。</li>
+    <li><strong>「一人电影制片人」：</strong>普通人不但可以拍电影，而且可以被拍电影。一个人带着 AI 做分镜、角色、配音、剪辑、特效，直接为一小群人、一个小家庭、一个小教育场景拍一部电影。</li>
+  </ul>
+
+  <h3>第三类：信任与责任岗位</h3>
+  <p>这些任务以前就是必须的，但是现在变得更重要，以至于值得升级成专门的岗位——</p>
+  <ul>
+    <li><strong>「AI 输出审计师」：</strong>专门检查 AI 写出的法律文本、医疗建议、财务报告、科研摘要有没有错，错在哪里，风险归谁。</li>
+    <li><strong>「人类责任签署人」：</strong>在医疗、金融、法律、教育等高风险场景里，AI 可以给建议，但最后要有一个懂业务的人签字、解释和担责。</li>
+    <li><strong>「首席审美官」：</strong>AI 可以生成一万张图，但选出那张最有灵魂、最能触动人心的一张，只能靠你。</li>
+  </ul>
+
+  <blockquote><p>当能力变便宜，需求就会变复杂。当任务被自动化，责任就会被人格化。</p></blockquote>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>结语：现代化是个好消息</h3>
+
+  <p>杰文斯悖论和鲍莫尔成本病都告诉我们现代化是个好消息。提高效率是好消息；别人提高效率你没提高，对你也是好消息。人们总会有些担心，但即便是你担心的那事儿，终究也是好消息。</p>
+
+  <p>杰文斯悖论更深刻的洞见是，<strong>人类社会不是爱节约的机器——人类社会更像一台欲望发动机</strong>。当技术把一个门槛降低，人类不会说“够了”，人类会说“那我们还想要这个、这个和那个”。</p>
+
+  <p>就在 2026 年 GTC 大会期间，英伟达 CEO 黄仁勋接受采访说 <sup>[10]</sup>：</p>
+
+  <blockquote><p>「那些为了 AI 裁员的公司都缺乏想象力（out of imagination）。真正有想象力的公司应该用 AI 扩张，而不是收缩（do more with more）。」</p></blockquote>
+
+  <p><strong>杰文斯会完全同意他的说法。AI 是对人的解放，而不是对人的限制。只有想象力是我们的限制。</strong></p>
+
+  <div class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>VandeHei, Jim, and Mike Allen. “AI Jobs Danger: Sleepwalking into a White-Collar Bloodbath.” Axios, May 28, 2025.</li>
+      <li>Frank Flight, “The 2026 Global Intelligence Crisis,” Citadel Securities, February 24, 2026. <a>https://www.citadelsecurities.com/news-and-insights/2026-global-intelligence-crisis/</a></li>
+      <li>Jevons, William Stanley. <em>The Coal Question</em>. London: Macmillan, 1865.</li>
+      <li>Wang, Yanyun, et al. “The Verification of Jevons’ Paradox of Agricultural Water Conservation in Tianshan District of China Based on Water Footprint.” <em>Agricultural Water Management</em> 239 (2020).</li>
+      <li>UDS Health. “AI in Radiology: Why Demand for Humans is Growing 9%.” UDS Health Blog, February 15, 2026. <a>https://udshealth.com/blog/ai-radiology-demand-for-humans-growing/</a></li>
+      <li>Zhang, Kaichen, Zixuan Yuan, and Hui Xiong. “The Impact of Generative Artificial Intelligence on Market Equilibrium: Evidence from a Natural Experiment.” arXiv, 2023. <a>https://arxiv.org/abs/2311.07071</a></li>
+      <li>Acemoglu, Daron, and Pascual Restrepo. “Automation and New Tasks: How Technology Displaces and Reinstates Labor.” <em>Journal of Economic Perspectives</em> 33, no. 2 (2019): 3–30.</li>
+      <li>World Economic Forum. <em>The Future of Jobs Report 2025</em>. Geneva: World Economic Forum, 2025.</li>
+      <li>Machovec, Christine, Michael J. Rieley, and Emily Rolen. “Incorporating AI Impacts in BLS Employment Projections.” <em>Monthly Labor Review</em>. U.S. Bureau of Labor Statistics, February 2025.</li>
+      <li>Huang, Jensen. Interview by Jim Cramer. “CNBC Exclusive: Transcript: Nvidia Founder &amp; CEO Jensen Huang Speaks with CNBC’s Jim Cramer on ‘Mad Money’ Today.” CNBC, March 17, 2026.</li>
+    </ol>
+  </div>
+
+  <div class="comments">
+    <h3>用户留言</h3>
+
+    <div class="card comment">
+      <div class="c-head">
+        <span class="c-name">王艳</span>
+        <span class="c-time">1小时前 · 湖南</span>
+      </div>
+      <p>深夜，我坐在电脑前看着课程文稿，竟然笑得前仰后合。这是 AI 出现以来，我读过最有趣、也是最有希望的一篇文章——终于有人站出来为 AI 正名了。我觉得黄仁勋真的好了不起，当别人因为 AI 裁员时，他敢说“那些公司都缺乏想象力”。而得到和万 Sir 也很了不起，持续将最先进的思路给到我们这些普普通通的学员。真的很感恩！</p>
+      <p>曾几何时，挥舞铲子的人也焦虑挖掘机会抢走自己的饭碗，但不少人后来成了挖掘机操作能手。汽车问世时，绝望的马车夫中们也有许多率先握住了方向盘，成了历史上第一批司机。</p>
+      <p>当年高铁在国内刚开通时，父亲盯着电视里的新闻，不屑地说：“哼，这么贵，谁会去坐？”当时我也有点替高铁公司捏把汗。可后来永州到长沙通了高铁，我几乎每周都会去买 2 张票——女儿在长沙，周末我得赶过去陪她。那十年下来，花在高铁票上的钱，真是不敢细算。如今一到节假日，想买到心仪的高铁车票，不花点钱给抢票平台，几乎别想有满意的座位。高铁的出现，实实在在激发了大家出行的巨大需求。</p>
+      <p>“得到大脑”上线那晚，专家版用户被拉进一个群。我当晚做得最多的一件事，就是不停地应大家邀请，去关注小伙伴们的账号——他们都在兴奋地发小红书的第一篇笔记，或者推送可读性不错的微信公众号文章，不少人当即立下了日更的 flag。AI 的出现，让越来越多人加入了文字创作的行列。我有几位企业家朋友，过去从不动笔，如今因为有了 AI 变得跃跃欲试：想写公众号，推广自己的企业和产品。正如杰文斯悖论所说——能力变便宜，需求就会变复杂。不过，即便有了 AI，一篇文章的可读性，终究还是需要一定的文字功底去修改和打磨。</p>
+      <p>上周的商会活动上，一位助力中小企业主打造个人 IP 的伙伴分享了他的创业故事。他带着 20 来人的团队，专门为中小企业主制作短视频：先收集素材，了解产品，拍几张产品图和办公场景图，然后每天用即梦、豆包生成短视频，每天用委托者的账号推送相应作品。视频里的人一个个动作优雅，姿势帅气，说话流利，背景可接地气，可高大上，场景随需求变换自如。大家看了，直呼开眼界。虽然看得出来有 AI 制作的痕迹，但这对于那些想做短视频却不知从何下手、又怕被潮流抛在身后的人来说，这简直是福音。每月花一千多块，就能保证日更，多省心，听说需求量不少。这位伙伴的生意火爆得很。有了 AI，这些人会失业吗？当然不会，AI 让他们忙都忙不过来好不好！</p>
+      <div class="c-subhead"># 小小的改变也很厉害</div>
+    </div>
+
+    <div class="card comment">
+      <div class="c-head">
+        <span class="c-name">caicai</span>
+        <span class="c-time">1小时前 · 浙江</span>
+      </div>
+      <p>联想到一个朋友分享的成长经历：这位朋友，为了获得更好的发展机会离开了待了很多年的公司。离职时，领导劝他说：“收入虽然增加了，但由俭入奢易，由奢入俭难。”这句话让他犹豫过，也害怕过，但最终还是选择向前。多年后再回头看，他说：“谁说由俭入奢之后一定还要入俭？”这句话恰好回应了今天的学习。</p>
+      <p>很多人以为，人追求的是节约和稳定。但杰文斯悖论告诉我们，人类从来不是一台追求节约的机器，而是一台不断创造新需求的发动机。当收入提高时，人们追求往往不只是更贵的消费品，而是更丰富的体验、更广阔的视野和更多的人生的选择。当能力增长时，人们也不会停留在原来的目标，而产生新的追求。</p>
+      <p>就像蒸汽机提高效率后，人们没有减少煤炭使用，而是创造出铁路、工厂和轮船等新的需求；人生也是如此。当生存压力降低后，人们不会停止前进，而是开始追求成长、自由和更大的可能性。</p>
+      <p><strong>启发：</strong>很多时候，推动一个人离开舒适区的，表面上是收入，实际上是对未来更多可能性的渴望。收入增长只是结果，真正增长的是一个人容纳世界的能力。</p>
+    </div>
+
+    <div class="card comment">
+      <div class="c-head">
+        <span class="c-name">朱翔</span>
+        <span class="c-time">1小时前 · 上海</span>
+      </div>
+      <p>❌你在低效率部门『鲍莫尔成本病』对你是好消息？我觉得万老师没讲完下半句，你工资被高效率部门拉上去的前提是【你还在那个岗位上】。岗位还在，任务变了，你得提前更换技能包。我们现在公司还有程序员，竟然都没有用过“Claude”解决真实开发问题，我表示震惊和担忧。</p>
+      <div class="author-reply">
+        <div class="ar-label">作者回复：</div>
+        <p>我今天看到一个数字，好像是说全世界现在有超过 9 亿人用过 ChatGPT，但是用过 Codex 的只有 500 万人，这里面有巨大的 Alpha。</p>
+      </div>
+    </div>
+  </div>
+
+  <section id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <p class="s-tag">由 AI 通读全文后撰写，非原作者观点</p>
+
+    <p class="one-line">一句话概括：效率提升不会减少消耗，反而会通过降低门槛释放出更多需求——因此 AI 大概率不是消灭工作，而是把工作从「旧任务」转移到「新需求」，让岗位总量变得更多。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>开篇的末日焦虑：</strong>2026 年 5 月硅谷普遍相信 AI 将大规模取代人类工作，Anthropic CEO 达里奥·阿莫迪甚至预言一到五年内消灭一半初级白领岗位、失业率推到 10%—20%，并呼吁业界停止粉饰太平。</li>
+      <li><strong>最早的反对信号：</strong>城堡证券 2026 年 2 月报告显示，软件工程师岗位发布量在 2025 年五六月已触底反弹——最该被 AI 干掉的职业反而最先回暖，这正是杰文斯悖论的一次完美展示。</li>
+      <li><strong>杰文斯悖论的由来：</strong>1865 年杰文斯在《煤炭问题》中指出：蒸汽机越省煤，煤动力越便宜，使用它的行业越多，英国总煤耗反而上升；随后用新疆天山滴灌 20 年用水反弹超 115%、AI 芯片省电但数据中心总耗电飙升等案例证明「效率不是刹车，而是油门」。</li>
+      <li><strong>生活中的同款逻辑：</strong>写作因 AI 提速反而篇幅更长、要求更高；省钱返现 App 让人花得更多；沟通成本趋近于零让会议数量反而暴涨——降低单位消耗的同时也降低了行动门槛，被压抑的需求像洪水一样释放。</li>
+      <li><strong>历史一再验证：</strong>纺织机没消灭织布工（布料普及让需求大增）、ATM 让柜员总数不降反升并转向高价值任务、AI 读片让放射科医生从「要失业」变成「严重短缺」，电子表格与搜索引擎同样创造了更多岗位。</li>
+      <li><strong>米画师的数据：</strong>AI 绘图普及后单张图像均价下降 64%，但订单量增加 121%，总收入反而上升 56%——增长主要来自过去「不值得做」的低端个人需求。</li>
+      <li><strong>机制与预测：</strong>「AI 干掉的是任务，而不是岗位」；劳动经济学的任务模型区分了替代效应与复职效应；世界经济论坛预测 2030 年净增 7800 万岗位，美国劳工统计局预测软件开发岗位 2023—2033 年增长 17.9%。</li>
+      <li><strong>未来新岗位的三类方向：</strong>直接与 AI 相关（工作流架构师、智能体监督员、模型评测师、知识库园丁、机器人舰队管家）、生活增强类（学习导演、老人生活增强师、微型体验策划人、数字档案馆员、一人电影制片人）、信任与责任类（AI 输出审计师、人类责任签署人、首席审美官）。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>把省下的时间换成「第二版」：</strong>本周挑一个你天天做的重复任务（周报、纪要、报表），用 AI 把它压到 10 分钟完成，然后把省下的时间主动产出更高价值的版本——让老板看到你「多要」而不是「早退」。</li>
+      <li><strong>把 AI 当初稿，把自己当终审：</strong>凡是 AI 产出的文字、代码、方案，都再过一遍判断、审美和责任的关口，并养成标注「哪个部分由人把关」的习惯，这正好对应文中「人类责任签署人」的新岗位逻辑。</li>
+      <li><strong>主动寻找「不值得做」的生意：</strong>对照你所在的行业，找出过去因为太贵、太小、太麻烦而没人做的需求（小客户定制、个人 IP 内容、家庭纪念影像等），用 AI 把成本打下来，试着接住它——这正是米画师增长的那部分。</li>
+      <li><strong>别只停在 ChatGPT：</strong>像留言里朱翔提醒的那样，去尝试 Codex/Claude 等更能解决真实问题的工具，用 AI 完整解决一个你工作里真实存在的开发或分析问题，把「用过」升级为「用熟」。</li>
+      <li><strong>围绕三类新岗位练一个小项目：</strong>从「AI 工作流、智能体监督、AI 输出审计」中选一个与你专业最贴近的方向，本周做一个最小实例（比如给团队搭一个自动审稿工作流），并记录成果作为作品集。</li>
+      <li><strong>用杰文斯眼光重估焦虑：</strong>把「AI 会不会抢我饭碗」换成「AI 降低了哪些我原本做不起事的门槛」，每周尝试一件以前嫌麻烦而不做的事，亲身体验需求被释放的过程，顺便积累新技能。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <p class="q-quote">「原来效率不是刹车，而是油门。」</p>
+    <p class="q-quote">「当能力变便宜，需求就会变复杂。当任务被自动化，责任就会被人格化。」</p>
+    <p class="q-quote">「人类不会说'够了'，人类会说'那我们还想要这个、这个和那个'。」</p>
+    <p class="q-quote">「AI 是对人的解放，而不是对人的限制。只有想象力是我们的限制。」</p>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer>万维钢 · 现代思维工具100讲 · 第66讲 ｜ 手机阅读版</footer>
+</div>
+
+<script>
+  var bar=document.getElementById('progress'),topBtn=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+    topBtn.style.display=window.scrollY>400?'flex':'none';
+  },{passive:true});
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

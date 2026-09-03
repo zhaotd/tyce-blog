@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲 第67讲：平台：现代世界最厉害的商业模式</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2a26;
+    --text-soft:#6b665c;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.12);
+    --border:#e8e0d2;
+    --quote-bg:#f6efe3;
+    --summary-bg:#f2ead9;
+    --summary-border:#c9a86a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --text:#e8e2d6;
+      --text-soft:#a49b8a;
+      --accent:#d9a866;
+      --accent-soft:rgba(217,168,102,.16);
+      --border:#3a352c;
+      --quote-bg:#241f19;
+      --summary-bg:#241e14;
+      --summary-border:#a98a4e;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:96px;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:1000;
+  }
+  .wrap{max-width:700px;margin:0 auto;padding:28px 20px 40px}
+  /* 文档头 */
+  .doc-head{margin-bottom:28px}
+  .tag{
+    display:inline-block;font-size:12.5px;color:var(--accent);
+    background:var(--accent-soft);border:1px solid var(--accent);
+    border-radius:999px;padding:3px 12px;margin-bottom:14px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;margin-bottom:12px;text-align:left}
+  .meta{font-size:13px;color:var(--text-soft);display:flex;flex-wrap:wrap;gap:6px 14px}
+  .meta span{white-space:nowrap}
+  /* 正文 */
+  .lead{font-size:17px;color:var(--text);}
+  p{margin:0 0 14px}
+  h2{
+    font-size:19px;line-height:1.5;margin:34px 0 14px;text-align:left;
+    padding-left:12px;border-left:4px solid var(--accent);
+  }
+  h3{font-size:17px;line-height:1.5;margin:24px 0 10px;text-align:left;color:var(--accent)}
+  .divider{
+    text-align:center;margin:30px 0;color:var(--accent);
+    font-size:14px;letter-spacing:6px;
+  }
+  .divider::before,.divider::after{content:"——";color:var(--border)}
+  blockquote{
+    margin:18px 0;padding:12px 16px;border-left:4px solid var(--accent);
+    background:var(--quote-bg);border-radius:0 12px 12px 0;
+    color:var(--text);font-size:16px;
+  }
+  blockquote .src{display:block;margin-top:6px;font-size:12.5px;color:var(--text-soft)}
+  ul{margin:0 0 16px;padding-left:1.3em}
+  li{margin-bottom:8px}
+  strong{color:var(--accent);font-weight:700}
+  em{font-style:normal;color:var(--accent);border-bottom:1px dashed var(--accent)}
+  .note-img{
+    font-size:12.5px;color:var(--text-soft);text-align:center;
+    margin:10px 0 16px;font-style:normal;
+  }
+  /* 注释 */
+  .notes{
+    margin:36px 0 0;padding:16px 18px;background:var(--card);
+    border:1px solid var(--border);border-radius:12px;font-size:13px;
+    color:var(--text-soft);line-height:1.7;
+  }
+  .notes h2{border:none;padding:0;margin:0 0 10px;font-size:15px;color:var(--accent)}
+  .notes ol{padding-left:1.4em}
+  .notes li{margin-bottom:6px}
+  /* 用户留言 */
+  .comments{margin-top:36px}
+  .comments h2{border:none;padding:0;margin:0 0 14px;font-size:17px;color:var(--accent)}
+  .comment{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;margin-bottom:14px;
+  }
+  .comment .who{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .comment .name{font-size:14px;font-weight:700;color:var(--accent)}
+  .comment .when{font-size:12px;color:var(--text-soft)}
+  .comment p{font-size:15px;margin:0}
+  /* AI 总结 */
+  #ai-summary{
+    margin-top:44px;padding:22px 20px;border-radius:12px;
+    background:var(--summary-bg);border:2px solid var(--summary-border);
+  }
+  #ai-summary .ai-title{
+    display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800;
+    color:var(--accent);margin-bottom:6px;text-align:left;
+  }
+  #ai-summary .ai-sub{font-size:12.5px;color:var(--text-soft);margin-bottom:16px}
+  #ai-summary .one{
+    font-weight:700;font-size:16.5px;line-height:1.7;
+    padding:10px 12px;background:var(--accent-soft);border-radius:10px;margin-bottom:16px;
+  }
+  #ai-summary h3{font-size:15.5px;margin:18px 0 8px;color:var(--accent)}
+  #ai-summary ol,#ai-summary ul{padding-left:1.3em;margin-bottom:8px}
+  #ai-summary li{font-size:15px;line-height:1.75;margin-bottom:7px}
+  #ai-summary .quote{
+    font-size:14.5px;line-height:1.7;color:var(--text);
+    border-left:3px solid var(--summary-border);padding:2px 0 2px 12px;margin-bottom:10px;
+  }
+  #ai-summary .ai-foot{
+    margin-top:16px;padding-top:12px;border-top:1px dashed var(--summary-border);
+    font-size:12px;color:var(--text-soft);text-align:center;
+  }
+  /* 回到顶部 */
+  #topBtn{
+    position:fixed;right:18px;bottom:28px;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--border);background:var(--card);color:var(--accent);
+    font-size:18px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s;z-index:999;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第67讲</span>
+    <h1>平台：现代世界最厉害的商业模式</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>来源：《现代思维工具100讲》课程讲稿</span>
+      <span>手机阅读版 · 全文约 5000 字</span>
+    </div>
+  </header>
+
+  <!-- 正文 -->
+  <p class="lead">我们已经讲了很多赚钱的原则和方法，但有一个事实你可能没意识到：传统意义上那种“我开个店、做个产品、摆到市场上直接卖给顾客”的赚钱模式，现在已经非常罕见了。</p>
+
+  <p>现在你是淘宝开店也好，抖音带货也罢，甚至哪怕在街头开一家普普通通的餐馆想要连接顾客提供点餐外卖服务，都需要通过某个「平台」。</p>
+
+  <p>起初，这一切就像是个科技乌托邦。平台说它是来消灭中间商的！咱不但不让中间商赚差价，而且让你免费使用服务，还给你发红包，还有各种补贴！你只要把自己的商品做好就行，平台替你操心物流和库存！你只要专注于服务用户就好，平台帮你匹配用户！它提供了搜索、广告、信任评分甚至社交，它让信息变得史无前例的高效。</p>
+
+  <p>你心想，这可真是新商业文明，天下哪还有难做的生意？</p>
+
+  <p>……但是这几年，人们对平台的观感变了。商家抱怨抽成越来越高，买家发现搜出来的全是广告，外卖小哥被困在算法里。</p>
+
+  <p>以前的中间商是倒买倒卖，可今天的平台管入口、管排序、管评价、管流量……乃至于管生死。<strong>它赚的的确不叫差价 —— 得叫秩序。</strong></p>
+
+  <blockquote>这一讲要说的是：平台不是一种普通的生意，而是现代商业史上的终极捕食者：它把“市场本身”变成了自己的商品。平台通过算法决定谁能被谁看见，这原本是不该属于商业玩家的权力。</blockquote>
+
+  <div class="divider">✦</div>
+
+  <h2>一、平台为什么这么厉害：双边市场与两个飞轮</h2>
+
+  <p>平台之所以这么厉害，是因为它是一个「双边市场（two-sided market）」[1]。</p>
+
+  <p>传统生意都是单边的。比如说你开个面包店，你只需要面对买面包的顾客就可以了。但平台，却是要同时面对两边、甚至多边：卖家和买家，司机和乘客，餐馆、骑手和消费者，开发者和用户，内容创作者、广告商和观众……</p>
+
+  <p>这使得平台生意特别难以启动。你说我这是个卖货平台，可是如果没有商家，消费者就不会来；没有消费者，商家也不会来。你必须动员两边才行。但也正是因为这个特点，平台生意只要做大了，别人就很难跟你竞争了，你就可以独大。</p>
+
+  <p>难启动怎么启动呢？最常见的打法是先提供完全免费的服务，甚至给新用户发补贴 —— 说白了就是<strong>烧钱获客</strong>。你可能还记得十多年前移动互联网经济刚开始时候的种种美好景象：叫个滴滴专车，打车费比出租车都便宜；几毛钱就能扫一辆共享单车。一直到今天，有时候几个外卖平台爆发战争，还会疯狂给消费者补贴，搞个什么免费奶茶。</p>
+
+  <p>VC 会说烧钱是值得的，因为这里有个「间接网络效应（indirect network effects）」[2]。买家越多，卖家越愿意来；卖家越多，买家越愿意来；司机越多，乘客越容易打到车；乘客越多，司机越愿意上线 —— 这是一个边际效益<em>递增</em>的过程：商家也好消费者也好，每多一个用户，平均每个用户的价值就越高，新用户就越值得来，老用户就越不愿意离开。</p>
+
+  <p>所以补贴不是做慈善，而是解决“先有鸡还是先有蛋”的问题。</p>
+
+  <p>等到商家和消费者都来了，平台还会得到第二个边际效益递增过程，那就是「数据—算法反馈飞轮（data-algorithm feedback loop）」：</p>
+
+  <ul>
+    <li>用户越多，数据越多；</li>
+    <li>数据越多，算法越准；</li>
+    <li>算法越准，匹配越好；</li>
+    <li>匹配越好，用户更多。</li>
+  </ul>
+
+  <p>我们前面说了，赚钱一定要有杠杆，要规模化 —— 间接网络效应和数据—算法反馈飞轮就是平台最强的杠杆。平台的规模化是个自己喂养自己的正反馈过程，是指数增长……它唯一的限制就是全国、或者全世界人口总数。</p>
+
+  <p>这就是为什么硅谷也好，中国也好，那些科技大厂能雇佣那么多的高学历人才，还能给每个人发那么高的工资。</p>
+
+  <blockquote><strong>平台，是人类历史上新出现的超级赚钱组织。</strong></blockquote>
+
+  <div class="divider">✦</div>
+
+  <h2>二、从起家到堕落：平台的「衰败化」三部曲</h2>
+
+  <p>你说行吧。平台一旦有了最多的用户、最好的数据和最强的算法，别人就难以与之竞争了。那你们就好好做个现代商业的基础设施，也不用再补贴了，就好好收取一个公正的利润，服务大众呗？</p>
+
+  <p>现实可没有这么简单。<strong>如果你拥有那么大的力量，你不会满足于好好做个基础设施。你会开始收割。</strong></p>
+
+  <p>加拿大科技思想家科里·多克托罗（Cory Doctorow）专门发明了一个词，叫「Enshittification」[3]，形容平台从起家到堕落，从服务用户到收割用户的过程。这个词后来被美国方言学会选为 2023 年年度词汇 [4]，我们翻译得文雅一点，姑且称之为<strong>「衰败化」</strong>。</p>
+
+  <p>一个这么新的商业模式，一开始人人都喜欢，怎么这么快就人人喊打了呢？多克托罗专门写了本书讲这个过程 [5]：<strong>先讨好终端用户；然后牺牲终端用户、讨好商业客户；最后牺牲商业客户，把价值收回给自己。</strong></p>
+
+  <h3>第一阶段：起家 —— 补贴终端用户</h3>
+  <p>凭借巨额风险投资，平台为了发挥间接网络效应，会不惜代价地为终端用户提供远远低于成本、甚至经常是完全免费的优质服务。</p>
+  <ul>
+    <li>当初 Facebook 还在跟 MySpace 竞争的时候，它不但没有广告，而且不监控用户隐私，在时间线上只展示你主动订阅的信息，没有任何作恶的迹象。</li>
+    <li>亚马逊卖的书比书店便宜得多，而且只要每年花 79 美元成为会员，就给你全年免运费。</li>
+    <li>早期的 Twitter 是个完全开放的应用程序接口，第三方开发者可以随意访问它的数据，很多用户把 Twitter 当成自己的东西，帮它发明新功能……</li>
+  </ul>
+  <p>起家期的平台就如同新到占领区的统治者：修路、免税、发补贴、微笑服务。只要你们愿意来就行……最好把你们的社交关系、购物习惯、支付记录、内容资产和工作流全都搬来。</p>
+
+  <h3>第二阶段：壮大 —— 补贴商家</h3>
+  <blockquote>不是有那么句话吗？「如果你没有付费，你不是消费者，你其实是产品。」</blockquote>
+  <p>锁定了足够多的用户以后，平台就开始把用户当资产卖给商家：我这里有海量用户，你们要不要来？你们来，我不但只收取很低的抽成，而且我还给免费流量！于是卖家、广告主、APP 开发者和主播们都来了。</p>
+  <p>私下里，平台正在对终端用户做手脚。Facebook 向广告商提供精准的定向广告服务，并且允许一些未经订阅的媒体文章出现在用户的时间线上。苹果默许了第三方应用的商业监控行为。Twitter 为了配合一些国家的审查要求，牺牲了当地用户的言论自由和隐私安全……</p>
+  <p>但平台的形象仍然非常正面。它给小商家机会，给创作者舞台，让消费者继续享受低价，同时投资人看着股价接连往上涨，每个人都很高兴。</p>
+  <p><strong>可是谁买单呢？</strong></p>
+
+  <h3>第三阶段：黑化 —— 压榨买卖双方</h3>
+  <p>这就迎来了第三阶段，黑化。平台开始压榨买卖双方，现在享受补贴的只有股东。</p>
+  <ul>
+    <li>消费者看到的是更多的广告、更差的搜索体验和更少的真实选择；</li>
+    <li>商家面对更高的抽成、更贵的广告费和更复杂的规则；</li>
+    <li>创作者发现如果不买流量，连自己的粉丝都看不见自己；</li>
+    <li>开发者感觉自己是在给应用商店打工……</li>
+  </ul>
+  <p>但是平台的网络效应已成。曾经的竞争对手要么已死，要么达成了平衡：消费者和商家都已经很难逃走了。</p>
+  <p class="note-img">（原稿此处配有图示：GPT 按多克托罗书中口径展现的美国五个大平台从起家到壮大再到黑化的时间历程，本版略去。）</p>
+  <blockquote>我们曾经以为互联网的精神是自由和免费，现在我们得到的是控制和压榨。</blockquote>
+
+  <div class="divider">✦</div>
+
+  <h2>三、平台的武器：不用暴力，用算法</h2>
+
+  <p>别误会，平台对人的控制和压榨跟古代官府可不一样。这里不涉及任何暴力，平台没有权力强迫你做任何事，你任何时候都有选择 —— 但是它会默默地影响你的选择。</p>
+
+  <p><strong>平台的武器是算法。</strong>平常不会派一个真人来管你，而且也不在意你这个具体的人接不接受它的管理 —— 它只需要在宏观概率上影响群体的选择，就够了。</p>
+
+  <h3>零工经济：一场「灵活性幻觉」</h3>
+  <p>比如外卖小哥和网约车司机。他们被包裹在一种叫做「零工经济（Gig economy）」的灵活性幻觉里。你不需要上班打卡，你想什么时候开工就什么时候开工，想什么时候收工就什么时候收工，对吧？</p>
+  <p>可是算法正在监控你的每一秒钟，它会计算你的路径，会给你倒计时，会根据你的表现决定你的派单权重。如果你超时或者用户评分低，你会被罚款；如果你完成的单数多，你会得到奖励，而奖励是给你更多、更值钱的订单。</p>
+  <p>一个最极端的做法，是比如 Uber，会根据你的接单情况判断你有多么迫切地需要钱：一旦你被认定“什么单子都接”，算法就会自动把利润最低的单子扔给你。这难道不是对弱者的打压吗？</p>
+
+  <h3>对消费者：杀熟与压缩选择</h3>
+  <p>对消费者，平台更不会手软。首先是价格歧视，也就是所谓「大数据杀熟」：经常有老用户说看到的价格比新用户更贵；有人说你搜索机票的次数越多，得到的价格反而会越高，因为算法认为你的支付意愿强。</p>
+  <p>另一个办法是压缩你的选择。同样的搜索，平台想让你看见的会放在第一排，不想让你看见的会排到很后边。默认选项是什么，取消按钮藏在哪里，优惠券怎么设计，这些都是操控。而你还以为那是你自己的偏好。</p>
+
+  <h3>对商家：存在感成了收费项目</h3>
+  <p>对商家，平台更是连装都不装，直接理性对话。不但抽成明明白白提高，而且你要想被消费者看见，还得交广告费、服务费和活动费，你必须购买流量 —— 你的存在感，现在是一个收费项目。</p>
+  <p>而就在控制和压榨的同时，平台甚至不需要给外卖小哥交退休金、买保险，更不需要承担商家的盈亏 —— 它说它只是在提供一个“撮合服务”，它卖的只是信息。可是它默默地拿走了你们劳动成果的大头。</p>
+
+  <blockquote>我们讲真正赚钱都得收「经济租」，请问还有比平台更厉害的租吗？</blockquote>
+
+  <div class="divider">✦</div>
+
+  <h2>四、技术封建主义：市场被装进了 App</h2>
+
+  <p>如今我们已经离不开平台。</p>
+
+  <p>你必须承认，平台创造了巨大的价值。它让小商家能把一种非常小众的商品卖到哪怕是非常偏远的地区，它让独立开发者触达全球用户，它提供了巨量的就业。而且我们至今找个信息、用个地图，仍然是免费的。平台是现代经济的基础设施。</p>
+
+  <p>但平台也是下场跟服务对象争利的基础设施，而且它对服务对象有相当的控制权。这已经不是纯粹的市场经济，也不是资本主义，这等于是占山为王！所以有人称之为「技术封建主义（technofeudalism）」[6]。</p>
+
+  <div class="divider">✦</div>
+
+  <h2>五、怎么办：监管、互操作性与个体觉醒</h2>
+
+  <p>那怎么办呢？法律和政府监管肯定很重要，特别是反垄断。以前我们对垄断的定义是你占领了市场之后提高价格。但对于平台，我们必须重新理解价格 —— <strong>消费者不花钱，不代表消费者没有付出成本</strong>。欧盟的《数字市场法》（Digital Markets Act, DMA）把大型数字平台称为「守门人（gatekeepers）」，关键思路就是限制入口权力被滥用 [7]。中国也在通过《个人信息保护法》和《互联网平台价格行为规则》监管平台。</p>
+
+  <p>多克托罗和其他学者 [8] 特别推崇的一招，是「互操作性（interoperability）」。简单说就相当于手机的“携号转网”：为了确保平台不能把用户关在自己的城堡里，应该立法规定如果用户选择离开一个平台，他可以带上自己所有的数据，包括社交关系、购买记录和内容资产离开，可以带着自己的用户和粉丝关系迁移到这个平台的对手那里。说白了就是要“拆墙”，促进平台之间的竞争。</p>
+
+  <blockquote>有的网约车司机同时开几部手机，在几个平台上一起接单，这就对了。平台从来没有忠于你，它自然没有权利要求你忠诚于它。</blockquote>
+
+  <blockquote>
+    <strong>算法不是自然规律，而是人写出来的制度。人不是数据接口，更不是算法的奴隶。</strong>
+  </blockquote>
+
+  <p>当前的空气是越来越多的人开始对平台警觉，这是一个好消息，说明人不是那么好摆弄的，自由市场还有希望。</p>
+
+  <div class="divider">✦</div>
+
+  <h2>结语</h2>
+
+  <blockquote><strong>平台是当今世界最可怕的赚钱机器。我们必须确保它只是一个好用的工具，而不能是一个特别会算账的主人。</strong></blockquote>
+
+  <!-- 注释 -->
+  <div class="notes">
+    <h2>注释</h2>
+    <ol>
+      <li>Rochet, Jean-Charles, and Jean Tirole. “Platform Competition in Two-Sided Markets.” <em>Journal of the European Economic Association</em> 1, no. 4 (2003): 990–1029.</li>
+      <li>Parker, Geoffrey G., and Marshall W. Van Alstyne. “Two-Sided Network Effects: A Theory of Information Product Design.” <em>Management Science</em> 51, no. 10 (2005): 1494–1504.</li>
+      <li>Doctorow, Cory. “My McLuhan Lecture on Enshittification.” Medium, 2024.</li>
+      <li>American Dialect Society. “2023 Word of the Year Is ‘Enshittification.’” January 5, 2024.</li>
+      <li>Doctorow, Cory. <em>Enshittification: Why Everything Suddenly Got Worse and What to Do About It</em>. MCD, 2025.</li>
+      <li>Varoufakis, Yanis. <em>Technofeudalism: What Killed Capitalism</em>. London: Bodley Head, 2023.</li>
+      <li>European Parliament and Council of the European Union. Regulation (EU) 2022/1925 on Contestable and Fair Markets in the Digital Sector, 2022.</li>
+      <li>比如说，Wu, Tim. <em>The Age of Extraction: How Tech Platforms Conquered the Economy and Threaten Our Future Prosperity</em>. New York: Knopf, 2025.</li>
+    </ol>
+  </div>
+
+  <!-- 用户留言 -->
+  <div class="comments">
+    <h2>用户留言</h2>
+
+    <div class="comment">
+      <div class="who"><span class="name">至尊女宝</span><span class="when">昨天 · 河北</span></div>
+      <p>最近我听到一个有趣的业务，叫「滴滴代骂」，比如说你骂不过楼上那个半夜打牌的邻居，物业解决不了，报警也没用，你就花百八十块雇个专业骂手。这些骂手都是培训过的，战斗力满级，都是中老年妇女，平台抽六成，只给骂手留四。还有试骂免费阶段，体验好了再付费。类似这样的甚至延伸到商战，比如据说广东那边搞垮对手，直接雇人去浇死对方家里的发财树，全程录像，哈哈哈，听着离谱但真实存在啊。你看，连愤怒和仇恨都能被平台做成生意，它只负责撮合，然后拿走大头。</p>
+      <p>所以平台不是中间商，是中间商它爹。它把市场本身装进 App，再给每个按钮标上价。你以为你在做选择，其实你只是在它画的迷宫里找它藏好的奶酪。技术封建主义大概理解一下就是领主不直接管你，但草场和水源都是他的。你想放羊，那就交租。想带羊走，对不起，羊群的数据和社交关系都锁在他的地盘上。那咋办呢？我的答案很简单：多个平台开着接单，就像网约车司机同时挂三部手机。它从来没对你忠诚过，你也不必对它守节。总结一下，算法不是天道，人更不是接口。如果非要说谁是终极捕食者，那也得是人，而不是人造出来的那个玩意，那个玩意最多是个很会算账的……算盘。平台不是工具，它顶多就是个规则吧。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><span class="name">左星星</span><span class="when">昨天 · 上海</span></div>
+      <p>平台用算法研究我们、影响我们、诱导我们形成习惯，但我们完全可以反过来理解算法，不轻易把自己的选择权交出去。我平时买菜会同时打开几个 App 比价，挑便宜、优惠多的下单。但我不会轻易成为某个平台的会员，也不会因为看了一次就立刻下单。有时候，我连续几次只浏览不购买。过一段时间，平台为了把我拉回来，就会发一个金额较大的红包，这时我再用优惠下单。用完之后，我又回到比较和观望的状态，等待下一轮“对我的引诱”出现。支付环节也类似。有的平台会提供一个诱人的默认支付选项，比如立减 2 元。我会接受这个优惠，但支付完成后，会立即取消它的优先地位。等过一段时间，平台为了重新争取我的支付习惯，又会推送新的折扣，我再按需选择。单车会员同样如此。例如连续包月原价 30 元，第一个月优惠到 21 元，我先开通享受优惠，然后及时取消续费。会员到期几天后，平台通常会推送新的续费优惠。这样做不是为了占平台便宜，而是提醒自己：不要被“自动续费”和默认选项牵着走。普通用户的反抗，不在于完全不用平台，而在于不要被平台绑定。能比价就比价，能取消自动续费就取消，能保留选择权就保留选择权。平台把我当数据，我把平台当工具。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><span class="name">常觉不住</span><span class="when">昨天 · 保加利亚</span></div>
+      <p>我觉得 Cory Doctorow 的 enshittification 最有解释力的地方，不只是把平台衰败分成三段，而是点出了一个更冷的机制：当各方都跑不掉以后，收割就会变成理性选择。平台一开始对用户好，用低价、免费、方便、好体验，把用户的数据、关系和习惯都吸进去。后来它把这些用户变成资产，拿去吸引商家、广告主和创作者。等两边都被锁住以后，平台才开始真正抽水：用户看到更多广告、更差搜索，商家必须买流量才能被看见，创作者甚至连自己的粉丝都触达不了。所以问题不只是平台老板变坏了，而是约束慢慢失效了。竞争少了，监管跟不上，互操作性被掐断，用户的数据和关系带不走，商家的客户也不真正属于自己。到了这个阶段，平台要做的不是把你服务好，而是精确计算：给你留下多少价值，刚好让你骂归骂，却还不离开。用平台当然必要，今天几乎没人能完全绕开。危险的是另一件事：把客户关系、内容资产、支付路径和品牌入口，全部交给平台保管。那一开始看起来省力。省下的是眼前的力，押上的却是以后某一天，平台一翻脸，你得花钱把自己的顾客重新买回来。</p>
+    </div>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <div class="ai-title">📖 AI 阅读总结</div>
+    <div class="ai-sub">本区块由 AI 通读全文后撰写</div>
+
+    <div class="one">一句话概括：平台这门生意把“市场本身”变成了自己的商品，靠双边网络效应与数据—算法飞轮垄断入口之后，必然走向“衰败化”——从讨好用户到收割用户，最终成为最会算账的主人；我们的出路，是用监管、互操作性与个体警觉把它关回“工具”的笼子里。</div>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>传统生意已成罕见物种。</strong>“开店—做产品—直接卖给顾客”的单边模式正被平台取代，今天的淘宝、抖音乃至街边餐馆的外卖，都要通过某个平台；平台管入口、排序、评价、流量乃至生死，赚的不是差价，而是“秩序”。</li>
+      <li><strong>双边市场决定了平台的宿命。</strong>平台同时面对卖家与买家等多边，启动极难（“先有鸡还是先有蛋”），只能烧钱补贴获客；但一旦做大，间接网络效应 + 数据—算法反馈飞轮形成自我喂养的正反馈，指数增长，唯一限制是全国乃至全球人口总数——所以平台是“人类历史上新出现的超级赚钱组织”。</li>
+      <li><strong>“衰败化”三部曲是平台的标准剧本。</strong>多克托罗用 Enshittification（2023 年美国方言学会年度词汇）概括：先补贴终端用户起家；再把用户当资产卖给商家（“没付费的你，就是产品”）；最后黑化，压榨买卖双方，只有股东享受补贴。竞争死掉、两边被锁死，是收割成为“理性选择”的前提。</li>
+      <li><strong>平台的权力是算法，不是暴力。</strong>它不强迫任何人，只在宏观概率上影响群体的选择：零工经济是“灵活性幻觉”，算法监控每一秒、决定派单权重，Uber 甚至专挑“迫切需要钱”的司机派最差的单；对消费者则用大数据杀熟、排序与默认选项压缩你的选择，让你误以为那是自己的偏好。</li>
+      <li><strong>平台只收租，不担责。</strong>它自称只卖信息、只做“撮合”，不交退休金、不买保险、不承担商家盈亏，却默默拿走劳动成果的大头——这就是最厉害的“经济租”，因此被称作“技术封建主义”，占山为王。</li>
+      <li><strong>它也是基础设施，所以无法一弃了之。</strong>平台让小众商品卖向偏远地区、让独立开发者触达全球、提供巨量就业，找信息用地图至今免费——它是现代经济的基础设施，问题在于它同时是“下场与对象争利的基础设施”。</li>
+      <li><strong>治本之策：重新定义价格 + 互操作性。</strong>反垄断必须承认“消费者不花钱≠没付出成本”；欧盟 DMA 把大平台定位为“守门人”限制入口权力；多克托罗推崇“互操作性”，相当于“携号转网”——允许用户带着数据、社交关系和粉丝迁移到对手平台，拆墙促进竞争。</li>
+      <li><strong>个体觉醒就是希望。</strong>平台从未忠于你，你也不必忠于它；算法是人写的制度而非自然规律，人不是数据接口、更不是算法的奴隶。越来越多的人开始警觉，说明自由市场还有希望。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>本周清一遍“默认选项”。</strong>打开手机里的订阅与自动续费列表（App Store / 支付宝 / 微信的免密支付与连续包月），能取消的一律取消，需要时再按次购买——别让“自动续费”替你做决定。</li>
+      <li><strong>大宗消费养成“双平台 + 换视角”比价。</strong>买机票、订酒店、打车、买菜前至少比两个 App，并尝试用另一台设备或换个账号再搜一次价，主动破解大数据杀熟；多次搜索机票前先清一下浏览痕迹。</li>
+      <li><strong>别把“关键资产”押在单一平台上。</strong>如果你做生意或做内容，从今天起沉淀一份自己的客户 / 粉丝名单（私域），并保持至少两个发布与获客渠道，让任何一家平台都锁不死你的关系。</li>
+      <li><strong>像网约车司机挂三部手机一样经营“平台组合”。</strong>工作、购物、支付、社交分散在不同平台，保留“随时可走”的能力；平台政策或价格突变时，第一时间评估迁移成本，别等到被锁死再想办法。</li>
+      <li><strong>每月设一个“算法斋戒日”。</strong>关掉推荐流，用主动搜索、收藏夹、订阅源获取信息，重建“我想看见什么”的主权，而不是被动接受“平台想让我看见什么”。</li>
+      <li><strong>把“流量税”写进成本账。</strong>如果你需要被看见，就提前规划不依赖买量的获客路径——老客户转介绍、社群运营、内容沉淀；对“你的存在感是收费项目”这件事始终保持清醒。</li>
+      <li><strong>关注监管红利。</strong>留意欧盟 DMA、数据可携带与互操作性立法、国内平台新规的进展——这些政策可能在未来赋予你“带数据离开”的权利，提前整理好你的数据导出习惯，届时直接受益。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="quote">“它赚的的确不叫差价 —— 得叫秩序。”</div>
+    <div class="quote">“如果你没有付费，你不是消费者，你其实是产品。”</div>
+    <div class="quote">“算法不是自然规律，而是人写出来的制度。人不是数据接口，更不是算法的奴隶。”</div>
+    <div class="quote">“平台是当今世界最可怕的赚钱机器。我们必须确保它只是一个好用的工具，而不能是一个特别会算账的主人。”</div>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress'), btn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement, p = h.scrollHeight - h.clientHeight;
+    bar.style.width = (p > 0 ? (h.scrollTop / p) * 100 : 0) + '%';
+    btn.style.opacity = h.scrollTop > 400 ? '1' : '0';
+    btn.style.pointerEvents = h.scrollTop > 400 ? 'auto' : 'none';
+  });
+  btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+</script>
+</body>
+</html>

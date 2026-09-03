@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第72讲｜激励相容：好的制度不应该指望人“畏威怀德”</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2620;
+    --sub:#6f6659;
+    --line:#e6dccb;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --quote-bg:#f4ecdd;
+    --shadow:0 1px 3px rgba(43,38,32,.06), 0 6px 18px rgba(43,38,32,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d18;
+      --text:#e8e0d4;
+      --sub:#a89f92;
+      --line:#3a342b;
+      --accent:#c99a5e;
+      --accent-soft:rgba(201,154,94,.14);
+      --quote-bg:#26211a;
+      --shadow:0 1px 3px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:calc(60px + env(safe-area-inset-bottom));
+  }
+  #progress{
+    position:fixed; top:0; left:0; height:3px; width:0;
+    background:linear-gradient(90deg,var(--accent),#c98a4b);
+    z-index:99;
+  }
+  .wrap{max-width:700px; margin:0 auto; padding:0 20px;}
+  header.doc-head{padding:34px 0 22px;}
+  .course-tag{
+    display:inline-block;
+    font-size:12.5px; letter-spacing:.06em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:3px 12px;
+    margin-bottom:14px;
+  }
+  h1{
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    font-size:26px; line-height:1.45; font-weight:700;
+    color:var(--text);
+    margin-bottom:12px;
+  }
+  .meta{font-size:13px; color:var(--sub);}
+  main{padding:8px 0 6px;}
+  main p{margin:0 0 16px; text-align:justify; text-justify:inter-ideograph;}
+  h3{
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    font-size:19px; font-weight:700; color:var(--accent);
+    margin:34px 0 12px; padding-left:12px;
+    border-left:4px solid var(--accent);
+    line-height:1.4;
+  }
+  strong{color:var(--text); font-weight:700;}
+  em{font-style:normal; font-weight:700; color:var(--accent);}
+  .divider{
+    text-align:center; color:var(--accent); font-size:15px;
+    margin:30px 0; letter-spacing:1em; text-indent:1em;
+    opacity:.85;
+  }
+  blockquote.quote{
+    margin:22px 0; padding:14px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    font-size:17px; line-height:1.85;
+    color:var(--text);
+  }
+  .qa{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow);
+    padding:18px 18px 14px; margin:24px 0;
+  }
+  .qa .q{
+    font-weight:700; color:var(--accent);
+    margin-bottom:10px; padding-bottom:10px;
+    border-bottom:1px dashed var(--line);
+  }
+  .qa .q::before{content:"问　"; font-weight:700;}
+  .qa .a::before{content:"答　"; font-weight:700; color:var(--accent);}
+  .qa .a{text-align:justify; text-justify:inter-ideograph;}
+  ul.points{margin:0 0 18px; padding-left:0; list-style:none;}
+  ul.points li{
+    position:relative; padding:0 0 10px 24px; margin:0;
+    text-align:justify; text-justify:inter-ideograph;
+  }
+  ul.points li::before{
+    content:""; position:absolute; left:6px; top:.72em;
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+  }
+  ul.soft{margin:0 0 18px; padding-left:0; list-style:none;}
+  ul.soft li{
+    position:relative; padding:2px 0 6px 22px;
+    text-align:justify; text-justify:inter-ideograph;
+  }
+  ul.soft li::before{content:"·"; position:absolute; left:6px; color:var(--accent); font-weight:700;}
+  .fig{
+    text-align:center; color:var(--sub); font-size:12.5px;
+    letter-spacing:.08em; margin:6px 0 18px;
+  }
+  .poem{
+    margin:30px 0; padding:26px 20px;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow);
+    text-align:center;
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    line-height:2.1; color:var(--text);
+  }
+  .poem .poem-title{
+    display:inline-block; font-size:13px; letter-spacing:.25em; text-indent:.25em;
+    color:var(--accent); margin-bottom:14px;
+    border-bottom:1px solid var(--line); padding-bottom:8px;
+  }
+  section.block{margin-top:36px;}
+  .block-title{
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    font-size:18px; font-weight:700; color:var(--accent);
+    margin-bottom:14px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .notes{font-size:13px; color:var(--sub); line-height:1.8;}
+  .notes ol{padding-left:22px; margin:0;}
+  .notes li{margin-bottom:6px; text-align:justify; text-justify:inter-ideograph;}
+  .comment{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; box-shadow:var(--shadow);
+    padding:16px 18px; margin-bottom:16px;
+  }
+  .comment .who{
+    font-size:13px; color:var(--sub); margin-bottom:8px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;
+  }
+  .comment .who b{color:var(--text); font-size:14.5px;}
+  .comment p{font-size:15px; line-height:1.8; text-align:justify; text-justify:inter-ideograph;}
+  #ai-summary{
+    margin-top:44px;
+    background:var(--card);
+    border:2px solid var(--accent);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:24px 20px 18px;
+  }
+  #ai-summary .ai-head{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  #ai-summary .ai-badge{
+    background:var(--accent); color:#fff;
+    font-size:12.5px; font-weight:700; letter-spacing:.08em;
+    border-radius:8px; padding:4px 10px;
+  }
+  #ai-summary h2{
+    font-size:18px; font-weight:700; color:var(--text);
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+  }
+  #ai-summary .one-line{
+    background:var(--accent-soft);
+    border-radius:10px; padding:12px 16px;
+    font-weight:700; font-size:16px; line-height:1.7;
+    margin-bottom:20px;
+  }
+  #ai-summary h3{
+    font-family:inherit; font-size:15.5px; color:var(--accent);
+    border-left:none; padding-left:0; margin:22px 0 10px;
+  }
+  #ai-summary h3::before{content:"▍"; margin-right:4px;}
+  #ai-summary p, #ai-summary li{font-size:15px; line-height:1.8; text-align:justify; text-justify:inter-ideograph;}
+  #ai-summary ul{padding-left:20px; margin-bottom:6px;}
+  #ai-summary li{margin-bottom:8px;}
+  #ai-summary .quote-list{
+    margin:0; padding:0; list-style:none;
+  }
+  #ai-summary .quote-list li{
+    border-left:3px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 8px 8px 0;
+    padding:9px 14px; margin-bottom:10px;
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+  }
+  #ai-summary .ai-foot{
+    margin-top:20px; padding-top:12px;
+    border-top:1px dashed var(--line);
+    font-size:12px; color:var(--sub); text-align:center;
+  }
+  footer.site{
+    margin-top:34px; padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:12px; color:var(--sub); text-align:center;
+    line-height:1.8;
+  }
+  #topBtn{
+    position:fixed; right:18px; bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px; height:46px; border-radius:50%;
+    border:none; cursor:pointer;
+    background:var(--accent); color:#fff;
+    font-size:20px; line-height:1;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .2s ease;
+    z-index:98;
+  }
+  #topBtn:active{transform:scale(.92);}
+  @media (max-width:480px){
+    h1{font-size:23px;}
+    body{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第72讲</span>
+    <h1>激励相容：好的制度不应该指望人“畏威怀德”</h1>
+    <div class="meta">作者：万维钢　｜　现代思维工具100讲 · 第72讲　｜　手机阅读版</div>
+  </header>
+
+  <main>
+    <p>传说有个中国企业家在非洲开了家工厂，雇用了很多当地工人。他对工人讲平等讲尊重，待遇优厚，绝对不搞以前殖民者那一套。可是没过多久，他就发现自己这一套行不通。</p>
+    <p>工人是很愿意进他的厂，可是来了没几天就开始迟到、旷工、上班睡觉，稍微不留神就消失一会儿跑去抽烟，车间里的零件还时不时不翼而飞。</p>
+    <p>中国老板就只能使了个下策：招几个本地监工对工人严格管理，动辄打骂，手段可以说是非常凶狠……结果工厂走上了正轨，产量稳定出货按时。</p>
+    <p>恐怕每个老板都或多或少地有过相关的体验。我们该怎么看这个事儿？你尊重工人，工人当你好欺负；你严厉对待他们，他们反而老老实实干活儿。这真是“畏威而不怀德”啊！难道说这些人配不上好的管理吗？</p>
+    <p>先别着急下判断。每个人都有本能的欲望和私利，让一群人凑在一起好好做事本来就是一个奇迹。要说如何管理冲突、达成合作，传统中国琢磨了两千多年，得出的主要是两套解决方案——</p>
+    <ul class="points">
+      <li><strong>儒家的办法是教化</strong>，要把人变成更好的人，让他「怀德」；</li>
+      <li><strong>法家的办法是赏罚</strong>，也就是胡萝卜加大棒，让他「畏威」。</li>
+    </ul>
+    <p>但这一讲我要说的是，现代世界既不是靠儒家也不是靠法家运行的。它靠的是第三种东西，叫做「<strong>激励相容（Incentive Compatibility）</strong>」。</p>
+
+    <p>这个洞见是：好的制度既不应该要求人是好人，也不应该像对待坏人一样去控制人——而应该让<em>普通人</em>，在追求<em>自身</em>利益的同时，顺手就能完成制度想要的事情。</p>
+    <blockquote class="quote">制度的最高境界不是战胜人性，而是让人性为秩序打工。</blockquote>
+
+    <div class="divider">✵</div>
+
+    <p>激励相容这个词，最早是波兰裔美国经济学家列奥尼德·赫维茨（Leonid Hurwicz）在 1972 年系统提出来的。他因为「机制设计（mechanism design）」的开创性工作获得了 2007 年诺贝尔经济学奖 [1]。</p>
+    <div class="fig">［Leonid Hurwicz］</div>
+
+    <p>传统经济学问的是“正问题”：给定一套规则，你能不能使用比如说博弈论的原理，预测一下大家会怎么玩？机制设计问的则是“逆问题”：我想要一个什么样的结果，你能不能给我反推一套规则，让大家自愿玩出这个结果。</p>
+    <p>机制设计是经济学的工程化。以前人们经常抱怨经济学家像预报不准天气的气象学家，现在经济学家终于可以像工程师一样建造一个有用的东西了。</p>
+    <p>而激励相容，就是机制设计的灵魂。它问：能不能造出一种局，让一个个自私自利精于算计的普通人，在这里最明智的选择就是做对系统有利的事？能不能在我这个局里，君子做好事不必再付出额外的牺牲，小人也不得不做君子的事？</p>
+
+    <p>这跟儒家、法家可不在一个维度上。儒家是君子的推己及人，假定人性可以无限拔高，可以说早在战国时代就被人看出来是太过天真浪漫了。法家假定人性可以被赏罚操控——这已经比儒家高一档——但它依然需要一个全知全能的统治者：他要看得清真相，断得了功过，行得了赏罚，而且自己还不腐败。儒家依赖被统治者的素质，法家依赖统治者自己，其实都不是根本办法。</p>
+    <p>而激励相容则说：我承认每个人都有自己的小算盘，我也承认我根本看不全你做了什么。但我不在乎。我设计的这个局，会让你的小算盘怎么打都打到我要的那个数上。</p>
+
+    <blockquote class="quote">我设计的这个局，会让你的小算盘怎么打都打到我要的那个数上。</blockquote>
+
+    <div class="qa">
+      <div class="q">你说这可能吗？真有这么好的制度吗？</div>
+      <div class="a">其实现代政府治理、公司管理的主流，用的就是这样的制度。</div>
+    </div>
+
+    <div class="divider">✵</div>
+
+    <h3>一个例子：销售的虚假承诺</h3>
+    <p>举个例子。想象有一家卖企业软件的公司，最近遇到一个问题：销售为了冲业绩，经常给客户许诺一些产品还没做出来的功能。客户一高兴就当场签约；可是产品上线，客户发现根本就没有那些功能，觉得被骗了，要么投诉，要么就不续费，公司口碑崩塌。请问你是老板的话，你怎么办？</p>
+    <p><strong>儒家的方案</strong>，是请金牌讲师搞个“价值观工作坊”，大讲诚信文化，讲客户至上，讲不要给公司抹黑！销售们听得热泪盈眶，回去之后该怎么忽悠还是怎么忽悠，毕竟提成才是真的。</p>
+    <p><strong>法家的方案</strong>，则是宣布谁再虚假承诺，扣半年奖金，严重的开除！结果销售们开始玩文字游戏，把口头承诺写成“我们正在积极探索这个方向”，把责任推给产品部门，把客户录音“不小心”删除。你抓了几个典型，剩下的销售却是更精了。</p>
+    <p><strong>激励相容的方案</strong>，则是重新设计销售的提成结构。</p>
+    <ul class="points">
+      <li>从今往后，销售签单后不再一次性拿到全部佣金，改为分阶段发放：一部分在签约时发，一部分在使用三个月后发，一部分在续约时发；</li>
+      <li>如果客户因“承诺不符”而提前流失，已发佣金按比例要追回。</li>
+    </ul>
+    <p>这样你既不需要道德培训，也不需要像对敌人一样对自己的员工搞盯防，销售们自己就会采取对公司最有利的做法。</p>
+
+    <h3>法家的棍子 vs 激励相容的部件</h3>
+    <p>儒家要人做君子，法家威胁人别做小人。激励相容，则是让人做一个聪明的普通人。</p>
+    <p>激励相容并不是没有奖惩——这里也用奖金，也用处罚，也用解雇——但是区别在于，法家的奖惩是外部的棍子，激励相容的奖惩是机制的部件。</p>
+    <ul class="points">
+      <li><strong>法家</strong>是在行为之后处理人；<strong>激励相容</strong>是在行为之前设计局。</li>
+      <li><strong>法家</strong>问：怎样让人不敢坏？</li>
+      <li><strong>激励相容</strong>问：怎样让坏不再划算，让好不再吃亏？</li>
+    </ul>
+
+    <div class="divider">✵</div>
+
+    <h3>回到非洲工厂：老板犯的两个错误</h3>
+    <p>中国老板犯的<strong>第一个错误</strong>，是把“条件好”当成了激励到位，殊不知条件好和激励到位完全两码事 [2]。</p>
+    <p>你给工人的待遇好不好，属于「参与约束（participation constraint）」，解决的是“这份工作值不值得我来”的问题；而「激励约束（incentive constraint）」，解决的则是“我来了以后，为什么要认真干”的问题。工资只能买到人到场，机制才能确保人努力。</p>
+    <p>经济史学家西德尼·波拉德（Sidney Pollard）研究过英国工业革命早期的工厂，发现最初的工人并不会天然适应考勤、重复劳动、外部节奏和流水线纪律。“现代工人”是被一整套制度训练出来的 [3]。你得有机制设计才行。</p>
+    <p>打骂管理是老板犯的<strong>第二个错误</strong>，因为那不是一种有效的激励约束。工人有办法适应打骂管理。监工在，产量就有；监工一走，工人会想尽办法找补。打骂还会持续筛掉那些有尊严、有能力、有选择余地的工人，留下最能忍气吞声、最会看人脸色、最会躲避惩罚的人。你产量暂时是稳定了，可是未来还会有诉讼、罢工、品牌污点、骨干流失、质量问题……后患无穷。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>激励相容工厂的四字诀：威、利、信、德</h3>
+    <p>结合学术界的研究成果，一个激励相容的工厂制度，简单说就是四个字：<strong>威、利、信、德</strong>——</p>
+    <p><strong>第一步，先有「威」。</strong>这个威不是恐惧监工的棍棒，而是规则一定兑现。迟到、缺勤、质量事故、安全违规怎么处理，要做到事前写清楚，过程可记录，处罚可预期，而且一视同仁，主管也受约束。规则的有效性取决于惩罚的确定性，而不是惩罚的暴力性，更不是人格侮辱。</p>
+    <p><strong>第二步，加「利」。</strong>只要任务足够简单、结果足够可测，就要让努力尽快变成钱。根据人事经济学家爱德华·拉齐尔（Edward Lazear）的研究 [4]，美国一家公司把汽车玻璃安装工的小时工资改成计件工资，生产率一下子就提高了 44%——其中一半来自原有工人变得更努力，另一半来自原有的那些懒散但混在小时工资里的人被筛走了。只要任务可测量，用钱强激励就真好使。</p>
+    <p><strong>第三步，有了利，还得有「信」。</strong>很多发展中国家工厂的问题不是工人不懂激励，而是工人不信激励。老板说月底发奖金，可工人心里想：月底你会不会说质量不合格？会不会找理由扣工时？会不会说下个月一起发？而且人天然倾向于短期利益，工人有时候自己也控制不住自己。你跟他说月底发奖金，他会觉得这个等待过程太漫长了 [5]。如果一个场域的「信」还不足，工资和奖金就最好是短周期的，甚至可以日结。</p>
+    <p><strong>第四步，「德」会在制度里慢慢长出来。</strong>我们多次讲过，最好的激励是身份认同。你可以给工厂设计一套晋升阶梯：学徒、操作工、熟练工、质检员、小组长……每一级都有工资差。短期奖金买努力，长期身份买忠诚。</p>
+
+    <h3>小队制：让工人互相监督</h3>
+    <p>还有一个办法叫「小队制」。不要让一个监工盯二十个互不相干的人，而是把 5 到 10 个人组成一个小队，小队长有额外津贴。要点是小队有共同产量目标、共同的质量和出勤考核，完成了全队得奖金。这个好处是工人会互相监督：多劳多得是大家的，谁长期偷懒谁就会被小队排斥。有研究发现，一家服装厂从个人计件转向团队计件，工人生产率平均提高了 14% [6]。还有实验证明，团队激励会同时改变工人的努力程度和团队人员组成 [7]。</p>
+    <p>这里所谓的「威」和「利」，并不是法家那种赏罚；「信」和「德」，也不是儒家的教化：<strong>威是规则确定性，利是收益函数，信是承诺可信，德是身份生成</strong>——关键在于这些属性是对<em>制度</em>的要求，而不是对员工人品、也不是对管理者心力的要求。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>中国先贤早已看破</h3>
+    <p>激励相容是一个现代概念，但是相关的思想可不是二十世纪才出现的。中国先贤早就知道赏罚和教化不能解决根本问题。</p>
+    <p>《道德经》说：「法令滋彰，盗贼多有」；「不尚贤，使民不争；不贵难得之货，使民不为盗。」《论语》说：「乡愿，德之贼也」；「众恶之，必察焉；众好之，必察焉」……其实说的就是：赏罚会让坏人升级作弊技术，教化会让小人冒充好人、让真好人反而吃亏。对这些问题的工程化解决，就是现代化的根本制度突破。</p>
+    <p>最早的曙光也许可以追溯到 1741 年，哲学家大卫·休谟（David Hume）在《论议会的独立性》（Of the Independency of Parliament）一文中说破：在设计任何政体时，「应当假定每个人都是无赖，除了私利别无目的。」</p>
+    <p>1788 年，美国制宪运动核心人物、后来的第四任总统詹姆斯·麦迪逊（James Madison），在《联邦党人文集》第 51 篇里说得更直接：「如果人人都是天使，就不需要政府了。」他还说：「必须用野心来对抗野心。」</p>
+    <p>你要知道，那个年代，西方主流意识形态还是崇尚美德的——休谟和麦迪逊这番见识，可谓是石破天惊。这不是悲观主义，也不是真的认为所有人都是无赖。他们说的是制度设计不能把公共的福祉押在掌权者的好心上。</p>
+
+    <blockquote class="quote">超越儒家和法家，让人不必非得是好人，让人做好人也不必吃亏，这才是现代化制度。</blockquote>
+
+    <div class="divider">✵</div>
+
+    <div class="qa">
+      <div class="q">那么问题来了：如果一个系统的参与者就是无私的、高素质的好人呢？你搞个机制设计，非得像对待流水线工人那样给人家发计件工资，这不是侮辱人吗？</div>
+      <div class="a">那你就误解了。计件工资是一种「强激励」，而激励相容理论恰恰不主张对什么场域都用强激励：有时候你就得用「弱激励」。</div>
+    </div>
+
+    <h3>强激励与弱激励：看任务性质</h3>
+    <p>具体说来，一份工作如果是「算法性（algorithmic）任务」，也就是结果单一、过程清晰、容易测量，比如送外卖和流水线装配，那就适合强激励。而那些属于「启发性（heuristic）任务」的工作，特点是多维度，看判断，讲长期，靠协作，比如科学家、官员、医生这些岗位，使用强激励反而不好 [8]。</p>
+    <p>这是因为你强激励什么，人们就会拼命地优化什么——而对于多维度问题，专门优化其中一个维度，就会把整个工作给异化。说白了就是如果你按论文发表篇数给科学家发奖金，科学家就会拼命发表毫无意义的论文。这里涉及到「多任务委托代理问题」和「古德哈特定律（Goodhart's Law）」，咱们后面再详细讲。</p>
+    <p>要点在于，这种多维度、复杂的任务，最好是自我驱动的，讲究内在动机。根据「自我决定理论」，一个激励相容的制度应该给人提供自由宽松的管理环境。</p>
+    <p>但弱激励不等于没有激励。弱激励是用更软、更长、更立体的方式激励人：</p>
+    <ul class="soft">
+      <li>高底薪、长期合约、自主权、同行评议、身份荣誉、成长通道、清晰使命等等。</li>
+    </ul>
+    <p>现实中对高端人才的管理正是这样。你看那些高科技公司就不搞什么计件工资，也不会动不动就罚款，都是给一笔足够高的年薪，让员工不用每天算计自己挣多少钱。再看大学和研究机构，只要你证明了自己的能力，就给你一个终身职位，你从此都不用担心工作安全，可以大胆地探索感兴趣的东西。</p>
+
+    <blockquote class="quote">激励相容理论认为，指标越可靠，奖金可以越直接；指标越粗糙，文化和声誉越重要。</blockquote>
+
+    <div class="divider">✵</div>
+
+    <div class="qa">
+      <div class="q">那你说，难道制度设计可以解决一切问题吗？</div>
+      <div class="a">未必完全没希望。机制设计的根本困难在于「信息不对称（information asymmetry）」，也就是干活的人到底干了多少活，管理者看不见。然而在 1979 年，美国经济学家罗杰·迈尔森（Roger Myerson）等人从数学上证明了一个被称为「显示原理（revelation principle）」的定理 [10]，大意是说：任何一个复杂机制能够达成的结果，都存在一个等价的「直接机制」，使得每个人直接、如实报告自己的私人信息，最符合自己的激励。说白了就是理论上总可以把问题改写成一种制度设计，让说真话成为每个人的最优策略。</div>
+    </div>
+
+    <div class="fig">［Roger Myerson］</div>
+    <p>迈尔森据此也得到 2007 年的诺贝尔经济学奖。所以至少在数学上，这个世界有希望过得更好。</p>
+    <p>儒家对「好人吃亏」唯有感叹，法家对「信息不对称」束手无策。而现代工业文明既不是靠美德，也不是靠胡萝卜加大棒建立起来的，它靠的是可执行的日常秩序。</p>
+
+    <h3>中国也早已说过这句话</h3>
+    <p>你千万别说中国只能搞儒家和法家。邓小平早在 1980 年就说过一句非常现代的话 [9]：「……制度好可以使坏人无法任意横行，制度不好可以使好人无法充分做好事，甚至会走向反面。」他这句话颠倒了传统中国“先选好人，再办好事”的思路，其实说的就是激励相容。</p>
+
+    <div class="poem">
+      <div class="poem-title">尾声小诗</div>
+      <div>不求人皆君子，<br>不防人皆豺狼。<br>但教利路顺人欲，<br>自有秩序如朝阳。</div>
+    </div>
+  </main>
+
+  <section class="block notes">
+    <div class="block-title">注释</div>
+    <ol>
+      <li>Nobel Prize Outreach. “The Prize in Economic Sciences 2007: Popular Information.” NobelPrize.org, 2007.</li>
+      <li>Laffont, Jean-Jacques, and David Martimort. <em>The Theory of Incentives: The Principal-Agent Model.</em> Princeton: Princeton University Press, 2002.</li>
+      <li>Pollard, Sidney. “Factory Discipline in the Industrial Revolution.” <em>Economic History Review</em> 16, no. 2 (1963): 254–271.</li>
+      <li>Lazear, Edward P. “Performance Pay and Productivity.” <em>American Economic Review</em> 90, no. 5 (2000): 1346–1361.</li>
+      <li>Kaur, Supreet, Michael Kremer, and Sendhil Mullainathan. “Self-Control at Work.” <em>Journal of Political Economy</em> 123, no. 6 (2015): 1227–1277.</li>
+      <li>Hamilton, Barton H., Jack A. Nickerson, and Hideo Owan. “Team Incentives and Worker Heterogeneity: An Empirical Analysis of the Impact of Teams on Productivity and Participation.” <em>Journal of Political Economy</em> 111, no. 3 (2003): 465–497.</li>
+      <li>Bandiera, Oriana, Iwan Barankay, and Imran Rasul. “Team Incentives: Evidence from a Firm Level Experiment.” <em>Journal of the European Economic Association</em> 11, no. 5 (2013): 1079–1114.</li>
+      <li>Pink, Daniel H. <em>Drive: The Surprising Truth About What Motivates Us.</em> New York: Riverhead Books, 2009.</li>
+      <li>邓小平：《党和国家领导制度的改革》，1980 年 8 月 18 日。</li>
+      <li>Myerson, Roger B. “Incentive Compatibility and the Bargaining Problem.” <em>Econometrica</em> 47, no. 1 (1979): 61–73.</li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <div class="block-title">用户留言</div>
+
+    <div class="comment">
+      <div class="who"><b>左星星</b><span>昨天 · 上海</span></div>
+      <p>很多父母头疼孩子玩手机。儒家的办法，是反复讲学习重要、要自律、要懂事；法家的办法，是没收手机、限制时间、发现一次惩罚一次。但讲道理容易变成唠叨，强管控又容易引发对抗。更好的办法，也许是设计一套激励相容的机制。孩子每天完成户外运动、作业复盘和阅读后，就获得固定的屏幕时间；规则提前约定，父母不能临时加码。没有完成基础任务，就没有屏幕时间，这是“威”；完成任务后可以安心玩手机，甚至把未使用时间兑换周末活动，这是“利”；父母说到做到，不因为情绪随意扣减，也不轻易改变规则，这是“信”；时间长了，孩子慢慢把自己看成一个能管理自己的人，这就是“德”。教育不是天天斗智斗勇，而是让孩子体验到自我管理带来的好处。</p>
+      <p>我之前待过一家公司，销售考核主要看签单额，于是大家为了冲业绩，经常给客户放很长账期。合同签得很好看，现金流却承受着巨大压力。后来公司调整机制，销售奖金不只看合同额，还要和回款进度挂钩；超长账期必须经过更高层审批，出现坏账影响后续提成。不合规账期不能随便承诺，这是“威”；优质回款能带来真实收益，这是“利”；公司按规则兑现奖金，不随意拖欠，这是“信”；时间长了，销售不再只把自己看成签单的人，而开始把自己视为经营现金流的人，这就是“德”。好的制度不用天天考验人性，而是让正确的选择变得自然。高明的管理，不是逼着人做好事，而是让做好事成为最符合自身利益的选择。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><b>常觉不住</b><span>昨天 · 美国</span></div>
+      <p>万老师这一讲，说到我自己一个老毛病。当老板的，很容易把「我对你好」当成「我已经把制度做好了」。待遇给好一点，说话尊重一点，该有的都不缺，这些当然都对。可是这些加起来，也只是好意，不是制度。</p>
+      <p>我以前一直想不通：这个道理不难懂，为什么还是会一再犯？后来发现，是手感在骗人。你对一个人好，回音来得很快。你多给一点，对方当场说谢谢，你心里也舒服，马上觉得这件事做对了。可是制度不一样。你把规则写清楚，把奖金怎么发、责任怎么算、出问题怎么处理，都安排好，做完也没人吭声。它有没有用，要过一段时间才看得出来。人是跟着反馈走的。好意的反馈快，制度的反馈慢。做着做着，我们就会偏向那个马上有感觉的东西。打骂也是一样。今天凶一下，今天产量就上来。看起来很有效。可是制度要慢慢养，没那么快给你回应。</p>
+      <p>我读到「条件好不等于激励到位」这句话，停了一下。人不是不知道制度重要，是制度太慢了。慢到我们常常还没等它长出来，就先退回到好意，或者棍子上去了。难的不是懂制度。难的是熬过那段没有回音的时间。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><b>李盈</b><span>昨天 · 天津</span></div>
+      <p>好的制度，不是试图改变人性，而是利用人性。就像亚当斯密在《国富论》当中说的，我们期望的晚餐并非来自屠夫、酿酒师或面包式的仁慈，而是来自于他们对自身利益的关切。比如为了实现减碳的任务，不是单纯的不允许企业排放，二是要不断完善碳排放交易，让减排的企业可以卖出配额去获益，而多排放的企业需要花钱去购买配额。对于减排的企业，环保是一门生意，它可以赚钱，所以它会积极的应用低碳技术。而对于花钱购买配额的企业来说，维持目前的碳排放肯定能挣到更多的钱，花钱也值得……</p>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <div class="ai-head">
+      <span class="ai-badge">AI 阅读总结</span>
+      <h2>通读全文后的总结与行动建议</h2>
+    </div>
+
+    <p class="one-line">一句话概括：好的制度不靠让人“畏威”（恐惧）或“怀德”（变好），而是设计一种“局”，让普通人出于自身利益的算计，恰好做出制度想要的选择——这就是“激励相容”。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><strong>开篇案例的教训。</strong>非洲工厂里，中国老板对工人讲平等、给优厚待遇，工人却迟到旷工偷零件；改用打骂监工后产量虽稳定，但作者指出这犯了两个错误：待遇好不等于激励到位（参与约束≠激励约束），打骂也不是有效激励——它只会筛掉有尊严、有能力、有选择余地的工人，留下最能忍气吞声和躲避惩罚的人，未来诉讼、罢工、骨干流失等后患无穷。</li>
+      <li><strong>儒家与法家的根本缺陷。</strong>儒家靠教化，假定人性可以无限拔高，太过天真；法家靠赏罚，却需要一个全知全能、断得了功过还自己不腐败的统治者。一个依赖被统治者的素质，一个依赖统治者自己，都不是根本办法。</li>
+      <li><strong>激励相容的定义与由来。</strong>赫维茨 1972 年系统提出、并因机制设计获 2007 年诺贝尔经济学奖。机制设计是经济学的“逆问题”：先要结果，再反推一套规则让大家自愿玩出来；激励相容就是让自私自利者的最优选择恰好等于系统想要的结果——“让坏不再划算，让好不再吃亏”。</li>
+      <li><strong>销售虚假承诺的三种解法。</strong>价值观工作坊（儒家）没人在乎；扣奖金开除（法家）让销售玩起文字游戏、更精了；只有重新设计提成结构——签约、使用三个月后、续约时分期发放，违规可追回——销售自己就会选择对公司最有利的做法。奖惩的性质因此不同：法家是行为之后的“外部棍子”，激励相容是行为之前的“机制部件”。</li>
+      <li><strong>工厂制度四字诀。</strong>威＝规则的确定性（惩罚可预期、一视同仁，而非暴力）；利＝任务可测就用钱强激励（汽车玻璃安装工改计件后生产率 +44%）；信＝承诺可信，信任不足就缩短周期甚至日结；德＝身份认同（晋升阶梯、小队制，团队计件让服装厂生产率 +14%，并同时改变努力程度与团队构成）。这四个属性是对制度的要求，而非对员工人品或管理者心力的要求。</li>
+      <li><strong>强激励与弱激励的分野。</strong>算法性任务（送外卖、流水线）适合强激励；启发性任务（科学家、官员、医生）用强激励会异化工作——你按论文篇数发奖金，科学家就拼命发没意义的论文（涉及多任务委托代理与古德哈特定律）。弱激励是高底薪、长期合约、自主权、同行评议、身份荣誉、成长通道、清晰使命；指标越可靠奖金越直接，指标越粗糙文化和声誉越重要。</li>
+      <li><strong>思想谱系。</strong>休谟 1741 年主张“假定每个人都是无赖”，麦迪逊 1788 年说“必须用野心对抗野心”，邓小平 1980 年说“制度好可以使坏人无法任意横行，制度不好可以使好人无法充分做好事”——都不是悲观主义，而是不把公共福祉押在掌权者的好心上。</li>
+      <li><strong>数学上的希望。</strong>机制设计的根本困难是信息不对称，但迈尔森 1979 年证明显示原理：任何复杂机制都等价于一个让“说真话”成为每个人最优策略的直接机制，并因此同获 2007 年诺奖——“至少在数学上，这个世界有希望过得更好”。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>本周做一次“好意 vs 制度”盘点。</strong>选一件你常靠人情、靠发火或靠“我对你好”推动的事（带团队、带孩子、家务分工都行），问自己：如果我不在场，这件事靠什么机制自动运转？把最常靠吼或靠情面解决的 2-3 件事写成书面规则。</li>
+      <li><strong>检查你手里最重要的考核指标是否错位。</strong>只要奖金只看签单额，就一定有人放长账期、乱承诺。把考核与最终结果挂钩——回款、复购、续约、客户留存——本周就先改掉一条最明显的错位指标。</li>
+      <li><strong>把“威”落实为规则的确定性，而不是嗓门。</strong>处罚事先写清楚、过程可记录、可预期、一视同仁，主管同样受约束。对自己和家人也一样：约定好的事按约定兑现，情绪化加码最伤“信”。</li>
+      <li><strong>信任不足就缩短激励周期。</strong>孩子完成当日任务就当日兑换屏幕时间；团队的小成果就小周期兑现，别把所有奖励都押在“月底/年终”——等待太久，人会先放弃。</li>
+      <li><strong>给自己也设计一套激励相容。</strong>把一个想养成的习惯拆成可测量的小任务（比如“每天写 200 字”而非“好好写作”），完成后立刻给自己一个即时小奖励，让“做正确的事”本身变得划算，而不是靠意志力硬扛。</li>
+      <li><strong>对长期、创造性的工作用弱激励对待自己。</strong>写作、研究、专业成长这类启发性任务，别用阅读量、短期 KPI 自我考核；给自己保证基本收入的安全感、明确使命和自主空间，靠内在动机驱动。</li>
+      <li><strong>遇到“人不行”的抱怨时，先问一句：能不能改规则？</strong>把精力从和具体的人斗智斗勇，转向设计“让正确的选择变得自然”的局——高明的管理不是逼人做好事，而是让做好事成为最符合自身利益的选择。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <ul class="quote-list">
+      <li>“制度的最高境界不是战胜人性，而是让人性为秩序打工。”</li>
+      <li>“我设计的这个局，会让你的小算盘怎么打都打到我要的那个数上。”</li>
+      <li>“法家是在行为之后处理人；激励相容是在行为之前设计局。”</li>
+      <li>“不求人皆君子，不防人皆豺狼。但教利路顺人欲，自有秩序如朝阳。”</li>
+    </ul>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+  <footer class="site">万维钢 · 现代思维工具100讲 · 第72讲　｜　手机阅读版 · 仅供个人学习使用</footer>
+</div>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('topBtn');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? h.scrollTop / max : 0;
+    bar.style.width = (p * 100) + '%';
+    var show = h.scrollTop > 600;
+    btn.style.opacity = show ? '1' : '0';
+    btn.style.pointerEvents = show ? 'auto' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+</script>
+</body>
+</html>

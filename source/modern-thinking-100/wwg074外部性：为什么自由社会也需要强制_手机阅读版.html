@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第74讲 外部性：为什么自由社会也需要强制</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2c2722;
+    --muted:#7d746a;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --card-bg:#ffffff;
+    --card-border:#e7dfd2;
+    --quote-bg:#f5efe4;
+    --quote-border:#c9a87e;
+    --divider:#d9cfc0;
+    --summary-bg:#f2ead9;
+    --summary-border:#c9a87e;
+    --shadow:0 1px 3px rgba(60,45,25,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e9e3d9;
+      --muted:#a79e91;
+      --accent:#d3a268;
+      --accent-soft:rgba(211,162,104,.14);
+      --card-bg:#201d19;
+      --card-border:#3a342c;
+      --quote-bg:#241f19;
+      --quote-border:#8a6a45;
+      --divider:#423a30;
+      --summary-bg:#262016;
+      --summary-border:#8a6a45;
+      --shadow:0 1px 3px rgba(0,0,0,.4);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--quote-border),var(--accent));
+    z-index:999;
+    transition:width .08s linear;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:36px 20px 64px;
+  }
+  .doc-head{
+    padding:8px 0 28px;
+    border-bottom:1px solid var(--card-border);
+    margin-bottom:28px;
+  }
+  .tag{
+    display:inline-block;
+    font-size:13px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--quote-border);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:16px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:26px;
+    line-height:1.4;
+    font-weight:700;
+    letter-spacing:.5px;
+    margin-bottom:14px;
+    text-align:left;
+  }
+  .meta{
+    font-size:14px;
+    color:var(--muted);
+    text-align:left;
+  }
+  section{margin-bottom:36px;}
+  .body h3{
+    font-size:19px;
+    font-weight:700;
+    color:var(--accent);
+    margin:34px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--quote-border);
+    line-height:1.45;
+  }
+  .body p{margin-bottom:16px;}
+  .body strong{color:var(--accent);}
+  blockquote{
+    margin:20px 0;
+    padding:14px 18px;
+    background:var(--quote-bg);
+    border-left:4px solid var(--quote-border);
+    border-radius:0 12px 12px 0;
+    color:var(--text);
+    font-style:normal;
+  }
+  blockquote p{margin:0;}
+  .divider{
+    text-align:center;
+    color:var(--divider);
+    font-size:16px;
+    margin:28px 0;
+    letter-spacing:8px;
+    user-select:none;
+  }
+  .divider::before,.divider::after{
+    content:"";
+    display:inline-block;
+    vertical-align:middle;
+    width:42px;
+    height:1px;
+    background:var(--divider);
+    margin:0 10px;
+  }
+  ol.list,ul.list{
+    margin:14px 0 18px;
+    padding-left:1.4em;
+  }
+  ol.list li,ul.list li{
+    margin-bottom:10px;
+    padding-left:4px;
+  }
+  .qa{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:20px 0;
+    box-shadow:var(--shadow);
+  }
+  .qa .q{
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .qa .q::before{content:"问　";font-weight:700;}
+  .qa .a::before{content:"答　";font-weight:700;color:var(--accent);}
+  .section-title{
+    font-size:20px;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--card-border);
+  }
+  /* 注释 */
+  .notes{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px 20px;
+    font-size:13px;
+    line-height:1.7;
+    color:var(--muted);
+    box-shadow:var(--shadow);
+  }
+  .notes h3{font-size:15px;color:var(--accent);margin-bottom:10px;}
+  .notes p{margin-bottom:6px;text-align:left;}
+  .notes sup{font-size:11px;color:var(--accent);}
+  /* 用户留言 */
+  .comment-card{
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  .comment-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .comment-name{
+    font-weight:700;
+    font-size:15px;
+    color:var(--text);
+  }
+  .comment-meta{
+    font-size:12px;
+    color:var(--muted);
+  }
+  .comment-body{font-size:15px;line-height:1.75;text-align:justify;}
+  .comment-body p{margin-bottom:8px;}
+  .comment-tag{
+    display:inline-block;
+    font-size:12px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:6px;
+    padding:2px 8px;
+    margin-bottom:8px;
+  }
+  /* AI 总结 */
+  #ai-summary{
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+    border-radius:14px;
+    padding:24px 22px;
+    margin-top:44px;
+  }
+  #ai-summary .ai-title{
+    font-size:19px;
+    font-weight:700;
+    color:var(--accent);
+    text-align:center;
+    margin-bottom:16px;
+    letter-spacing:2px;
+  }
+  #ai-summary .ai-oneline{
+    font-weight:700;
+    font-size:16.5px;
+    line-height:1.75;
+    padding:14px 16px;
+    background:var(--card-bg);
+    border-radius:10px;
+    border:1px solid var(--card-border);
+    margin-bottom:18px;
+  }
+  #ai-summary h4{
+    font-size:16px;
+    color:var(--accent);
+    margin:20px 0 10px;
+  }
+  #ai-summary ol,#ai-summary ul{
+    margin:0 0 6px;
+    padding-left:1.35em;
+  }
+  #ai-summary li{margin-bottom:9px;}
+  #ai-summary .quote-line{
+    border-left:3px solid var(--quote-border);
+    padding-left:12px;
+    margin-bottom:10px;
+    color:var(--text);
+  }
+  #ai-summary .ai-foot{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px dashed var(--card-border);
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:40px;
+  }
+  /* 回到顶部 */
+  #topBtn{
+    position:fixed;
+    right:18px;
+    bottom:30px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+    z-index:998;
+    opacity:.92;
+  }
+  #topBtn:active{opacity:1;transform:scale(.95);}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<main class="container">
+
+  <header class="doc-head">
+    <div class="tag">万维钢 · 现代思维工具100讲 · 第74讲</div>
+    <h1>外部性：为什么自由社会也需要强制</h1>
+    <div class="meta">作者：万维钢 ｜ 现代思维工具100讲 · 第74讲 · 课程讲稿</div>
+  </header>
+
+  <section class="body">
+
+    <p>我们这个系列一直在讲社会需要制度。我们讲了「礼」作为一种互动协议，「激励相容」让个人利益和制度目标自动对齐，「程序正义」让好坏可验证——你注意到没有，这些制度有一个共同点：它们都是软性的。</p>
+    <p>这里没有强制。守礼可以帮你减少很多无谓的冲突，但你也可以不守；一个激励相容的系统会让你自愿做有利于它的事儿；即便是好的市场，也允许你卖坏货，只要你选择承担后果就行。</p>
+    <p>软性制度是漂亮的制度。有些自由派（libertarians）知识分子就认为，世界就应该只有软性制度，最好没有任何强制。</p>
+    <p>我当年上大学的时候，就发现教授上课点名是个非常不体面的事情：你讲得好，学生自然会来听；学生不来听，那就说明你讲得不行。你强制点名让学生坐在那儿，这像什么话呢？</p>
+    <p>如果一切问题都能靠市场和软性制度解决，可就太好了……但这一讲我们要说的是：<strong>自由社会也需要强制。</strong>这里有好几位天才经济学家和政治学家的思想较量，而一切的起源，叫做「外部性（externality）」。<sup><a href="#note1">[1]</a></sup></p>
+
+    <div class="divider">✵</div>
+
+    <h3>什么是外部性：私人账本与社会账本对不上</h3>
+    <p>外部性最早是英国经济学家阿瑟·庇古（A. C. Pigou）系统化的概念。他1920年出版的《福利经济学》（The Economics of Welfare）一书是领域的奠基之作<sup><a href="#note1">[1]</a></sup>。</p>
+    <p>简单说，<strong>外部性就是做一件事的人不完整承担他这件事的后果。</strong></p>
+    <p>比如你在大学住四人间的宿舍，有个室友，小张，嫌学校食堂的饭菜不好吃，就自己弄个炉灶在宿舍炒菜吃。炒菜这件事对小张有好处，但也有一定的坏处，那就是油烟。好处完全由小张自己享受了，可是坏处却不是由他自己完全承担，而是分出了一部分来给你们，让你们不得不忍受油烟味。分出来的这一部分，就是小张炒菜这个事儿给宿舍制造的「负外部性（negative externality）」。</p>
+    <p>外部性也有正面的。比如一个孩子受教育，主观上当然是为了自己——有了学历就好找工作、能过好日子。但是客观上，更多的人受教育对整个社会也有好处：犯罪率会降低，人们的收入更高就会交更多的税，社会福利也会随之提升……所以哪怕你没有孩子，你也希望你家邻居的小孩都能受到好的教育。这就是说，教育有「正外部性（positive externality）」。</p>
+    <p>负外部性是我得利、别人付费；正外部性是我付出、别人受益。那我们当然希望制造负外部性的事儿能少一点，制造正外部性的事儿能多一点。</p>
+    <p>可是你们并没有向小张收取环境清洁费，你也没有给你家邻居小孩支付教育感谢金。那么结果就是：</p>
+    <blockquote>
+      <p>坏事会过量，因为做坏事的全部成本你不必承担。<br>好事会不足，因为做好事的全部收益你拿不到。</p>
+    </blockquote>
+    <p>这里没有任何坏人在故意造成这些问题。外部性的根本原因是利益格局存在账本错位：<strong>私人账本和社会账本，对不上。</strong></p>
+
+    <h3>为什么账本对不上：公共品与搭便车</h3>
+    <p>直观上说，解决外部性的最合理办法应该是把账本重新对上：谁制造了负外部性，谁就交一笔钱提供补偿，谁享受了正外部性，谁就交一笔钱表示赞助，对吧？</p>
+    <p>可是现实没那么简单。有些账本就是结构性地没法对上。</p>
+    <p>1954年，保罗·萨缪尔森（Paul Samuelson）严格论证了一个概念，叫「公共品（public goods）」<sup><a href="#note2">[2]</a></sup>，我们大约可以理解成某种必须刻意营造的正外部性。比如说夜晚的路灯、基础科学研究的结果、军队提供的国防服务就都属于公共品。萨缪尔森提出，这些公共品有两个特点：</p>
+    <ul class="list">
+      <li><strong>第一是非排他性：</strong>你很难因为一个人没交钱就不让他用。你说赞助科学人人有责，人家说你们探测火星跟我可没关系……唯一可操作的办法就是把基础科学成果让全民共享。</li>
+      <li><strong>第二是非竞争性：</strong>一个人用了，也不影响别人用。毕竟军队不可能只给一部分人提供保护，要和平就是全国都和平。</li>
+    </ul>
+    <p>所以萨缪尔森说：<strong>公共品的好处太大、扩散太广，根本没法有针对性地收费。</strong></p>
+    <p>还有一个麻烦，出自马里兰大学经济学家曼瑟·奥尔森（Mancur Olson）1965年的名著《集体行动的逻辑》<sup><a href="#note3">[3]</a></sup>，叫「搭便车（free riding）」。意思是：反正就算我不交钱，我也能享受到正外部性，那我何必交钱呢？</p>
+    <p>比如你住在一个老旧的小区，业主们想加装一部电梯，需要挨家挨户收钱。按理说，想用电梯就得交钱，这没啥可说的。但是居民电梯又不能谁用一次交一次钱，肯定是建好之后大家随便用。那么有些人就会想：就算我赖着不交，你们不也得把电梯建起来吗？你建起来之后，难道还能禁止我用吗？</p>
+    <p>所以我理性的选择就是不交。如果大家都这么理性，装电梯这个事儿就永远都干不成。结果就是虽然装电梯对大家都有利，但是这件事就是做不成。</p>
+    <blockquote>
+      <p>这就是奥尔森的反直觉洞见：<strong>共同利益不是集体行动的充分条件。</strong>事实上，群体越大，搭便车就越容易，就越不会为了共同利益行动。</p>
+    </blockquote>
+    <p>外部性和信息不对称都是市场失灵。坏事过量好事不足，人人都说应该做，最后没人会做——这样的社会好得了吗？</p>
+
+    <h3>庇古的答案：强制征税</h3>
+    <p>看来唯一的办法就是有个强人站出来，说我看好了，这个事儿必须办。你们各家有钱出钱，没钱也得出力。谁不服我就收拾谁。</p>
+    <p>具体操作方法就是由政府强制每个人都交税，然后污染由政府治理，公共品由政府提供。这也是庇古的建议。在经济学家眼中，<strong>解决外部性是政府最正当的征税理由，叫做「庇古税」。</strong></p>
+    <p>如你所能想见，经济学家真的特别不喜欢强制。强制说明你这个系统还没有做到完全激励相容。暴力上场就意味着学者讲道理的失败。强制，很不优雅。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>科斯的答案：产权 + 自由协商</h3>
+    <p>那你说不是有个「显示原理」吗？不是说什么问题都有可能用激励相容的这种方式解决吗？其实显示原理说的是制度可以让每个人如实报告私人信息，但并不一定说就能把问题解决……</p>
+    <p>但是经济学家还真找到一个聪明的解决办法，来自了不起的罗纳德·科斯（Ronald Coase）。科斯1960年发表的《社会成本问题》（The Problem of Social Cost），是整个经济学中被引用次数最多的论文之一<sup><a href="#note4">[4]</a></sup>，科斯据此得到1991年诺贝尔经济学奖。</p>
+    <p>科斯的解法是产权。他试想了这么一个局面：一个养牛人和一个种麦的农民是邻居。牛会经常跑到麦田里踩坏麦子，这是典型的负外部性，请问怎么办？</p>
+    <div class="qa">
+      <p class="q">庇古会说：必须政府出手，要么禁止放牛，要么征税。</p>
+      <p class="a">科斯却问：他们俩自己谈不行吗？</p>
+    </div>
+    <p>如果这头牛每年能给牛主带来100块的利润，可它踩坏的麦子值150，农民完全补贴牛主120，让他不要养这头牛了；而如果牛每年能给牛主赚200，可它踩坏的麦子只值50，那就让牛主赔给农民80。</p>
+    <p>只要可以谈，只要有交易，双方的境遇都会比之前更好，不需要任何暴力干预。这多好呢？<strong>外部性根本不需要政府管，私人产权 + 自由协商，自动解决。</strong></p>
+    <p>但是现实中可没有这么好的事儿。请注意科斯定理有两个前提条件：<strong>产权清晰，交易成本为零。</strong></p>
+    <p>现实中，空气和水的产权属于谁？下游有几百万人，你怎么去跟每个人谈判？交易成本常常高到让协商根本不可能发生。</p>
+    <p>更要命的是，产权本身从哪儿来？谁来界定？谁来登记？谁来执行判决？谁来防止强者直接抢走弱者的产权？你会发现一个反讽：<strong>产权本身就是一种公共品。</strong>一个能保护产权的社会秩序，本身需要被建设、被维护、被强制执行——这就把问题又甩回了强制层面。</p>
+    <p>这并不是说科斯定理是失败的。科斯自己1991年获诺奖时讲得很明白：科斯定理只是一个思想实验，目的是让经济学家意识到，真实世界里总有交易成本，所以制度的选择至关重要<sup><a href="#note5">[5]</a></sup>。</p>
+    <blockquote>
+      <p>科斯真正的遗产不是"产权万能"，而是：<strong>选择制度之前，先计算交易成本。</strong></p>
+    </blockquote>
+    <p>说白了，科斯留下一道后门：只要交易成本足够低，协商就能解决问题，强制就是可以避免的。</p>
+
+    <h3>公地悲剧：难道没有第三条路？</h3>
+    <p>然而经济学家对现实已经近乎绝望。1968年，加勒特·哈丁（Garrett Hardin）发表著名的《公地悲剧》（The Tragedy of the Commons）论文<sup><a href="#note6">[6]</a></sup>，其中讲了一个寓言：一片公共草地，每个牧民都可以来放牛。你多放一头，收益全归自己，草场的损失却是大家分摊——这笔账怎么算都划算，结果就是每个人都拼命加牛，直到草场彻底毁掉。</p>
+    <p>公地悲剧是萨缪尔森那个公共品的镜像：公共品是"想要正外部性而得不到"，公地悲剧是"想去掉负外部性而去不掉"。而科斯的方案在这里几乎注定失败：当事人不是两个，而是几百上千个，谁都有动机搭便车，怎么谈？</p>
+    <p>所以主流经济学界从此相信一个二分法：面对公共资源，要么政府接管，要么私有化，没有第三条路。</p>
+    <p>就在这个时候，一位女政治学家，埃莉诺·奥斯特罗姆（Elinor Ostrom），站出来了。</p>
+
+    <h3>奥斯特罗姆：社区自治的八条原则</h3>
+    <p>奥斯特罗姆没有躲在书房里推演，她的做法是领着学生走遍全世界，看看各地的小社区到底是怎么管理公共资源的。他们发现，全世界有大量小型社区，在既没有政府强制，也没有把公共资源变成私有产权的情况下，成功管理了公共资源，而且持续了几代甚至上千年。</p>
+    <p>比如说，特尔贝尔（Törbel）是瑞士的一个小山村，村民共享一块山地牧场，是典型的公地局面。可是从十五世纪起，村民签了一份关于水利渠道和高山牧场的集体使用契约，一直延续至今。契约里最精妙的一条规则是：</p>
+    <blockquote>
+      <p>"冬天养不起的牛，夏天就不能赶到公共牧场上去。"</p>
+    </blockquote>
+    <p>啥意思呢？瑞士山区养牛分冬夏两季。夏天的时候，牛在公共牧场上吃免费的草，你基本不需要投入什么成本。到了冬天，山上就没有草了，牛只能回自家牛棚里，吃你自家储备或者购买的干草，成本完全由个人承担。如果没有这条规定，有些人可能本来冬天只养得起五头牛，但他会在夏天临时多买五头牛上公共牧场吃免费的草，等冬天来了再卖掉。这条规则等于把公共牧场的<b>使用限制在了私人的承担能力上</b>。</p>
+    <p>它妙就妙在把"夏天谁家的牛吃多少草"这么一个很难监督的事情，变成了"冬天数一数各家有几头牛"这么一个很容易监督的事情。于是只要邻里之间互相监督就好，不需要政府出手。结果是特尔贝尔在数百年里都没有发生过公地悲剧。</p>
+    <p>还有很多类似的故事。奥斯特罗姆在1990年出版的《公共事物的治理之道》（Governing the Commons）一书中列举了这些发现<sup><a href="#note7">[7]</a></sup>，她也因此获得2009年的诺贝尔经济学奖。</p>
+    <p>原来社区自治可以在相当程度上解决外部性问题！奥斯特罗姆总结了8条自治制度设计原则——</p>
+    <ol class="list">
+      <li>边界要清晰（没有"我们"，就没有责任共同体）；</li>
+      <li>规则要从下往上长，匹配本地条件；</li>
+      <li>受规则约束的人要有权改规则；</li>
+      <li>监督要内生，最好就由使用者担任；</li>
+      <li>惩罚要分级，直接重罚反而毁了合作；</li>
+      <li>冲突解决要便宜，纠纷得有地方说理；</li>
+      <li>上级政府至少要承认你能自治；</li>
+      <li>复杂问题要嵌套治理。</li>
+    </ol>
+    <p>最关键的是，这里没有一条说实在不行就请求政府介入。你立即可以跟咱们中国的传统乡村联系起来。费孝通先生在《乡土中国》一书里就说本乡本土的矛盾，都是尽量在本乡本土协商解决，而不是折腾到官府那儿去。这叫「无讼」。</p>
+    <p>奥斯特罗姆这套思想叫做「多中心治理（polycentric governance）」。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>回到装电梯：自治原则怎么落地</h3>
+    <p>这些原则其实是一套工程化解决方案，是可以实操的。咱们回到小区装电梯那个事儿，就可以这么操作——</p>
+    <ul class="list">
+      <li>首先，业委会不要把加装电梯做成全小区的公共事业，而是采取"哪个单元装电梯，哪个单元解决自己问题"的模式。这对应奥斯特罗姆的第1条：确定本单元共同体。</li>
+      <li>其次，不要平均分摊费用。一楼如果不用电梯，可以少出甚至不出钱；楼层高的则多出钱。这就是对应第2条：规则要匹配本地条件。</li>
+      <li>然后，还要让所有受影响的人共同参与制定规则（第3条）；项目的账目要由使用者监督（第4条）。</li>
+      <li>根据第5条，对搭便车的人要设置分级的后果：不是一开始就撕破脸，而是先提醒，再公示，实在不行才暂停其电梯使用资格，如果后续补交钱，再恢复资格。</li>
+      <li>第6条是争议可以在业委会协调解决。</li>
+      <li>最后别忘了第7条，你需要上级承认，这意味着事先取得街道和居委会的认可。</li>
+      <li>奥斯特罗姆的第8条，所谓"嵌套治理"，意思就是每一层管每一层最适合管的事。修电梯这个项目具体怎么做，本单元业主商量着办；小区业委会只负责统一程序和供应商比价之类；到了居委会和街道这一层，则只要确认合法性和安全审批就好。</li>
+    </ul>
+
+    <h3>结语：强制依然必要</h3>
+    <p>我理解这里的核心思想是：因为本地人低头不见抬头见，是一个可以互相监督的利益共同体，所以有些事儿我们可以商量着办，没必要找政府来硬的。</p>
+    <p>奥斯特罗姆告诉我们小社区可以自治，但是这并不意味着社会就不再需要强制。当一个群体太大、成员变得匿名、外部性跨越地域、冲突有可能升级为暴力的时候，我们终究还是需要一个拥有最终强制力的组织出面管理。</p>
+    <p><strong>这个组织，就是政府。咱们下一讲再说。</strong></p>
+
+  </section>
+
+  <section class="notes">
+    <h3>注释</h3>
+    <p id="note1">[1] Pigou, Arthur C. <i>The Economics of Welfare</i>. London: Macmillan, 1920.</p>
+    <p id="note2">[2] Samuelson, Paul A. "The Pure Theory of Public Expenditure." <i>The Review of Economics and Statistics</i> 36, no. 4 (1954): 387–89.</p>
+    <p id="note3">[3] Olson, Mancur. <i>The Logic of Collective Action: Public Goods and the Theory of Groups</i>. Cambridge, MA: Harvard University Press, 1965.</p>
+    <p id="note4">[4] Coase, Ronald H. "The Problem of Social Cost." <i>Journal of Law and Economics</i> 3 (1960): 1–44.</p>
+    <p id="note5">[5] Coase, Ronald H. "The Institutional Structure of Production." Nobel Prize Lecture, December 9, 1991.</p>
+    <p id="note6">[6] Hardin, Garrett. "The Tragedy of the Commons." <i>Science</i> 162, no. 3859 (1968): 1243–48.</p>
+    <p id="note7">[7] Ostrom, Elinor. <i>Governing the Commons: The Evolution of Institutions for Collective Action</i>. Cambridge: Cambridge University Press, 1990.</p>
+  </section>
+
+  <section>
+    <h3 class="section-title">用户留言</h3>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-name">susan</span>
+        <span class="comment-meta">1小时前 · 福建</span>
+      </div>
+      <div class="comment-body">
+        <p>万老师举的电梯案例，实实在在就发生在我小区。几十年老小区原来的电梯故障率攀升，趁着去年政府《超长期特别国债支持住宅老旧电梯更新实施方案》出台，指明老旧电梯更新，每台有10~20万的定额补贴。物业于是在大群里通知，让每楼栋自行协商更换事宜。</p>
+        <p>我们单元在小群里很快就达成了共识：架空一层，从第二层开始，二层500，往上楼层每升高一层，增加500（至于最高的9层，反而又跳回到500，其中的原委我不清楚。对于自己没有心力参加的公共事务，我的基本态度就是相信，支持）。大家又都推举出了五层的一位住户任楼长，负责收钱、以及帮助大伙儿跟物业，还有社区进行对接和交涉。</p>
+        <p>我们楼很快就拿着补贴完成了更新，但有些楼栋，尤其是不像我们属于小高层的一些高层，就没有我们幸运，问题主要就出在租户身上。搬离了的原业主不想出钱，租户认为自己是临时租住，也不交钱，一栋楼里租户多了，情况就变得复杂起来，问题层出不穷，结果是整栋楼都跟着遭殃。其实我们单元也有租户，还有一户是没入住的新业主。但问题还是得到了解决。这大概是要归功于我们有位智慧的楼长吧。</p>
+        <p>说到负外部性，我还在等万老师接下来的回答。比如城市里现在养宠的人越来越多，虽然这几年有了改善，但仍然可以看到许多不能做到随手清理的情况，有次晚上停完车，我就不小心踩了一脚的狗屎。再比如，楼顶成了私人菜园子，你是享受了劳动的果实，但建筑风险、环境卫生，却要整栋楼的人跟你一起承担，面对老人，物业讲话压根不好使。小区隔壁是医院，医院里车满为患，于是小区门口的一条小道，经常被占道停车，别说交会车，有时通过都难。物业报警，交警来抄单，可仍然无济于事。到后来，交警干脆直接不来了。这种情况，多中心治理模式怎么使劲？我就觉得还是要靠政府强制干预。</p>
+      </div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-name">王艳</span>
+        <span class="comment-meta">1小时前 · 湖南</span>
+      </div>
+      <div class="comment-body">
+        <p>老公的老家在湖南最南边的一个村子里。每次回去，多半是去吃席——村里谁家有红白喜事，全村人都会去。包个小红包，几十或一两百，然后一家人倾巢而出，四五个、七八个，甚至坐满一桌，都很常见。</p>
+        <p>记得有一回清明节回去，我却挨了老公一顿批评。那天是村里添丁的人家轮流做东请客，按规矩，饭后女人们要帮忙收拾桌子、洗碗扫地。我吃完就走了，老公嫌我懒，更觉得丢人。可我也委屈——他确实没告诉过我这个规矩，毕竟我也是头一回遇上。他之前也没放在心上，大概因为他是男人，不用操这份心。</p>
+        <p>村里办白事，家家户户只要有男人，都必须派代表回去，回去就是"做事"。他们管这叫"当大事"。不管你在天南海北上班，村里有这种事，就得回来。不回来，将来你家办大事，也没人来帮你。所以再远再忙，都得回。也正因如此，那些平时过年都碰不上的面孔，这时全聚到了一起：管账的让经验丰富的来，买菜的派力气大的上；会做菜的，当然能掌勺；会写字的，挽联归你写；没什么特别能耐的，就去上菜——几十桌席面，每桌十几个菜，上菜的人得臂力好、平衡感强，不然那一大碗血鸭、狗肉，哪端得动？顺便说一句，村里人炒菜的手艺是真好。</p>
+        <p>关于这个规矩，我倒是很少听老公抱怨过什么。大家似乎都默认了，谁也不敢不去。毕竟，人这一生，有生就有死。孩子生下来，自己欢欢喜喜养大；家里老人没了，悲伤之余，有人来帮忙张罗、操持，也算一件幸事。</p>
+        <p>今天听了"外部性"这堂课，我才真正明白这套规矩背后的智慧。这其实是一个典型的正外部性问题——帮忙办白事，是"我付出、别人受益"的好事。如果没有强制约束，就会出现搭便车：反正我不回去，别人也会去，到时候我家有事照样有人帮。如果人人都这么想，好事就会越来越少。村里的"当大事"规矩，正是一种强制力，用来破解公共品的困境。它让每个人都必须承担成本，也确保每个人都能享受收益。这种看似不近人情的规定，恰恰维系了整个社区的互助网络，让"有人来帮忙打理"这种幸事，得以代代相传。</p>
+      </div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-name">Dylan @Chutzpah</span>
+        <span class="comment-meta">2小时前 · 上海</span>
+      </div>
+      <div class="comment-body">
+        <span class="comment-tag"># 小小的改变也很厉害</span>
+        <p><strong>公共品 ↔ 暗物质与暗能量</strong></p>
+        <p>1. 物理本质：标准模型精确描述了我们能观测到的5%宇宙质能（普通物质）。但宇宙实际质能分布：暗物质27%，暗能量68%。标准模型对95%的宇宙完全沉默。</p>
+        <p>2. 经济学本质：市场机制精确配置了部分社会资源（私人物品）。但社会价值的大部分：国防、基础科研、路灯、清洁空气、品牌信任、技术标准——市场对这部分完全沉默。</p>
+        <p>公共品就是社会系统中的"暗物质"——它不发光（不交易），但通过引力（制度、信任、标准）塑造着一切可观测结构的形态。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <div class="ai-title">✦ AI 阅读总结 ✦</div>
+    <p class="ai-oneline">一句话概括：外部性让私人账本与社会账本对不上，导致坏事过量、好事不足；当产权清晰、交易成本足够低时协商自治即可解决，否则就需要政府强制——自由社会的"软"与"硬"都是必要的制度工具。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>外部性是账本错位。</strong>做一件事的人不完整承担后果：负外部性是"我得利、别人付费"（小张宿舍炒菜的油烟），正外部性是"我付出、别人受益"（教育让全社会受益）。根源不是有坏人，而是私人账本与社会账本对不上。</li>
+      <li><strong>必然的失衡结果：</strong>坏事会过量（成本不用全担）、好事会不足（收益拿不全）。因此人人都想要的外部性调节，恰恰是市场自己搞不定的。</li>
+      <li><strong>公共品（萨缪尔森1954）：</strong>路灯、基础科研、国防这类正外部性具有非排他性和非竞争性，好处太大太广，根本没法针对性收费。</li>
+      <li><strong>搭便车（奥尔森1965）：</strong>共同利益不是集体行动的充分条件，群体越大越没人行动——老小区加装电梯、家家想赖账就永远装不成，就是活例子。</li>
+      <li><strong>庇古税：</strong>既然协商失灵，就由政府强制征税，污染由政府治理、公共品由政府提供——经济学家眼中政府最正当的征税理由。</li>
+      <li><strong>科斯定理（1960）：</strong>产权清晰且交易成本为零时，养牛人和农民自己谈判就能解决外部性；但现实中交易成本常高到谈不成，而且产权本身也是一种需要强制保护的公共品。科斯真正的遗产是：选择制度之前，先计算交易成本。</li>
+      <li><strong>公地悲剧（哈丁1968）：</strong>公共草地上人人加牛、收益归己、损失分摊，最终草场毁掉。科斯方案在当事人众多时失效，主流经济学曾认为只有政府接管或私有化两条路。</li>
+      <li><strong>奥斯特罗姆的第三条路（2009诺奖）：</strong>她走遍世界发现，许多小社区不靠政府、不靠私有化也能世代管好公共资源（瑞士特尔贝尔山村靠"冬天养不起的牛，夏天不许上牧场"的契约）。她总结出8条自治原则——边界清晰、规则自下而上、使用者监督、惩罚分级等；但她也承认，群体太大、成员匿名、冲突可能升级为暴力时，最终仍需政府这个强制力兜底。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>先识别自己制造的负外部性：</strong>合租做饭的油烟、深夜的噪音、楼道堆物……本周起主动问一句"我的方便有没有让别人买单"，并主动补偿（比如错峰做饭、随手清理）。</li>
+      <li><strong>参与公共事务时先"划小"：</strong>无论是装电梯还是楼道改造，主动提议"哪个单元的事哪个单元解决"，先把大集体拆成有"我们"认同感的小共同体，再谈规则。</li>
+      <li><strong>设计"谁受益谁多出"的规则，而不是平均分摊：</strong>一楼少出、高层多出这类差异化付费，能让最受益的人愿意牵头，也让反对声变小。</li>
+      <li><strong>对付搭便车用分级后果：</strong>先提醒、再公示、最后才暂停资格——别一上来就撕破脸，给"补交钱就能恢复资格"留台阶，合作才不会崩。</li>
+      <li><strong>把难监督的事变成好监督的事：</strong>学特尔贝尔村，把"夏天吃了多少草"改成"冬天数数有几头牛"——本周就可以在自己负责的小事务里，找一个可观察、可数数的替代指标。</li>
+      <li><strong>让规则"从下往上长"并保留修改权：</strong>受规则约束的人应当参与制定和修改规则；在小圈子里推动账目公开、使用者监督，而不是等上级拍板。</li>
+      <li><strong>主动为公共品付费或出力：</strong>意识到教育、社区环境、公共设施的正外部性，别做那个"反正有人做"的搭便车者——从参加一次业委会、支持一次邻里互助开始。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <p class="quote-line">「坏事会过量，因为做坏事的全部成本你不必承担。好事会不足，因为做好事的全部收益你拿不到。」</p>
+    <p class="quote-line">「外部性的根本原因是利益格局存在账本错位：私人账本和社会账本，对不上。」</p>
+    <p class="quote-line">「共同利益不是集体行动的充分条件。事实上，群体越大，搭便车就越容易，就越不会为了共同利益行动。」</p>
+    <p class="quote-line">「科斯真正的遗产不是'产权万能'，而是：选择制度之前，先计算交易成本。」</p>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer>万维钢 · 现代思维工具100讲 · 第74讲 · 手机阅读版</footer>
+
+</main>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+var bar=document.getElementById('progress'),btn=document.getElementById('topBtn');
+function onScroll(){
+  var h=document.documentElement,s=h.scrollTop||document.body.scrollTop;
+  var p=h.scrollHeight-h.clientHeight;
+  bar.style.width=(p>0?(s/p*100):0)+'%';
+  btn.style.display=s>400?'flex':'none';
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+
+</body>
+</html>

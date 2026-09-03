@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第58讲 阿尔法：优势战略意识 · 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2f2a24;
+    --muted:#8a8378;
+    --card:#fffdf8;
+    --border:#e8e0d2;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --quote-line:#c9a876;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e9e1d3;
+      --muted:#a89f8e;
+      --card:#201c17;
+      --border:#3a332b;
+      --accent:#c9975e;
+      --accent-soft:rgba(201,151,94,.14);
+      --quote-line:#8a6a44;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px 72px;
+  }
+  #progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:100;
+    transition:width .1s linear;
+  }
+  .wrap{
+    max-width:700px;margin:0 auto;
+  }
+  header.doc-head{
+    padding:44px 6px 26px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:26px;
+  }
+  .course-tag{
+    display:inline-block;
+    font-size:12.5px;letter-spacing:.06em;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:16px;
+    background:var(--accent-soft);
+  }
+  h1{
+    font-size:26px;line-height:1.4;
+    font-weight:700;letter-spacing:.01em;
+    text-align:left;
+    margin-bottom:12px;
+  }
+  .doc-meta{
+    font-size:13.5px;color:var(--muted);
+    text-align:left;
+  }
+  h2.section{
+    font-size:20px;line-height:1.5;
+    margin:38px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+    text-align:left;
+  }
+  h3.sub{
+    font-size:17px;margin:22px 0 10px;
+    color:var(--accent);
+    text-align:left;
+  }
+  p{margin:0 0 16px;}
+  strong{color:var(--accent);}
+  .quote{
+    border-left:3px solid var(--quote-line);
+    background:var(--accent-soft);
+    padding:14px 18px;
+    margin:18px 0;
+    border-radius:0 12px 12px 0;
+    font-size:16.5px;
+  }
+  .quote .q-mark{
+    display:block;color:var(--accent);
+    font-size:15px;margin-bottom:6px;
+  }
+  ul.plain, ol.plain{
+    margin:0 0 16px;padding-left:1.5em;
+  }
+  ul.plain li, ol.plain li{margin-bottom:8px;}
+  ul.chain{
+    list-style:none;padding:0;margin:0 0 16px;
+  }
+  ul.chain li{
+    position:relative;padding-left:22px;margin-bottom:6px;
+  }
+  ul.chain li::before{
+    content:"→";position:absolute;left:0;color:var(--accent);font-weight:700;
+  }
+  .ornament{
+    display:flex;align-items:center;gap:14px;
+    margin:34px 0;color:var(--accent);
+  }
+  .ornament span{flex:1;height:1px;background:var(--border);}
+  .ornament i{font-style:normal;font-size:13px;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:18px 0;
+  }
+  .card .card-label{
+    display:inline-block;
+    font-size:12px;letter-spacing:.08em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:6px;
+    padding:2px 9px;
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .step{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:12px;
+    padding:14px 18px;
+    margin:12px 0;
+  }
+  .step .step-title{
+    font-weight:700;color:var(--accent);
+    margin-bottom:6px;display:block;
+  }
+  .notes{
+    margin-top:40px;
+    padding:18px 20px;
+    background:var(--card);
+    border:1px dashed var(--border);
+    border-radius:12px;
+    font-size:13px;line-height:1.7;
+    color:var(--muted);
+    text-align:left;
+  }
+  .notes h2{font-size:15px;color:var(--accent);margin-bottom:10px;text-align:left;}
+  .notes ol{padding-left:1.4em;}
+  .notes li{margin-bottom:6px;word-break:break-all;}
+  .comments{margin-top:36px;}
+  .comments h2{
+    font-size:18px;margin-bottom:14px;
+    padding-left:12px;border-left:4px solid var(--accent);
+    text-align:left;
+  }
+  .comment{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .comment .c-head{
+    display:flex;align-items:baseline;gap:10px;
+    margin-bottom:10px;
+  }
+  .comment .c-name{font-weight:700;font-size:15px;}
+  .comment .c-time{font-size:12px;color:var(--muted);}
+  .comment p{font-size:15.5px;margin-bottom:10px;}
+  .comment p:last-child{margin-bottom:0;}
+  #ai-summary{
+    margin-top:44px;
+    background:var(--card);
+    border:2px solid var(--accent);
+    border-radius:12px;
+    padding:22px 20px;
+    box-shadow:0 4px 18px rgba(138,90,43,.12);
+  }
+  #ai-summary .ai-badge{
+    display:inline-block;
+    background:var(--accent);
+    color:#faf7f1;
+    font-size:13px;font-weight:700;letter-spacing:.1em;
+    border-radius:6px;padding:3px 12px;
+    margin-bottom:14px;
+  }
+  #ai-summary h2{
+    font-size:19px;margin-bottom:12px;text-align:left;
+  }
+  #ai-summary .one-line{
+    font-weight:700;font-size:16.5px;
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:12px 16px;
+    margin-bottom:20px;
+    text-align:left;
+  }
+  #ai-summary h3{
+    font-size:16px;color:var(--accent);
+    margin:18px 0 10px;text-align:left;
+  }
+  #ai-summary ul, #ai-summary ol{padding-left:1.4em;margin-bottom:10px;}
+  #ai-summary li{margin-bottom:9px;}
+  #ai-summary .golden li{
+    margin-bottom:8px;
+    list-style:none;
+    position:relative;padding-left:20px;
+  }
+  #ai-summary .golden li::before{
+    content:"❝";position:absolute;left:0;color:var(--accent);
+  }
+  #ai-summary .ai-foot{
+    margin-top:18px;padding-top:14px;
+    border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);
+    text-align:left;
+  }
+  #back-to-top{
+    position:fixed;right:18px;bottom:24px;
+    width:46px;height:46px;border-radius:50%;
+    border:none;cursor:pointer;
+    background:var(--accent);color:#faf7f1;
+    font-size:20px;line-height:1;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:100;
+  }
+  #back-to-top.show{opacity:1;pointer-events:auto;}
+  #back-to-top:active{transform:scale(.94);}
+  @media (prefers-color-scheme: dark){
+    #ai-summary .ai-badge{color:#171512;}
+    #back-to-top{color:#171512;}
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第58讲</span>
+    <h1>阿尔法：优势战略意识</h1>
+    <div class="doc-meta">作者：万维钢　·　讲稿整理 · 手机阅读版</div>
+  </header>
+
+  <!-- 开篇 -->
+  <p>现在人人都在追 AI，你也没落后。别人学提示词的时候你也学提示词；别人养龙虾的时候你也养龙虾；别人把广告、周报、代码、客服都接上大模型，你也都接上了。你每天追逐各种流行趋势和最新工具，都有点 FOMO（害怕错过症）了……</p>
+  <p>这一切都很好，我也是其中一员。但是有一个根本的问题你想过没有：<strong>你只想跟别人一样吗？</strong></p>
+  <p>又或者你也曾经梦想取得某种了不起的成就，公司能一飞冲天？那你就必须回答这个问题——</p>
+  <div class="quote"><span class="q-mark">❝</span>凭什么，是你。</div>
+  <p>你到底做了什么别人做不到的，以至于天大的好事儿能落在你头上？</p>
+  <p>我们上一讲说了，要捕获超额价值就得拿到某种「经济租」。当然你不是董事长的小舅子，我们也不想要那种靠关系和行政壁垒搞出来的坏租，我们想要谋求的是好的经济租——你具备某种降维打击的技术优势、你享有一项无法绕开的专利保护、你拥有人气超强的品牌声望，或者你搭建了一个别人离不开的平台——如果你有这些，你不需要 FOMO。</p>
+
+  <!-- Beta 与 Alpha -->
+  <h2 class="section">认识 Beta 与 Alpha</h2>
+  <p>好租不是从天上掉下来的，一定是你做了一些别人做不到的事情，而积累出来的成果。单单会用 AI 可给不了你租，因为 AI 是一种通用技术，别人也能用。你得有一个超出友商的优势才行。</p>
+  <div class="card">
+    <span class="card-label">两个金融学概念 [1]</span>
+    <p>金融学里有两个概念：「Beta（贝塔）」和「Alpha（阿尔法）」。Beta 是一只基金对市场共同风险的暴露，代表它“跟着市场走”所应得的那部分回报；Alpha 则是在扣除这部分市场因素之后，基金所获得的风险调整后超额收益。</p>
+    <p>我们把这两个概念借用过来，简单说：<strong>Beta 是你搭市场顺风车得到的收益，Alpha 则是你超出市场共识、靠更高一层的认知、判断和动作，硬生生多拿到的那部分收益。</strong></p>
+  </div>
+  <div class="quote"><span class="q-mark">❝</span>Beta 只能让你在市场中存活，只有 Alpha 才能给你积累经济租。</div>
+  <p>想要出类拔萃、建功立业，你得有 Alpha 意识。</p>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 经济学家原本不相信 Alpha -->
+  <h2 class="section">经济学家原本不相信 Alpha</h2>
+  <p>这可不是特别寻常的道理。你要知道，经济学家原本不相信有 Alpha 存在。新古典经济学倾向于假设市场是完全信息的，人是绝对理性的，所以一切事物都应该处于均衡状态。你发明一个什么新东西卖得贵，别人就会受到激励，就会迅速发明一个跟你类似的东西，卖得比你便宜——这样所有信息都瞬间反映在价格上，那就谁都没有获得超额利润的空间。</p>
+  <p>如果市场是绝对均衡的，你根本就不值得费力做生意，因为你不管干什么事儿的回报率都是一样的。你之所以愿意出来做生意，就是因为你相信你的竞争优势不会被人家瞬间抹平，对吧？</p>
+
+  <!-- 哈耶克与柯兹纳 -->
+  <h2 class="section">哈耶克与柯兹纳：竞争是发现程序</h2>
+  <p>1968 年，哈耶克（F.A. Hayek）提出一个洞见：「竞争是一个发现程序（Competition as a Discovery Procedure）」[2]。哈耶克说现实世界里的知识是高度分散的，市场并不透明，永远都存在被低估的需求、被闲置的资源和没有被利用的机会。</p>
+  <p>换句话说，这个世界充满了「错配（Mismatch）」，所以市场是普遍<strong>不均衡</strong>的。</p>
+  <p>在哈耶克的基础上，同属奥地利学派的伊斯雷尔·柯兹纳（Israel M. Kirzner）进一步提出，企业家的任务就是纠正错配 [3]。他发明了一个说法叫「企业家发现（Entrepreneurial Discovery）」：市场一直都充满错配，真正的企业家都是具备高度「警觉性（Alertness）」的人，他们能敏锐地察觉到错配，并且通过纠正错配来赚取利润。</p>
+  <p>说白了，你赚钱是因为你发现并且利用了市场的不均衡——而恰恰因为你的存在，市场变得更均衡了一点，也就是错配少了一点，效率高了一点，这就是你的贡献。</p>
+  <p>比如中国改革开放之初，一边是农村有大量的劳动力没事儿干，一边是城市里人连个电风扇都买不到，这就是错配。你办一个乡镇企业，农民找到了工作，城里人买到了便宜的电器，这就是纠正错配。那你这难道不就是最正当、最高尚的赚钱方式吗？</p>
+  <p>如果只有你在纠正错配，这就是你的 Alpha。可是如果大家都在开公司纠正类似的错配，那这就只是 Beta。<strong>志存高远的企业家不但要发现错配，而且要发现高价值错配，而且要以别人暂时做不到的方式，把这个错配纠正成自己的成果，这才叫有 Alpha。</strong></p>
+  <p>如果你有 Alpha 意识，你会认识到公司的日常运营活动不是 Alpha——你必须主动搜寻机会，特事特办，专门布局才能捕捉 Alpha。</p>
+  <p>这就引出了公司的战略问题。</p>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 波特：运营效益不是战略 -->
+  <h2 class="section">波特：运营效益不是战略</h2>
+  <p>1996 年，哈佛商学院教授迈克尔·波特（Michael Porter）发表一篇雄文，叫《什么是战略？》（What Is Strategy?）[4]，提出：「运营效益（Operational Effectiveness）」和「战略定位（Strategic Positioning）」是两回事。</p>
+  <p>运营效益是说你在日常的活动上做得比对手更好，比如说搞搞管理，你们的速度更快、成本更低——这些事儿原则上对手也都在做，只不过你做得稍好一些而已。而战略定位，则是说你要么执行了一些与对手完全不同的活动，要么以完全不同的方式执行一些活动，以至于你有一个对手无法模仿的优势。</p>
+  <p>咱们就拿航空公司来说。运营效益是大家都飞同样的航线、卖同样的票，只不过你把调度做得更精、飞机周转得更快、采购压得更狠。这些当然也重要，但别人迟早也能学会。战略定位，却是你必须换一套打法。</p>
+  <div class="card">
+    <span class="card-label">案例 · 美国西南航空</span>
+    <p>比如美国西南航空，直接改成只做短途高频航线，所有航线采用单一机型，再加上简化服务——这不是一般的成本优化，这是围绕“快速周转”这个目标重新设计整套运营系统。</p>
+  </div>
+  <p>大多数人整天忙忙碌碌，无非是在优化运营效益，也就是完成 Beta 而已。<strong>而 Alpha，只存在于你们独特的战略定位之中。</strong></p>
+  <p>波特的警告是：你要搞战略定位，就一定要有痛苦的「取舍（Trade-offs）」。你必须专注于某个错配，那么你就必须放弃其他市场。如果你这也要那也要，不敢大刀阔斧地押注方向，你凭什么取得别人没有的 Alpha？</p>
+  <p>在波特这个视角下，<strong>用 AI 降本增效根本就不是战略</strong>。裁掉一半程序员，再裁掉一半运营，看看别人有什么 best practice（最佳实践）你就模仿一下，把流程理顺建立 SOP……所有这些的确都能提高生产力，但如果你只做这些，你就会跟竞争者越来越像——这是没有前途的，因为你其实是在同一个赛道上和对手比拼谁跑得更累：</p>
+  <ul class="chain">
+    <li>竞争高度同质化</li>
+    <li>演变成价格战</li>
+    <li>利润率蒸发</li>
+    <li>失去健康的现金流</li>
+    <li>没有多余的钱研发新的 Alpha</li>
+    <li>消费者会认为你们提供的就是个廉价产品</li>
+    <li>失去品牌资产和创新能力</li>
+  </ul>
+  <p><strong>低利润率是一种耻辱。降本增效不是进攻而是防守。想要 Alpha，你得进攻才行。</strong></p>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 三本账 -->
+  <h2 class="section">公司的三本账</h2>
+  <p>我们可以把一家公司想象成三本账——</p>
+  <ul class="plain">
+    <li><strong>第一本是现金账，管今天；</strong></li>
+    <li><strong>第二本是能力账，管明天；</strong></li>
+    <li><strong>第三本是位置账，管后天。</strong></li>
+  </ul>
+  <p>日常运营主要盯第一本账，所以它天然喜欢 KPI、周转率、毛利率这些数字。战略意识盯的是第二本账：我们今天这点利润，到底买回来了什么别人一时学不走的能力？等能力再沉淀成品牌、标准、默认入口、网络效应和信任，第三本位置账才会变厚。</p>
+  <div class="quote"><span class="q-mark">❝</span>利润是今天的结果，能力是明天的原因，位置是后天的统治——如果你真的形成统治，那也就是经济租。</div>
+  <p><strong>Alpha 是动能，经济租是势能。</strong>Alpha 是你主动出击、纠正错配的动作；而当你把这个动作的战果转化成品牌、专利和网络效应之类的防御堡垒的时候，它就凝固成了经济租。</p>
+  <p>如你所能想见，大多数公司并没有 Alpha 意识，谈不上什么战略定位。如果你们公司已经陷入价格战疲于奔命，那你当然没有资金去研发什么 Alpha。可是如果你们公司运营状况良好，资金充足，你们多数也不会想要去寻找新的 Alpha。</p>
+  <p>这里有一个我们前面讲过的「探索与利用（Explore / Exploit）的权衡」问题 [5]：当前打法我们已经很熟练了，我们已经做了很好的优化！我们为什么要放着现成的优势业务不好好利用，非得把资源挪开，去探索什么新东西呢？核心能力很容易反过来变成核心刚性，不可挑战 [6]。</p>
+  <p>这就是为什么巨头会给后来者留下机会搞「颠覆式创新」。</p>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 对比案例 -->
+  <h2 class="section">守租 vs 进攻：四个对比案例</h2>
+  <p>如果你只想降本增效守住旧租，你早晚会被人家的 Alpha 颠覆。咱们看几个对比案例。</p>
+  <div class="card">
+    <span class="card-label">柯达 vs ASML</span>
+    <p>今天的年轻人也许不知道，曾经有个人人皆知的品牌叫“柯达（Kodak）”，它是卖照相机胶卷的。你可能以为柯达消失是因为他们没有发明数码相机，但恰恰相反，柯达比很多竞争者更早发明了数码相机。但是他们的管理层认为传统胶卷业务才是自己的优势所在，选择把资源继续投入到对现有胶卷生产线的降本增效上——<strong>他们失败是因为选择守住自己的租</strong>。</p>
+    <p>对比之下，光刻机巨头 ASML 在深紫外光刻（DUV）时代已经是赢家了，但是他们可没指望把老路再榨干一点；他们主动押注极紫外光刻（EUV）。现在 ASML 是全球唯一的 EUV 光刻系统制造商，但是他们没打算给人弯道超车的机会，正在积极推进下一代光刻技术，叫“高数值孔径极紫外光刻（High NA EUV）”。</p>
+  </div>
+  <div class="card">
+    <span class="card-label">Kmart/Sears vs 英伟达</span>
+    <p>美国曾经有两个零售巨头，一个叫 Kmart，一个叫 Sears，一度面临沃尔玛和 Target 的强烈竞争。这两家公司一看，我们不能坐以待毙啊，干脆我们合并吧，成为一个更大的巨头！合并了，我们就有更大的规模效应，我们可以削减管理费用，我们可以共享供应链，对吧？他们并没有创造新的体验也没有研发新技术，他们只是想通过财务报表上的数字削减来赢得竞争……结果这两家老店一个就此衰败，一个直接破产。</p>
+    <p>对比之下，英伟达当年面对巨头英特尔和 AMD 也是打不过，但人家可没想通过降本增效来应对，而是搞了个叫 CUDA 的新平台，想把学术界和工业界锁定在自己的 GPU 生态之中……在长达十几年的时间里，CUDA 是一个纯粹的投资，没有什么爆发性的财务回报——<strong>但那是一个 Alpha 投资</strong>。后来 AI 爆发，CUDA 成了万亿美元帝国的租。</p>
+  </div>
+  <div class="card">
+    <span class="card-label">诺基亚 vs Airbnb</span>
+    <p>当 iPhone 横空出世，改变了手机市场竞争维度的时候，诺基亚心想，没事，我们有无与伦比的硬件制造效率，我们有超强的供应链成本控制能力，我们比苹果价格便宜，我们的性能更可靠！结果被时代抛弃。</p>
+    <p>对比之下，Airbnb 进军旅游业的时候，酒店早就是一个高度发达的行业，用互联网订房间也早已成熟。他们并没有想着再给你来一波降本增效。他们反而发现私人住宅闲置是一个错配，他们认为阻碍匹配的核心不是技术，而是信任。于是 Airbnb 搭建了一个租客和房东的互评体系，用创始人亲自挨家挨户敲门、免费帮房东拍摄专业高清照片的冷启动方式，人为创造了标准化信任……它硬生生地搭建了一个新的平台。</p>
+  </div>
+  <div class="quote"><span class="q-mark">❝</span>总想把老一套做得更好，真是人的本性啊。但你所有的勤奋都会沉没到 Beta 里。</div>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 五步心法 -->
+  <h2 class="section">从 Alpha 到经济租：五步心法</h2>
+  <p>我们把上面的拼图放在一起，总结出一套从 Alpha 到经济租的心法，分为五步——</p>
+  <div class="step">
+    <span class="step-title">第一，错配。</span>
+    <p>别只知道说“我擅长什么”，你得问哪儿有高价值错配。是需求和供给错配，价格和价值错配，用户痛点和行业共识错配，还是技术可能性和组织能力错配？</p>
+  </div>
+  <div class="step">
+    <span class="step-title">第二，认知。</span>
+    <p>这个错配，为什么偏偏轮到你来纠正？你到底看见了什么重要、但还没被充分定价的真相？你手上有什么独特的东西——是知识、品味、渠道、资本耐心、客户理解、声誉、文化，还是对一手现实的长期贴身观察？</p>
+  </div>
+  <div class="step">
+    <span class="step-title">第三，执行。</span>
+    <p>没有取舍就没有战略。你下决心做什么，就必须回答“我们不做什么”。你必须砍掉一些看起来很有希望的选项，你必须得罪一些人，你必须容忍一些指标暂时变得难看。正因为这是艰难的取舍，别人才无法模仿——他们会被旧业务绑架，会被品牌定位限制——他们即便知道你这个战略也动不了，所以才能成就你的 Alpha。</p>
+  </div>
+  <div class="step">
+    <span class="step-title">第四，占有。</span>
+    <p>一旦取得优势地位，你如何把优势沉淀成经济租？别忘了价值创造不自动等于价值捕获。你必须占有我们上一讲说的「互补性资产」，把内功外化成品牌、合同、数据、标准、默认入口、人才磁场、用户习惯或者供应链控制。</p>
+  </div>
+  <div class="step">
+    <span class="step-title">第五，重构。</span>
+    <p>任何经济租一旦过于舒适，就会腐蚀警觉。不要小看天下英雄，别人会创造他们自己的 Alpha，颠覆你的租。所以你最好有再造 Alpha 的能力，利用过一段时间、积累了资源，就要再去探索。</p>
+  </div>
+  <p>你立即就能看出来，<strong>这里最关键的是第二步，也就是凭什么由你来纠正这个错配——你手上一定有某种独特的东西</strong>。这听起来是个悖论：有独特的东西才能有 Alpha，但 Alpha 不就是独特的东西吗？这不是同义反复吗？</p>
+  <p>其实不然。有一点异质性的人很多——可能你会一点小众的技能，拥有一点别人没有的一手观察，懂一点跨领域的理解，又或者你在某个非常特定的场域之中，积累了一点信誉——这些东西本身并不构成 Alpha：只有把它们组合起来，放到具体的错配上，才有可能形成 Alpha。</p>
+  <p>但的确，你要有点特点才好。</p>
+
+  <div class="ornament"><span></span><i>✵</i><span></span></div>
+
+  <!-- 结尾 -->
+  <h2 class="section">把 Beta 留给别人</h2>
+  <p>世间多数人能有个地方安稳地生活，领一份 Beta 收入就很满意。但是也有少数人，或者说极少数人，感觉不到自己的 Alpha 就会坐立不安。</p>
+  <div class="quote"><span class="q-mark">❝</span>商业竞争也好，人生博弈也罢，我们想要的 Alpha 绝不是“我比你更努力”那种线性勤奋，而是“我比你更早站在一个尚未被社会充分定价的真相上”。你要找到那个真相，你要成为几项异质性特点的组合，你要大胆实施一个战略定位。如果可以选，我们选择把 Beta 留给别人。</div>
+
+  <!-- 注释 -->
+  <div class="notes">
+    <h2>注释</h2>
+    <ol>
+      <li>Jensen, Michael C. “The Performance of Mutual Funds in the Period 1945–1964.” The Journal of Finance 23, no. 2 (1968): 389–416.</li>
+      <li>Hayek, F. A. “Competition as a Discovery Procedure.” Quarterly Journal of Austrian Economics 5, no. 3 (2002): 9–23. 这是对哈耶克 1968 年讲演稿的英文翻译和重刊。</li>
+      <li>Kirzner, Israel M. “Entrepreneurial Discovery and the Competitive Market Process: An Austrian Approach.” Journal of Economic Literature 35, no. 1 (1997): 60–85.</li>
+      <li>Porter, Michael E. “What Is Strategy?” Harvard Business Review (1996). https://hbr.org/1996/11/what-is-strategy</li>
+      <li>March, James G. “Exploration and Exploitation in Organizational Learning.” Organization Science 2, no. 1 (1991): 71–87.</li>
+      <li>Leonard-Barton, Dorothy. “Core Capabilities and Core Rigidities: A Paradox in Managing New Product Development.” Strategic Management Journal 13 (1992): 111–125.</li>
+    </ol>
+  </div>
+
+  <!-- 用户留言 -->
+  <div class="comments">
+    <h2>用户留言</h2>
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">左星星</span>
+        <span class="c-time">昨天 · 上海</span>
+      </div>
+      <p>罗胖当年创立得到，其实就是一个寻找 Alpha 的过程。</p>
+      <p>第一步，他看到了一个巨大的错配：一边是薛兆丰这样优秀的老师，只能在北大课堂里影响少数学生；万维钢这样优秀的科普作者，只能在博客、知乎、微博上零散输出内容。另一边，则是大量生活在三四线城市、已经离开校园、却依然渴望学习的人。他们有学习欲望，却接触不到真正高质量、成体系的知识。</p>
+      <p>第二步，这个错配为什么偏偏是罗胖来纠正？因为他同时具备几种能力：他能感受到普通人的学习焦虑，能理解互联网传播逻辑，还能把老师、用户、平台和商业模式连接起来。他不只是“卖课”，而是把原本零散、低效率的知识，重新包装成一种可交付、可订阅、可持续更新的产品。</p>
+      <p>第三步，他亲自下场组织供给。他飞到加州见万维钢，邀请老师加入得到，还亲自参与栏目设计、表达打磨和内容品控。因为一个好老师，不一定天然适合互联网传播。得到后来甚至成立总编室，把课程节奏、表达方式、时长结构都标准化，要求一节课控制在 12 分钟左右，还不断更新《得到品控手册》。本质上，他们是在把“知识”工业化、产品化。</p>
+      <p>第四步，则是占有。罗胖通过《时间的朋友》跨年演讲，不断强化自己“终身学习”和“知识服务”的入口地位。后来又做《文明之旅》，想从长期历史叙事中，建立更深层的认知品牌。他不只是做平台，而是在塑造一种“知识陪伴”的身份。</p>
+      <p>第五步，是重构。得到没有停留在最早的知识付费，而是不断寻找新的 Alpha。从得到高研院、得到新商学，到 AI 学习圈，再到如今尝试 AI 硬件，它始终在探索新的知识交付方式。Alpha 从来不是“我比别人更努力”，而是“我比别人更早看见一个还没被充分满足的需求”。很多人以为努力就够了，但真正稀缺的，其实是发现错配的能力。</p>
+      <p>对普通人来说，Alpha 未必是创办一家大公司。它可能只是：你比别人更早理解 AI 会改变什么；你比同行更懂用户真正痛苦在哪里；你把几个看似普通的能力组合起来，形成别人暂时学不会的优势。很多时候，人与人的差距，不在于勤奋程度，而在于是否拥有一种属于自己的独特视角。</p>
+    </div>
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">至尊女宝</span>
+        <span class="c-time">昨天 · 四川</span>
+      </div>
+      <p>用我的理解总结一下：</p>
+      <p>第一，别看见别人赚钱就眼红，那钱不一定轮得到你赚。你得找那些别人觉得麻烦不愿意干、但确实有人需要的事儿。一夜暴富的梦少做，你没有那么幸运。别人挖到什么，我跟着去挖；别人养龙虾赚钱，我也跳进池塘。问题是，当所有人都在做同一件事的时候，这事儿还有超额利润吗？跟风只能吃面，搞差异化才能吃肉。</p>
+      <p>第二，敢砍掉那些挺好的机会。你啥都想要，最后啥都抓不住。就像衣柜里衣服再多，你常穿的永远是那几件最合身的。女人的衣柜永远是个迷……</p>
+      <p>第三，赚到钱之后别飘，赶紧把那些钱变成别人拿不走的东西——口碑、信任、老客户、独门手艺。这些东西才是你躺平也能收租的资本。所有的关系都需要维护，不能十年八年不联系，开口就麻烦别人吧？这也拉不下老脸。</p>
+      <p>至于我？我先把 FOMO 戒了。从现在多想想身边有什么大家都嫌麻烦的事儿能让我干。毕竟，跟风的人永远在排队，而找到自己那条路的人，已经在收钱了，明天先彻底清理衣柜，说到做到。</p>
+    </div>
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">常觉不住</span>
+        <span class="c-time">12小时前 · 美国</span>
+      </div>
+      <p>万老师这五步法里，第二步“认知”最难，也最容易被自己骗过去。</p>
+      <p>我自己这一年高强度用 AI 写代码，有一个意外观察：AI 工具极大地放大了一个人把流程做扎实的能力。文档、知识库、SOP、可复用模式、测试用例、开发规范——这些以前嫌麻烦、不愿做、做不完整的东西，现在反而被 AI 推着做起来了，而且做得比以前好。</p>
+      <p>但这恰恰更接近万老师说的 Beta。流程化、工程化、可复制，当然重要；没有这些，公司连基本盘都守不住。可是它们一旦成熟，也就意味着别人迟早可以学会。</p>
+      <p>真正的 Alpha，在柯兹纳那里叫 alertness，警觉性。它的本质不是更好地执行流程，而是在没有流程指引的时候，先于别人察觉错配：客户真正怕的是什么，市场真正缺的是什么，技术已经可能了但行业还没反应过来的是什么。</p>
+      <p>这个东西，AI 不能替你完成，甚至有时会有反作用。因为当文档越来越完整，SOP 越来越顺，流程越来越漂亮，人很容易误以为：我已经把事情做系统了，所以我就有战略了。其实未必。流程能让你把已知的路走得更稳；警觉性却要求你看见一条还没有被命名的路。</p>
+      <p>所以这一年我对自己最大的提醒是：工具变强的时候，真正要警惕的，不是自己有没有跟上工具，而是自己的 alertness 有没有被流程感麻醉。</p>
+    </div>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <div id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <h2>通读全文后的总结与行动建议</h2>
+    <p class="one-line">一句话概括：在人人追 AI 的时代，只会“跟风”的 Beta 只能让你在市场里活着，真正能积累经济租的，是像 Alpha 一样去发现并纠正高价值错配、做出别人暂时无法模仿的战略定位——这正是本讲从金融学、经济学一路讲到企业战略的核心。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li>FOMO 的根源是只有 Beta。学提示词、养龙虾、把广告周报接上大模型，都是“别人也能做”的事；经济租只来自“别人做不到”的独特优势，而 AI 是通用技术，会用 AI 本身给不了你租。</li>
+      <li>Beta 是搭市场顺风车应得的回报，Alpha 是扣除市场因素后、靠更高一层的认知、判断和动作硬拿到的超额收益——所以“Beta 只能让你在市场中存活，只有 Alpha 才能给你积累经济租”。</li>
+      <li>市场并非均衡：新古典经济学“完全信息、绝对理性”的假设不成立。哈耶克指出竞争是一个发现程序，柯兹纳提出企业家发现与“警觉性（Alertness）”：世界充满错配，赚钱的本质是发现并纠正错配，让市场更均衡一点——这是最正当的赚钱方式。</li>
+      <li>波特的区分：运营效益（把日常活动做得比对手好）不是战略，对手迟早能学会；战略定位（做完全不同的活动，或以完全不同的方式做事）才有无法模仿的优势，且必须以痛苦的“取舍”为前提。</li>
+      <li>降本增效只是防守不是进攻：同质化竞争会滑入“价格战→利润率蒸发→无力研发→失去品牌与创新”的恶性循环；柯达守胶卷、Kmart/Sears 合并省钱、诺基亚拼硬件效率，都败在只想守住旧租。</li>
+      <li>三本账与两种能量：现金账管今天、能力账管明天、位置账管后天；利润是今天的结果，能力是明天的原因，位置是后天的统治。Alpha 是动能，经济租是势能——把战果沉淀成品牌、专利、网络效应等防御堡垒，动能才凝固成势能。</li>
+      <li>进攻者的正面样板：ASML 主动押注 EUV 并推进 High NA、英伟达十几年不计回报投资 CUDA（AI 爆发后成为万亿美元帝国的租）、Airbnb 用互评体系与冷启动解决“信任”错配——都是在别人“把老路榨干”时换了打法。</li>
+      <li>五步心法：错配→认知→执行→占有→重构，最关键的是第二步“认知”：为什么偏偏是你来纠正这个错配。异质性本身不构成 Alpha，必须把几项独特的东西组合起来放到具体错配上；还要警惕核心能力变成核心刚性，主动再造 Alpha。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ol>
+      <li>本周做一次“Beta 盘点”：把每天花时间最多的事列出来，逐项问“这件事别人多久能学会？”——凡是可轻易模仿的勤奋都只是 Beta，至少给它们设个时间上限。</li>
+      <li>找一个你熟悉的领域（工作、副业、爱好都行），用错配清单提问：哪里有“需求与供给”“价格与价值”“用户痛点与行业共识”的错配？先写下 3 个候选，粗糙没关系。</li>
+      <li>写下你的“独特组合清单”：知识、品味、渠道、信誉、一手观察、跨领域理解……然后问：把它们组合起来，能放到哪个具体错配上？挑一个组合去小范围试验。</li>
+      <li>练习取舍：列出 3 件“看起来有希望但和主线冲突”的事，本周砍掉或暂停 1 件，并明确写下“我不做什么”。</li>
+      <li>停止照抄 best practice：下次想模仿别人的 SOP 或流程前，先问“这个优势对手多久能学会”；把省下的时间投到别人暂时做不到的地方（更深的客户理解、独特的数据、难复制的关系）。</li>
+      <li>把已有成果沉淀成“收租资产”：整理你的方法论文档、维护 3 位关键关系、攒下可复用的口碑案例——这些是别人拿不走的东西。</li>
+      <li>给自己留“探索预算”：每周固定 2 小时不碰现有业务，只探索新方向（新工具、新需求、新组合），防止核心能力变成核心刚性，也防止再次掉进 FOMO 式跟风。</li>
+    </ol>
+
+    <h3>三、金句摘录</h3>
+    <ul class="golden">
+      <li>“Beta 只能让你在市场中存活，只有 Alpha 才能给你积累经济租。”</li>
+      <li>“利润是今天的结果，能力是明天的原因，位置是后天的统治。”</li>
+      <li>“低利润率是一种耻辱。降本增效不是进攻而是防守。想要 Alpha，你得进攻才行。”</li>
+      <li>“总想把老一套做得更好，真是人的本性啊。但你所有的勤奋都会沉没到 Beta 里。”</li>
+    </ul>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习。</p>
+  </div>
+
+</div>
+
+<button id="back-to-top" title="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress-bar');
+  var topBtn = document.getElementById('back-to-top');
+  function onScroll(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    bar.style.width = (p * 100) + '%';
+    topBtn.classList.toggle('show', h.scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  topBtn.addEventListener('click', function(){ window.scrollTo({top: 0, behavior: 'smooth'}); });
+  onScroll();
+</script>
+</body>
+</html>

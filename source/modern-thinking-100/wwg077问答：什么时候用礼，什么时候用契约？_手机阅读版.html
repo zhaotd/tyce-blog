@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>问答：什么时候用礼，什么时候用契约？ — 万维钢·现代思维工具100讲 第77讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --card-2:#f3ede2;
+    --text:#2e2a24;
+    --muted:#8a857c;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --accent-strong:rgba(138,90,43,.16);
+    --border:#e5ddd0;
+    --quote-border:#c9a876;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --card-2:#262219;
+      --text:#e8e0d4;
+      --muted:#9a9184;
+      --accent:#c9a876;
+      --accent-soft:rgba(201,168,118,.12);
+      --accent-strong:rgba(201,168,118,.20);
+      --border:#3a342c;
+      --quote-border:#8a6a3f;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:var(--accent);z-index:1000;
+    transition:width .08s linear;
+  }
+  #backTop{
+    position:fixed;right:18px;bottom:30px;z-index:1000;
+    width:46px;height:46px;border-radius:50%;border:none;
+    background:var(--accent);color:#fff;font-size:20px;line-height:1;
+    cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);
+    opacity:0;pointer-events:none;transform:translateY(10px);
+    transition:opacity .25s,transform .25s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .wrap{
+    max-width:700px;margin:0 auto;
+    padding:34px 22px 60px;
+    padding-bottom:calc(60px + env(safe-area-inset-bottom));
+  }
+  /* 文档头 */
+  .tag{
+    display:inline-block;font-size:13px;font-weight:600;letter-spacing:.5px;
+    color:var(--accent);background:var(--accent-soft);
+    border:1px solid var(--quote-border);border-radius:999px;
+    padding:5px 13px;margin-bottom:16px;
+  }
+  h1{
+    font-size:25px;line-height:1.45;font-weight:700;
+    margin-bottom:10px;letter-spacing:.3px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    padding-bottom:22px;border-bottom:1px solid var(--border);
+    margin-bottom:8px;
+  }
+  /* 小节标题 */
+  h3{
+    font-size:18px;font-weight:700;color:var(--accent);
+    margin:34px 0 14px;padding-left:11px;
+    border-left:4px solid var(--accent);
+    line-height:1.4;
+  }
+  p{margin:0 0 14px;text-align:justify}
+  ul{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:8px;text-align:justify}
+  strong{font-weight:700}
+  /* 分隔装饰 */
+  .divider{
+    text-align:center;color:var(--accent);letter-spacing:10px;
+    margin:34px 0;font-size:14px;opacity:.75;
+  }
+  /* 问答卡片 */
+  .qa{margin:0 0 30px}
+  .qa-q{
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent);
+    border-radius:12px;padding:16px 18px;margin-bottom:12px;
+  }
+  .qa-q .who{font-weight:700;color:var(--accent);font-size:14px;display:block;margin-bottom:8px}
+  .qa-q p:last-child{margin-bottom:0}
+  .qa-q .q-item{margin-bottom:12px}
+  .qa-q .q-item:last-child{margin-bottom:0}
+  .qa-q .q-item .reader{font-weight:700;font-size:14.5px;color:var(--text)}
+  .qa-q .q-item .reader small{color:var(--muted);font-weight:400}
+  .qa-a{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:18px 20px;
+  }
+  .qa-a .who{
+    font-weight:700;color:var(--accent);font-size:14px;
+    display:block;margin-bottom:10px;
+  }
+  .source{
+    font-size:12.5px;color:var(--muted);
+    margin-top:8px;font-style:normal;
+  }
+  /* 金句引用块 */
+  blockquote{
+    margin:16px 0;padding:13px 16px;
+    border-left:4px solid var(--quote-border);
+    background:var(--card-2);
+    border-radius:0 12px 12px 0;
+    color:var(--text);
+  }
+  blockquote p{margin:0;text-align:justify}
+  .quote-src{
+    display:block;margin-top:8px;font-size:13px;color:var(--muted);text-align:right;
+  }
+  /* 用户留言 */
+  .comment{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:17px 19px;margin-bottom:14px;
+  }
+  .comment .head{display:flex;align-items:baseline;gap:9px;margin-bottom:9px;flex-wrap:wrap}
+  .comment .name{font-weight:700;font-size:15px}
+  .comment .where{font-size:12px;color:var(--muted)}
+  .comment p:last-child{margin-bottom:0}
+  /* AI 总结 */
+  #ai-summary{
+    margin-top:40px;padding:24px 22px;
+    background:var(--accent-strong);
+    border:1.5px solid var(--accent);
+    border-radius:16px;
+  }
+  #ai-summary h2{
+    font-size:20px;font-weight:700;color:var(--accent);
+    margin-bottom:6px;text-align:center;letter-spacing:1px;
+  }
+  #ai-summary .ai-sub{
+    text-align:center;font-size:12.5px;color:var(--muted);margin-bottom:18px;
+  }
+  #ai-summary h4{
+    font-size:16px;font-weight:700;color:var(--accent);
+    margin:20px 0 10px;
+  }
+  #ai-summary .one-line{
+    font-weight:700;font-size:16.5px;line-height:1.7;
+    padding:14px 16px;background:var(--card);
+    border-radius:12px;border:1px solid var(--border);
+    margin-bottom:4px;
+  }
+  #ai-summary ol, #ai-summary ul{margin:0 0 6px;padding-left:22px}
+  #ai-summary li{margin-bottom:9px}
+  #ai-summary .foot{
+    margin-top:20px;padding-top:14px;border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);text-align:center;line-height:1.6;
+  }
+  #ai-summary .golden p{
+    margin-bottom:9px;padding:10px 13px;
+    background:var(--card);border-radius:10px;border-left:3px solid var(--quote-border);
+    font-size:15px;
+  }
+  #ai-summary .golden p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+
+  <!-- 文档头 -->
+  <header>
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第77讲</span>
+    <h1>问答：什么时候用礼，什么时候用契约？</h1>
+    <div class="meta">作者：万维钢（万 Sir）　·　读者问答合辑：涵盖「礼 · 社会互动协议」「激励相容」「柠檬市场」「外部性」「保护费和公共契约」等主题</div>
+  </header>
+
+  <!-- 问答一 -->
+  <h3>一、什么时候用礼，什么时候用契约？</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · 阿信：</span>
+        <p>有一个疑问想请教万 Sir：礼，什么地方不适用？我自己的一个感受是：农村、小县城，礼更多、更重；大城市，相对会轻一些。不知道这个判断对不对，背后有没有更深层的逻辑？</p>
+      </div>
+      <div class="q-item">
+        <span class="reader">读者 · 崂仔：</span>
+        <p>请问万老师，我总感觉现代社会大体上是在向契约方向不断发展，而这种契约的前提本身就是不信任，所以感觉现在越来越很难相信一个人。我总觉得这是个没办法逆转的事情，您觉得有什么破解的办法吗？是说每个人都需要一个自己信任的小圈子或者小群体吗？</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>这两个问题其实是同一件事：<strong>什么时候用礼，什么时候用契约？</strong>二者都是为了让人与人达成合作，达成合作都需要信任，它们提供的是不同的信任解决方案。</p>
+      <p><strong>礼的信任来自关系</strong>：咱俩把关系搞"好"，这样办事就方便，就能达成合作。我们讲了，礼首先是承认地位，而人们最重视的是自己在所在小圈子、小群体中的地位——所以<strong>礼适用于身份会反复相遇、关系会持续的场景</strong>。</p>
+      <p>在小县城，你今天办事遇到一个人，可能他的表现并不令你满意，但是你最好也别翻脸。这个人搞不好就是你亲戚的同事，是你孩子同学的家长，你们俩就算现在没关系，将来也可能有关系。所以就更需要用礼来维持边界、确认身份、降低摩擦。别搞成投诉、维权，日后不好相见。你有这个考虑，对方也有这个考虑，所以双方都客客气气，在互相恭维之中，把事情尽量解决。</p>
+      <p>而<strong>契约的信任则是来自制度</strong>：我不认识你，我不知道你是好人还是坏人，但是我相信制度——所以我相信你不敢违规、我也不打算违规，所以咱们还是可以一起办事。</p>
+      <p>这当然就比较适合大城市。首先大城市是陌生人社会，你租房、打车、买东西、上班，很多关系都是一次性、标准化、可替换的，没必要考虑人情和留面子。更重要的是大城市制度完善，虽然是陌生人，也不怕你违约。</p>
+      <p>但也不能说大城市就没有礼。大城市的礼是陌生人之间的彼此尊重：守时、排队、邮件措辞、会议礼节、不打探隐私、尊重边界……就算咱们日后都不会相见，也应该彼此尊重对方的现场地位，让合作能够进行。</p>
+      <p>也许有些小县城的人会觉得事事签合同太麻烦，很多合作都是一句话的事儿，最方便。也许有些大城市的人觉得人情往来才是麻烦，照章办事最简单。我们只能说<strong>每个场域有特定的惯习</strong>。</p>
+      <p>但我们也不能说契约的前提就是不信任——<strong>契约是让你"不必深度信任"也能合作</strong>。你不信任这个人，但是你信任制度，而且你相信这个人也会信任制度——在这个意义上，你其实就信任了他。所以你不认识他也敢使用他的服务。</p>
+      <p>但大城市既然默认靠契约而不是靠关系达成合作，人们相逢就不会致力于建设关系，那么这就使得我们不容易建立深度的关系。</p>
+      <p>回到关系的逻辑，建立关系就必须制造再次相逢的机会才行。而且这种相逢最好还不是在同一个场域下发生的——如果两个人只是同事关系，只在公司相见，那恐怕难以成为深度的关系。最好你们能在公司以外的另一个场合相见，比如一个兴趣小组、或者哪怕一起吃午饭。在不同的场域多次重逢，才能建立<strong>人与人之间，而不是角色与角色之间的关系</strong>。</p>
+      <p>归根结底，这一切都是由互动模式决定，而不是由"人的本质"决定的。大城市里的人和小县城里的人是一样的人：只要我们对这一点有信心，我们就可以建立任何模式的关系。</p>
+      <p class="source">本节来源：《礼：社会互动协议》</p>
+    </div>
+  </div>
+
+  <!-- 问答二 -->
+  <h3>二、礼的坏处，与真正的礼</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · 逍遥游：</span>
+        <p>万老师说了很多礼的"好处"，我知道说的是一个面，能不能深入的说说礼的其它面，比较中性的、还有坏处的？</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>礼最大的坏处就是<strong>它是对等级的确认</strong>。礼如果走到极致，就是等级地位的绝对化，这也是现代人对"封建礼教"的根本批评。</p>
+      <p>如果晚辈永远要"懂事"，下级永远要"会来事"，弱者永远要"识大体"，礼就不再是互相尊重，而是单方面服从。更糟糕的是直接以礼的名义欺负人：明明是利益索取，说成情分；明明是权力压迫，说成规矩；明明是道德绑架，说成礼数。</p>
+      <p>那怎么解决呢？其实高端中国文化恰恰不是这种封建礼教。礼承认双方地位不是平等的——<strong>但它要求双方有对等的义务</strong>。</p>
+      <p>所谓"君君臣臣，父父子子"，意思是君像个君的样子，臣才能像个臣的样子；一边父慈，一边子孝；一边兄友，一边弟恭——这是一种<strong>不对称的互惠</strong>。如果只要求下位者服从，而不要求上位者尽责，那就不是礼。</p>
+      <blockquote>
+        <p>「君之视臣如手足，则臣视君如腹心；君之视臣如犬马，则臣视君如国人；君之视臣如土芥，则臣视君如寇仇。」</p>
+        <span class="quote-src">——孟子</span>
+      </blockquote>
+      <p>有好几个读者问：如果你尊重人家的地位，人家不尊重你的地位，那怎么办？孟子会说那太好办了！你都不尊重我的地位了，我怎么还能尊重你的地位呢？<strong>当然翻脸啊。</strong></p>
+    </div>
+  </div>
+
+  <!-- 问答三 -->
+  <h3>三、为什么古代中国没能实现激励相容？</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · ILJC：</span>
+        <p>请教万老师：既然儒家和法家都不行，为什么就没有探索出一条激励相容的"中庸"思想？到底是什么妨碍了古代中国实现激励相容？一定是有原因阻碍了这种思想的实现，其中最重要的因素有哪些？是不是整体思想有苗头，但落实到实际就会有各种各样复杂多变的激励相容措施？因此很难有一个统一标准，要实现就变得非常之困难。</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>我就等着你问这个问题呢。首先激励相容不是"别像儒家那么软也别像法家那么狠，取个中间值"。<strong>激励相容是儒家和法家之外的思想，它提供了一种工程化的方案</strong>：承认每个人都会为自己打算，然后设计一套规则，让他为自己打算的时候，顺便把公共目标也实现了。</p>
+      <p>这里的关键在于，你得先承认每个人都有权、而且应当，为自己打算。你必须承认人追求自身的利益是完全正当的。你甚至应该假设，人首要追求的就是自身利益。</p>
+      <p>但这种承认，<strong>是非常现代的思想</strong>。</p>
+      <p>儒家认为人不是孤立个体，而是角色关系中的人：君臣、父子、兄弟、朋友，各有其分——你首先应该追求的是完成角色义务。法家就更直接：天下都是国君的。法家追求的不是社会合作，而是君主控制——你首先应该追求的是怎样为君主服务。在这两个体系里，你说"我要为自己打算"，这本身就是错的。</p>
+      <p>那你说中国古代就没有激励相容的苗头吗？我认为也有，那就是杨朱：</p>
+      <blockquote>
+        <p>「古之人，损一毫利天下，不与也；悉天下奉一身，不取也。人人不损一毫，人人不利天下，天下治矣。」</p>
+        <span class="quote-src">——杨朱</span>
+      </blockquote>
+      <p>尤其最后这句，不就是激励相容吗？但是杨朱的思想并没有完整流传下来，现在我们只能猜测。</p>
+      <p>如果你说杨朱是个人主义，中国还有更极端的集体主义，那就是墨子。杨朱和墨子曾经是春秋时代的显学，比儒家、法家的粉丝都多。孟子说：「杨朱、墨翟之言盈天下。天下之言，不归杨，则归墨。杨氏为我，是无君也；墨氏兼爱，是无父也。」</p>
+      <p>孟子这句话也说明白了为什么杨朱和墨子的学说最终就失败。</p>
+      <ul>
+        <li><strong>杨朱要搞的激励相容</strong>，必须要求规则能约束所有的参与者，包括制定规则的人，也不能为所欲为。这跟君主制是不兼容的——你把皇上往哪放？</li>
+        <li><strong>墨子要搞的人人绝对平等的集体主义</strong>，则跟家庭关系是不兼容的——你把父亲往哪儿放？</li>
+      </ul>
+      <p>虽然不兼容，但是我们想一想，后世发明的各种理论，都能在古代中国找到影子，这不也很厉害吗？世界曾经拥有一个充满了想象力、人人追求新思想的中国。</p>
+      <p class="source">本节来源：《激励相容：好的制度不应该指望人"畏威怀德"》</p>
+    </div>
+  </div>
+
+  <!-- 问答四 -->
+  <h3>四、怎样让工作成果变得可验证？</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · 蔡冠宇 James：</span>
+        <p>不只是"柠檬市场"这个概念，而是它让我看到：我以前一直在用"我很努力"来换取信任，但现代语境下这毫无意义。信任不是求来的，是工程化出来的。我更想追问的是：怎么让自己的工作成果变得可验证？怎么在不增加太多负担的情况下，为自己的工作建立"可验证信号"？</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>你想要的是用一个简单的办法，发出一个<strong>昂贵的信号</strong>——这个信号既能证明你的价值，又是别人难以复制的。这个办法就是：<strong>交付一个小成品</strong>。</p>
+      <p>一个小软件也好、一份报告、一个方案也好，这个东西不必花哨，但必须是你亲手做出来，而且人家拿来就能用。</p>
+      <p>你拿出这个东西，就证明了：你理解对方的需求，你能解决对方的需求，而且你不需要催。下次开会的时候，你拿出来了，别人没拿出来，那就如同关云长温酒斩华雄，足以说明所有问题。</p>
+      <blockquote>
+        <p>你交付的是一个结果，而不是态度。</p>
+      </blockquote>
+      <p class="source">本节来源：《柠檬市场：不要直接扬善惩恶，要让好坏可验证》</p>
+    </div>
+  </div>
+
+  <!-- 问答五 -->
+  <h3>五、陌生人小共同体，自治从哪里开始？</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · 咚咚锵：</span>
+        <p>奥斯特罗姆的小社区自治很有启发，但现在中国城市里的很多小区其实已经不像熟人社会，邻居之间不认识，业委会也未必有威信，一牵涉钱和公共空间就容易互不信任。在这种"陌生人小共同体"里，自治的第一步应该从哪里开始？是先做透明账本，先建立低成本纠纷处理机制，还是先让大家在一两件小事上重新积累合作经验？</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>确实，小区自治最大的难点就在于这个小共同体并不是大多数人的真实共同体。很多人白天在公司，社交也是跟别处的朋友，还可能随时搬家，根本就不在意这个小区的事务。</p>
+      <p>所以小区治理最主要的恐怕还是<strong>专业化</strong>，也就是交给物业、保安、维修这些专业人员。再者就是让那些有时间、有意愿、在本小区有特别利益相关的人出来多做点事，比如说长期业主、退休老人、全职在家的人、社区的商户等等。有事儿可以让他们多操心，但他们不能垄断社区的业务，大事还得尽可能跟整个社区商量。</p>
+      <p>其实每个人都应该参与一点社区事务。别整天就知道虚无缥缈的世界新闻。本社区的事务表个态、发个言、主个事儿，是<strong>最根本的公民义务</strong>，既符合中国古代的乡贤传统，也符合公民参与的现代民主精神。</p>
+      <p>具体说来，也许应该<strong>从去邻居家敲门开始</strong>。要像选举拉票和宗教人士传教一样，挨家挨户地推：这是我们的理念，你有什么诉求？我能帮你什么？请加入我们。什么是领导力？这就是领导力。</p>
+      <p>可以先从一些小的议题入手，比如办一次社区联谊活动，或者搞个儿童活动区，又或是在门口搭一个快递架。特点是花不了多少钱、周期短、边界清楚、结果显而易见。<strong>先办成几件小事，人们就会建立起信任</strong>，社区自然就会有参与感了。</p>
+      <blockquote>
+        <p>白天跟远方的人合作大工程，晚上解决社区纠纷，在任何场域都能输出秩序，这就是「士」，是当代君子人格。</p>
+      </blockquote>
+      <p class="source">本节来源：《外部性：为什么自由社会也需要强制》</p>
+    </div>
+  </div>
+
+  <!-- 问答六 -->
+  <h3>六、对 Fable 5 与 Agent 时代的一点观察</h3>
+  <div class="qa">
+    <div class="qa-q">
+      <span class="who">读者提问</span>
+      <div class="q-item">
+        <span class="reader">读者 · 开心就好：</span>
+        <p>万老师如何看待 Fable 5 / Mythos 5 模型对未来的影响？是否又是 AI 领域标志性的事件？</p>
+      </div>
+    </div>
+    <div class="qa-a">
+      <span class="who">万维钢 回复</span>
+      <p>我稍微说一说对 Fable 5 的体感。我理解它的能力跟 Mythos 是一样的，区别只在于它限制比较多，特别是不被允许回答生物学和计算机安全方面的问题。</p>
+      <p>在回答思想性的问题方面，我倒没感觉 Fable 相对于 GPT 5.5 Pro 有特别明显的跃迁。当然，它的确有大模型的气质，说话一听就是想的比较深。我用同样的设定、同样的提示词，GPT Pro 输出会更长、更全面一些，Fable 则更短、更有"直指人心"之感。</p>
+      <p>但你要说哪个回答的水平更高，我觉得有时候 GPT 说的更好一些，有时候 Fable 说的更好一些，它们经常说的不一样。其实 AI 水平到了这个地步，对话质量很大程度上已经不是由 AI 自身的能力，而是由它对你的了解、你的提问、特别是<strong>追问水平</strong>所决定的。</p>
+      <p>不过只让 Fable 回答问题可就太屈才了——<strong>2026 年的大模型比的是 Agent 能力</strong>。以前的 AI 是帮你生成一个什么内容，后来是帮你完成一个什么作品，现在，则是帮你直接完成一个「任务」：你不用问它是怎么完成的，不用管它用什么工具，你只要告诉它交付的标准是什么，它会想方设法去给你达成。</p>
+      <p>Claude Code 和 Codex 基本上可以做任何你能在电脑上做的事情，你让它帮你修电脑都可以。</p>
+      <p>每一个大模型本身就是一个终端的 Agent。你可以用它运行你本地写的 Agent，让它帮你写 Agent，甚至让它一次又一次地替你迭代你本地的 Agent。理想情况下，你全部的工作，其实就是不断地提需求。</p>
+      <p>我经常目睹 Codex 想方设法达成我的要求。这么做不行，又换一个方法；又不行，再换一个方法，调用各种工具。比如我让它画漫画，第一稿作品出来之后，它不会直接给我，而是会自己先看一遍，比如漫画的边框有没有问题、文字在漫画中的呈现有没有问题……它会自己挑毛病、自己改毛病，经过几轮循环，满意了才交付给我。我在旁边看着它干活儿，真是一种享受。</p>
+      <p>而 Fable 给我最大的一个惊喜，是它会随时、自动地安排几个「子智能体（sub-agents）」，一起帮它做事。它会把任务分解成若干个模块，每个子智能体负责一个模块。</p>
+      <p>比如我在 Claude Code 中，让 Fable 制作一份旧金山湾区本地时间和电视台的世界杯收看时间表，说我要打印。它调研、做成这些都不必说，有意思的是在把内容转成 PDF 文件的时候，遇到了一些麻烦——于是它自己设计了好几个测试任务，让每个子智能体负责测试其中一项。它在旁边一边等待子智能体的测试结果，一边考虑下一步方案。</p>
+      <p>这就等于孙悟空拔出一把毫毛，化作若干个分身跟他一起干活儿。</p>
+      <p>其实这个功能你完全可以用别的模型，用比如说 OpenClaw 那样的方式实现，但是那需要你先自己做一些本地设定。可是 Fable 做这一切完全是自发的、原生态的。你什么都不用管。</p>
+      <p>而且它做出来的世界杯时刻表主动加了些贴心的设计，比如说标出了哪些比赛是在湾区本地进行的——</p>
+      <p><strong>Fable 给我一种更高级的智能感。这是一次阶跃。</strong>传说 OpenAI 马上也要发布自家的下一代大模型。加速正在加速进行。</p>
+      <p class="source">本节来源：《保护费和公共契约：政府的演化》</p>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- 用户留言 -->
+  <h3>用户留言</h3>
+
+  <div class="comment">
+    <div class="head"><span class="name">至尊女宝</span><span class="where">9小时前 · 四川</span></div>
+    <p>礼和契约，我理解就是两套不同的协同算法。「礼」这套算法，靠的是本地缓存。假设回到我们海东市，人际关系网就像一个小型局域网，节点少，延迟低，反复连接。你、我、他，大家都是邻居、亲戚、同学的亲戚。今天你帮我个忙，明天我欠你个人情，这信用记录不是写在合同里，而是写在街坊邻居的嘴里和心里。这时候用「礼」来维护，效率最高，因为每次交互的成本几乎为零，都是老熟人就能启动一个任务。</p>
+    <p>「契约」这套算法，靠的是中心化的可信认证。在大城市，我们面对的是广域网甚至互联网。几千万个节点，绝大多数都是一次性连接。你没法跟每个网约车司机、每个外卖小哥去建立关系。那就交给制度这个中央服务器来背书。你不用信任他个人，你信任平台、信任法律、信任差评机制这个惩罚节点。</p>
+    <p>但我自己有个更自私的体会：很多时候，我们觉得小地方礼重人情厚，大地方契约冷冰冰，其实是因为我们自己的身份坐标变了。说小地方抬头不见低头见，医院有同学、学校有亲戚、银行有熟人，这事儿是真的。但这句话有个隐藏前提："我"是本地人。如果我是个外地人，空降到那个小县城呢？我会发现，那个礼的网络对我根本不存在。我看所有人都是陌生人，而他们彼此都认识。我想办点事，感觉像隔着一层透明的玻璃墙，看得见里面的热闹，自己却融不进去。这时候我大概不会觉得礼好，只会觉得排外。我会比在大城市更渴望契约，因为契约一视同仁，对外地人最公平。</p>
+    <p>反过来看大城市。我作为一个外地来的成都人，感觉这里什么都讲规则、排号、取票、按合同办事，真方便。但要是问问本地土著，比如一个在华西上班、父母是南二环老土著的年轻人，他有没有自己的礼？他当然有。他的小学同学可能就在华西当医生，他的表哥可能就在他想去的那个街道办工作。他的礼圈子只是被海量的外地人稀释了而已。他办大多数事，也习惯于先打个电话问问熟人，而不是傻傻地去排队。</p>
+    <p>所以我的感受是，"礼"和"契约"不是地方属性，而是<strong>人口密度和我们自身人脉密度的比值</strong>。</p>
+  </div>
+
+  <div class="comment">
+    <div class="head"><span class="name">左星星</span><span class="where">昨天 · 上海</span></div>
+    <p>从一个两千多人的国际性大公司，来到一个十几个人的创业型公司以后，我对"礼"和"契约"的理解变得很具体。</p>
+    <p>在大公司里，谁审批，谁负责，什么程序走什么系统，邮件抄送谁，都有相对清楚的边界。人与人之间未必多熟，但只要规则清楚，事情就能往前走。契约在这里是<strong>降低沟通成本</strong>，它让每个人不必靠私人关系证明自己可靠，只要按流程、按职责、按标准交付就可以。</p>
+    <p>但小公司完全不同。十几个人每天低头不见抬头见，很多事情没有那么完整的制度，这时候，"礼"就变得重要。不是那种虚头巴脑的客套，而是<strong>对关系、情绪和位置的照顾</strong>。你怎么提出不同意见，怎么提醒别人风险，怎么让老板接受你的计划书，怎么在不伤关系的情况下推动规范，这些都不能只靠"制度"。</p>
+    <p>我的体会是，小公司不是不需要契约，反而更需要逐步建立契约。因为人少、关系近，最容易把很多事情变成默契，默契短期高效，长期却容易产生误会。比如费用审批、付款权限、客户合同、库存管理，如果一直靠口头约定，出了问题就很难说清责任。</p>
+    <p>真正成熟的做法，是看场景。<strong>涉及底线、钱、责任和风险的事情，要尽量契约化；涉及沟通、协作、情绪和信任的事情，要懂得用礼来润滑。</strong></p>
+  </div>
+
+  <div class="comment">
+    <div class="head"><span class="name">李盈</span><span class="where">15小时前 · 天津</span></div>
+    <p>礼和契约的区别，不是一个讲规则一个不讲，其实，礼和契约的背后都是规则。它们的区别不在于"有"或"没有"规则，而在于<strong>规则的成文性和执行机制</strong>。</p>
+    <p>礼是一种不成文的、内化的规则。它通过习俗、传统、社会舆论和个人修养来执行。它规定的是一个人在特定关系中应该怎么做。契约是一种成文的、外在的规则。它通过法律、法庭、政府、国家强制力来执行。它规定的是两个独立主体"同意"怎么做。</p>
+    <p>礼的排序原则是"关系远近"。费孝通先生称之为"差序格局"。你的权利和义务，取决于你在人际关系网络里所处的位置。随着关系变远，你的责任和义务是逐层递减的。</p>
+    <p>而契约的排序原则是"市场供需"。你的权利和义务，取决于你在谈判桌上的筹码。一个稀缺技能的拥有者，天然就比一个普通劳动力的拥有者，拥有更大的议价权。</p>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <p class="ai-sub">通读全文后生成 · 第77讲「问答：什么时候用礼，什么时候用契约？」</p>
+
+    <div class="one-line">礼靠关系、契约靠制度，二者是两种互补的信任解决方案；真正成熟的做法是看场景切换使用，并用「小成品」「激励相容」这类工程化手段主动建立信任、在陌生环境中重建共同体。</div>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>礼与契约解决的是同一个问题——达成合作</strong>，区别只在信任来源：礼的信任来自关系，适用于身份会反复相遇、关系会持续的场域；契约的信任来自制度，适合陌生人社会，让你"不必深度信任"也能合作。</li>
+      <li><strong>选择取决于场域而非人的本质</strong>：小县城靠礼维持边界、降低摩擦（因为"日后不好相见"），大城市靠契约（制度完善、关系一次性、可替换），但大城市的礼并未消失，只是转化为陌生人之间的彼此尊重——守时、排队、不探隐私。</li>
+      <li><strong>礼最大的坏处是确认等级</strong>：走到极致就是"封建礼教"——单方面服从，甚至以礼的名义行利益索取、权力压迫、道德绑架之实。而真正的礼是"不对称的互惠"：要求上下双方对等尽责，只要求下位者服从而不要求上位者尽责，那就不是礼，对方不尊重你的地位，当然可以翻脸。</li>
+      <li><strong>激励相容不是儒法之间的"中间值"</strong>，而是第三种工程化思路：承认人追求自身利益完全正当，再设计规则让人为己谋利时顺便实现公共目标；儒家要你完成角色义务、法家要你服务君主，都否定了"为自己打算"的正当性。</li>
+      <li><strong>古代并非没有激励相容的苗头</strong>：杨朱"人人不损一毫，人人不利天下，天下治矣"即是，但激励相容要求规则连制定者也要约束，与君主制不兼容；墨子式的绝对平等集体主义又与家庭关系不兼容，二者终成绝响。</li>
+      <li><strong>建立"可验证信号"的廉价方法是交付小成品</strong>：亲手做出、拿来即用的软件、报告或方案，是难以复制的昂贵信号，同时证明你理解需求、能解决问题、不需要催——"你交付的是一个结果，而不是态度"。</li>
+      <li><strong>陌生人小共同体的自治从"做小事"开始</strong>：专业化分工加上利益相关者多操心，从敲邻居家门、办联谊活动、搭快递架这类花钱少、周期短、边界清楚的小事起步积累信任；"白天合作大工程，晚上解决社区纠纷"就是当代君子人格。</li>
+      <li><strong>对 AI 的观察</strong>：2026 年大模型比拼的是 Agent 能力——直接帮你完成"任务"而非生成内容；Fable 会自发派出多个子智能体分工协作、自我质检后交付；对话质量越来越取决于你对它的了解与追问水平。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li>本周盘点身边的"高频相遇"关系（家人、同事、邻居），挑一段容易起摩擦的，主动用礼维护一次：当面沟通、留足面子、守住边界，而不是翻脸或投诉。</li>
+      <li>把"我很努力"换成"小成品"：选一件本周能完成的小事，亲手做出拿来就能用的交付物（一份报告、一个小工具、一个方案），下次开会直接拿出来，用结果说话。</li>
+      <li>凡涉及钱、责任与底线的事，无论对象多熟，都把约定落到文字：契约不是不信任，而是让双方都不必深度信任也能放心合作。</li>
+      <li>在陌生人场合练习"大城市的礼"：守时、排队、邮件措辞得体、不打探隐私，把尊重"现场地位"变成默认动作。</li>
+      <li>想与某个人建立深度关系，就制造跨场域的再次相逢：一起吃午饭、加入同一个兴趣小组，让关系从"角色与角色"变成"人与人"。</li>
+      <li>给所在社区做一件小事：在业主群表个态、参加一次社区活动，或从搭一个快递架、办一次儿童活动开始，先积累一次合作成功。</li>
+      <li>用 AI 时练习"提需求＋追问"：先明确交付标准，再连环追问迭代，把 AI 当成交付任务的 Agent，而不是内容生成器。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <div class="golden">
+      <p>"你交付的是一个结果，而不是态度。"</p>
+      <p>"君之视臣如手足，则臣视君如腹心；君之视臣如犬马，则臣视君如国人；君之视臣如土芥，则臣视君如寇仇。"——孟子</p>
+      <p>"契约是让你不必深度信任也能合作。"</p>
+      <p>"先办成几件小事，人们就会建立起信任，社区自然就会有参与感了。"</p>
+    </div>
+
+    <p class="foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('backTop');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    if (h.scrollTop > 400) { btn.classList.add('show'); } else { btn.classList.remove('show'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  btn.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+})();
+</script>
+</body>
+</html>

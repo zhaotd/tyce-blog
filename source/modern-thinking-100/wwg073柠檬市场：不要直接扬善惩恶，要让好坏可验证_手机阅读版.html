@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第73讲 柠檬市场：不要直接扬善惩恶，要让好坏可验证｜万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --card-2:#f3ede2;
+    --text:#2b2620;
+    --text-soft:#6b6257;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --border:rgba(138,90,43,.22);
+    --quote-border:#b98a52;
+    --shadow:0 1px 4px rgba(80,60,30,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --card-2:#282420;
+      --text:#e8e0d4;
+      --text-soft:#a89c8c;
+      --accent:#d3a06a;
+      --accent-soft:rgba(211,160,106,.12);
+      --border:rgba(211,160,106,.28);
+      --quote-border:#c99a63;
+      --shadow:0 1px 4px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progressBar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#b98a52,#8a5a2b);
+    z-index:999;
+  }
+  @media (prefers-color-scheme: dark){
+    #progressBar{background:linear-gradient(90deg,#d3a06a,#8a5a2b);}
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px 80px;
+  }
+  /* 文档头 */
+  .doc-head{margin-bottom:26px;}
+  .course-tag{
+    display:inline-block;
+    font-size:13px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:24px;
+    line-height:1.4;
+    font-weight:700;
+    margin-bottom:12px;
+    letter-spacing:.5px;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--text-soft);
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 14px;
+  }
+  .meta span::before{content:"· ";color:var(--accent);}
+  .meta span:first-child::before{content:"";}
+  /* 正文 */
+  .article p{
+    text-align:justify;
+    margin:0 0 14px;
+    text-indent:0;
+  }
+  .article p.lead{
+    font-size:17px;
+    color:var(--text);
+  }
+  h3{
+    font-size:18px;
+    font-weight:700;
+    color:var(--accent);
+    margin:30px 0 12px;
+    line-height:1.45;
+    position:relative;
+    padding-left:12px;
+  }
+  h3::before{
+    content:"";
+    position:absolute;left:0;top:.28em;bottom:.28em;
+    width:4px;border-radius:2px;
+    background:var(--accent);
+  }
+  .bold{font-weight:700;}
+  ul{
+    margin:0 0 14px;
+    padding-left:1.35em;
+  }
+  ul li{
+    text-align:justify;
+    margin-bottom:8px;
+  }
+  ul li::marker{color:var(--accent);}
+  /* 引用块（金句） */
+  blockquote{
+    margin:20px 0;
+    padding:14px 16px;
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    color:var(--text);
+    font-size:16.5px;
+    line-height:1.8;
+    text-align:justify;
+  }
+  blockquote p{margin:0;}
+  /* 分隔线 */
+  .divider{
+    text-align:center;
+    margin:30px auto;
+    color:var(--accent);
+    font-size:15px;
+    letter-spacing:8px;
+    opacity:.8;
+  }
+  .divider::before,.divider::after{
+    content:"";
+    display:inline-block;
+    width:56px;height:1px;
+    background:var(--border);
+    vertical-align:middle;
+    margin:0 10px;
+  }
+  /* 卡片（要点框） */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:18px 0;
+    box-shadow:var(--shadow);
+  }
+  .card .card-title{
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:8px;
+    font-size:15.5px;
+  }
+  .card p{margin-bottom:8px;}
+  .card p:last-child{margin-bottom:0;}
+  /* 注释 */
+  .notes{
+    margin:36px 0 10px;
+    padding:16px 18px;
+    background:var(--card-2);
+    border-radius:12px;
+    font-size:13px;
+    color:var(--text-soft);
+    line-height:1.75;
+  }
+  .notes .notes-title{
+    font-weight:700;
+    color:var(--accent);
+    font-size:14px;
+    margin-bottom:8px;
+  }
+  .notes p{margin-bottom:6px;word-break:break-word;}
+  /* 用户留言 */
+  .comments{margin-top:30px;}
+  .comments-title{
+    font-size:17px;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .comment{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    box-shadow:var(--shadow);
+  }
+  .comment .c-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .comment .c-name{font-weight:700;font-size:14.5px;}
+  .comment .c-info{font-size:12px;color:var(--text-soft);}
+  .comment p{
+    font-size:15px;
+    text-align:justify;
+    line-height:1.78;
+  }
+  /* AI 总结 */
+  #ai-summary{
+    margin-top:44px;
+    background:var(--card);
+    border:2px solid var(--accent);
+    border-radius:14px;
+    padding:22px 20px;
+    box-shadow:0 2px 12px rgba(138,90,43,.10);
+  }
+  #ai-summary .ai-badge{
+    display:inline-block;
+    background:var(--accent);
+    color:var(--bg);
+    font-size:13px;
+    font-weight:700;
+    border-radius:6px;
+    padding:3px 10px;
+    letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  #ai-summary h2{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:6px;
+    line-height:1.4;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;
+    font-size:16.5px;
+    line-height:1.75;
+    text-align:justify;
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:12px 14px;
+    margin:12px 0 18px;
+  }
+  #ai-summary h4{
+    font-size:16px;
+    font-weight:700;
+    color:var(--accent);
+    margin:20px 0 10px;
+  }
+  #ai-summary ol{
+    padding-left:1.4em;
+    margin-bottom:6px;
+  }
+  #ai-summary ol li{
+    text-align:justify;
+    margin-bottom:9px;
+    line-height:1.78;
+  }
+  #ai-summary ol li::marker{color:var(--accent);font-weight:700;}
+  #ai-summary ul.actions{
+    padding-left:1.4em;
+    margin-bottom:6px;
+  }
+  #ai-summary ul.actions li{
+    text-align:justify;
+    margin-bottom:9px;
+    line-height:1.78;
+  }
+  #ai-summary ul.actions li::marker{color:var(--accent);font-weight:700;}
+  #ai-summary .quotes blockquote{
+    border-left-color:var(--accent);
+    margin:10px 0;
+  }
+  #ai-summary .ai-foot{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px dashed var(--border);
+    font-size:12px;
+    color:var(--text-soft);
+    text-align:center;
+    line-height:1.6;
+  }
+  /* 回到顶部 */
+  #backTop{
+    position:fixed;
+    right:18px;
+    bottom:calc(24px + env(safe-area-inset-bottom));
+    width:44px;height:44px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--accent);
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    display:none;
+    z-index:998;
+    opacity:.92;
+  }
+  #backTop:hover{opacity:1;}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第73讲</span>
+    <h1>柠檬市场：不要直接扬善惩恶，要让好坏可验证</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>栏目：现代思维工具100讲</span>
+      <span>第73讲</span>
+    </div>
+  </header>
+
+  <!-- 正文 -->
+  <main class="article">
+
+    <p class="lead">你注意到没有，现在很多好单位招聘，都特别在意应聘者本科是哪个学校毕业的——本科达没达到 985 或者 211，决定了人才的档次。这叫「第一学历崇拜」。至于说硕士、博士学历，含金量已经大不如前。</p>
+
+    <p>曾几何时，硕士、博士是非常受尊敬的头衔。研究生，顾名思义，是做研究的人。一个人能读到硕士，说明受过高级训练、有点研究能力……那怎么现在就不是能力了呢？</p>
+
+    <p>一方面当然是现在有硕士、博士学位的人太多了，高学历已经不再是稀缺的信号。但另一方面，确实，人们不再充分认可这些学位所代表的水准。</p>
+
+    <p>硕士可以水，博士可以混，导师可以是挂名的，论文都可以买，这样的学位读下来，除了有耐力延迟就业，还能证明什么呢？</p>
+
+    <p>你看今天，居然连官方都承认，毕业论文有一个「查重」环节，也就是上网检索一番看论文是不是抄的。可是你想想，这不荒唐吗？只要论文是你自己写的，就算不是特别有新意的研究，也不至于说能查出重来啊。而且有些学校更是规定，只要查重率不超过一定的数值，论文就算没问题，等于是默认你可以抄一部分。这不斯文扫地吗？</p>
+
+    <p>现在有了 AI 更方便了：学生用 AI 写论文，老师用 AI 审稿，学校用 AI 查重，学生再用 AI 降重……所有人都在装模作样。你们糊弄给谁看呢？这个学位读着还有什么劲呢？</p>
+
+    <p>要不怎么有人说，之所以有第一学历崇拜，是因为人们认可高考的选拔功能，但是不认可高等院校的培养能力。</p>
+
+    <p>这不只是教育问题，这还是经济学问题。学位证书和学术发表正在变成一个「柠檬市场（market for lemons）」。</p>
+
+    <div class="divider">✵</div>
+
+    <p><span class="bold">「柠檬市场」是美国经济学家乔治·阿克洛夫（George A. Akerlof）在 1970 年提出的概念</span>，他据此拿到了 2001 年诺贝尔经济学奖。</p>
+
+    <h3>从二手车市场说起：信息不对称与死亡螺旋</h3>
+
+    <p>阿克洛夫最初研究的是二手车市场 [1]。在美国俚语里，坏车叫 lemon，也就是"柠檬"。买二手车就怕买到柠檬。然而二手车交易天然就是如此：卖家知道车况，买家可不知道。</p>
+
+    <p>这就是「信息不对称」。我们可以推演一番，信息不对称会让市场发生什么——</p>
+
+    <ul>
+      <li>买家并不傻。我知道市场上有好车也有坏车，可是既然我分不出来，我就不可能按照好车给你出价。我一定会把出价降低一些，这样万一买到坏车，我的损失小一些。</li>
+      <li>但是如此一来，好车车主就不愿意卖了。我的车明明很好，你却只给一个好车坏车的平均价，那我不亏了吗？当然坏车车主还是愿意卖，他很乐意跟好车平均。</li>
+      <li>于是好车退出，坏车留下。</li>
+      <li>时间长了，坏车比例越来越高，买家越来越不信任市场，于是价格进一步下降。</li>
+      <li>于是更多好车退出，更多坏车留下。这是一个不会自己停下来的循环，经济学家称之为「死亡螺旋（death spiral）」。劣币驱逐良币，每转一圈，市场就更坏一点，直到良币消失。</li>
+    </ul>
+
+    <p>最后市场就变成了柠檬市场。</p>
+
+    <h3>放眼望去，很多市场都是柠檬市场</h3>
+
+    <p>有了这个眼光，你会发现很多市场都是柠檬市场。招聘市场里，真正有能力的人无法证明自己的能力，会包装简历、会刷面试题的人就越来越多。内容平台上，点击率和情绪刺激最容易被看见被评分，读者就会被标题党、冲突和极端表达包围。医疗保健领域，治疗需要长期验证，患者不知道广告有多少水分，你就不能指望真药打败假药。</p>
+
+    <p>现在问题最严重的可能就是学术界。科研经费和学术头衔是政府发的，但是政府不知道哪个研究做得好，就只能看论文数量和影响因子，于是搞科研变成了发论文。一项研究 [2] 分析了截至 2022 年 6 月，所有学术期刊中被撤稿并且被认定来自论文工厂的 1,182 篇论文，发现几乎全部相关作者都来自中国机构，其中超过四分之三论文的第一作者单位是医院。</p>
+
+    <p>医生的首要任务不是治病救人吗？但是我们的职称评价体系要求他们必须写论文，于是他们就写假论文。结果是全体中国医生写的论文都被降级了信任度。</p>
+
+    <p>现在还有人相信百度上的医疗广告吗？如果你是个正规大医院，疗效真的好，你会去百度做广告吗？早就被莆田系医院搞成了柠檬市场。</p>
+
+    <blockquote>
+      <p>柠檬市场最可怕的并不是这里有坏货，而是好货无法被识别出来，所以只能离开。</p>
+    </blockquote>
+
+    <p>这不是道德问题，这是信息工程问题。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>柠檬市场是有解的：让真实品质能被识别</h3>
+
+    <p>柠檬市场是有解的。现代文明早就发明了一系列避免市场"柠檬化"的机制。基本思想是建立某种信号，让真实品质能被识别出来。</p>
+
+    <ul>
+      <li><span class="bold">昂贵的「信号（signaling）」</span>：让卖家主动发一个昂贵的信号。比如说，既然你的东西好，你敢不敢提供保修？敢不敢允许退货？这是一种可追责的承诺。</li>
+      <li><span class="bold">第三方「认证（certification）」</span>：比如卖车之前找个修车铺把车做一番检查，出一份可信的报告。现在食品药品领域有政府机构监管，专业技术领域有行业标准和民间评级。</li>
+      <li><span class="bold">同行评议</span>：其实最古老也是最有效的第三方认证，就是学术界的同行评议。你的研究够不够分量，不用看什么影响因子什么引用数量，你的同行最清楚……只是同行评议意味着学术共同体自治，而自治意味着行政权力的让渡。</li>
+      <li><span class="bold">可测量的「声誉机制（reputation mechanism）」</span>：比如交易记录和用户评分，互联网时代简单有效。</li>
+      <li><span class="bold">纠纷解决和申诉机制</span>：让坏交易有地方处理。被骗一次可以，但是不能变成对整个系统都不信任。</li>
+    </ul>
+
+    <p>现实中的二手车市场就比阿克洛夫描述的原始状态好多了。这是因为我们有车辆识别码、事故记录、维修记录、保修制度、问题车退换法（Lemon Law）和车辆历史报告。</p>
+
+    <h3>淘宝：中国最漂亮的成功案例</h3>
+
+    <p>中国最漂亮的成功案例大概是淘宝。你想想，如果在 2003 年，有一家远在千里之外的小店，卖一个你从来没用过的商品，价格还不便宜，你敢买吗？</p>
+
+    <p>你打了钱，他不发货怎么办？对方也会说，他发了货，你到时候不付钱怎么办？双方都担心对方是"柠檬"，交易就做不起来。</p>
+
+    <p>淘宝和支付宝的关键发明是担保交易。买家先把钱付到第三方，卖家发货，买家确认收货之后，钱再给卖家。再加上店铺评分、买家评价、聊天记录、物流记录、退换货规则、平台仲裁，陌生人之间就有了最低限度的信任 [3]。</p>
+
+    <p>请注意，这不是说淘宝上没有假货。恰恰相反，淘宝、拼多多和各种网络平台一直都有假货和山寨产品——但这里的关键是：<span class="bold">假货并没有把好货驱逐出去</span>。</p>
+
+    <p>因为消费者大体知道信号怎么读。你花 139.9 元包邮买一双"名牌同款"鞋，你心里知道它大概率是什么东西；下次要买正品，你照样回这个平台，只是去旗舰店、多花点钱。</p>
+
+    <blockquote>
+      <p>只要真假不混淆，有假货不等于是柠檬市场。</p>
+    </blockquote>
+
+    <p>这一切都不是完美的，但是我们大约可以说，互联网平台让人变得更诚实了一点。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>更深层的名字：程序正义</h3>
+
+    <p>柠檬市场的解药，这一整套「把不可见变为可见、可验证、可纠错」的机制，更深层的名字，是「程序正义（procedural justice）」。所谓程序正义就是不先问谁该赢、谁该输，而是先把规则说清、把证据摆开、把过程公开、把理由讲明、给错误留下可申诉和可纠正的通道。</p>
+
+    <div class="card">
+      <p>柠檬市场问的是：<span class="bold">我凭什么相信你卖的是好货？</span></p>
+      <p>程序正义问的是：<span class="bold">我凭什么相信你不是在黑箱里整我？</span></p>
+      <p>这两个问题的答案都是把不可见的品质、动机和判断过程，转化为可见的公共信号。</p>
+    </div>
+
+    <p>正如治理柠檬市场不是为了杜绝坏货，而是为了把好货留下，程序正义也不是为了追求结果公平，而是为了让哪怕是输了的人，也承认这个游戏值得继续玩下去。</p>
+
+    <blockquote>
+      <p>制度的第一使命不是惩罚坏人，而是留下好人。</p>
+    </blockquote>
+
+    <h3>为什么好人愿意留下来</h3>
+
+    <p>你提供的是优质产品，可能因为定价高没卖出去，所以你没有赢。但没关系，只要你相信这个系统能把你和坏货区分开，你就愿意留下，也许主动降价，也许继续打磨产品。可是如果你觉得无论你多好都没人看得见，这里的好评是刷的，晋升是关系户，判决是黑箱，市场是骗子的天下，那你就会退出。</p>
+
+    <blockquote>
+      <p>你甚至可以承受一定的误判。最危险的不是误判，而是输的人觉得"反正你们早就定好了"。</p>
+    </blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>人为什么服从法律：泰勒的研究</h3>
+
+    <p>耶鲁大学社会心理学家汤姆·泰勒（Tom R. Tyler）长期研究一个问题：人为什么服从法律？是因为害怕惩罚吗？</p>
+
+    <p>泰勒做了大量的研究。他在 1984 年对芝加哥 1,575 名居民做电话访谈，一年后又回访其中随机抽取的 804 人，一个一个问这些人，比如说："你为什么听警察的？是因为警察有枪吗？"……他把答案写成了一本经典著作，就叫《人为什么服从法律》（Why People Obey the Law）[4]。</p>
+
+    <p>答案是人并不只是因为害怕惩罚才守法，更重要的是人必须相信这套法律程序是公正、中立、可解释、尊重人的。</p>
+
+    <p>可是什么样的司法制度才能满足这些要求？法庭不能直接知道事实真相，但是你可以确保产生结果的这个过程是公平的。</p>
+
+    <p>现代司法的全部努力，不在"直接宣布真相"上，而在保证逼近真相的程序不被污染：证据规则规定什么能呈堂、什么不能；控辩双方彼此挑战；法官必须说明判决理由；判错了有上诉、有复核。</p>
+
+    <p>这套程序最反直觉的地方就是它有时候会让你很不爽。明明你觉得那个人坏，程序却要求证据；明明你希望马上惩罚，程序却要听辩护；明明舆论已经定性，程序却说还要审。</p>
+
+    <p>这是因为<span class="bold">放过一个坏人对系统的伤害远远小于错杀一个好人</span>。你必须给好人安全感，他们才能留下来。安全感来自程序正义是一个工程化的过程：它有时会出错，但它是可操作、可验证、可纠错的。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>公司晋升和考核也是这个道理</h3>
+
+    <p>公司晋升和考核也是这个道理。</p>
+
+    <p>老板说"我们奖励真正有贡献的人"，这句话就不可操作。</p>
+
+    <p>可操作的问题是：什么叫贡献？谁来评价？评价者有没有偏心？短期贡献和长期贡献怎么平衡？个人贡献和团队贡献怎么区分？看得见的贡献和看不见的贡献怎么平衡？被评价者能不能挑战错误判断？</p>
+
+    <p>没有这些东西，"奖励贡献者"实际上就会变成"奖励会表现贡献的人"。那就是公司里的柠檬化。真正做事的人沉默退出；会邀功的人越来越多；老板以为自己在扬善惩恶，其实是在奖励信号操纵。</p>
+
+    <p>好公司一定要有自己的价值观，但日常管理不能靠高喊价值观。好的管理靠的是建立清晰的事前晋升标准、可复核的贡献证据、多源评价、决策理由公开、被评价者可申诉。目标是把"贡献"这个原本主观的事物，变得部分可验证。</p>
+
+    <h3>学术评议与高考：同样靠程序运行</h3>
+
+    <p>学术评议也是同样的逻辑。</p>
+
+    <p>科学共同体不会说什么"我们奖励真理、惩罚谬误"。内行都知道真理不是马上可见的，而且今天的"谬误"可能是明天的真理，今天的"突破"也可能只是明天的撤稿。</p>
+
+    <p>科学界运行靠的是一套程序：实验可重复、方法公开、数据透明、同行评议、可证伪、被引用、错了能撤稿。这些都不是真理本身，而是接近真理的可验证机制。</p>
+
+    <p>每一个新成果发布出来，谁也不能确保论文说的绝对是对的。但是这个程序能让科学整体不断地往前走：能让好的结论留下，让错误的结论被淘汰。</p>
+
+    <blockquote>
+      <p>科学的伟大，不是科学家高尚，而是科学错误能被暴露。</p>
+    </blockquote>
+
+    <p>还有，为什么用人单位相信高考？因为高考是一个程序正义的考试：题目封存、统一时间、统一标准、匿名阅卷、成绩公开可查。</p>
+
+    <p>高考当然不完美。这里有很多偶然因素，相差一分的两个同学，我们实在没有理由相信他们就应该一个考上 211，一个考不上。可是只有这样全凭分数说话才能让人服气。</p>
+
+    <p>对比之下，硕士和博士学位的公信力可就差多了，每个官员都可以读个什么"在职博士"。每多一个水货博士，都是在让有真学问的人吃亏。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>结合「激励相容」：好制度胜过要求好人</h3>
+
+    <p>再结合我们上一讲说的「激励相容」，你会有一个洞见：<span class="bold">现代社会变好，靠的不是要求大家做好人，而是要求大家有一个好制度</span>。</p>
+
+    <p>你可以要求你自己做好人，但是"大家做好人"是你无法直接要求的。你奖励好人惩罚坏人，只会让很多人变成伪君子，让坏人藏得更深。更何况，凭什么是你来奖励和惩罚？就因为你拳头大吗？难道你就不会看错吗？难道你就不会腐败吗？</p>
+
+    <p>好的制度不去直接要求人，却可以让好人不吃亏，愿意留下来，让好人能够自动显现，让坏人也会理性地去学做好人。</p>
+
+    <p>现代制度的天才之处，是它做了一件极其反直觉的事：<span class="bold">它放弃了对结果善恶的直接执着，转而建设让善恶能够被自动暴露的程序</span>。</p>
+
+    <p>证监会不直接判断哪家公司是好公司，它只要求强制信息披露，让市场去判断；食品药品监督局不直接判断哪个药是好药，但是它要求药品疗效拿出"实质性证据"，让试验和数据说话。法院不直接判断谁是好人，它设立程序，让证据可以质证。</p>
+
+    <blockquote>
+      <p>所以严格说来，成熟制度不是"扬善惩恶"的机器，而是「把善恶变得可验证」的机器。</p>
+      <p>扬善惩恶是前现代社会的愿望；可验证性是现代制度的技术。</p>
+    </blockquote>
+
+    <p>现代化让我们不再幻想找到所有好人、把他们安在合适的位置上；不再幻想消灭所有坏人、让世界立即变好。我们承认人性的难以改造，承认信息的有限，承认判断者本身也是有偏见的参与者。然后我们设计程序，让真品质有办法显形，让欺骗变得不划算，让错误能被发现和纠正。</p>
+
+    <blockquote>
+      <p>我们学会了不去直接改造人，而是改变信息结构。这大约是现代化最深的智慧之一。</p>
+    </blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>现代人不说「相信我」</h3>
+
+    <p>我越往后写就越感到，「工程化」和「可操作」是我们这个课程的隐藏主题。这其实也是现代化的主题。</p>
+
+    <p>一个现代人根本就不应该说什么"我很优秀""我很努力""我很善良"。为了让人家可操作，你自己得可验证。你得用作品、记录、信用、交付、长期合作关系、可复盘成果、别人愿意持续托付给你的责任说话。</p>
+
+    <blockquote>
+      <p>现代人不说「相信我」。</p>
+      <p>现代人说：「这是你检查我的方法。」</p>
+    </blockquote>
+
+  </main>
+
+  <!-- 注释 -->
+  <section class="notes">
+    <div class="notes-title">注释</div>
+    <p>[1] Akerlof, George A. "The Market for 'Lemons': Quality Uncertainty and the Market Mechanism." <em>The Quarterly Journal of Economics</em> 84, no. 3 (1970): 488-500.</p>
+    <p>[2] Candal-Pedreira, Cristina, et al. "Retracted Papers Originating from Paper Mills: Cross Sectional Study." <em>BMJ</em> 379 (2022): e071517.</p>
+    <p>[3] 《支付宝发布社会责任报告：15 年只为建立信任机制》. 新浪财经，2019 年 5 月 20 日.</p>
+    <p>[4] Tyler, Tom R. <em>Why People Obey the Law</em>. Princeton, NJ: Princeton University Press, 2006. Original edition, 1990.</p>
+    <p>[5] 法学界有个著名的「Blackstone 比率（Blackstone's ratio）」：「宁可放过十个有罪的人，也不可冤枉一个无辜的人。」</p>
+  </section>
+
+  <!-- 用户留言 -->
+  <section class="comments">
+    <div class="comments-title">用户留言</div>
+
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">刘纪宏</span>
+        <span class="c-info">河北</span>
+      </div>
+      <p>早些年我刚入行时，亲眼见证了美业惊人的暴利与乱象。一款洗面奶进货价仅 12 元，美容院定价 120 元。门店找个名目搞活动做五折促销，60 元消费者抢着买，其实依旧有四倍纯利润。为了更好地了解这个行业，我在广州住了半年，每天泡在兴发市场，让我看透了美业的底层逻辑。行业产品参差不齐、水分巨大，一款就能在美容院标价四千多元的精油套盒，最大的成本是那个价值十八元的精致包装盒。靠着颜值溢价收割顾客，实际价值微乎其微。</p>
+      <p>从前信息闭塞，消费者盲目信任院线护肤，极易被高价和精美包装套路。如今靠信息差、高溢价赚钱的时代已然落幕，互联网让信息愈发透明，消费者彻底去魅、愈发理性，美业多年的虚高泡沫被彻底戳破。市场不断被教育，行业洗牌加速。在乱象之中，一批坚守初心、注重品质的国货品牌脱颖而出。未来美业，唯有真实效果、实在品质、透明价格，才能长久立足。</p>
+    </div>
+
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">王世英</span>
+        <span class="c-info">黑龙江</span>
+      </div>
+      <p>柠檬市场鱼龙混杂，通过工程可操作的程序方式，让好和坏可以检验，可以看见。签到、点名、打卡可以作弊。有学生有很多部手机，用手机让别人代替签到、打卡、刷课。上交的笔记和作业，可能是找人代写的，也可能是抄袭别人的。考试可能雇佣枪手找人代考。通过多元评价、多信源评价，比如课上上讲台讲解知识讲解问题，上讲台展示学习成果；有条件时采用面试等直接交流的方式考察，试题非标准化，通过随机抽查，试卷内容随机，避免学生通过套路化的学习刷重点通过考试。</p>
+      <p>理想是让优秀者、奋斗者可以被看见，让混子混不下去。现实是，学校要求教师点名，上课要求抬头率，考试要求通过率、优良率，专业认证规定了达成度下限，教师评价参考学生的好评率。有的老师有时候会讨好学生，降低评价标准，给学生提分。学校对教学名义上重视，实际上更重视短期的教学成果和科研成果，因为这是学校向上发展的最大阻力。教师有非常大的教学科研压力，达到一定数量和级别的科研项目和论文数才有资格晋升。</p>
+    </div>
+
+    <div class="comment">
+      <div class="c-head">
+        <span class="c-name">许晓萌</span>
+        <span class="c-info">北京</span>
+      </div>
+      <p>我明白我为什么会要求在体制内闲差位置上去一线了，因为闲差都是有关系才上的，虽然我也有关系所以在这里，但我认为这不公平，而且我闲不住。我明白我为什么要在体制内一线离职跳出体制内了，因为管理层对一线的态度，和一线员工能不能晋升，取决于一个人硬不硬、会不会来事和有没有关系，而我认为这不对，我接触到的上去的都是柠檬市场的烂车。</p>
+      <p>我理解为什么出来后我对社会感到愤怒了，因为我还教育服务行业，而 C 端顾客的无理吵闹和要求教委不会管是否合理却要你不能出声辩驳、旁边有私立学校倒闭教委不在乎你的实际处境如何只会要求你无条件接收学生、你的教育水平管理水平和餐饮质量不是你可以存活下去的理由。我所在的行业和环境是个柠檬市场，无论我如何提升自己，只要有一环我做不好（比如不去送商通卡、不想陪领导喝酒、不愿意忍受家长辱骂），我就无论如何没有机会活下去，所以我在体制内和这个行业，注定只能做个员工，还是愤怒至极的员工。</p>
+      <p>所以我已决定离职——上面那些可能不是全部原因，但我因为万老师这篇文章找到了这些原因，它让我的思路清晰了一些。</p>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <h2>《柠檬市场：不要直接扬善惩恶，要让好坏可验证》</h2>
+
+    <p class="one-liner">一句话概括：柠檬市场的病根是"好坏不可验证"导致好货被劣货驱逐，解药不是直接扬善惩恶，而是用信号、认证、声誉与程序正义把不可见的品质变成可见、可验证、可纠错的公共信号——制度的第一使命不是惩罚坏人，而是留下好人。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><span class="bold">第一学历崇拜的经济学根源</span>：人们认可高考的选拔功能，却不认可高校的培养能力。硕士博士学历因注水（水硕、混博、买论文、查重默认可抄）而贬值，学位证书与学术发表正变成典型的柠檬市场。</li>
+      <li><span class="bold">柠檬市场机制</span>：阿克洛夫 1970 年提出（2001 年获诺奖），源于二手车市场的信息不对称——买家分不出好坏只能压价，好车退出、坏车留下，形成不断恶化的"死亡螺旋"，劣币驱逐良币直至良币消失。</li>
+      <li><span class="bold">柠檬市场无处不在</span>：招聘市场（包装简历者胜出）、内容平台（标题党和情绪刺激刷屏）、医疗（莆田系搞坏百度广告信任）、学术界（论文工厂与职称逼出的假论文，令全体中国医生论文信任度降级）。</li>
+      <li><span class="bold">本质是信息工程问题而非道德问题</span>：最可怕的不是有坏货，而是好货无法被识别出来、只能被迫离开——所以靠道德呼吁没用，必须靠机制重建信息结构。</li>
+      <li><span class="bold">四类解药机制</span>：卖家主动发出昂贵信号（保修、退货等可追责承诺）、第三方认证（同行评议、行业标准、政府监管）、可测量的声誉机制（交易记录、评分）、纠纷解决与申诉机制；现实二手车市场和淘宝担保交易都是成功案例。</li>
+      <li><span class="bold">深层答案是程序正义</span>：不先问谁赢谁输，而是规则说清、证据摆开、过程公开、理由讲明、留申诉通道；泰勒的研究证明人守法主要不是因为怕惩罚，而是相信程序公正、中立、可解释、尊重人。</li>
+      <li><span class="bold">对组织的启示</span>：公司考核"奖励贡献者"不可操作就会变成"奖励会表现贡献的人"；科学共同体靠可重复、可证伪、可撤稿的程序运行；高考因程序正义而有公信力。误判可以承受，最危险的是让人觉得"反正早就定好了"。</li>
+      <li><span class="bold">现代制度的天才之处</span>：放弃对结果善恶的直接执着，转而建设让善恶自动暴露的程序（证监会要求信息披露、食药监要求实质性证据、法院让证据可质证）；结合"激励相容"，现代人不用"相信我"自我表白，而应说"这是你检查我的方法"，用作品、记录、信用与交付证明自己。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul class="actions">
+      <li><span class="bold">这周就做一份"可验证履历"</span>：把自己做过的项目、写过的方案、完成过的交付逐条列出（含时间、结果、可复盘记录），以后自我介绍、汇报或跳槽时用具体证据代替"我很努力"式的自评。</li>
+      <li><span class="bold">主动给自己的承诺加"信号"</span>：无论求职、接活还是合作，主动提出可追责条款——试用、可退款、数据可查、限期交付并接受验收。一个愿意被检验的人，天然更容易赢得信任。</li>
+      <li><span class="bold">像买家一样识别"柠檬"</span>：网购看店铺评分、评价与退换货规则，签约合作前查对方资质、口碑与历史记录，对"包治百病"式的广告和极端爆款内容保持警惕，用第三方认证和原始数据交叉验证。</li>
+      <li><span class="bold">如果你是管理者，把"贡献"拆成可操作指标</span>：本周选定一项考核或晋升规则，明确回答"什么叫贡献、谁来评价、证据是什么、评价者如何避免偏心、被评者能否申诉"这五个问题，哪怕先从自己带的项目组试起。</li>
+      <li><span class="bold">给自己的工作留"可复查痕迹"</span>：公开方法、留存过程、写好决策理由与复盘记录，让成果可以被别人检验——这正是积累长期声誉资本、避免被"会邀功者"挤出的方式。</li>
+      <li><span class="bold">被误判时走程序而不是对抗</span>：遇到不公，先收集证据、走申诉或复核通道；同时推动你所在的小圈子（班级、团队、社区）建立公开透明的规则，哪怕只是先约定"规则说清、理由讲明"。</li>
+      <li><span class="bold">警惕把平台当"绝对可信"</span>：明白"有假货不等于柠檬市场"——重点不是消灭坏货，而是分辨真假信号；为自己的重要决策（买房、择校、就医）主动寻找可验证的信号源，而非只看流量与广告。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <div class="quotes">
+      <blockquote><p>"柠檬市场最可怕的并不是这里有坏货，而是好货无法被识别出来，所以只能离开。"</p></blockquote>
+      <blockquote><p>"制度的第一使命不是惩罚坏人，而是留下好人。"</p></blockquote>
+      <blockquote><p>"扬善惩恶是前现代社会的愿望；可验证性是现代制度的技术。"</p></blockquote>
+      <blockquote><p>"现代人不说「相信我」。现代人说：「这是你检查我的方法。」"</p></blockquote>
+    </div>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progressBar'),btn=document.getElementById('backTop'),t=null;
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop)/max:0;
+    bar.style.width=(p*100)+'%';
+    btn.style.display=(h.scrollTop||document.body.scrollTop)>600?'block':'none';
+  }
+  window.addEventListener('scroll',function(){if(t)clearTimeout(t);t=setTimeout(onScroll,60);},{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onScroll();
+})();
+</script>
+</body>
+</html>

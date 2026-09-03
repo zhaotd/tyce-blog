@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第76讲 软预算约束：有人兜底，责任就会变形 | 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2620;
+    --muted:#8a8378;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.12);
+    --border:#e6dfd2;
+    --quote-bg:#f4ede1;
+    --poem-bg:#f4ede1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --text:#e8e2d8;
+      --muted:#9a928a;
+      --accent:#c99a63;
+      --accent-soft:rgba(201,154,99,.15);
+      --border:#37322b;
+      --quote-bg:#221f1a;
+      --poem-bg:#221f1a;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:1000;
+  }
+  #backtop{
+    position:fixed;right:18px;bottom:26px;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    border:none;cursor:pointer;z-index:1000;
+    display:none;align-items:center;justify-content:center;
+    font-size:20px;line-height:1;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:.92;
+  }
+  #backtop:active{opacity:.7}
+  .container{
+    max-width:700px;margin:0 auto;
+    padding:28px 22px 72px;
+  }
+  .doc-header{
+    padding:10px 0 22px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:26px;
+  }
+  .tag{
+    display:inline-block;
+    font-size:13px;color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:4px 14px;margin-bottom:16px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:26px;line-height:1.4;
+    font-weight:700;margin-bottom:12px;
+    letter-spacing:.5px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:4px 12px;
+  }
+  h3{
+    font-size:19px;line-height:1.5;
+    font-weight:700;color:var(--accent);
+    margin:40px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+  }
+  p{margin:0 0 16px}
+  ul{margin:0 0 16px;padding-left:1.4em}
+  li{margin-bottom:8px}
+  blockquote{
+    margin:22px 0;
+    padding:14px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    font-size:16.5px;
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    gap:14px;margin:34px 0;color:var(--accent);
+    font-size:14px;opacity:.8;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--border);
+  }
+  .poem{
+    margin:28px 0;
+    padding:22px 18px;
+    background:var(--poem-bg);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    border-radius:12px;
+    text-align:center;
+    font-size:16.5px;line-height:2;
+    font-family:Georgia,"Songti SC","SimSun",serif;
+    letter-spacing:2px;
+  }
+  .poem .poem-title{
+    display:block;color:var(--accent);
+    font-size:14px;letter-spacing:4px;margin-bottom:10px;
+  }
+  .notes{
+    margin-top:40px;padding-top:18px;
+    border-top:1px solid var(--border);
+    font-size:12.5px;color:var(--muted);line-height:1.7;
+  }
+  .notes h3{border-left:none;padding-left:0;margin:0 0 10px;font-size:15px}
+  .notes ol{padding-left:1.4em}
+  .notes li{margin-bottom:6px;text-align:left}
+  .comments{margin-top:36px}
+  .comment-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .comment-meta{
+    font-size:12.5px;color:var(--muted);
+    margin-bottom:8px;
+  }
+  .comment-meta .name{color:var(--accent);font-weight:600;margin-right:8px}
+  .comment-text{font-size:15.5px;line-height:1.8;text-align:justify}
+  #ai-summary{
+    margin-top:44px;
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:12px;
+    padding:22px 20px;
+  }
+  #ai-summary .ai-head{
+    display:flex;align-items:center;gap:8px;
+    font-size:17px;font-weight:700;color:var(--accent);
+    margin-bottom:14px;
+  }
+  #ai-summary h4{
+    font-size:15.5px;color:var(--accent);
+    margin:18px 0 8px;
+  }
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8}
+  #ai-summary ul{padding-left:1.3em}
+  #ai-summary .ai-one{
+    font-weight:700;font-size:15.5px;
+    padding-bottom:12px;border-bottom:1px dashed var(--border);
+    margin-bottom:4px;
+  }
+  #ai-summary .ai-quote{
+    border-left:3px solid var(--accent);
+    padding-left:12px;margin-bottom:8px;
+    font-size:14.5px;
+  }
+  #ai-summary .ai-foot{
+    margin-top:18px;padding-top:12px;
+    border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);text-align:left;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="backtop" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-header">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第76讲</span>
+    <h1>软预算约束：有人兜底，责任就会变形</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>来源：《现代思维工具100讲》讲稿</span>
+      <span>整理：手机阅读版</span>
+    </div>
+  </header>
+
+  <!-- 正文 -->
+  <h3>开篇：两个似曾相识的故事</h3>
+  <p>这一讲的思维工具叫「软预算约束（soft budget constraint）」，它能帮你进一步理解公共事务。但是它也适用于私人事务。你肯定听说过这样的事儿：有个家庭，孩子已经成年了，热衷于高消费，什么信用卡、花呗、借呗欠了不少债，但是父母总会给她兜底。</p>
+  <ul>
+    <li>第一次，父母说孩子还年轻，没有社会经验，以后就好了。</li>
+    <li>第二次，父母又心疼，说替她还上吧，反正咱家有钱。</li>
+    <li>第三次，父母已经感到吃力，但总不能看着孩子征信坏掉。</li>
+    <li>第四次，孩子主动提醒父母，该帮她还钱了。</li>
+  </ul>
+  <p>这跟你在公司里看到的那些超预算项目是一个道理。本来项目预算一千万，才做到一半就已经花了八百万。负责人说："前面都花了，现在停掉不是更浪费吗？"于是总部又批了五百万。过了三个月，还是不行，又说："都走到这一步了，临门一脚，不能功亏一篑。"于是再批五百万……到最后没钱了，项目也没成。但是人家报告写得好：探索了路径，积累了经验，锻炼了队伍。</p>
+  <blockquote><p>这两件事背后是同一个机制：拍板花钱的人，不是最后买单的人。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h3>概念源头：科尔奈与国营企业的怪现象</h3>
+  <p>「软预算约束」最早是匈牙利经济学家雅诺什·科尔奈（János Kornai）在上世纪七十年代末、八十年代初提出来的 [1]。他当时在研究匈牙利和南斯拉夫的国营企业，发现一个特别普遍的怪现象：有些企业效率极其低下，年年亏损，按市场规律早该倒闭一百回了，可它们就是不死。</p>
+  <p>为啥呢？因为国家不会让它们死。不管你怎么亏，上面都会想办法让你活着：让你免税、给你低息贷款，实在不行直接给你发补贴……反正这个窟窿有人填。</p>
+  <p>预算，原本是一种硬约束。你有多少钱办多大事，亏光了就出局。企业长期亏损说明你的业务模式有问题，你没有在创造价值，你是在消耗价值。这样的企业应该死掉，给能创造价值的企业腾出空间来，这才是大自然的法则。</p>
+  <p>可是如果你相信每次亏了都会有人来救你，预算对你来说就只是个软约束。科尔奈发现，外部力量会替你填窟窿的主观概率越高，你的预算约束就越软。说白了就是只要你相信"真出事了总有人管"，你今天的每一个决策就都会更敢借钱、更敢冒险、更不在乎成本。</p>
+  <p>在 2003 年的一篇综述论文 [2] 中，科尔奈和合作者进一步提出，软预算约束并不只属于社会主义和转型经济，也适用于市场经济，它本质上是个「动态承诺问题（dynamic commitment problem）」：人家在第一次给你提预算的时候，就已经知道出了事儿你会救他，所以你们之间的承诺只是暂时的，将来预算一定会加码。</p>
+  <p>也就是说，哪怕你事先发狠话说"绝不兜底"，事到临头，往往也会发现还是得救，于是食言。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>大到不能倒：金融版的软预算约束</h3>
+  <p>最著名的例子就是 2008 年金融危机，让全世界都记住的那句「大到不能倒（too big to fail）」。</p>
+  <p>当时雷曼兄弟（Lehman Brothers）先倒了，市场恐慌急剧扩散；保险巨头 AIG 也快撑不住了，如果它也倒下，全球无数金融机构都会被牵连。于是美联储和国会先后对 AIG 大规模注资。</p>
+  <p>你事后看，可能政府这步棋是不得已而为之，不然会导致巨大灾难。但是从另一方面说，用纳税人的钱去救助一家私人金融机构，这合理吗？这还叫资本主义吗？你们赚钱的时候奖金可没分给我们，怎么亏钱亏到要死的时候找我们救命呢？合着小企业倒闭叫优胜劣汰，大机构出事叫系统性风险？</p>
+  <p>监管者从 2008 年吸取了两条教训。</p>
+  <ul>
+    <li>第一，有些机构真的不能让它突然死，因为它会把整个系统拖下水。</li>
+    <li>第二，但是救援不能救得太舒服。你要是连股东、管理层、债权人都一并保护了，那就等于告诉所有大公司：你们放心大胆地赌，赌赢了归你们，赌输了归系统。</li>
+  </ul>
+  <p>到了 2023 年硅谷银行（Silicon Valley Bank）倒闭，监管者的动作就高明多了 [3]。按常规规则，美国联邦存款保险只保每个账户 25 万美元以内，超出的部分是储户自认损失。可是硅谷银行的影响实在太大：如果不保护储户，挤兑很可能向其他中小银行扩散，一大批科技公司就可能发不出工资……恐慌会制造更大的恐慌。所以相关部门启用了「系统性风险例外（systemic risk exception）」，宣布保护全部存款，包括 25 万美元以上的大额存款。</p>
+  <p>但是请注意，政府保的只是储户，而不是这家银行。硅谷银行的股东血本无归，高管被撤换，部分无担保债权人也不受保护。我救的是系统，不是奖励你们乱来……</p>
+  <p>那你说银行业会不会吸取教训，以后决策更谨慎呢？也未必。只要市场相信"真到系统性风险那一步，政府还是会救"，这个预期就会进入事前决策。</p>
+
+  <h3>时间与空间：两个诺贝尔奖</h3>
+  <p>这个机制是在时间和空间上双重的，相关理论赢得两个诺贝尔奖。</p>
+  <p>在时间上，挪威经济学家芬恩·基德兰德（Finn E. Kydland）和美国经济学家爱德华·普雷斯科特（Edward C. Prescott）提出 [4]，政府事前的确应该承诺"谁出事我都不救"，这样大家才会谨慎——可一旦事情真的发生，站在事后那个时间点上，救援往往又比放任崩盘更理性。于是政府会改主意。于是市场早就预见到政府会改主意。于是事后最理性的救援，恰恰制造了事前最大胆的冒险。基德兰德和普雷斯科特获得 2004 年诺贝尔经济学奖。</p>
+  <p>在空间上，法国经济学家埃马纽埃尔·法尔希（Emmanuel Farhi）和让·梯若尔（Jean Tirole）发现 [5]，作为一家金融机构，你最聪明的做法未必是降低自家的风险，而是把风险搞得跟大家一样——因为只要所有人都挤在同一条船上，犯同一个错误，比如都去做高风险的"期限错配（maturity mismatch）"业务，那么这条船一旦要沉，监管者为了不让整个经济陪葬，就别无选择，只能来救。</p>
+  <p>这是"法不责众"的金融版。一个人闯红灯会被罚，一万人一起闯红灯，红灯只好认输。梯若尔后来获得 2014 年诺贝尔经济学奖。</p>
+  <blockquote><p>你亏损，那是你的失败；但如果你能把自己的亏损变成系统的问题，那就不是你的失败，而是一种让别人为你买单的能力。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h3>帝国建造与预算最大化官僚</h3>
+  <p>更可怕的是，你还可以更主动地使用这个能力。大了不但不会倒，而且"大"本身就是一个奖赏。</p>
+  <p>美国金融经济学家迈克尔·詹森（Michael Cole Jensen）在公司治理研究中提出一个机制叫「帝国建造（empire building）」[6]，意思是经理人有动力把组织的规模做大。规模越大，他手里的预算、人员、资产和话语权就越大。</p>
+  <p>注意啊，这个追求跟股东的利益可常常是背道而驰的。股东关心的是利润，经理人更关心"我管多大的盘子"。这就是为什么有些公司明明没有好项目，也要并购、扩张、招更多的人、盖更高的总部大楼。</p>
+  <p>市场经济中的职业经理人尚且如此，那要是政府之中呢？要是钱纯粹是"公家的"，连股东都没有呢？你将走向我们上一讲说的「黄宗羲定律」。</p>
+  <p>这种事古今中外都在发生。美国经济学家威廉·尼斯坎南（William A. Niskanen）提出一个模型叫「预算最大化官僚（budget-maximizing bureaucrat）」[7]——官僚追求的不是利润，而是他掌管的预算规模：管的钱越多、盘子越大，权力就越大，前途就越光明。</p>
+
+  <h3>晋升锦标赛：中国增长的另一面</h3>
+  <p>咱们平心而论，这个机制有时候是好的，能提供正外部性。特别对于发展中国家，在经济增长期，官员主动做大预算、上大项目、搞好基础设施，这就是经济动员。像修路、建桥、搞工业园区这些事，如果只靠市场自发演化，速度未必够快。有些经济学家相信，正是地方政府围绕增长和招商展开的良性竞争，促成了中国经济的高速增长。</p>
+  <p>经济学家李宏彬和周黎安称之为「晋升锦标赛（promotion tournament）」[8]：地方官员像运动员一样比赛 GDP 增长率，谁的数字漂亮谁就更可能升迁。他们的研究发现，省级官员的升迁概率和当地经济增长率显著正相关。</p>
+  <p>这其实是一种进步，按政绩升官总比按关系升官强。但是这里的预算约束很软。政府主导的投资已经系统化，各地都成立了"地方融资平台"，发行了"城投债"，官员们可以轻易从银行调动钱去做任何大项目。</p>
+  <p>高速增长期干什么都有正外部性，但是投资拉动增长只能让你走这么远。到了某一阶段，投资出现边际效益急剧递减，可是官员们还在狂刷业绩，那些项目长远是赚是赔、会不会留下一地鸡毛，可就要算账了。你会发现曾经的政绩变成了债务和过剩的产能。</p>
+  <p>那你说投资效益下降了，债务已经很多了，产能已经过剩了，是不是以后花钱就应该谨慎一点了？并没有。中国经济学家的实证研究发现这里有个恶性循环：银行信贷支持会压低企业的产能利用率，可是经营效率越差的企业，越可能拿到更多信贷，尤其是国企，更难退出 [9]。</p>
+  <p>日本早有前车之鉴 [10]。在 1991 到 2001 年，也就是日本资产泡沫破裂后、经济陷入停滞与通缩的"失去的十年"期间，银行为了不让坏账暴露，反而给最该破产的企业续命，于是这些死不掉的「僵尸企业（zombie firms）」占着信贷、压着价格，把健康企业一起拖进坟墓。</p>
+  <p>这就是软预算约束的厉害之处。市场本该奖励效率，现在低效反倒成了"需要帮一把"的理由。原本"不该投的项目"，现在变成了"不能停的项目"。</p>
+  <blockquote><p>小的失败者被市场教育，大的失败者教育市场。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h3>道德风险：软预算约束无处不在</h3>
+  <p>经济学里有个更老的概念叫「道德风险（moral hazard）」[11]，原本是保险业的行话，意思是当一个人不必承担自己行为的全部后果时，他就会变得更大胆、更不在乎。软预算约束其实就是道德风险的组织版本。这种结构远比你想象的普遍。</p>
+  <p>比如说美国大学学费为什么越来越贵呢？我们前面讲过一个原因是「鲍莫尔成本病」——但鲍莫尔成本病不能完全解释学费涨到这么离谱的程度，大学生一年的学费可以比普通家庭一年的收入还要高。其实这也跟软预算约束有关。</p>
+  <p>早在 1987 年，美国教育部长威廉·贝内特（William Bennett）就提出：政府的助学贷款越慷慨，大学的学费就会涨得越凶，因为学生有联邦贷款兜底，对价格就没那么敏感了。这个说法被称为「贝内特假说（Bennett Hypothesis）」。结果 2019 年的一篇论文量化证明了这个假说：联邦补贴贷款每多 1 美元，大学学费就往上抬大约 60 美分 [12]。</p>
+  <p>医疗也有这个问题。医疗保险本质上也是一种软预算约束：看病花的是保险公司和政府给的钱，那么医生和病人就都没有那么在乎药品的价格。现代化的潮流是物越来越便宜，人越来越贵，可是美国医疗器械和药品的价格可没有变便宜。</p>
+  <p>经济学家米尔顿·弗里德曼（Milton Friedman）早就说过这个问题 [13]，他发明了一个流传极广的说法叫「花钱四象限」，说花自己的钱办自己的事，最在乎节省也最在乎效果；而花别人的钱办别人的事，则既不心疼也不讲效果，最浪费。</p>
+  <p>其实我看根本用不着弗里德曼，老百姓都知道这个道理。只不过老百姓常常不知道花的是谁的钱，办的是谁的事儿。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>两种叙事能力：闹与包装</h3>
+  <p>要想充分享受软预算约束，尽情地花别人的钱，你需要掌握两种叙事能力。</p>
+  <p>第一种是"闹"，也就是把自己的失败说成所有人的麻烦——</p>
+  <ul>
+    <li>"你们不给我追加预算，系统就要停。"</li>
+    <li>"你们现在让我倒下，前面的投入就全白费了。"</li>
+    <li>"你们要是不救我，供应商会追债，员工会失业，客户会投诉，领导也不好交代。"</li>
+  </ul>
+  <p>这里真正起作用的不是道理，而是声量，闹得越大越好，有些事儿是"按闹分配"的。</p>
+  <blockquote><p>会哭的孩子有奶吃，不是因为他更饿，而是因为他让全屋人都听见了他的饿。</p></blockquote>
+  <p>第二种是"包装"，也就是把自己的利益说成大局的安全——</p>
+  <ul>
+    <li>"我们不是一家亏损的企业，我们是关系几万人饭碗的支柱产业。"</li>
+    <li>"这不是产能过剩，这是保障供应链安全的战略储备。"</li>
+    <li>"我们不是要补贴，这是保护就业、保护民生、保护地方稳定。"</li>
+  </ul>
+  <p>只要你能把"我亏了"讲成"你们不救我就会出事"；把"我想要更多"讲成"你们需要我继续存在"，你的低效就成了筹码，你的失败就成了资历，进而成了下一轮资源申请书。</p>
+  <p>这些叙事未必全是假的。但是局面走到这一步，那些老老实实量入为出、出了事儿自己扛的人，可就都成了没有系统重要性的边缘人。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>一句「谁出钱？」</h3>
+  <p>我们前面讲了，宏大叙事最怕算账。一句「谁出钱？」能帮你看清楚很多事情。</p>
+  <p>"稳定"、"就业"、"民生"、"产业链安全"、"系统性风险"……这些的确都是重要的，但这些都没有明确的受益人和责任人。每当有人谈论这些大词儿的时候，你就要警惕了，他是准备花别人的钱。</p>
+  <p>"孩子还小"、"老人不容易"、"都是自己人"、"于心不忍"……这些也是真感情。但是每当有人跟你谈感情的时候，你就明白，这一局多半是你买单。</p>
+  <blockquote><p>爱要有边界，救助得有附加条件，支持不是兜底，容错不是免责，权力跟责任应该对等。软预算约束是人为的制度，别人的钱也是有限的。大自然的法则终究要求我们尊重硬约束。</p></blockquote>
+
+  <div class="poem">
+    <span class="poem-title">收束小诗</span>
+    预算本是尺，人情把尺弯。<br>
+    今日救一寸，明日债成山。<br>
+    能救须明价，能败才知难。<br>
+    后果归其主，慈悲有边栏。
+  </div>
+
+  <!-- 注释 -->
+  <section class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Kornai, János. "The Soft Budget Constraint." <em>Kyklos</em> 39, no. 1 (1986): 3–30.</li>
+      <li>Kornai, János, Eric Maskin, and Gérard Roland. "Understanding the Soft Budget Constraint." <em>Journal of Economic Literature</em> 41, no. 4 (2003): 1095–1136.</li>
+      <li>Federal Deposit Insurance Corporation, "FDIC Acts to Protect All Depositors of the former Silicon Valley Bank," Press Release PR-19-2023, March 13, 2023; 及 U.S. Government Accountability Office, GAO-25-107023, 2025.</li>
+      <li>Kydland, Finn E., and Edward C. Prescott. "Rules Rather than Discretion: The Inconsistency of Optimal Plans." <em>Journal of Political Economy</em> 85, no. 3 (1977): 473–492.</li>
+      <li>Farhi, Emmanuel, and Jean Tirole. "Collective Moral Hazard, Maturity Mismatch, and Systemic Bailouts." <em>American Economic Review</em> 102, no. 1 (2012): 60–93.</li>
+      <li>Jensen, Michael C. "Agency Costs of Free Cash Flow, Corporate Finance, and Takeovers." <em>American Economic Review</em> 76, no. 2 (1986): 323–329.</li>
+      <li>Niskanen, William A. <em>Bureaucracy and Representative Government</em>. Chicago: Aldine-Atherton, 1971.</li>
+      <li>Li, Hongbin, and Li-An Zhou. "Political Turnover and Economic Performance: The Incentive Role of Personnel Control in China." <em>Journal of Public Economics</em> 89, no. 9–10 (2005): 1743–1762. 另见周黎安《中国地方官员的晋升锦标赛模式研究》，《经济研究》2007 年第 7 期。</li>
+      <li>Ma, Hongqi, Xinxiang Mei, and Yuan Tian. "The Impacts and Potential Mechanisms of Credit Support with Regard to Overcapacity." <em>Resources Policy</em> 68 (2020): 101704. 另见江飞涛、耿强等关于地区竞争、补贴与产能过剩的实证研究（《中国工业经济》）。</li>
+      <li>Caballero, Ricardo J., Takeo Hoshi, and Anil K. Kashyap. "Zombie Lending and Depressed Restructuring in Japan." <em>American Economic Review</em> 98, no. 5 (December 2008): 1943–1977.</li>
+      <li>Pauly, Mark V. "The Economics of Moral Hazard: Comment," <em>American Economic Review</em> 58, no. 3 (1968): 531–537.</li>
+      <li>Bennett, William J. "Our Greedy Colleges." <em>New York Times</em>, Feb 18, 1987. 实证见 Lucca, David O., Taylor Nadauld, and Karen Shen. "Credit Supply and the Rise in College Tuition." <em>Review of Financial Studies</em> 32, no. 2 (2019): 423–466.</li>
+      <li>Friedman, Milton, and Rose Friedman. <em>Free to Choose</em>. 1980.</li>
+    </ol>
+  </section>
+
+  <!-- 用户留言 -->
+  <section class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="name">刘纪宏</span>27分钟前 · 河北</div>
+      <div class="comment-text">不怕富二代玩物丧志，就怕富二代踌躇满志。最容易掏空家业的，是盲目创业的富二代。背靠父辈兜底的创业者，最容易心态失控、无视风险。因为亏损有人买单、失败可以重来，他们没有敬畏市场的底线，不懂本金珍贵、不懂回撤可怕。这类创业，从不是深耕积累，而是凭着一腔浮躁盲目扩张、跟风投机，沉迷短期暴富的幻想，排斥长期稳健的复利思维。他们频繁做认知以外的决策，肆意试错、随意投入，一次次小亏损累积成大额亏空，慢慢透支几代人攒下的基业。</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="name">kenshin李</span>9分钟前 · 北京</div>
+      <div class="comment-text">文中有句话很触动我——"会哭的孩子有奶吃，不是因为他更饿，而是因为他让全屋人都听见了他的饿。"这让我不禁想到：在现代社会，这种"哭"已经变得高度专业化和制度化。像是危机公关、维权代表、债务重组顾问、舆论造势者，他们的核心能力不是把事情做对，而是在事情做错后，将损失和痛苦最大化地、最具画面感地公开展示。且由此形成了一套成熟的"反向劫持"流程：第一步：先把自己做得"系统重要"（绑定就业、绑定供应商、绑定基层稳定）；第二步：在临界点，主动触发危机，将内部坏账外溢成公共事件；第三步：聘用专家，用最极致的叙事（包装）和最大的声浪（闹），迫使系统不得不行权那张"看跌期权"。而这启示了我们：一个社会如果缺乏"有序失败"和"干净破产"的机制，那么它就会奖励那些最善于表演崩溃的演员，并催生一个围绕"崩溃表演"的产业链。</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="name">君子不器</span>35分钟前 · 上海</div>
+      <div class="comment-text">我想到薛兆丰老师讲的经济学这门课，里面也是提到相似概念，就是边际逻辑，比如像刚刚结束的高考，很多家长给孩子报班，想要几个月的突击把三年的缺口补上，但是孩子基础在那，花的钱和精力很大大概率收不回来。从软预算约束看，家长的行为其实也说得通，不报就晚了，别的孩子都在补，就差这一下……家长觉得万一有用呢，花这个钱不是在买成绩，买的是已经尽力了的心理安慰。这个就跟企业救大项目是一样，救的不是项目，是不能让它倒在我手上——沉没成本绑架，已经陪读了 12 年，最后几个月不花钱，前面 12 年的投入感觉就白费了。</div>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <div class="ai-head">📖 AI 阅读总结</div>
+    <p class="ai-one">一句话概括：软预算约束说的是——只要决策者确信"真出事了总有人兜底"，责任就会变形：花钱的人不怕花，冒险的人更敢赌，最后往往由整个系统为个别低效与鲁莽买单。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li><strong>核心机制就一句话</strong>：拍板花钱的人不是最后买单的人。无论父母替成年子女还债，还是公司给超预算项目不断追加投资，只要相信"亏了会有人救"，决策就会更敢借钱、更敢冒险、更不在乎成本。</li>
+      <li><strong>概念源头</strong>：匈牙利经济学家科尔奈在 70–80 年代研究国营企业时提出"软预算约束"——年年亏损、本该倒闭的企业因国家兜底而不死；2003 年他进一步指出其本质是"动态承诺问题"，不只属于社会主义，市场经济同样适用。</li>
+      <li><strong>金融版"大到不能倒"</strong>：2008 年救助 AIG 的教训是"救援不能救得太舒服"；2023 年硅谷银行事件中监管者启用"系统性风险例外"保全部存款，却让股东血本无归、高管被撤换——救的是系统，不是奖励乱来。但预期一旦形成，仍会进入事前决策。</li>
+      <li><strong>时空双重的机制，两个诺奖</strong>：基德兰德与普雷斯科特揭示"事前承诺不救、事后理性救援"的时间不一致性（2004 诺奖）；法尔希与梯若尔发现金融机构会主动把风险做得和大家一样、逼监管者集体救助（2014 诺奖）——这是"法不责众"的金融版。</li>
+      <li><strong>组织层面的激励扭曲</strong>：詹森的"帝国建造"与尼斯坎南的"预算最大化官僚"说明，无论公司经理还是政府官员，都有动力把盘子做大而非创造利润；周黎安等的"晋升锦标赛"解释了地方投资冲动促成增长，但也埋下债务与过剩产能的隐患。</li>
+      <li><strong>恶性循环与僵尸企业</strong>：银行信贷压低产能利用率，效率越差的企业反而越容易拿到信贷、越难退出；日本"失去的十年"里，银行给最该破产的企业续命，僵尸企业占着信贷、压着价格，把健康企业一起拖进坟墓。</li>
+      <li><strong>道德风险的组织版本</strong>：贝内特假说被实证——联邦助学贷款每多 1 美元，学费约涨 60 美分；医疗保险让医患对药价不敏感；弗里德曼"花钱四象限"点明，花别人的钱办别人的事，既不心疼也不讲效果，最浪费。</li>
+      <li><strong>两种叙事能力与自保之道</strong>：受益者靠"闹"（把失败说成全体的麻烦）和"包装"（把私利说成大局的安全）来获取资源；而老实量入为出、出事自己扛的人反成"没有系统重要性的边缘人"。面对"稳定、就业、系统性风险"等大词，要追问"谁出钱"。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>给家庭财务设硬上限</strong>：把"花光就出局"当默认规则，信用卡、花呗、借呗设定明确额度与还款纪律，从源头上切断"反正有人兜底"的心理预期，也拒绝为家人无限兜底。</li>
+      <li><strong>梳理你身边的"兜底方"</strong>：列出生活中谁在替你买单——父母、公司报销、保险、贷款——做重大决策前先问一句："如果没人救我，我还敢这么做吗？"</li>
+      <li><strong>用"重新决定测试"对抗沉没成本</strong>：当项目、投资或学业已投入大半时，不要用"不能功亏一篑"说服自己加码，而是问："如果今天重来，我还会投吗？"答案是否就及时止损。</li>
+      <li><strong>帮助别人要有附加条件</strong>：如果必须救助亲友，把援助设计成有限额、有期限、有还款计划、有明确止损线的形式，让"慈悲有边栏"，而不是无底线的兜底。</li>
+      <li><strong>听到大词先问"谁出钱"</strong>：遇到"稳定、就业、产业链安全、系统性风险、民生"等宏大叙事，追问受益人是谁、责任人是谁、钱从哪来——警惕有人准备花你的钱。</li>
+      <li><strong>培养"干净失败"的能力</strong>：把试错控制在可负担的小规模内，亏损不超过自己承受的上限，每次失败写两行复盘，别把失败滚成需要别人接盘的大窟窿。</li>
+      <li><strong>用"花钱四象限"自查每一笔钱</strong>：花钱前分清"花谁的钱、办谁的事"，尽量让出钱方与受益方一致；公事公办、私事私了，减少"花别人的钱办别人的事"带来的双重浪费。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <div class="ai-quote">"拍板花钱的人，不是最后买单的人。"</div>
+    <div class="ai-quote">"会哭的孩子有奶吃，不是因为他更饿，而是因为他让全屋人都听见了他的饿。"</div>
+    <div class="ai-quote">"小的失败者被市场教育，大的失败者教育市场。"</div>
+    <div class="ai-quote">"爱要有边界，救助得有附加条件，支持不是兜底，容错不是免责，权力跟责任应该对等。"</div>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<script>
+  var bar=document.getElementById('progress'),topBtn=document.getElementById('backtop');
+  function onScroll(){
+    var d=document.documentElement;
+    var p=d.scrollTop/(d.scrollHeight-d.clientHeight)*100;
+    bar.style.width=p+'%';
+    topBtn.style.display=d.scrollTop>600?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

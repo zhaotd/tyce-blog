@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲·第71讲｜问答：处于被领导做空地位的状态怎么办？</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #faf7f1;
+    --text: #2c2720;
+    --text-soft: #6f6658;
+    --accent: #8a5a2b;
+    --accent-deep: #6e451f;
+    --accent-soft: rgba(138, 90, 43, 0.10);
+    --card: #fffdf8;
+    --card-border: #e7decc;
+    --quote-border: #c9a876;
+    --divider-line: #ddd2bc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --text: #e9e2d6;
+      --text-soft: #a89f8f;
+      --accent: #d0a06a;
+      --accent-deep: #c8915a;
+      --accent-soft: rgba(208, 160, 106, 0.13);
+      --card: #201d17;
+      --card-border: #3a332a;
+      --quote-border: #8a6a3d;
+      --divider-line: #423a2e;
+    }
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.82;
+    text-align: justify;
+    -webkit-font-smoothing: antialiased;
+  }
+  #progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--quote-border));
+    z-index: 999;
+  }
+  #toTop {
+    position: fixed; right: 18px; bottom: 28px; width: 44px; height: 44px;
+    border-radius: 50%; border: 1px solid var(--card-border);
+    background: var(--card); color: var(--accent);
+    font-size: 20px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity .3s ease, transform .3s ease, visibility .3s;
+    cursor: pointer; z-index: 998; -webkit-tap-highlight-color: transparent;
+  }
+  #toTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .container { max-width: 700px; margin: 0 auto; padding: 30px 22px 70px; }
+
+  /* 文档头 */
+  .doc-head { padding: 6px 2px 18px; border-bottom: 1px solid var(--card-border); margin-bottom: 26px; }
+  .tag {
+    display: inline-block; font-size: 13px; letter-spacing: 1px;
+    color: var(--accent); background: var(--accent-soft);
+    border: 1px solid var(--quote-border); border-radius: 999px;
+    padding: 4px 12px; margin-bottom: 14px; text-align: left;
+  }
+  .doc-head h1 { font-size: 25px; line-height: 1.45; font-weight: 700; margin-bottom: 12px; text-align: left; }
+  .meta { font-size: 14px; color: var(--text-soft); text-align: left; }
+
+  /* 小节来源 */
+  .qa { margin-bottom: 34px; }
+  .qa-src {
+    font-size: 14px; font-weight: 600; color: var(--accent-deep);
+    margin: 6px 0 14px; text-align: left; letter-spacing: .5px;
+  }
+  .qa-src::before { content: "📖 "; }
+
+  /* 问答卡片 */
+  .q-card, .a-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  .q-card { border-left: 4px solid var(--quote-border); }
+  .a-card { border-left: 4px solid var(--accent); }
+  .q-label, .a-label {
+    font-size: 14px; font-weight: 700; margin-bottom: 8px; text-align: left;
+  }
+  .q-label { color: var(--text-soft); }
+  .a-label { color: var(--accent); }
+  .q-card p, .a-card p { margin-bottom: 10px; }
+  .q-card p:last-child, .a-card p:last-child { margin-bottom: 0; }
+
+  /* 正文段落 */
+  .body-text p { margin-bottom: 14px; }
+  .body-text p:last-child { margin-bottom: 0; }
+
+  /* 要点列表 */
+  .body-text ul, .body-text ol { margin: 4px 0 14px 1.3em; }
+  .body-text li { margin-bottom: 8px; }
+  .body-text li::marker { color: var(--accent); }
+
+  /* 金句引用 */
+  .gold {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px; margin: 18px 0;
+    color: var(--text); font-weight: 600; font-size: 16px;
+  }
+  .gold::before { content: "❝ "; color: var(--accent); font-weight: 700; }
+
+  /* 分隔线 */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 34px 0 26px; color: var(--divider-line);
+  }
+  .divider::before, .divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--divider-line);
+  }
+  .divider span { color: var(--accent); font-size: 14px; }
+
+  /* AI 总结 */
+  #ai-summary {
+    margin-top: 40px; padding: 24px 22px;
+    background: linear-gradient(180deg, var(--accent-soft), var(--card));
+    border: 1.5px solid var(--quote-border); border-radius: 12px;
+  }
+  #ai-summary h2 {
+    font-size: 20px; text-align: left; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 1px dashed var(--quote-border);
+    color: var(--accent-deep);
+  }
+  #ai-summary h3 { font-size: 16.5px; margin: 20px 0 10px; color: var(--accent-deep); text-align: left; }
+  #ai-summary .one-liner { font-size: 16px; line-height: 1.8; margin-bottom: 4px; }
+  #ai-summary ol { margin: 4px 0 8px 1.3em; }
+  #ai-summary li { margin-bottom: 9px; }
+  #ai-summary li::marker { color: var(--accent); font-weight: 700; }
+  #ai-summary .quote-mini {
+    border-left: 3px solid var(--accent);
+    padding: 8px 14px; margin: 10px 0; color: var(--text);
+  }
+  .ai-foot {
+    margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--quote-border);
+    font-size: 12.5px; color: var(--text-soft); text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第71讲</span>
+    <h1>问答：处于被领导做空地位的状态怎么办？</h1>
+    <p class="meta">作者：万维钢 ｜ 读者问答合集（一问一答四组）</p>
+  </header>
+
+  <!-- 问答一 -->
+  <section class="qa">
+    <p class="qa-src">来自《杰文斯悖论：AI 会增加人的工作岗位》</p>
+    <div class="q-card">
+      <p class="q-label">读者「韩大海」问：</p>
+      <p>以放射科医生为例，如果 AI 的 90% 的准确率不够，那 AI 如果进化到 95% 和 98% 会不会带来放射科医生减少呢？这里面是否也有利益群体用各种理由拖延 AI 应用效率呢？</p>
+    </div>
+    <div class="a-card body-text">
+      <p class="a-label">万维钢 回复：</p>
+      <p>如果 AI 已经全能全知，如同神降临人间，那当然不只是放射科医生，所有人都不用工作了。</p>
+      <p>但现实中的 AI，包括未来几年内我们可能看到的 AGI，都不是神。它不是全能的，它尤其不是全知的——它不能自动知道一个患者为什么来医院、哪里疼、怕什么、能不能承受进一步检查、当地医院有没有处理能力、保险怎么支付、患者本人愿不愿意冒某个风险。</p>
+      <p>得有人把这些本地信息，以医学标准喂给 AI，再把 AI 的判断放回这个具体患者的处境之中。</p>
+      <p>临床这门业务并不是说把一张片子扔给机器，问这个人有什么病。该重点往哪儿看，看完怎么办，是一种主观的选择。具体症状该做什么检查，如果检查中有偶然发现应该怎么办，这些都是医生的责任。</p>
+      <p>比如一个人因为右下腹痛来急诊，那么医生的重点就是看有没有阑尾炎、穿孔、脓肿，要不要手术。片子上也许还看到肝囊肿、肺小结节、椎间盘退变，那些不是完全不管，但它们不应该抢走主问题的权重。</p>
+      <p>放射科医生一个关键任务，就是把临床问题翻译成影像问题，再把影像答案翻译回临床行动。尤其是前者。医生要先决定：这个病例到底在问什么问题。</p>
+      <p>据我了解，当前最强的专业影像 AI，大多还是「窄模型」。它的目标函数通常是识别某一种特定疾病：肺结节、颅内出血、骨折、乳腺癌、肺栓塞……它在单一任务上可能比人类医生更强，但前提是你已经把题目交给它了。你得先告诉它：现在要看什么。有了 AI，临床里最难的就不是答题，而是「定题」。</p>
+      <p>那你说现在的通用大模型，比如 GPT、DeepSeek，看片子看得也都有模有样，很准确啊？——也许通常都很准，但是这里边有复杂情况。你要知道看病不只是看片子。</p>
+      <p>真实的放射科判断，往往要结合一组检查、不同序列、既往影像、病史、主诉、实验室结果、临床医生真正担心的问题，以及下一步治疗选择。医生不是在作图像描述，而是在把影像放进整个治病过程里。医生训练的是「图像—病人—后果—责任」的闭环。</p>
+      <p>而大模型的训练目标不是「治病」，而更接近于把影像翻译成文字。它学到的是大量图像和报告之间的对应关系，所以它能说出专业术语，甚至生成一份漂亮报告。它很会「像医生那样说话」，但不一定稳定地「像医生那样看」。</p>
+      <p>所以就算 AI 比医生更会看片子，也得由医生先告诉它往哪看，给它提供以往的病史和所有的检查报告，并且给病人下单去做了那些检查，才能帮助 AI 看好。</p>
+      <p>当然，这一切很可能只是暂时的。也许将来 AI 就是能自己接触患者，自己采集本地信息，自己决定检查方案，自己解释结果，AI 公司或者医院愿意为所有误诊和漏诊承担法律责任，患者和监管机构也都接受这一套……如果真到了那一天，我们只能承认，放射科医生的大部分任务被取代了，他们应该离开岗位。</p>
+      <p>但即便在这个场景里，杰文斯悖论也仍然有效。杰文斯悖论说的不是「原岗位永远存在」，它说的是效率提高会释放更多需求——可能是其他岗位的需求。</p>
+      <p>影像诊断如果便宜到接近零，需求会爆炸。基层医院会做更多检查，体检会更频繁，慢病会被长期影像跟踪，癌症筛查会前移，患者会要求第二意见，临床医生会更依赖影像证据，偶然发现会更多，随访管理会更多。下面这些都会变成新的工作：</p>
+      <ul>
+        <li>AI 模型审计</li>
+        <li>医疗责任保险</li>
+        <li>数据治理</li>
+        <li>患者解释</li>
+        <li>过度检查控制</li>
+      </ul>
+      <p>那你说利益集团是不是在阻挡 AI 进入医疗？美国医学会的确有一些制度上的设置，使得 AI 只能帮助医生，而不能直接替代医生——最重要的办法就是把最后的签字权和责任权死死掌握在医生手里。但至少在目前来说，这个规定并没有阻碍 AI 的进步。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span>✵</span></div>
+
+  <!-- 问答二 -->
+  <section class="qa">
+    <p class="qa-src">来自《平台：现代世界最厉害的商业模式》</p>
+    <div class="q-card">
+      <p class="q-label">读者「Tedder_NanJing」问：</p>
+      <p>AI 的兴起或许会让中小企业或者个人开发者觉醒，AI 让「绕过平台提供的繁琐且昂贵的中间服务直接触达用户」成为一种可能。如果平台的压榨过狠，那么通过技术手段剥离中间服务就是必然选择。不过这些大公司也不会袖手旁观的，请问万老师，目前的技术环境（比如 AI Agent 的崛起）是会动摇平台的根基，还是会成为平台巩固垄断的终极武器？</p>
+    </div>
+    <div class="a-card body-text">
+      <p class="a-label">万维钢 回复：</p>
+      <p>AI Agent 一定会打击一批旧平台，但 AI Agent 本身就是一个平台。比如说现在 ChatGPT、Google 和亚马逊都在搞 Agent 模式的购物和接入。</p>
+      <p>我们不妨设想，如果搞一种开源的 agent 购物机制：</p>
+      <ul>
+        <li>商家通过这个机制发布他们的产品，维护自家的网站。</li>
+        <li>每个用户通过这个机制去扫描各个商家的网站，寻找所需的产品。</li>
+      </ul>
+      <p>比如说各家航空公司官网列出随时间变动的各个时段机票价格，我想买机票，就用我的 Agent 到这几家官网扫描比价一番，给我拿一个最好的价格，这行不行？</p>
+      <p>这个机制就如同 OpenClaw 一样，背后的模型你可以随便换，但这个机制本身就是一个开源的框架。这样有没有可能绕过平台？</p>
+      <p>对买机票来说也许可以，毕竟全世界只有这么多家航空公司；但如果是对于小商家来说，恐怕还是需要平台的存在。</p>
+      <p>平台之所以必要，不是因为它会展示商品，而是因为它替社会解决了四个麻烦：发现、信任、支付、纠纷。</p>
+      <p>信誉不只是一个数字，更是一套防作弊系统。谁证明这个商家真实？谁防止刷单？谁识别假评价？谁处理 agent 之间互相刷信誉？谁判断一次退款到底是商家欺诈，还是用户恶意薅羊毛？谁防止成千上万个假 agent 注册账号给某个店铺抬轿子？</p>
+      <p>你一旦开始解决这些问题，就会需要身份系统、押金、仲裁、黑名单、保险、审计、治理委员会。于是平台又回来了。</p>
+      <p>而且还有一个入口问题。就算协议是开放的，商家网站也是开放的，模型也可以随便换，又有多少用户真的会自己跑一个本地 agent，到处扫描全网呢？恐怕大多数人还是用手机里默认的 agent，那么这就是新的平台位置：不是谁拥有商家，而是谁拥有用户的默认 agent。</p>
+      <p>但开源的 AI 机制能起到制衡和补充的作用。比如说我就听说，在某些边远的县城，人们是不用滴滴之类的打车平台的。要用车都是直接打电话给熟悉的司机，或者到一个司机群里发个消息，不让平台赚取差价。这种熟人小市场对平台没有很大的依赖。</p>
+      <p>我看这个「小群」机制完全可以用开源 AI 接管起来，稍微扩大规模。如果它能形成某种竞争，那就是好的。</p>
+      <blockquote class="gold">平台最强的地方，是陌生人大市场；平台最弱的地方，是熟人小市场。平台最怕你能用别的机制解决信誉问题。</blockquote>
+    </div>
+  </section>
+
+  <div class="divider"><span>✵</span></div>
+
+  <!-- 问答三 -->
+  <section class="qa">
+    <p class="qa-src">来自《托付：世界奖励把不确定性变成确定性的人》</p>
+    <div class="q-card">
+      <p class="q-label">读者「无为」问：</p>
+      <p>万老师您好，我是一名还有一年要毕业的研究生。在学习您关于「世界奖励把不确定性变成确定性的人」的课程时，我有一个困惑。现实是：在当前就业环境下，很多同学连进入好企业的机会都很难获得，可能还没等到成长机会就被「平仓」了。在这种情况下，我们该如何突破这个「先有鸡还是先有蛋」的困境？是否有什么方法能在没有正式工作机会的情况下，就开始积累这种「可托付性」的能力？</p>
+    </div>
+    <div class="a-card body-text">
+      <p class="a-label">万维钢 回复：</p>
+      <p>现在毕业生人数越来越多，市场就业机会越来越少，学历贬值的局面下，你的确不能等拿到好工作之后再开始积累可托付性，而是必须先表现出一点可托付性，别人才敢给你机会。</p>
+      <p>这是我多次说过的一个建议：你需要拿「作品集」。你有没有什么完整的作品？哪怕是几段短视频、一个上架了的 APP，但最好是你真实解决过，并且完成交付的一个什么东西——给一个开源项目修一个小问题，帮老师整理一个数据集，给小商家做一个自动化工具，给一家目标公司写一份产品诊断，甚至把你学到的某个技术做成一个可复用的 Skill.md。</p>
+      <p>如果你问一问那些做事的企业家，你会发现现在中国不是人才过剩，而是人才不足：大量的毕业生什么都不会干，没有解决问题的能力，而且对做事没有激情——你要做的，就是证明你有这个能力。</p>
+      <p>就拿工程师来说，他们最在乎的就是这个人有没有动手能力，特别是手要快：今天有个想法，明天就去实践；今天有个问题，现场就给你解决。你要有这样的功夫，哪个单位都愿意用你。</p>
+      <p>要抓住在大学最后一两年和读研究生的这几年，利用这段时间找机会建立自己的作品集，最好在网上留下痕迹。无论是帮导师做的事、在单位实习，还是你自己折腾出来的小东西都可以。目标是让别人一看就能被你吸引到注意力；别人一问你是怎么做的，你能思路很清晰地表达出来。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span>✵</span></div>
+
+  <!-- 问答四 -->
+  <section class="qa">
+    <p class="qa-src">来自《地位：社会参与的第一性原理》</p>
+    <div class="q-card">
+      <p class="q-label">读者「深时槿」问：</p>
+      <p>万老师，如果一个人处于被领导做空地位的状态，他能怎么办呢？</p>
+    </div>
+    <div class="q-card">
+      <p class="q-label">读者「和華」问：</p>
+      <p>有能力但不被认可时怎样调整心态和情绪？</p>
+    </div>
+    <div class="a-card body-text">
+      <p class="a-label">万维钢 回复：</p>
+      <p>老实人遇到挫折总爱先找自己的原因，这其实也是一种科举思维：系统总是对的，只是我没达到系统的要求。是不是我表达不够好，是不是我不够成熟，是不是我应该再努力一点？</p>
+      <p>但现实很可能是系统有问题。如果你的领导已经决定做空你，那这就不是心态问题，这是定价权问题。</p>
+      <p>领导要做空你的地位，他会做三件事：减少你的信用、切断你的资源、降低你的可见性。</p>
+      <p>他可能不正面否定你，但让你永远做边角活；他可能口头表扬你，但关键场合不提你；他可能让你干最难的事，但成果出来以后变成「团队共同努力」；他可能让你承担责任，但不给你相应权限。</p>
+      <p>如果有以上表现，他已经辜负了你。那你就不要替一个不承认你的人创造资产了。你需要的不是什么调整心态和情绪。为什么是你调整心态呢？难道不应该是这个系统需要调整吗？</p>
+      <p>你要做的是重新获得行动感。这个场域不是你效忠的对象。你可以在这里继续拿工资，但从现在开始，你真正的任务是把自己从那个领导的定价权里解放出来。</p>
+      <ol>
+        <li><strong>第一，保留证据。</strong>把任务、贡献、结果、沟通记录、关键节点都沉淀下来。不要指望别人凭良心记得你做了什么。职场里，没有证据的功劳，等于没有发生。</li>
+        <li><strong>第二，建立绕开领导的、更大的可见性。</strong>不要只让直属领导一个人知道你的价值。让协作部门、上级的上级、客户、外部同行，通过你的作品和数据知道你。你的价值如果只有一个人能证明，那他就拥有你的定价权。</li>
+        <li><strong>第三，积累可迁移资产。</strong>技能、作品、客户理解、行业判断、项目经验、人脉，这些东西要长在你身上，而不是只长在当前岗位里。一个坏系统最怕你变得可移动。</li>
+        <li><strong>第四，设定止损线。</strong>你可以努力沟通，可以争取机会，可以调整表达，但要给自己一个期限。如果到某个时间点，资源、评价、机会都没有改善，就不要继续向这个系统乞讨认可。</li>
+      </ol>
+      <p>知道自己在积累证据、扩大可见性、建设可迁移资产、准备退出选项，你的情绪自然就变好了。</p>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <p class="one-liner"><strong>一句话概括：</strong>面对 AI 时代的岗位变动、平台垄断与被领导「做空」的困境，真正的出路不是等待或自我怀疑，而是夺回「定题权」与「定价权」——用作品集证明可托付性，用证据、可见性和可迁移资产重新定义自己的价值。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>AI 不是全知全能的「神」：</strong>再强的影像 AI 也不知道患者为什么来医院、哪里疼、怕什么、保险怎么支付，必须有人把本地信息以医学标准喂给它，再把判断放回具体患者的处境之中。</li>
+      <li><strong>临床最难的从「答题」变成「定题」：</strong>专业影像 AI 多是识别单一疾病的「窄模型」，需要医生先告诉它「现在要看什么」；放射科医生的关键任务是把临床问题翻译成影像问题，再把影像答案翻译回临床行动。</li>
+      <li><strong>「像医生那样说话」不等于「像医生那样看」：</strong>大模型学到的是图像与报告的对应关系，而医生训练的是「图像—病人—后果—责任」的闭环；所以就算 AI 更会看片子，也得靠医生提供病史、检查并定题。</li>
+      <li><strong>杰文斯悖论依然成立：</strong>即使放射科医生的任务真被取代，效率提高会释放更多需求——影像便宜到接近零时，检查、筛查、随访、第二意见以及 AI 审计、医疗责任保险、数据治理、患者解释等都会成为新工作。</li>
+      <li><strong>平台的价值在解决「发现、信任、支付、纠纷」四个麻烦：</strong>尤其是信誉系统——谁防刷单、谁识假评价、谁仲裁纠纷，一旦开始解决这些问题就需要身份、押金、仲裁、黑名单等机制，平台就回来了；新的平台位置是「谁拥有用户的默认 agent」。</li>
+      <li><strong>开源 AI 机制能制衡平台：</strong>平台最强在陌生人大市场，最弱在熟人小市场；像县城里不用滴滴、直接打电话叫熟人的「小群」机制，用开源 AI 接管后若能形成竞争，就是好事。</li>
+      <li><strong>就业困境的破法是「先表现出可托付性」：</strong>别等拿到好工作再积累，直接拿作品集——修开源项目、整理数据集、做自动化工具、写产品诊断，证明你有解决问题的能力；现在中国不是人才过剩，而是能做事的人才不足。</li>
+      <li><strong>被领导「做空」是定价权问题，不是心态问题：</strong>领导会减少你的信用、切断你的资源、降低你的可见性；对策是保留证据、建立绕开领导的可见性、积累可迁移资产、设定止损线，不再向系统乞讨认可。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ol>
+      <li><strong>本周建立一份「证据档案」：</strong>把近一年做过的任务按「任务—贡献—结果—沟通记录—关键节点」整理成文档，邮件、聊天记录、成果截图全部归档——没有证据的功劳等于没有发生。</li>
+      <li><strong>做出一个完整的小作品并公开：</strong>给开源项目修一个 issue、帮导师整理一份数据集、把小技能写成可复用的文档（如 Skill.md），发到网上留下痕迹，让陌生人也能看到你的交付能力。</li>
+      <li><strong>练「手要快」：</strong>今天有想法明天就去实践，遇到问题当场解决，用一件 48 小时内完成的小事证明执行力，而不是等待完美时机。</li>
+      <li><strong>让第二个人知道你的价值：</strong>主动在协作部门、跨级汇报、客户或外部同行面前展示你的作品和数据，避免只有直属领导一个人能证明你——那等于把定价权交给了他。</li>
+      <li><strong>给现状设定止损期限：</strong>写下你期待的改善（资源、评价、机会），给自己一个明确时间点，到期无改善就停止向系统「乞讨认可」，转而准备退出选项。</li>
+      <li><strong>对照「做空三信号」自查处境：</strong>是否被安排永远做边角活、口头表扬但关键场合不提你、成果被归为「团队共同努力」、担责却不给权限——有则说明是系统问题，别再把责任全揽到自己身上。</li>
+      <li><strong>用「定题」框架审视自己的岗位护城河：</strong>选一个你熟悉的专业场景，列出「AI 能做什么、不能做什么、需要谁来定题」，想清楚你不可替代的部分，并把它作为持续打磨的方向。</li>
+    </ol>
+
+    <h3>三、金句摘录</h3>
+    <p class="quote-mini">「有了 AI，临床里最难的就不是答题，而是『定题』。」</p>
+    <p class="quote-mini">「职场里，没有证据的功劳，等于没有发生。」</p>
+    <p class="quote-mini">「你的价值如果只有一个人能证明，那他就拥有你的定价权。」</p>
+    <p class="quote-mini">「平台最强的地方，是陌生人大市场；平台最弱的地方，是熟人小市场。平台最怕你能用别的机制解决信誉问题。」</p>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('toTop');
+  function onScroll() {
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (h > 0 ? (st / h * 100) : 0) + '%';
+    if (st > 320) { topBtn.classList.add('show'); } else { topBtn.classList.remove('show'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第29讲 · 问答：没有机缘得到使命召唤怎么办？ | 万维钢·现代思维工具100讲</title>
+<style>
+  :root {
+    --bg: #faf7f1;
+    --text: #2b2a26;
+    --muted: #8a8377;
+    --accent: #8a5a2b;
+    --accent-soft: rgba(138, 90, 43, 0.10);
+    --card: #ffffff;
+    --card-border: #e8e0d1;
+    --ask-bg: #f5efe3;
+    --quote-border: #c9a06c;
+    --quote-bg: #f7f1e6;
+    --divider: #b8a68c;
+    --sum-bg: #f3ead7;
+    --sum-border: #b98a4e;
+    --btn-text: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --text: #e8e2d5;
+      --muted: #9a9284;
+      --accent: #d3a56a;
+      --accent-soft: rgba(211, 165, 106, 0.14);
+      --card: #211d17;
+      --card-border: #3a332a;
+      --ask-bg: #2a251d;
+      --quote-border: #b98a4e;
+      --quote-bg: #282219;
+      --divider: #6b5f4d;
+      --sum-bg: #241f17;
+      --sum-border: #b98a4e;
+      --btn-text: #171512;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+    font-size: 17px;
+    line-height: 1.82;
+    text-align: justify;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  #progress {
+    position: fixed; top: 0; left: 0;
+    height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--accent), #d9a05f);
+    z-index: 100;
+  }
+  #topBtn {
+    position: fixed; right: 18px; bottom: calc(24px + env(safe-area-inset-bottom));
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--accent); color: var(--btn-text);
+    border: none; font-size: 20px; line-height: 1;
+    cursor: pointer; z-index: 99;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    opacity: 0; visibility: hidden; transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #topBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+
+  .container { max-width: 700px; margin: 0 auto; padding: 28px 20px 90px; }
+
+  /* ---------- 文档头 ---------- */
+  .tag {
+    display: inline-block;
+    font-size: 13px; letter-spacing: 0.5px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--quote-border);
+    border-radius: 999px;
+    padding: 4px 12px; margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 24px; line-height: 1.4;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+  .meta {
+    font-size: 14px; color: var(--muted);
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 26px;
+    display: flex; flex-wrap: wrap; gap: 4px 14px;
+  }
+
+  /* ---------- 正文 ---------- */
+  p { margin: 14px 0; }
+  strong { font-weight: 700; color: var(--accent); }
+  .lead-in { font-weight: 600; }
+
+  .qa-block { margin: 26px 0; }
+  .qa-source {
+    font-size: 13px; color: var(--muted);
+    text-align: center; letter-spacing: 1px;
+    margin: 30px 0 14px;
+  }
+  .qa-source::before, .qa-source::after {
+    content: "——"; color: var(--divider);
+  }
+
+  .ask-card {
+    background: var(--ask-bg);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .ask-card .label, .reply-card .label {
+    display: inline-block;
+    font-size: 12.5px; font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .ask-card .reader {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 6px; font-weight: 600;
+  }
+  .ask-card p { margin: 8px 0; }
+
+  .reply-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 18px;
+    margin: 14px 0;
+  }
+  .reply-card p { margin: 12px 0; }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 10px 16px;
+    border-left: 4px solid var(--quote-border);
+    background: var(--quote-bg);
+    border-radius: 0 10px 10px 0;
+    color: var(--text);
+  }
+  blockquote p { margin: 6px 0; }
+  blockquote .cite {
+    display: block; margin-top: 6px;
+    font-size: 13px; color: var(--muted);
+    text-align: right;
+  }
+
+  ul, ol { margin: 12px 0; padding-left: 1.4em; }
+  li { margin: 8px 0; }
+
+  .divider {
+    text-align: center;
+    color: var(--divider);
+    letter-spacing: 12px;
+    margin: 34px 0 10px;
+    font-size: 15px;
+    user-select: none;
+  }
+
+  /* ---------- 用户留言 ---------- */
+  .comments-title {
+    font-size: 18px; font-weight: 700;
+    margin: 40px 0 6px;
+    color: var(--accent);
+  }
+  .comments-title::after {
+    content: ""; display: block;
+    width: 42px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px; margin-top: 6px;
+  }
+  .comment-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 14px 0;
+  }
+  .comment-card .c-head {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 8px;
+  }
+  .comment-card .c-name { font-weight: 700; font-size: 15px; }
+  .comment-card .c-meta { font-size: 12.5px; color: var(--muted); }
+  .comment-card .c-title {
+    font-weight: 700; color: var(--accent);
+    font-size: 15.5px; margin-bottom: 6px;
+  }
+  .comment-card p { margin: 10px 0; }
+
+  /* ---------- AI 阅读总结 ---------- */
+  #ai-summary {
+    background: var(--sum-bg);
+    border: 1.5px solid var(--sum-border);
+    border-radius: 12px;
+    padding: 24px 22px;
+    margin-top: 44px;
+  }
+  #ai-summary .sum-badge {
+    display: inline-block;
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    color: var(--btn-text);
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin-bottom: 14px;
+  }
+  #ai-summary h2 { font-size: 19px; margin: 0 0 6px; }
+  #ai-summary .one-liner {
+    font-weight: 700;
+    margin: 10px 0 18px;
+    padding: 12px 14px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+  }
+  #ai-summary h3 {
+    font-size: 16px; margin: 22px 0 8px;
+    color: var(--accent);
+  }
+  #ai-summary ul, #ai-summary ol { padding-left: 1.4em; }
+  #ai-summary li { margin: 9px 0; }
+  #ai-summary .sum-note {
+    margin-top: 22px; padding-top: 12px;
+    border-top: 1px dashed var(--card-border);
+    font-size: 12.5px; color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- ================= 文档头 ================= -->
+  <header>
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第29讲</span>
+    <h1>问答：没有机缘得到使命召唤怎么办？</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>现代思维工具100讲 · 读者问答精选</span>
+    </div>
+  </header>
+
+  <!-- ================= 问答一 ================= -->
+  <div class="qa-block">
+    <div class="qa-source">来自《场域：识时务者为俊杰》</div>
+
+    <div class="ask-card">
+      <span class="label">读者提问</span>
+      <div class="reader">李钊 · 全球会展</div>
+      <p>想请教老师：当一个场域的规则明显僵化、甚至阻碍长期发展时，普通人在既无力改变又不愿完全被同化的中间状态，该如何守住自我底线，同时又不被场域淘汰呢？</p>
+    </div>
+
+    <div class="reply-card">
+      <span class="label">万老师回复</span>
+      <p>两千年秦制之下，中国的历代基层官员早就找到了这个问题的一个解法，那就是老庄哲学。上位者严刑峻法，杀伐果断劳民伤财，想怎样就怎样。那你作为下位者，该如何与体制相处、与百姓相处，又该如何自处？你是帮着权势去欺压百姓，还是帮着百姓反抗？这两者恐怕都不行。作恶你不愿意，反抗你是拿鸡蛋撞石头，离开你还走不了，你必须至少暂时依靠体制生存。</p>
+      <p>这时候，你需要一个<strong>身份认同</strong>。你对自己的定位到底是什么？你是个什么样的人？</p>
+      <p>古代体制内读书人的解法就是：你是一个道家的人。</p>
+      <blockquote>
+        <p>用王夫之的话说，「其上申韩者，其下必佛老。」</p>
+        <span class="cite">——王夫之</span>
+      </blockquote>
+      <p>也就是说，如果上位者搞的是申不害、韩非那一套，为了满足君王需求而不择手段，把所有人都当工具，把老百姓当奴隶，那么我们下面的人如果还想做个人，就只能去搞搞佛学，搞搞老庄哲学。</p>
+      <p>这种状态的精髓在于：</p>
+      <ul>
+        <li><strong>第一，我不作恶</strong>，我也没有赞美和拥护作恶；</li>
+        <li><strong>第二，但我也不想跟你们较劲</strong>。所以我就做个逍遥派算了。</li>
+      </ul>
+      <blockquote>
+        <p>秦晖先生在《秦汉史讲义》这本书里的说法，就更形象了：「在上者指鹿为马，在下者难得糊涂。」</p>
+        <span class="cite">——秦晖《秦汉史讲义》</span>
+      </blockquote>
+      <p>当然，秦晖先生说的可不是人家老子、庄子写书的本意是什么，说的是体制内对老庄的用法。老子讲「无为」，本意是上位者要无为：所谓「我无为而民自化」，你上面别瞎折腾，下面才能按自然规律演化，大家才能过得好。但是到了后世，特别是庄子之后，人们就把无为更多地理解成了<strong>下位者的无为</strong>，我面对体制选择无为。</p>
+      <p>我们看庄子的《齐物论》，本来是很高雅很纯粹的哲学，跟佛学里说的"无我"很像，就是说人不应该执着于什么高贵、什么低级，讲究平等。但是，如果你从下位者的角度，也可以把《齐物论》这么用：上面的人有时候做好事也罢，做坏事也罢，我管不了，我何必非得去跟人家计较一个好坏呢？你说这个是鹿也好，是马也好，其实都差不多，我何必那么较真呢？我难得糊涂算了。</p>
+      <p>那如果你不想做道家，说我还有一点理想主义，该怎么办呢？你可以参考哈维尔在《无权者的权力》一书中的建议。哈维尔不讲难得糊涂，他强调"真实"：<strong>让自己活在真实之中</strong>。</p>
+      <p>对外你仍然要妥协，但是不能把妥协美化成某种"艺术"，什么生活美学。哈维尔说你要保留一种<strong>「平行的生活」</strong>：在工作场域，使用一套话语体系；在私下生活里，使用另一套话语体系。对身边的少数可信的人，特别是对自己，保持真实，说真话。</p>
+      <p>道家和哈维尔都能解决身份认同问题，能让你在精神上立得住。但是，你还得解决一个生存空间问题：你不跟人主动合作，你凭什么还能生活在这个体制之内呢？</p>
+      <p>那么我的建议是做一个司马迁在《史记》里说的那种「循吏」。我就是一普通官员，我不参与政治斗争，不站队，我也不改革，不折腾老百姓，更不与民争利。我做事是以法理、常情、教化和稳定社会预期为基础。你们爱咋咋地，但是我管理的这一片儿，我要求它有秩序，我希望我的老百姓能够安生。</p>
+      <p>循吏很像我们现在所说的技术官僚，但并不完全是。技术官僚是以专业技能在体制内立足，而循吏则是以提供稳定立足。不管你们谁当权，你都需要我这样的基础设施。</p>
+      <p>循吏的反义词是「酷吏」。其实酷吏的本质并不是做事手段残酷，而是不尊重法理和常情，只遵从上级的意志。皇上想干什么，酷吏就不择手段地帮他办成，所以酷吏是最极致的工具人。但司马迁总结历史教训，酷吏没有好下场。这是因为酷吏是让系统不稳定的因素：你极端地迎合少数人，就必定是一个破坏的力量，成为多数人的敌人，最终也会成为皇上的肉中刺。</p>
+      <blockquote>
+        <p>酷吏眼中只有皇上，循吏遵从的是法理和常情。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ================= 问答二 ================= -->
+  <div class="qa-block">
+    <div class="qa-source">来自《共鸣：高级生活的秘密》</div>
+
+    <div class="ask-card">
+      <span class="label">读者提问</span>
+      <div class="reader">雷塔</div>
+      <p>想请教万老师，如果，终其一生，我也修炼不够，没有机缘得到使命召唤，那我应该如何转身说服自己呢？还是说把精力放在培养下一代？</p>
+    </div>
+
+    <div class="reply-card">
+      <span class="label">万老师回复</span>
+      <p>培养下一代并不是一个很好的人生使命。对你来说，这太狭隘了；对孩子来说，这又太沉重了。我们后面会专门讲，养育是一个作用非常有限的业务。父母对孩子只应该承担有限的责任，这样不但对自己，而且对孩子也更好。</p>
+      <p>我认为好的人生使命应该有三个特点——</p>
+      <ul>
+        <li><strong>第一，它不能是一个具体的目标。</strong>你说我的人生使命就是成为全中国最顶尖的导演。那万一到时候没达到，甚至你连个普通导演都没当上，难道说你的使命就破灭了吗？你此前的一切努力就没意义了吗？万一达到了，你接下来又去干啥呢？怎么都不好。具体的目标具有强烈的偶然性，并不是你想追求就能追求，使命必须是你单方面就可以参与才行。</li>
+        <li><strong>第二，它应该超越自我，甚至可以说，要有点宏大才好。</strong>日常生活已经太无聊了，我们需要一点超越自我的精神力量。我看现在那些国产的影视剧，往往看一会儿就受不了。全是家常里短的事情，什么婚恋、出轨、代际冲突、职场之类，表面说的是刑侦、商战或者医疗故事，内核全是家庭伦理剧。如果一个女性一辈子就是彩礼包包查手机，防火防盗防闺蜜，她活的是不是太可悲了？我们需要一个使命把自己暂时从这些婆婆妈妈的日常中解脱出来。</li>
+        <li><strong>第三，它必须是你确实能使上劲儿的。</strong>如果你把促进科学进步当成自己的人生使命，你最好从事跟科研有关的工作。否则你就成了一个站在场边鼓掌的球迷。那个事的成与败跟你没有太大关系，你不需要承担任何责任，那也就谈不上是你的使命。</li>
+      </ul>
+      <p>但使命并不一定非是职业，使命比职业高一层。你当老师或者不当老师，都可以把帮助他人理解复杂事物当作自己的人生使命；你当不当医生，都可以把减轻痛苦和维护尊严当作自己的人生使命。</p>
+      <blockquote>
+        <p>使命最好是那种有点通用、但又能具体操作的事业，以至于你任何时候都可以开始，但是永远都干不完。</p>
+      </blockquote>
+      <p>对于今天的世界来说，有几个事情是你明显、立即就可以上手去做的。比如现在科学正在突飞猛进，特别是 AI 大潮来了，世界正在发生天翻地覆的变化。那我们该怎么理解这个世界？这个世界究竟是怎么回事？你可以选择做一个探索者，或者是一个解释者。有条件可以自己去探索世界的规律，选定一个领域深耕；没有条件亲身探索，也可以自己尝试理解别人的探索结果，并且给身边的人讲解。</p>
+      <blockquote>
+        <p>我们生活在这么奇妙而复杂的一个世界之中，难道你没有一种冲动，想要把它搞懂吗？</p>
+      </blockquote>
+      <p>再者，你还可以做一个建设者，也就是所谓的 builder。这个世界上有太多不完美的地方，有很多东西明显是不合理的，有很多需求没有满足。你为什么不能做一个好的产品，让别人的生活容易一点？像中国，食品安全这么多年都解决不了，那你为什么不能搞一个产品，哪怕是一个超市，让局面稍微变好一点呢？</p>
+      <p>你还可以做一个照料者或者守护者。等等等。</p>
+      <blockquote>
+        <p>不管你选择什么，你都可以把自己视为一个秩序输出者：你所到之处，秩序会多一点，清明会多一点，压迫和愚昧会少一点。</p>
+        <p>这件事儿你永远都做不完，你的人生永远有意义。曾子不说吗？仁以为己任，不亦重乎？死而后已，不亦远乎？</p>
+        <span class="cite">——《论语》引曾子语</span>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ================= 问答三 ================= -->
+  <div class="qa-block">
+    <div class="qa-source">来自《无免费午餐定理：诸行无常，有偏置才有决策》</div>
+
+    <div class="ask-card">
+      <span class="label">读者提问</span>
+      <div class="reader">宫徐波</div>
+      <p>万老师您好，无免费午餐定理和 AGI 或者 ASI 是否矛盾，是否意味着这个定理说明不可能有一个单一模型能实现 AGI?</p>
+    </div>
+
+    <div class="reply-card">
+      <span class="label">万老师回复</span>
+      <p>AGI 并没有违反无免费午餐定理。事实上，AGI 的设计初衷就不是一个什么题都会做的"神"。</p>
+      <p>AGI 最想解决的是在尽可能广泛的环境之中，能够有效实现目标的问题。这类问题最好具备以下特征：</p>
+      <ul>
+        <li>在我们生活和工作中反复出现</li>
+        <li>可以用语言描述</li>
+        <li>有结构可学</li>
+        <li>做完之后能收到反馈</li>
+      </ul>
+      <p>说白了，AGI 做的是我们现在每天都在日常处理的那些事儿，目前来说，尤其是在办公室里处理的那些事。而这些事并不代表所有可能的事。</p>
+      <p>AGI 是<strong>有偏置</strong>的。它的预训练语料是人类喂给它的，所以它天生就相信的是人类写出来的那个世界，而不是世界本身的一切。AGI 没有跳过我们去直接观察世界。它后期的强化学习也有偏置，这体现在它知道有些问题应该怎么回答才更符合我们的心意，它会迎合主流人群，但它不可能对每个人都迎合得那么好。</p>
+      <p>事实上，训练 AI 的工程师会强烈感受到「无免费午餐定理」的作用：你把它的某些能力抬上去的同时，就是在把另外一些能力给压下来。比如说，你想让思考更有创意，那你做数学题时，有时候就容易出错；你想在解题推理上特别严密，你思考就没有那么多的创意。这叫「对齐税」。</p>
+      <blockquote>
+        <p>所以，AGI 是付费午餐。</p>
+      </blockquote>
+      <p>AGI 是一个系统，但是在理论上，我们仍然可以说 AGI 就是一个算法，因为它是一套明确的计算过程。这一个算法居然能做这么多任务，这件事非常令人震撼、简直是不可思议。</p>
+      <p>但正如我们专栏以前讲过的沃尔夫勒姆（Wolfram）所说，写文章、编程、翻译、总结材料等这些事的背后，其实并不是不同的道理——可能背后就是<strong>同一套</strong>道理。它们都需要你去做一定的压缩，一定的预测，调动上下文，在有一定的目标约束之下生成一个输出——可能这些任务的共同点，比我们想象的要大得多。</p>
+      <p>根据无免费午餐定理，我们大致可以说，未来不会出现一个大模型能同时做好所有的事情——你总要在训练中做些取舍。也许不同的模型各自擅长不同的领域，可能会有一定的分工。</p>
+      <p>但是，一家公司总可以训练若干个模型，然后在这些模型的基础之上再放一个<strong>调度层</strong>：当你给我一个任务时，我再把这个任务调度给最擅长做该任务的模型。这件事并不违反无免费午餐定理。</p>
+      <p>正如我们这个世界、这个社会上有各种各样的人，每个人有不同的专长。但是你要说某件事全中国都没有一个人会，那也不太可能。</p>
+      <p>ASI 则是另一个故事。我理解 ASI 要追求超越人的智能，那么它应该追求人所不擅长的思考能力。比如说像 AlphaFold 这样思考蛋白质结构，这种模型必定是高度专业化的。正如你如果只是下棋的话，我们应该用一个专门下棋的 AI，而不应该用 AGI，尽管 AGI 下棋下的可能也不错。</p>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ================= 问答四 ================= -->
+  <div class="qa-block">
+    <div class="qa-source">关于「发愿与决策」之一</div>
+
+    <div class="ask-card">
+      <span class="label">读者提问</span>
+      <div class="reader">殷辉</div>
+      <p>不是很理解为什么选择去广州赚钱是个发愿，发愿跟决策怎么区分？我考虑了中国各地区经济情况，广州是一线城市，包容，机会多等等，以及我个人情况，我选择广州比新疆有绝对最优的逻辑，那么选择广州不应该就是我的决策算法吗？</p>
+    </div>
+
+    <div class="reply-card">
+      <span class="label">万老师回复</span>
+      <p>如果你要在全中国考虑一个最值得赚钱的地方，选广州的确是你的决策。在这个问题上，考虑<strong>中国</strong>，就是你的发愿。世界这么大，你为什么非得在中国赚钱？而且你为什么非得赚钱，而不是好好生活呢？</p>
+      <p>在中国选广州，和在广州选哪一行，这两个决策的发愿不一样，过程中的思维模型也很不一样。</p>
+      <blockquote>
+        <p>但要点是：只要你决策，一定先有一个发愿。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- ================= 问答五 ================= -->
+  <div class="qa-block">
+    <div class="qa-source">来自《概率分布：到底什么是决策？》</div>
+
+    <div class="ask-card">
+      <span class="label">读者提问</span>
+      <div class="reader">奕潇行安</div>
+      <p>请教万老师：如果决策是一个过程，我们在这个过程中所考虑到的因素算是策略吗？如果是那策略和决策的区别是什么呢？如果不是那策略和决策的关系又是什么呢？</p>
+    </div>
+
+    <div class="reply-card">
+      <span class="label">万老师回复</span>
+      <p><strong>决策</strong>是针对一个动作"做"还是"不做"。比如这个工作 offer 你到底接还是不接？面前有三个选项，你选哪个？决策是一个选择判断问题。</p>
+      <p>而<strong>策略</strong>（或者叫战略）则是"你怎么做"。它是你对未来准备采取的动作，所做的一个预先的计划安排。就好像下棋一样：我选择在这里攻击对方，他会怎么应对我，我接下来又该怎么做，我有一个设想。</p>
+      <p>关于决策的研究比较多，因为它是通用的。策略，则是跟领域有关系，军事、商业等等，各种局面非常多。我们以前讲博弈论的时候已经说过一些策略，这里不会重复讲。</p>
+    </div>
+  </div>
+
+  <!-- ================= 用户留言 ================= -->
+  <h2 class="comments-title">用户留言</h2>
+
+  <div class="comment-card">
+    <div class="c-head">
+      <span class="c-name">常觉不住</span>
+      <span class="c-meta">昨天 · 美国</span>
+    </div>
+    <p>我想到我太太这些年。她受伤后长期行动不便，有半年连下床都困难。可即使这样，她躺在床上，还是一直在志工团体里付出，安慰人、回应人、支持人。这让我慢慢明白，使命未必是一种轰轰烈烈的召唤。很多时候，它不是等你准备好了才出现，而是当现实已经给了你很多限制，你还是愿意继续把心力往外送，继续对别人有一点托住。这样看，使命未必是"我要成为什么大人物"，而更像是：即使自己也不轻松，仍不把自己活成一个只剩下消耗的人。</p>
+  </div>
+
+  <div class="comment-card">
+    <div class="c-head">
+      <span class="c-name">至尊女宝</span>
+      <span class="c-meta">昨天 · 四川</span>
+    </div>
+    <p>在中国选广州，和在广州选哪一行，这两个决策的发愿不一样。前者发愿是「在中国赚钱」，后者发愿是「在广州做某类工作」。你选金融还是 IT，那是另一个层面的决策，对应另一个层面的发愿。发愿可以嵌套，但每一层的决策都依赖上一层的发愿。你不能说选金融是我的算法，因为我的能力、薪资数据指向金融——那你怎么解释你当初选了广州而不是深圳？选了赚钱而不是去大理开民宿？层层追问下去，总会碰到一个你没法用算法回答的问题。那个问题的答案，就是发愿。</p>
+    <p>区分发愿与决策，不是为了否定理性，而是为了让理性更清醒地知道自己能干什么、不能干什么。决策算法是好工具，但工具不能决定你要去哪里。去哪里这件事，最终是你自己说了算，不是数据说了算。数据只是告诉你，既然你决定了要去广州，那就别绕路去乌鲁木齐。而那个决定本身，不需要逻辑证明，也证明不了。承认这一点，应该不难。</p>
+    <p>我今晚去听了一场年轻人为主的脱口秀。虽然我已经是老登，但是他们笑的点我也能接到。这跟去广州赚钱是同一套逻辑：表面上看，买票、进场、坐下，是个决策。但真正让我能 get 到的，是我事先已经发愿，我愿意听懂他们的梗，我默认这个场子跟我有关。如果我一进门就抱着"这帮小孩儿有什么好笑的"这个发愿，那再好的脱口秀我也笑不出来。</p>
+    <p>决策算法只能告诉我哪个场次性价比高、哪个演员好笑。但它不能替我决定：我愿不愿意走进一个不属于我年龄的场子，并且允许自己被逗乐。虽然我在现场没看到一个我这年纪的人，有一种清北学霸包围着我一个美容美发的感觉，但真的太搞笑了，非常开心，就是要多和年轻人在一起，硬融入！</p>
+  </div>
+
+  <div class="comment-card">
+    <div class="c-head">
+      <span class="c-name">Christy</span>
+      <span class="c-meta">昨天 · 广东</span>
+    </div>
+    <div class="c-title">小小的改变也很厉害</div>
+    <p>我想一个值得追求的人生使命，不是"我要达到什么"，而是"我愿意持续做什么"。这是一种无需许可、无需保证结果就能主动交付的。摆脱对外在目标的执念，转向内在持续行动的确认。不是"我要达到什么"，而是"我愿意持续做什么"。这种使命不依赖外部认可或结果兑现，而是一种主动、自发、自驱的交付。</p>
+    <p>假如把人生比作登山，都习惯于：设定目标、规划路线、衡量距离，然后期待站上"山顶"的那一刻。但人生并不存在真正的山顶，意义就在攀登的当下。当你真正专注于脚下的每一步，那一刻你已经在"目的地"之中。很多人把幸福、成就、自由放在未来的"山顶"。升职后、买房后、孩子长大后。但人生不只会某个瞬间"完成"。当你抵达一个山顶，会发现前方还有新的高峰。人生的目的不是终点，而是此时此刻的行动。</p>
+    <p>将人生视为不断进化的过程，把注意力放在"成为谁"而非"得到什么"上。里程碑式的成长自然会带来外在回馈，但核心动力始终来自内部。</p>
+  </div>
+
+  <!-- ================= AI 阅读总结 ================= -->
+  <section id="ai-summary">
+    <span class="sum-badge">AI 阅读总结</span>
+    <h2>读完全文，我想帮你记住这些</h2>
+
+    <p class="one-liner">一句话概括：这一期问答用五个问题串起一条主线——不管环境多僵化、条件多有限，你都能通过「身份认同 + 有限妥协 + 持续使力」把自己立住：学老庄与哈维尔守住精神底线，做司马迁笔下的"循吏"保住生存空间，再用"永远做不完的使命"让这辈子始终有事可做、始终有意义。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><strong>僵化场域里的自处之道，古人早有答案——老庄哲学。</strong>王夫之说「其上申韩者，其下必佛老」：上位者把所有人当工具，下面的人若还想做个人，只能去搞佛学老庄。精髓就两条：不作恶、不赞美作恶，但也不跟体制较劲——做个"逍遥派"；秦晖概括得更形象：「在上者指鹿为马，在下者难得糊涂。」要注意，老子讲「无为」本意是让上位者别折腾，后世才把它挪用成下位者的自保哲学，庄子《齐物论》的"不较真"同样是被这样使用的。</li>
+      <li><strong>不想做道家、还留着理想主义，就学哈维尔：活在真实之中。</strong>对外照样妥协，但绝不把妥协美化成"生活美学"；保留"平行的生活"——工作场域一套话语，私下对少数可信的人、对自己保持真实、说真话。这一条解决的是精神上的"立得住"。</li>
+      <li><strong>要解决"凭什么留在体制内"的生存问题，做司马迁笔下的「循吏」。</strong>不站队、不改革、不折腾、不与民争利，靠法理、常情、教化和稳定社会预期立足——"不管你们谁当权，你都需要我这样的基础设施"。反面是只认上级意志、不择手段的「酷吏」，它是让系统不稳定的因素，讨好少数人、成为多数人的敌人，最终没有好下场。</li>
+      <li><strong>好的人生使命有三个特点：</strong>不能是具体目标（偶然性太强，达不达成都尴尬，且必须是你单方面就能参与的事）；要超越自我、有点宏大（把我们从婆婆妈妈的日常里暂时解脱出来）；必须是你确实能使上劲的（否则只是站在场边鼓掌的球迷，成败与你无关）。使命比职业高一层——当不当老师，都可以把"帮助他人理解复杂事物"当使命。</li>
+      <li><strong>现在就能上手的方向：</strong>做探索者或解释者（去探索世界规律，或理解并讲解别人的探索成果）、做建设者（builder，做点好产品让生活容易一点）、做照料者或守护者。本质上都是"秩序输出者"：所到之处秩序多一点、清明多一点、压迫和愚昧少一点。这样的事永远做不完，人生就永远有意义——曾子说"仁以为己任，不亦重乎？死而后已，不亦远乎？"</li>
+      <li><strong>"培养下一代"不是好使命。</strong>对你太狭隘，对孩子太沉重；养育作用有限，父母只该承担有限责任——这对自己和孩子都更好。</li>
+      <li><strong>AGI 并不违反无免费午餐定理。</strong>AGI 处理的是"反复出现、可描述、有结构、有反馈"的日常任务，并非无所不能的"神"；它是有偏置的（预训练语料来自人类、强化学习迎合主流），而且存在"对齐税"——抬升一种能力就压低另一种能力，所以 AGI 是"付费午餐"。未来不会有一个模型同时做好所有事，但可以用多个模型加一个调度层实现分工；ASI 则追求人类不擅长的思考，注定高度专业化（如 AlphaFold）。</li>
+      <li><strong>发愿与决策，是两层问题。</strong>任何决策之前必先有发愿——"在中国选广州"是决策，"为什么非在中国赚钱"就是发愿；发愿可以嵌套，层层追问下去，总会碰到一个数据与算法回答不了的问题，那个答案就是发愿。决策是"做还是不做"的选择判断，策略（战略）是"怎么做"的预先计划安排。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ol>
+      <li><strong>本周写下一句"身份宣言"。</strong>用一两句话回答"我是谁、我的底线是什么、我绝不做什么"——这是老庄和哈维尔方案的第一步：先让精神立得住，再谈别的。</li>
+      <li><strong>建立自己的"平行生活"。</strong>分清工作话语和私人话语，选定一两个可信的人，每周至少一次对ta、也对自己说真话；把妥协当成策略，而不是自我美化的"艺术"。</li>
+      <li><strong>从"循吏思维"经营你的一亩三分地。</strong>不管你在公司、单位还是小团体，本周就试着在你能影响的范围内按"法理、常情、稳定预期"办事：不站队、不折腾、不与民争利，把自己活成"谁当权都需要的基础设施"。</li>
+      <li><strong>拿"使命三特点"检验你现在的追求。</strong>问三句：它是具体目标吗（是，就改成过程性的）？它超越自我吗（否，就找个更大的容器）？我真能使上劲吗（否，就降一档到你能参与的事）？不符合就调整，别硬扛。</li>
+      <li><strong>立刻选一个角色开始，本周就做第一次。</strong>做"解释者"：把一件你刚搞懂的复杂事（比如某个 AI 概念）讲给身边一个人听；或做"建设者"：改进身边一个明显不合理的小流程；或做"照料者"：每周固定时间去托住一个人。这类事永远做不完，从今天开始就不会"来不及"。</li>
+      <li><strong>把"培养下一代"从使命清单里划掉。</strong>本周就和家人聊聊责任的边界：对孩子只承担有限责任，把省下来的心力放回你自己能持续使上劲的事业上——这对双方都更好。</li>
+      <li><strong>做任何重要决定前，先追问"我的发愿是什么"。</strong>像"为什么非得在中国赚钱"那样向上追问两层，直到碰到那个算法回答不了的问题；同时区分"决策（做不做）"和"策略（怎么做）"，分别做选择和做计划，别混为一谈。</li>
+    </ol>
+
+    <h3>三、金句摘录</h3>
+    <blockquote>
+      <p>「其上申韩者，其下必佛老。」</p>
+      <p>「在上者指鹿为马，在下者难得糊涂。」</p>
+      <p>使命最好是那种有点通用、但又能具体操作的事业，以至于你任何时候都可以开始，但是永远都干不完。</p>
+      <p>你所到之处，秩序会多一点，清明会多一点，压迫和愚昧会少一点。这件事儿你永远都做不完，你的人生永远有意义。</p>
+    </blockquote>
+
+    <p class="sum-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('topBtn');
+  function onScroll() {
+    var top = window.pageYOffset || document.documentElement.scrollTop;
+    var total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    bar.style.width = (total > 0 ? (top / total) * 100 : 0) + '%';
+    btn.classList.toggle('show', top > 400);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

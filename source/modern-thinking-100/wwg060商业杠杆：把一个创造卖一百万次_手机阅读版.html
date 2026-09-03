@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第60讲｜商业杠杆：把一个创造卖一百万次 —— 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#fffefb;
+    --text:#2b2620;
+    --muted:#7d7468;
+    --accent:#8a5a2b;
+    --accent-soft:#a9753f;
+    --border:#e6ddd0;
+    --quote-bg:#f6efe3;
+    --note-bg:#f4f0e8;
+    --comment-bg:#fbf8f2;
+    --summary-bg:#f2e8d3;
+    --shadow:rgba(90,70,40,.10);
+    --reply-bg:#f7f0e2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#1f1c17;
+      --text:#e8e2d8;
+      --muted:#a89f92;
+      --accent:#c89a6a;
+      --accent-soft:#a9753f;
+      --border:#3a342b;
+      --quote-bg:#262119;
+      --note-bg:#221f1a;
+      --comment-bg:#221f1a;
+      --summary-bg:#2a2215;
+      --shadow:rgba(0,0,0,.4);
+      --reply-bg:#2a241c;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent-soft),var(--accent));
+    z-index:999;border-radius:0 3px 3px 0;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:20px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;
+    z-index:998;
+  }
+  #toTop:hover{transform:scale(1.06)}
+  .paper{
+    max-width:700px;margin:0 auto;
+    background:var(--card);
+    border-radius:16px;
+    box-shadow:0 1px 10px var(--shadow);
+    padding:30px 24px 40px;
+    margin-top:14px;margin-bottom:40px;
+  }
+  .doc-head{margin-bottom:26px}
+  .tag{
+    display:inline-block;font-size:12.5px;letter-spacing:1px;
+    color:var(--accent);background:var(--quote-bg);
+    border:1px solid var(--border);border-radius:999px;
+    padding:5px 12px;margin-bottom:16px;font-weight:600;
+  }
+  h1{
+    font-size:25px;line-height:1.45;font-weight:800;letter-spacing:.5px;
+    margin-bottom:12px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;
+  }
+  .meta .dot{opacity:.5}
+  h3{
+    font-size:18.5px;font-weight:800;line-height:1.5;
+    margin:32px 0 12px;padding-left:12px;
+    border-left:4px solid var(--accent);
+  }
+  p{margin-bottom:14px;text-align:justify}
+  strong{color:var(--accent-soft)}
+  ul{margin:0 0 14px 1.2em;padding:0}
+  li{margin-bottom:8px;text-align:justify}
+  li::marker{color:var(--accent)}
+  blockquote{
+    margin:18px 0;padding:13px 16px;
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    font-weight:600;color:var(--text);
+    text-align:justify;
+  }
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:30px 0;color:var(--accent);font-size:16px;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--border);
+  }
+  .img-caption{
+    text-align:center;font-size:13px;color:var(--muted);
+    background:var(--note-bg);border-radius:10px;padding:10px 12px;
+  }
+  .note-box{
+    background:var(--note-bg);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin-top:30px;
+  }
+  .note-box h3{border:none;padding:0;margin:0 0 10px;font-size:15px;color:var(--accent-soft)}
+  .note-box ol{margin-left:1.4em}
+  .note-box li{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:7px;text-align:left}
+  .note-box a{color:var(--accent);word-break:break-all}
+  .comments{margin-top:34px}
+  .comment-card{
+    background:var(--comment-bg);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
+  }
+  .c-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;flex:none;
+    background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:700;
+  }
+  .c-name{font-size:14.5px;font-weight:700;line-height:1.3}
+  .c-meta{font-size:12px;color:var(--muted)}
+  .comment-card p{font-size:15px;line-height:1.78;margin-bottom:10px;text-align:justify}
+  .comment-card p:last-child{margin-bottom:0}
+  .author-reply{
+    margin-top:12px;padding:11px 14px;
+    background:var(--reply-bg);border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0;font-size:14px;
+  }
+  .author-reply .lbl{font-weight:700;color:var(--accent-soft);margin-bottom:4px;font-size:12.5px;letter-spacing:1px}
+  #ai-summary{
+    margin-top:40px;padding:24px 20px;
+    background:var(--summary-bg);
+    border:2px solid var(--accent);
+    border-radius:12px;
+  }
+  #ai-summary .sum-tag{
+    display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:2px;
+    color:var(--accent);border:1.5px solid var(--accent);border-radius:6px;
+    padding:4px 10px;margin-bottom:14px;
+  }
+  #ai-summary h2{font-size:20px;margin-bottom:6px;font-weight:800}
+  #ai-summary .one-line{font-size:16px;font-weight:700;line-height:1.7;margin-bottom:16px}
+  #ai-summary h4{
+    font-size:15.5px;font-weight:800;color:var(--accent-soft);
+    margin:18px 0 8px;
+  }
+  #ai-summary ul{margin-left:1.15em}
+  #ai-summary li{font-size:14.5px;line-height:1.72;margin-bottom:8px}
+  #ai-summary .quotes blockquote{
+    margin:8px 0;font-size:14.5px;background:rgba(255,255,255,.35);
+  }
+  @media (prefers-color-scheme: dark){
+    #ai-summary .quotes blockquote{background:rgba(255,255,255,.05)}
+  }
+  #ai-summary .disclaimer{
+    margin-top:20px;padding-top:14px;border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);text-align:center;line-height:1.7;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<main class="paper">
+
+  <!-- ======== 文档头 ======== -->
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第60讲</span>
+    <h1>商业杠杆：把一个创造卖一百万次</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span class="dot">·</span>
+      <span>选自《万维钢 · 现代思维工具100讲》</span>
+    </div>
+  </header>
+
+  <!-- ======== 正文 ======== -->
+  <h3>从「经济租」到「杠杆」：你到底是怎么赚钱的</h3>
+  <p>我们已经讲了「经济租」和「阿尔法优势」，讲的是“凭什么是你赚钱”，这一讲咱们说说你到底是怎么赚钱的。</p>
+  <p>比如你开了一家工厂，雇了一百个工人。工人们加班加点，每人每天干十来个小时；你作为老板，就算再贪婪、再努力，也不过一天干十几个小时。那凭什么你的收入比工人高那么多呢？</p>
+  <p>老百姓的直觉是这里一定隐藏着某种罪恶：你剥削了工人。你这个资本家无偿占有了别人的劳动成果！剥削叙事曾经让人很痛快，但在当今这个时代，却是越来越站不住脚了。</p>
+  <p>今天很多高科技公司，总共就几百人，甚至十几个人，员工人人持股。可是他们的财富却是那些有几万名工人的传统工厂都望尘莫及的。那你说他们占有了谁的劳动成果？现在已经出现了“一人公司”，一个人，调用一堆 AI 智能体，一年能做成几百上千万元的生意，他又剥削了谁呢？</p>
+  <p>我们不能说世界上没有剥削，但剥削肯定不是今天赚钱的主旋律。剥削是零和的：你多拿一点别人就得少拿一点，一个抢劫游戏可不能让你赚大钱。</p>
+  <p>要理解今天的世界为什么允许企业家赚那么多的钱，你必须意识到财富不是什么“凝结在商品中的社会必要劳动时间”——现代世界拥有惊人的财富，可不是因为社会必要劳动时间比古代增加了成千上万倍——财富是规模化、是把好东西放大的结果，这个放大必须远远超出劳动力的限制。</p>
+  <blockquote>财富是规模化、是把好东西放大的结果，这个放大必须远远超出劳动力的限制。</blockquote>
+  <p>你真正的方法不是剥削，而是「杠杆」。你赚钱多，不是因为你干的活多，也不是因为你能让别人替你干活，甚至不只是因为你能让很多人替你干活，而是因为你能把一个创造、一个组织、一个信任，卖出很多次。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>别针工厂：什么是真正的劳动力杠杆</h3>
+  <p>亚当·斯密在《国富论》里讲过一个别针工厂的故事。假设你一个人辛苦一天连 20 个别针都做不出来，于是你雇了 10 个工人替你干，你们要是每天总共生产 200 个别针……那可不叫杠杆。工厂从来都不是这么开的。</p>
+  <p>工厂是让这 10 个工人形成分工合作：有人专门拉铁丝，有人专门校直，有人专门切段……每个人只负责一个小环节，每个人都把一个动作练到纯熟，工具也专门设计，生产线也围绕所有这些动作排列——结果这 10 个人每天能生产 48,000 个别针。</p>
+  <p>因为你安排生产线、制定流程、分配任务、监督质量，因为你的设计、组织和管理，使得 10 个工人的产量远远超过一个人产量的 10 倍，这才叫<strong>劳动力杠杆</strong>。你要是再厉害一点，能弄一大笔投资过来，购买一批自动化机器，工人的人均生产力还能成倍提升。</p>
+  <h3>算一笔账：固定成本与边际成本</h3>
+  <p>为什么杠杆能放大财富呢？咱们算算账。你办工厂，要先买地、建厂房、买机器、研发产品、设计流程、做模具、招人培训……这些要花一大笔钱。不管你生产一件还是一万件产品，这笔钱都得先花出去——这叫「固定成本（fixed cost）」。可是等生产线跑起来，每多生产一件产品，只需要增加一点点人工、材料、水电、包装和运输费用就行——这叫「边际成本（marginal cost）」。</p>
+  <p>赚钱的关键就在于产品的零售价远高于它的边际成本。这是合理的，毕竟投入了那么多固定成本必须收回来——但是，因为边际成本足够低，只要产品销量越过盈亏点，利润就会噌噌往上涨。</p>
+  <p>我们不能只看到工人干活、老板赚钱，却不知道这个生意之所以能做起来，是因为老板投资了前期的固定成本，老板搭建了生产系统，老板承担了万一产品销量低、过不了盈亏点的风险。</p>
+  <p>有些号称搞政治经济学的人还在纠结劳动力杠杆算不算剥削，却不顾现在的世界早就发明了更先进的杠杆。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>卖水的故事：六种杠杆的等级</h3>
+  <p>我们设想有一个缺水的地方，你来把远方的水卖给村民。</p>
+  <ul>
+    <li><strong>第一种办法是自己挑水，没有杠杆。</strong>你一天挑 50 桶卖 50 桶，单价并不便宜，可是因为总量太少，只能挣个辛苦钱。</li>
+    <li><strong>第二种办法是雇人挑水，用劳动力杠杆。</strong>人均效率总会有所提高，毕竟可以分工合作：比如说两个人推一辆车，每组人只负责一段路，走熟了就走得快。你的收入会更多，甚至单价还可以略降。但是管理这一群挑水工也很麻烦。</li>
+    <li><strong>第三种办法是尽可能多地仰仗设备，用机器杠杆。</strong>你多投点钱，买骆驼、买更大的水车、甚至修一条简单的滑轨。到了这一步，隔壁村的业余人士可就不容易跟你竞争了。</li>
+    <li><strong>第四种办法是基础设施杠杆。</strong>你直接建了一条自来水管！前期投入巨大，但是你现在边际成本很低，而且可以服务好几个村子，销量巨大。对村民来说，水成了一种很便宜的东西；可是你却赚到了更多的钱。</li>
+    <li><strong>第五种办法是知识产权杠杆。</strong>你发明了一套“高效取水及过滤系统”，把这套方案授权给全国几千个缺水的地方，让当地自行成立公司，你只收取授权费。现在你卖的已经完全不是水了。</li>
+    <li><strong>第六种办法是网络杠杆。</strong>你建了一个“可信水源认证”和地图平台。所有卖水的人都愿意贴你的认证标志，因为消费者相信你。你卖的既不是水也不是专利，而是信任、标准和网络。</li>
+  </ul>
+  <p>我们后面会讲到，网络平台是当今世界最赚钱的生意。现在你只需要体会一下高级杠杆是什么样的。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>最危险的杠杆：债务</h3>
+  <p>还有一种杠杆，我们的卖水故事里没提到，却是最引人注目、赚钱速度最快但也是最危险的杠杆，那就是「债务杠杆」。基本玩法是这样的——</p>
+  <p>比如你赶上了房地产的大潮，人们都相信房价永远上涨。你作为开发商，自己只出了一点点本金，就通过找关系从银行贷款，买下了一块地，开始盖楼。地一拿到，它就成了你的资产。你楼还没盖好，土地价格就已经涨了不少。于是你以这块土地作为抵押物，去银行融到了更多的钱。你再用融来的钱去买更多的地。</p>
+  <p>你直接把没盖好的楼预售，让资金回笼。转头一看房价和地价又涨了，你就融了更多的钱，拿下更多的地……这样反复循环，你用最初一个亿的本金，撬动了一百个亿的生意。</p>
+  <p>只要房价一直涨，购房者也能接受预售，银行也愿意给贷款，所有人都配合你……直到房子卖不动的那一天。你才发现，那些所谓资产，其实是债务。债务是一种好杠杆吗？它能放大财富吗？</p>
+  <p>公司金融学有个「莫迪利亚尼—米勒定理（Modigliani-Miller theorem，简称 MM 定理）」<sup>[1]</sup>，说在理想市场中，单纯改变债务和股权比例并不会凭空创造企业价值，债务更多是在重新分配风险和收益。</p>
+  <p>这有点反直觉。比如你有一个创业想法，但是没有钱。你找人借了一笔钱，开了公司，雇了员工，做了产品，服务客户，你创造了市场上本来不存在的价值，然后把钱还上。你问：这不就是债务创造了财富吗？</p>
+  <p>其实创造财富的是你那个创业项目，而不是债务。如果我们明确知道你那是一个好项目，你根本就不愁钱的来源，会有很多人愿意入股或者借钱给你。你这个项目是债务融资还是股权融资做的，还是你自己攒钱做的，都没关系。那些改变的只是谁承担风险、谁分享收益、谁先拿钱谁后拿钱而已。</p>
+  <p>当然 MM 定理描写的是一个理想市场。真实市场中有交易摩擦，税收条款会影响债权和股权选择，而且信息是不对称的——那么债务的确可以起到一个非常正当的作用：让资源从有钱但不会用的人，转移到没钱但是会用的人那里。</p>
+  <p>但即便如此，创造财富的也不是债务本身，而是那个项目，最多加上借钱者的风险判断。</p>
+  <blockquote>债务是一个中性的工具：如果判断错了，债务也会忠实地放大错误。</blockquote>
+  <p>我们前面讲「脆弱和反脆弱」的时候说过明斯基那个「稳定孕育不稳定」理论，他说的就是债务杠杆的危害性。经济越繁荣，大家越有信心；越有信心，越敢借债；越敢借债，系统越脆弱。融资结构会从对冲型融资滑向投机型融资，最后变成庞氏骗局型融资<sup>[2]</sup>。</p>
+  <p>债务杠杆最不一样的地方在于：它有偿付义务，债主早晚要来敲门……我们想要的，是好杠杆。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>好杠杆的本质：可反复执行的信息模式</h3>
+  <p>好的商业杠杆不是把同一块资产反复抵押，而是创造一种可以反复执行的信息模式。</p>
+  <p>无论是你的组织管理、你发明的商业模式，还是你搞出的一个配方、设计的产品原型、一套标准化操作，或者是形成了一个品牌，这些本质上都是信息模式。信息模式的特点是你设计它需要巨大的智慧和成本，但一旦成型，它可以被近乎零成本地复制，并且可以被可靠地执行。</p>
+  <blockquote>做一次收一次，那叫劳动。做一次收很多次，才叫杠杆。</blockquote>
+  <p>这件事儿的底层原理，是 2018 年诺贝尔经济学奖得主保罗·罗默（Paul Romer）的「内生增长理论（endogenous growth theory）」<sup>[3]</sup>。罗默回答了一个特别基本的问题：为什么人类社会能持续增长，而不是陷入资源枯竭的死循环？你的财富也多了，我的财富也多了，那这个世界上谁的财富变少了呢？我们到底剥削了谁？</p>
+  <p class="img-caption">〔配图〕Paul Romer —— 2018 年诺贝尔经济学奖得主</p>
+  <p>答案是包括地球母亲在内，谁的财富也没少<sup>[4]</sup>。罗默的洞见是：因为“思想”和“配方”是「非竞争性（non-rivalrous）」的。</p>
+  <p>比如一个苹果，我吃了你就不能吃，这是竞争性的。但是一个数学公式、一段代码、一个商业模式，却是非竞争性的——我看了这篇文章，并不妨碍你也看这篇文章；我用这套算法，也不影响你再用一遍。</p>
+  <p>财富增长的原理就在于这些「非竞争性投入（non-rival input）」：信息模式没有守恒定律，它可以被近乎免费地复制，它的边际成本约等于零，而它的边际收益远大于边际成本，所以财富才能无中生有地被生成。</p>
+  <blockquote>苹果不能复制，苹果品种和种植法可以复制；员工工时不能复制，培训手册和软件工具可以复制；一家店不能复制，开店语法可以复制。这就是现代财富的秘密。</blockquote>
+  <p>你购买任何商品，苹果也好，汽车也好，买的不是组成商品的那一堆原子——那一堆原子你一个都消灭不了，早晚都得还给大自然。你买的是那些原子的排列组合方式。你买的是商品的信息模式，或者简单说，你买的是那个商品的虚拟成分。</p>
+  <blockquote>卖什么都约等于卖软件。虚拟成分越大，规模化就越能赚钱，这就是商业杠杆。</blockquote>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>用杠杆的视角看各种好生意</h3>
+  <p>软件、视频、网上文章是边际复制成本最低的杠杆业务。你可能需要花很多很多功夫才能完成它，但你只需要完成一次，它就可以在无数台机器上近乎无成本地运行。</p>
+  <p>街边小店卖的是饭菜，连锁店卖的却是可复制的运营协议。麦当劳不是卖汉堡的，它卖的是“汉堡生产语法”：选址、供应链、厨房流程、点餐系统、服务节奏和品牌标识。</p>
+  <p>品牌作为杠杆的本质作用，是降低交易成本。你不需要向用户解释半天，别人只要听到你的名字就自动信任。在这个意义上商业世界绝不是尔虞我诈，而是最该重视君子名节的世界。</p>
+  <p>如果你的品牌已经如此深入人心，人们买你的商品就已经不再是因为你“好”，而是因为你提供了确定性。每一瓶可口可乐的口感都是一模一样的。它卖的不是一瓶黑色糖水，甚至都不是号称有多么神秘的配方，而是口感稳定性和一百多年堆出来的消费记忆。</p>
+  <p>最厉害的杠杆，是你成为现代生活的一种基础设施。平台就是这样的杠杆<sup>[5]</sup>。一旦成了平台，用户就会自带生产资料加入你……你只需要把信任系统、评价机制和支付手段这些基础设施搞好就行。平台卖的不是产品，而是市场秩序。</p>
+  <blockquote>剥削叙事把思维停留在血汗工厂那个层次，只有杠杆叙事才能让我们真正理解赚钱的逻辑。</blockquote>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>硅谷思维：把杠杆用到极致</h3>
+  <p>现在硅谷的思维，是把杠杆用到极致。</p>
+  <p>创业教父保罗·格雷厄姆（Paul Graham）早在 2012 年就说过：创业公司的定义就是增长（Startup = Growth）<sup>[6]</sup>。创业就是要把你的局部努力放大到整个市场。如果一家理发店要想增长 100 倍就得多雇 100 倍的理发师，那这不叫创业公司，叫传统服务业。</p>
+  <p>我有个做风险投资（VC）的朋友叫张锐，跟我说过一个“好的 VC”的投资逻辑。他说有的创业者技术很好，有护城河，每年能稳定增长 20%——这种“稳健”对好的 VC 毫无吸引力。VC 投 100 家公司可能大部分都归零，所以必须要求每家都有增长 100 倍以上的潜力才行。现在 AI 时代，用户付费意愿高，你开个小公司赚到几十万美元不是问题，但 VC 对这个不感兴趣：他们感兴趣的是你怎么能突破年入 100 万美元，达到千万甚至上亿美元。</p>
+  <p>你必须能撬动巨大的市场。</p>
+  <p>那你说我一个人，上哪儿找杠杆呢？硅谷思想家纳瓦尔（Naval Ravikant）有个洞见叫「不需要授权的杠杆（permissionless leverage）」<sup>[7]</sup>。劳动力杠杆需要别人同意被你领导；资本杠杆需要银行或投资人同意借钱给你。但代码和媒体是不需要授权的：你拍一段视频不需要许可证就可以全球播放。你最好的起步，就是调动这些杠杆的能力。</p>
+  <p>在这个高杠杆时代，能随时调用各种现成工具和规模化设施的「调用力」<sup>[8]</sup>，是比精通某一种工具更有用的能力。</p>
+
+  <div class="divider" aria-hidden="true">✵</div>
+
+  <h3>杠杆的悖论：规模化也是一种平等</h3>
+  <p>商业杠杆带来一个有意思的悖论。</p>
+  <p>规模化能让少数人拥有巨量的财富，这对其他人似乎很不公平。但也恰恰是因为规模化，使得每个人使用的产品其实都差不多……以至于亿万富豪的实际生活水平与普通中产阶级并没有绝对的差别。亿万富豪用的手机和我们的并没有任何不同——而且你花再多钱，也买不到功能更强的手机。</p>
+  <p>在这个时代，给少数富人服务并不是一种特别赚钱的生意，VC 都不愿意投。要想做大生意，你必须为尽可能多的人服务。这不也是一种平等吗？</p>
+
+  <!-- ======== 注释 ======== -->
+  <div class="note-box">
+    <h3>注释</h3>
+    <ol>
+      <li>[1] Modigliani, Franco, and Merton H. Miller. “The Cost of Capital, Corporation Finance and the Theory of Investment.” <em>The American Economic Review</em> 48, no. 3 (1958): 261–297.</li>
+      <li>[2] Minsky, Hyman P. “The Financial Instability Hypothesis.” In <em>The Elgar Companion to Radical Political Economy</em>, edited by Philip Arestis and Malcolm Sawyer, 153–158. Aldershot: Edward Elgar, 1994.</li>
+      <li>[3] Romer, Paul M. “Endogenous Technological Change.” <em>Journal of Political Economy</em> 98, no. 5, Part 2 (1990): S71–S102.</li>
+      <li>[4] 经济增长的确带来了污染，但是那些是可以被管理的，那些不是增长的本质。人类活动造成的这点熵增，跟太阳每时每刻浪费在宇宙空间中的能量相比、跟几十亿年以来地球遭遇的自然灾难相比，实在是太微不足道了。</li>
+      <li>[5] Rochet, Jean-Charles, and Jean Tirole. “Platform Competition in Two-Sided Markets.” <em>Journal of the European Economic Association</em> 1, no. 4 (2003): 990–1029.</li>
+      <li>[6] Graham, Paul. “Startup = Growth.” September 2012. https://www.paulgraham.com/growth.html</li>
+      <li>[7] Ravikant, Naval. “Product and Media Are New Leverage.” Naval.com, 2019. 另见《纳瓦尔宝典》一书。</li>
+      <li>[8] 精英日课第五季，「调用力」：调用工具的能力。</li>
+    </ol>
+  </div>
+
+  <!-- ======== 用户留言 ======== -->
+  <section class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment-card">
+      <div class="c-head">
+        <div class="avatar">至</div>
+        <div>
+          <div class="c-name">至尊女宝</div>
+          <div class="c-meta">昨天 · 四川</div>
+        </div>
+      </div>
+      <p>某品牌酒店。我第一次看到它的加盟手册时都有些懵了，装修标准精确到马桶边的卷纸离地多高，品牌使用费却高得像抢银行。连锁卖的根本不是房间，卖的是一套确定性的模版。这套模版，总部砸了十年、烧了几亿才打磨出来，那是它的固定成本。可一旦成型，每多卖一份授权，边际成本几乎就是一沓打印纸的钱。这叫一次炼钢，万次铸剑。你交的每一分品牌费，都是在为那个已经被验证过的排列组合买单。它不是剥削，它是你花钱买了一条通往标准化的高速公路。</p>
+      <p>再说那个更魔幻的五星级酒店，入住率常年趴在三成以下，却像韭菜一样一茬一茬地冒出来。我一度以为这是洗钱，后来也是听别人说人家玩的根本不是酒店，是地皮、是债务、是杠杆上的刀尖舞。过程简单得像诈骗：先拿一块地，画个五星级的饼，找银行借第一桶金。地价涨了，拿地去抵押，借更多的钱，再拿更多的地。酒店的入住率那是障眼法，只要资产表上的数字在膨胀，故事就还能讲下去。这叫用一枚订书钉，撬动整栋大楼的贷款。我出一个小指甲盖的本金，靠债务这个扩音器，把一声咳嗽吼成一个电视剧呢。感觉不可思议，但也无可奈何。</p>
+      <p>杠杆把收入拉出了天堑，又把日用品削成了方砖。我这几年研究专利，精心做一次，以后可以卖万次。可能复制才是对剥削最优雅的报复吧……</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="c-head">
+        <div class="avatar">一</div>
+        <div>
+          <div class="c-name">一叶而知秋</div>
+          <div class="c-meta">14小时前 · 北京</div>
+        </div>
+      </div>
+      <p>【思维工具－商业杠杆】听完这一讲，终于想通了一个困扰我三十年的工作难题。</p>
+      <p>我们这儿的人开玩笑说，地下挖出来的东西，运出去时还带着土。说白了，就是“挖煤卖煤、挖土卖土”，始终被钉在价值链最底端。我在家乡工作了三十年，主要任务就是想让我市工业迈过精深加工、下游延伸这道坎。平心而论，不能说我们不努力。去发达省市“取经”，学产业园模式、学招商政策、学营商环境，是工作常态。把先进经验领回来、推动落地，也不能说我们不勤奋。领导大会强调，我们小会督促，规划写了一大摞，措施出台了几百条。结果呢？我们是越抓越“落后”——不能说产业没升级，而是我们小步慢跑，发达地区快马狂飙，绝对经济总量的差距越追越大。</p>
+      <p>过去写反思总结，从上到下的口径高度一致：思想不够解放、营商环境不够好、认识高度上不去。批评完，我们也很认账。但受了这么多年教育，主观方面不能说我们没进步——可层级传导中，财力、编制、考核这些硬约束摆在那，不是光靠解放就能解决的。结果，永远与先进地区差着一口气，怎么努力也提不上去。</p>
+      <p>万老师这一讲，真让我打开了一个豁然开朗的视角：上述问题不能说没有，但更主要的原因，可能还是我们从起跑线上就输给了「杠杆」。经济基础决定上层建筑，商业底座不扎实，如何能指望凭政府部门一年几回泛泛的考察，就把一个地区炼土成金？我粗暴概括一下：我们在砸钱建厂房时，人家已经在卖“加盟协议”；我们在培养熟练工时，人家已经在卖“操作软件”；我们的农畜产品论吨卖时，人家的品牌农产品已经在按克卖品牌溢价。就是这么个事。不是我们不努力，是发力方式根本不在一个维度上。</p>
+      <p>我们相信人定胜天，但沿海发达地区在工业化初期，就近水楼台靠近了三样东西：资本、海外市场、技术源头——这正是先发者垄断的杠杆燃料。有这些支撑，他们抢先完成了规模杠杆，这是我们“人再定”也追不上的事：第一，规模杠杆把固定成本摊薄了。别人一条先进产线面向全球市场，几亿的研发和设备成本，摊到十亿件产品上，几乎可以忽略。我们面向的只是区域市场，同样的成本根本摊不薄。第二，他们形成了“非竞争性”的护城河。万老师讲，一个配方、一套流程、一个品牌，你用一万次也不损耗。先发者把这些“信息模式”跑通、固化、注册商标、形成标准后——这就不是“先发优势”了，这是“赢者通吃的结构性优势”。“低端”，恰恰是我们正在干的活；“杠杆”，恰恰是别人拿走利润的方式。这不是小食堂和连锁餐饮在厨艺上的竞争，而是供应链和品牌杠杆的碾压；也不是地方小商户不够勤快，而是网络杠杆对传统渠道的降维打击。</p>
+      <p>似乎这还不是尽头。在眼见的未来，还有一个巨大的变数等着我们——AI 来了。说实话，这东西让我有点慌。如果说上一代互联网杠杆碾压的是“传统商业”，那么这一代 AI 杠杆正在碾压“一切可被信息化的劳动”——包括我们正在学习的“先进经验”本身。以前我们去沿海学个管理模式、带回一套 SOP，还能吃几年老本。现在，最顶尖的商业逻辑和代码，大模型几天就能生成。先发者的杠杆优势，正从“难以复制”，变成“你刚学会，它已经迭代了十个版本”。但吓完之后，反过来看，这把刀砍别人也砍自己。过去想学沿海的管理流程，得派人驻厂几个月，人家还不一定教真的；现在大模型几天就能拆给你看。AI 确实在加速头部迭代，但也把过去沿海靠信息差攒下的那点家底，一点点抹平了。</p>
+      <p>那我们这样的后发地区怎么办？万老师给出的答案是：别在别人已经封顶的杠杆赛道里内卷。去找到那些“不需要授权的杠杆”——本地特有的、无法被数字化的“场景知识”和“信任关系”。我把这类杠杆叫做“本土专属杠杆”，跟沿海那些“通用杠杆”不同，这东西他拿不走、抄不了。</p>
+      <p>顺着这个思路，我似乎感觉到了我市能破局的方向。以前我们总想复制别人的成功，搞“弯道超车”；现在才明白，“弯道超车”的前提是你和人家在同一条赛道上。而真正的出路，可能是“换道超车”——换一条只有你能跑的赛道。我市有什么是别人无法复制的？</p>
+      <p>第一，是“生态信用”——一种可以全球交易的信任杠杆。除了“卖土卖煤”，还可以“卖空气”“卖风卖光”“卖碳汇”。但光卖碳汇不够养一个市。更现实的路子：用我们的风光绿电，驱动高价值、低能耗的精深加工——比如零碳认证的医药中间体。这东西比原料贵十倍，人家还非买不可。前提是，得先选两三家试点企业，把绿电指标和出口认证绑在一起跑通。这条路我们已经有了点底子，关键是别再像以前那样一上来就铺摊子——盘活现有的医药和精细化工企业，让他们改造零碳产线，比新建厂房靠谱得多。</p>
+      <p>第二，是“地域品牌”——用标准和认证构筑护城河。这就是万老师说的“品牌杠杆”——我市深处黄金纬度，有全球最好的小麦粉、向日葵、枸杞、番茄、瓜果等农产品。我们可以卖这些“可验证的品质承诺”。问题在于，这套杠杆我们有没有用足？能不能从“政府主导的品牌”变成“市场认可的品牌”？我琢磨着，政府别再去创牌子了，就干一件事：把“河套”两个字做成一个硬邦邦的认证标准，谁来用这个标都得经过第三方检测。政府退后一步，标准向前一步，品牌让市场自己去养。</p>
+      <p>第三，是“文化 IP”——把地域独特性变成可复制的体验产品。宁夏镇北堡西部影城，当年张贤亮在一片荒凉上建起来的，曾经的口号是“荒凉也是一种美”。现在呢？荒凉不卖了，卖的是“成为电影主角两分钟的体验”。这些我们也可以做。河套地区历史上就是蒙汉交汇区，有丰富的二元文化，虽然我们落后，但这何尝不是资源。但别一下子铺开，文旅这东西最怕上来就建大楼。先集中力量打一个点，盘活现有的麦田、古烽火台这些闲置乡土资源，把模板跑通了再说。</p>
+      <p>最后再说说 AI。前面把它当“利维坦”，吓了自己一大跳。反过来想，AI 恰恰是我们这种地方唯一可能追上去的杠杆。沿海的经验我们学不会就拉倒，但我们自己几十年攒下来的东西——比如老农艺师一眼看出病虫害的本事——沿海没有，AI 却可以帮我们把它变成产品。具体怎么干？市农科院牵头，把二三十位老把式的经验归拢归拢，租个现成的农业大模型底座做微调，成本没那么吓人。先在咱们自己合作社里头试，试成了，面向“一带一路”的干旱地区卖订阅式的种植方案。这不比卖原粮强？</p>
+      <p>说到底，有一条底线我们自己得说清楚：不能再走老路了。不新建园区、不铺大摊子，盘活存量优先。当年几百条措施写在纸上，最后烂在抽屉里，教训够深了。只有在做自己的过程中，别人才没法与我们竞争。我市未来的产品，不该是“一吨矿石”“一吨原粮”，而应该是“一套生态解决方案”“一个可信的地域品牌”“一种独一无二的文化体验”“一个能卖出去的 AI 农技模型”。</p>
+      <p>听万老师的课，一丝顿开，便是收获。三十年总想追别人的脚步，如今才懂，深耕脚下这块地，才是最好的破局。</p>
+      <div class="author-reply">
+        <div class="lbl">作者回复</div>
+        <p>谢谢分享，我的荣幸！</p>
+      </div>
+    </div>
+
+    <div class="comment-card">
+      <div class="c-head">
+        <div class="avatar">左</div>
+        <div>
+          <div class="c-name">左星星</div>
+          <div class="c-meta">昨天 · 上海</div>
+        </div>
+      </div>
+      <p>万老师早年开博客、在天涯写文章、出书，那是知识产权杠杆。一次思考写成文字，读者可以反复阅读、转发、收藏。万老师睡觉的时候，文字还在替他工作。</p>
+      <p>后来在罗胖的怂恿下开了《精英日课》，这就不只是知识产权杠杆，而是网络杠杆。万老师提供观点、模型和价值观，得到提供分发、支付、交付和信任系统，读者提供反馈和持续订阅。这个时候，大家买的已经不是某一篇文章，而是一种确定性：每天有人替我把复杂、前沿、混乱的信息，重新加工成能理解的思维框架和决策模型。就像自来水公司卖的不是水分子，而是稳定供水；万老师卖的也不是单篇内容，而是稳定更新、稳定筛选、稳定解释世界的能力。六季下来，真正值钱的，是信任。</p>
+      <p>这对普通人的启发是，不要一上来就问“我能不能成为万维钢”。更好的问题是：我能不能在一个很小的领域，做出自己的“小型认知基础设施”？这不一定要融资创业，也不一定要做成百万粉丝账号，而是把自己的经验，变成别人可以反复调用的东西。</p>
+      <p>比如做“翻译型杠杆”。你不一定要成为某个领域最顶尖的人，但可以成为两个世界之间的翻译者：把 AI 讲给大爷大妈听，把数学讲给文科生听，把财务讲给老板听。别人看不懂的，你看懂了；别人用不上的，你翻译成可操作的方法，这就是普通人的杠杆。</p>
+      <p>普通人的机会，不是等待别人授权自己成为专家，而是在一个小切口里持续积累，把经验变成方法，把方法变成工具，最后变成别人离不开的稳定服务。</p>
+      <div class="author-reply">
+        <div class="lbl">作者回复</div>
+        <p>我只是一个谦卑的科学作家，赶上了读者愿意付费的时代和罗老师创办的这个平台。但是我的确并没有问我应该得到什么，我一直在问我能提供什么。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== AI 阅读总结 ======== -->
+  <section id="ai-summary">
+    <span class="sum-tag">AI 阅读总结</span>
+    <p class="one-line">一句话概括：赚钱的本质不是靠剥削或比别人干得多，而是用「杠杆」把一次性的创造（信息模式）规模化地卖出很多次，从而突破劳动力的物理上限。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li><strong>财富来自放大而非剥削。</strong>剥削是零和的抢劫游戏，而现代财富是把好东西规模化的结果——几百人甚至十几个人的高科技公司、一个人加一堆 AI 智能体做成上千万生意的一人公司，都说明赚钱的主旋律早已不是榨取劳动。</li>
+      <li><strong>劳动力杠杆的威力。</strong>亚当·斯密别针工厂的故事：让 10 个工人分工合作，日产量从 200 枚跃升到 48,000 枚，远超单人产量的 10 倍；杠杆来自设计、组织与管理，还能叠加资本（买机器）进一步放大。</li>
+      <li><strong>固定成本与边际成本决定赚钱逻辑。</strong>建厂、研发、模具等前期投入是固定成本，多产一件只增加边际成本；只要零售价远高于边际成本、销量越过盈亏点，利润就爆发式上涨——老板的高收入对应他投入的前期成本与承担的失败风险。</li>
+      <li><strong>杠杆有等级。</strong>卖水故事给出六种办法：人力（无杠杆）、劳动力、机器、基础设施（自来水管道）、知识产权（授权）、网络（信任认证平台）。越高级越接近卖信任、标准和网络，网络平台是当今最赚钱的生意。</li>
+      <li><strong>债务杠杆最危险。</strong>房地产循环抵押、预售融资能把一个亿撬动成一百个亿，但 MM 定理指出债务只是重新分配风险与收益、并不创造价值；明斯基「稳定孕育不稳定」揭示繁荣期借债如何让系统走向庞氏阶段——债务会忠实地放大错误。</li>
+      <li><strong>好杠杆的本质是「信息模式」。</strong>组织管理、商业模式、配方、品牌都可以近乎零成本复制、被可靠执行；罗默的内生增长理论说明思想与配方是「非竞争性」的，边际成本≈0、边际收益巨大，财富因此无中生有——苹果不能复制，苹果品种和种植法可以复制。</li>
+      <li><strong>卖什么都约等于卖软件。</strong>你买商品买的是原子的排列组合（虚拟成分）；软件、视频、文章、连锁店（麦当劳卖“汉堡生产语法”）、品牌（降低交易成本、提供确定性如可口可乐）、平台（用户自带生产资料，卖的是市场秩序）都是典型的杠杆业务。</li>
+      <li><strong>硅谷把杠杆用到极致。</strong>创业=增长（Startup = Growth），好的 VC 只投百倍潜力项目；纳瓦尔「不需要授权的杠杆」——代码与媒体无需许可即可触达全球；「调用力」比精通单一工具更有用；而杠杆的悖论是规模化让富豪与中产生活水平无绝对差别，为尽可能多的人服务才是大生意。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>把做过一次的活儿变成可复制资产。</strong>本周挑一个你重复做的工作（周报模板、沟通话术、问题排查清单），整理成一份标准文档或 SOP，下次直接调用，并试着分享给同事——这就是你的第一个“信息模式”。</li>
+      <li><strong>用「不需要授权的杠杆」起步。</strong>开一个公众号、视频号或播客，把你一个小领域的经验做成系列内容；不追求爆款，先积累“做一次、可反复被阅读”的资产，让内容在你睡觉时替你工作。</li>
+      <li><strong>做「翻译型杠杆」。</strong>找到两个你恰好都懂的世界（AI 与长辈、专业术语与大众、财务与老板），把一方的话翻译成另一方听得懂、用得上的方法——这几乎零成本，却是普通人最容易起步的杠杆。</li>
+      <li><strong>用固定成本/边际成本思维筛选题。</strong>做任何事前问一句“这个产出做一次能卖几次？”优先把时间投给边际成本趋近于零的产出（模板、课程、代码、内容、认证），少做只卖一次的纯劳动。</li>
+      <li><strong>慎用债务杠杆。</strong>借钱或加杠杆前，先判断资金投向是不是能产生“非竞争性资产”的好项目；个人层面把负债率控制在可承受范围，别让自己掉进“繁荣—自信—借债”的脆弱循环。</li>
+      <li><strong>积累个人品牌与信任。</strong>无论做什么，坚持稳定交付同一品质，让别人听到你的名字就自动信任——品牌杠杆的本质是降低交易成本，这是人人都能积累的长期资产。</li>
+      <li><strong>如果在组织或欠发达地区工作：换道超车。</strong>别照搬别人的通用杠杆，去找本地“无法被数字化的场景知识与信任关系”（本土专属杠杆），把存量经验——老师傅的手艺、好产品、文化资源——做成可出售的产品、认证标准或订阅服务。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <div class="quotes">
+      <blockquote>「做一次收一次，那叫劳动。做一次收很多次，才叫杠杆。」</blockquote>
+      <blockquote>「苹果不能复制，苹果品种和种植法可以复制；员工工时不能复制，培训手册和软件工具可以复制；一家店不能复制，开店语法可以复制。」</blockquote>
+      <blockquote>「卖什么都约等于卖软件。虚拟成分越大，规模化就越能赚钱，这就是商业杠杆。」</blockquote>
+      <blockquote>「债务是一个中性的工具：如果判断错了，债务也会忠实地放大错误。」</blockquote>
+    </div>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</main>
+
+<script>
+  var bar=document.getElementById('progress'),btn=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+    var show=h.scrollTop>400;
+    btn.style.opacity=show?'1':'0';
+    btn.style.pointerEvents=show?'auto':'none';
+  },{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

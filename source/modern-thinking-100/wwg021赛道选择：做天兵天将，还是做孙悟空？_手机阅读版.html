@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第21讲 · 赛道选择：做天兵天将，还是做孙悟空？｜万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1; --fg:#2b2a26; --fg-soft:#6f665a; --accent:#8a5a2b;
+    --card:#fffdf8; --line:#e7decc; --quote-bg:#f6efe2; --chip-bg:#efe6d3;
+    --summary-bg:#f3ead8; --shadow:0 1px 3px rgba(60,45,20,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512; --fg:#e9e3d8; --fg-soft:#a79e8f; --accent:#c9965c;
+      --card:#1f1c17; --line:#352e24; --quote-bg:#221d16; --chip-bg:#2a241a;
+      --summary-bg:#241d13; --shadow:0 1px 3px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;line-height:1.82;text-align:justify;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000;transition:width .1s linear;}
+  #backTop{
+    position:fixed;right:18px;bottom:calc(20px + env(safe-area-inset-bottom));width:44px;height:44px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;line-height:1;cursor:pointer;z-index:1000;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.22);
+  }
+  .container{max-width:700px;margin:0 auto;padding:0 20px 60px;}
+  header.doc-head{padding:34px 0 8px;}
+  .tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.06em;color:var(--accent);
+    background:var(--chip-bg);border:1px solid var(--line);border-radius:999px;padding:3px 12px;margin-bottom:16px;
+  }
+  h1{font-size:27px;line-height:1.45;margin:0 0 14px;text-align:left;font-weight:700;}
+  .meta{font-size:13.5px;color:var(--fg-soft);text-align:left;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:26px;}
+  h2{
+    font-size:20px;line-height:1.5;margin:36px 0 14px;padding-left:12px;border-left:4px solid var(--accent);
+    text-align:left;font-weight:700;
+  }
+  h3{font-size:17.5px;margin:28px 0 12px;text-align:left;font-weight:700;}
+  p{margin:0 0 16px;}
+  strong{color:var(--accent);font-weight:700;}
+  .divider{display:flex;align-items:center;gap:14px;margin:30px 0;color:var(--accent);}
+  .divider span{flex:1;height:1px;background:var(--line);}
+  .divider i{font-style:normal;font-size:13px;letter-spacing:.3em;opacity:.75;}
+  blockquote{
+    margin:22px 0;padding:14px 18px;background:var(--quote-bg);
+    border-left:4px solid var(--accent);border-radius:0 12px 12px 0;
+    color:var(--fg);font-size:16.5px;
+  }
+  blockquote p{margin:0 0 8px;} blockquote p:last-child{margin-bottom:0;}
+  ul{margin:0 0 16px;padding-left:22px;}
+  li{margin:0 0 8px;}
+  .story-card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin:22px 0;box-shadow:var(--shadow);
+  }
+  .story-card .story-lead{font-size:14px;color:var(--fg-soft);margin-bottom:10px;text-align:left;}
+  .story-card .verse{margin:0;line-height:2;text-align:left;}
+  .quiz-card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin:14px 0;box-shadow:var(--shadow);
+  }
+  .quiz-card .q{font-weight:700;margin-bottom:8px;text-align:left;}
+  .quiz-card .q .num{
+    display:inline-block;min-width:22px;text-align:center;margin-right:8px;color:#fff;background:var(--accent);
+    border-radius:6px;font-size:13px;padding:0 4px;
+  }
+  .quiz-card ul{list-style:none;padding:0;margin:0;}
+  .quiz-card li{margin:3px 0;font-size:16px;text-align:left;}
+  .quiz-card li b{display:inline-block;width:18px;color:var(--accent);}
+  .quiz-verdict{
+    background:var(--quote-bg);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:16.5px;
+  }
+  .poem{
+    text-align:center;background:var(--quote-bg);border:1px dashed var(--line);border-radius:12px;
+    padding:22px 18px;margin:28px 0;
+  }
+  .poem .poem-title{font-size:13px;color:var(--fg-soft);letter-spacing:.4em;margin:0 0 12px;}
+  .poem p{margin:0;font-size:18px;line-height:2.1;}
+  .notes{
+    margin:30px 0 10px;padding:16px 18px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);
+  }
+  .notes h3{margin:0 0 10px;font-size:15px;color:var(--accent);}
+  .notes ol{margin:0;padding-left:20px;font-size:12.5px;line-height:1.7;color:var(--fg-soft);text-align:left;}
+  .notes li{margin:0 0 6px;}
+  #ai-summary{
+    margin:42px 0 8px;padding:24px 22px;background:var(--summary-bg);
+    border:1.5px solid var(--accent);border-radius:14px;box-shadow:var(--shadow);
+  }
+  #ai-summary .ai-head{
+    display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800;margin:0 0 6px;text-align:left;color:var(--accent);
+  }
+  #ai-summary .ai-sub{font-size:12.5px;color:var(--fg-soft);margin:0 0 16px;text-align:left;}
+  #ai-summary h4{font-size:15.5px;margin:18px 0 8px;text-align:left;}
+  #ai-summary p,#ai-summary li{font-size:15.5px;line-height:1.85;}
+  #ai-summary .one-liner{font-weight:700;font-size:16px;background:var(--card);border-radius:10px;padding:12px 14px;margin:0 0 4px;}
+  #ai-summary ul{margin:0 0 4px;padding-left:20px;}
+  #ai-summary .quote-list{list-style:none;padding:0;margin:0;}
+  #ai-summary .quote-list li{
+    background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 8px;
+    border-left:3px solid var(--accent);font-size:15px;
+  }
+  #ai-summary .ai-foot{margin:16px 0 0;font-size:12px;color:var(--fg-soft);text-align:center;padding-top:12px;border-top:1px dashed var(--line);}
+  footer.site-foot{margin-top:24px;font-size:12.5px;color:var(--fg-soft);text-align:center;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="container">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第21讲</span>
+    <h1>赛道选择：做天兵天将，还是做孙悟空？</h1>
+    <div class="meta">作者：万维钢　｜　系列课程 · 现代思维工具100讲　｜　手机阅读版</div>
+  </header>
+
+  <p>有句话叫「选择大于努力」，你越了解真实社会就会越认可。加法世界里结果正态分布，你多一分努力就多一分收获；可是在我们这个重尾世界，你想有大成就，就得跟人做乘法。那么选择跟谁相乘就特别重要：乘对了，结果指数级放大；乘错了，甚至乘了负数，那结局就很不好了。</p>
+  <p>高回报不是对辛苦的补偿，大成就不是对努力的积分。这个世界喜欢奖励不对称的优势，你希望在正确的时机出现在正确的一方。</p>
+  <p>这可不只是“读个好专业、进个好行业”的问题，那些还都属于细节。<strong>最重要的是你要选择玩什么游戏。</strong></p>
+  <p>借用博弈论的一个说法，这一讲的思维工具可以叫做「赛道选择（Game Selection）」，也就是你打算入哪个局。</p>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <h2>一个段子：做题家成为公务员的故事</h2>
+  <div class="story-card">
+    <div class="story-lead">网上流传一个段子，建议把自己代入品一品 ——</div>
+    <p class="verse">你出生在修仙世家，<br>
+    从小天赋异禀，<br>
+    后来更是拜入名门正宗，<br>
+    历经千余年苦修，<br>
+    度过数次天劫，<br>
+    才最终得道飞升，<br>
+    然后成为了阻挡孙悟空的十万天兵之一。</p>
+  </div>
+  <p>我理解这是一个做题家成为公务员的故事。不是不努力，也不是不聪明，家里条件也给力，每一步都走对了，每一步都是大多数人的理想，每一步都赢了很多人，后来得到的位置也不是不满意……可是跟人家孙悟空一比，你只是个平庸的编号而已。</p>
+  <p>而你当年那个不守规矩、整天干一些离经叛道事情的同学，如今却成了一方人物。</p>
+
+  <h2>两种游戏：天兵天将 vs 孙悟空</h2>
+  <p>到底差在了哪呢？孙悟空和天兵天将，玩的是两种完全不同的游戏。</p>
+  <p><strong>赛道选择选的不是岗位，而是人生叙事权。</strong></p>
+  <p>天兵天将是别人故事里的 NPC；孙悟空是自己宇宙的叙事原点。</p>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <p>我这里可不是说就应该选择做孙悟空。咱们必须考虑「幸存者偏差」：大多数想做孙悟空的人最终只不过是普通的妖怪，早就被天兵天将轻松剿灭了……站在十万天兵天将面前的孙悟空，是一个孤独的幸存者。但是你得承认，孙悟空和天兵天将的体感完全不同。</p>
+  <p>天兵天将这条路线，就如同一个好学生，一路通过考试、名校毕业，进入一个大机构 —— 可能是公务员、可能是国企，可能是大型民营企业。要点是天兵天将都是那个大体制中的一份子，也可以说是螺丝钉。</p>
+  <p>我们可以把这个路线叫做「体制内」。你没有建立那个体制，你是去适应体制的。</p>
+  <p>这里的游戏规则是遵守流程、完成考核、按部就班升级、在既定框架里不断优化自己。如果你上进心强，你要学会向上管理，向下协作，理解规则利用规则，在规则允许的范围内争取更好的位置……</p>
+  <p>而孙悟空的路线，则是「体制外」。可能是个自己创业的企业家，也可能是个自由职业者，要点是你必须直面真实世界，而不是别人建立的规则。你不会因为把事情做“对”了就不必担责，你必须承担所有的风险。</p>
+  <p>体制内玩家需要钻研「人际关系逻辑」。这是因为你的待遇本质上是上面分配给你的：提拔、考核、表彰、奖励都来自于上级。你必须被人家 —— 很多时候是一个具体的人 —— 认可，才能占据一个好位置。</p>
+  <p>而体制外玩家，则必须研究「物理世界逻辑」：现有技术条件允许吗？成本合理吗？市场会怎么反应？用户会不会买单？你得操心许多实实在在的事情，而不是说搞定一个关系就行。</p>
+  <p>简单说，<strong>天兵天将的地位来自他们被分配的位置，而孙悟空的地位则是自己创造出来的。</strong></p>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <h2>体制内还是体制外：最重要的选择</h2>
+  <p>我私下认为是孙悟空这样的人在养着那些天兵天将。但是如果你选择做天兵天将，我也完全理解，毕竟这个世界需要的填补体制的人总是远远多于创造和改进体制的人。但是不论怎么选，你都有必要搞清楚选择意味着什么。</p>
+  <p><strong>赛道选择的要义是先选游戏，再谈最优策略。</strong></p>
+  <p>有太多的人根本没有赛道选择的意识，直接跳过了“选游戏”这一步。可能是父母安排可能是随波逐流，莫名其妙地进入某个系统，然后几十年都没搞清楚这样的系统应该怎么玩。</p>
+  <p>就如同被推着去参加了一场比赛，规则你没看，赛道材质你没摸，连对手是谁你都不知道 —— 那“努力”又有什么意义呢？</p>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <p>如果你有选择的意识，那么最重要的选择就是：<strong>体制内还是体制外。</strong></p>
+  <p>其实做孙悟空也不见得就要对立或者反抗体制。你完全可以自己建立一个小体制，或者对现有的体制做出一些改造，哪怕提点改进的建议……关键区别在于，体制内的人只是在适应别人的秩序，而体制外的人会有更多的想法和主动性。这两种思维模式可是太不一样了。</p>
+
+  <h2>GPT 三道自测题：你是天兵，还是悟空？</h2>
+  <p>我让 GPT 出了三道自测题，帮你选择到底要做孙悟空，还是更适合做天兵天将 ——</p>
+
+  <div class="quiz-card">
+    <div class="q"><span class="num">1</span>你每天主要焦虑的是：</div>
+    <ul>
+      <li><b>A</b> 今年的绩效、晋升、考评</li>
+      <li><b>B</b> 自己在长期能力曲线和影响力曲线上的位置</li>
+    </ul>
+  </div>
+  <div class="quiz-card">
+    <div class="q"><span class="num">2</span>你最害怕的是：</div>
+    <ul>
+      <li><b>A</b> 被组织淘汰、丢掉头衔</li>
+      <li><b>B</b> 失去好奇心、停止升级</li>
+    </ul>
+  </div>
+  <div class="quiz-card">
+    <div class="q"><span class="num">3</span>别人问你“你这一生想成为谁”，你的第一反应是：</div>
+    <ul>
+      <li><b>A</b> 一个职称/岗位：总监、教授、首席科学家……</li>
+      <li><b>B</b> 一个功能：一个改变人们思考方式的人、一个开创新行业的人……</li>
+    </ul>
+  </div>
+
+  <div class="quiz-verdict">
+    <p>如果你几乎全是选 A，你更适合当一个天兵：在明确规则下做长期优化，你能越爬越稳。如果你都选 B，你更像悟空：你受不了被定义，你想要有所创造。</p>
+    <p>这里不是价值判断。<strong>天兵不丢人，悟空也不高贵。</strong>真正危险的是你用天兵的心智在重尾赛道上求稳，又或者用悟空的性格在科层体系里求自由 —— 那样你会很惨，只落得一大堆抱怨。</p>
+    <p>选定了，就得尊重你那个游戏的玩法。</p>
+  </div>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <h2>天兵赛道：标准化、指标与政治</h2>
+  <p>天兵赛道的特点是讲究标准化。分数、名次、KPI、职称、头衔，如同一把刻度清晰的尺子，你得不断地接受考核。系统对你的评价往往不是基于你把事情做得有多“好”，而是你把事情做“对”。当然你很优秀，可是身旁就有很多像你一样优秀的人也在做同样的事。在系统眼中，你是非常可替代的。</p>
+  <p>体制内生存最大的伤害是人们会把「指标（metrics）」当成「目的（purpose）」。在某些时刻，你会发现没有什么比完成组织设定的指标更重要……这就是体制对人的异化，这叫「古德哈特定律（Goodhart’s Law）」，咱们后面再专门讲。</p>
+  <p>所以当天兵的第一修行是<strong>请把指标当工具，而不是当人生</strong> —— 否则你就是个随时可以被牺牲的工具。只有认识到那些指标只是工具，而且还不一定管用，很多只不过是临时拍脑袋的决策而已，你才能真正理解上级的意图，共情于他们的困境。</p>
+  <p>那么你就可以搞一点政治了。比如说，<strong>与其内卷指标，不如管理预期；与其比拼执行力，不如竞标解释权。</strong></p>
+  <p>搞政治并不是不道德的事儿，你要把政治技巧当成一门技术科目。组织行为学早就发现 [1]，「政治技巧（political skill）」与工作表现、声誉、职业成功都有稳定的正相关关系。还有研究发现 [2] 政治技巧和「可晋升性（promotability）」密切相关：升不升你，往往不是看你干了多少活，而是看别人能不能<strong>看见</strong>你干了什么活。哪里的舞台都喜欢更会讲故事的人。</p>
+  <p>很多人选择进入体制是为了求一个安全稳定，但那可能只是一厢情愿。体制内最大的系统性风险，是规则突然变了：上级倒台、部门裁撤、赛道转向、指标口径调整……你过去十年练的枪法瞬间成了过气的武术。</p>
+  <p>所以我还是想提醒你回到前面讲的「能耐寻求定理」，平时得多给自己赋能才行。<strong>就算你已经是天庭的猛将，最好也有个自己的秘密项目，悄悄修一个花果山副本。</strong></p>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <h2>孙悟空赛道：不对称技能、利基构建与效应化</h2>
+  <p>孙悟空赛道没有标准打法，你自己给自己设定目标。你认为这个世界上有些地方不太对，所以你想做一个更好的东西出来。你的存在是对现有秩序的挑战，或者说是对系统的压力测试。</p>
+  <p>创新最容易起源于边缘地带 [3]。最理想的起步地点是在一个灰色区域，正如花果山原本不归任何部门管。你需要练就几个<strong>不对称</strong>的技能 —— 不是在某个统一标准下多考几分，而是“七十二变”：很少有人练这些，以至于你拥有碾压式的差异。</p>
+  <p>比如你最好拥有跨学科、跨场景的思维工具，具备高水平的决策技能，能迅速看穿一个叙事的本质，也许你还擅长资源整合，再加上一点领导力和说服力……这些咱们后面再讲。这里我想说两个战略性的能力。</p>
+  <h3>利基构建（Niche Construction）</h3>
+  <p>不是寻找生态位，而是直接构建自己的生态位。利基构建其实是一个生物学概念，生物学家发现生物不只是被环境选择，生物也会主动改造环境，从而改变选择压力 [4]。像河狸筑坝、蚯蚓松土，都是典型的利基构建。</p>
+  <p>也就是孙悟空不应该去应聘弼马温那种现成的岗位，而是需要一个齐天大圣这样为自己量身定制的利基。让别人去卷 KPI、头衔和组织的资源吧，你不如<strong>直接出作品，积累用户，发展不需要人批准的影响力</strong>。</p>
+  <h3>效应化（Effectuation）</h3>
+  <p>那你说从何入手呢？另一个战略思维工具叫「效应化（Effectuation）」。这是弗吉尼亚大学达顿商学院的萨拉斯·萨拉斯瓦蒂（Saras Sarasvathy）教授 2001 年提出的理论 [5]，说创业其实是一种范式转化。</p>
+  <p>一般人做事的范式，可以称之为「因果式（causation）」：先有目标，有个想解决的问题，然后看看在我这个特定环境里我能把这个问题解决到什么程度。</p>
+  <p>而效应化，则是先看看我手头有什么资源、有什么关系、我能调用什么技术，想想我把这些东西组合起来、迭代、合作，能做出一个什么东西来，也许是个新游戏 —— 这个东西也许正好能解决某个问题。</p>
+  <p>萨拉斯瓦蒂说这就如同大厨做饭：<strong>因果范式是照着菜谱买菜；效应化则是打开冰箱看有什么菜，就做什么饭。</strong></p>
+  <p>我前段逛 CES（消费电子展），对这种效应范式创新的感受特别强烈。AI 硬件也好，医疗可穿戴设备也好，很明显那些公司不是说你们有一个问题我终于帮你们找到了解决方案，而是说当前技术前沿（state of the art）恰好到了这个程度，我恰好能拼凑出这么一个产品来，也许对你们有用。</p>
+  <p><strong>你做的不是你<em>该做</em>的事儿，你做的是你<em>能做</em>的事儿。</strong></p>
+  <p>听起来是为了创业而创业，但这恰恰是供给侧心态：我能贡献这么一个你们没有的东西，也许市场正好需要，不行我就再换一个……变化是主动而不是被动的，生物的自然选择不也是如此吗？</p>
+  <blockquote><p>天兵填写别人设计好的表格，悟空另开一张表。</p></blockquote>
+
+  <div class="divider" aria-hidden="true"><span></span><i>✵</i><span></span></div>
+
+  <h2>结语：赛道选择，也是选择一种痛苦的方式</h2>
+  <p>天兵天将和孙悟空都有存在的合理性，但这可绝对不是说你当孙悟空也行，当天兵天将也对，否则就成了努力大于选择，而不是选择大于努力。</p>
+  <p>让某些人到一家公司上班天天听人指挥，他们肯定觉得特别不幸福。但是我也能理解有些人认为离开体制是不可想象的。</p>
+  <p>赛道选择不是找捷径，不是说五年后哪个专业热门，而是<strong>选择你在什么结构里、和谁一起，被什么样的力量所放大</strong>。在某种意义上这也是选一种“痛苦的方式”：你是愿意忍受不得不听命于人的憋屈，还是随时可能一无所有的焦虑呢？</p>
+  <p>当天兵和做悟空的整个工作方式都截然不同，各有各的打法各有各的道理。<strong>最怕的是身在体制内却幻想大闹天宫的成就，或者身处乘法世界却眷恋体制内的安稳。</strong></p>
+  <p>你可能觉得我是不是还是对天兵天将有偏见，总想让人去做孙悟空 —— 其实不是。咱们下一讲的思维工具，就能帮你成为更好的天兵天将。</p>
+
+  <div class="poem">
+    <div class="poem-title">【收束小诗】</div>
+    <p>石裂一猴出，<br>不按玉皇书。<br>但练非常技，<br>方为非常夫。</p>
+  </div>
+
+  <div class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Munyon, Todd P., et al. 2015. “Political Skill and Work Outcomes: A Theoretical Extension, Meta-Analytic Investigation, and Agenda for the Future.” <em>Personnel Psychology</em> 68(1): 143–184.</li>
+      <li>Gentry, William A., et al. 2012. “Political Skill as an Indicator of Promotability Among Multiple Rater Sources.” <em>Journal of Organizational Behavior</em> 33(1): 89–104.</li>
+      <li>精英日课第四季，暴力在边缘。</li>
+      <li>Laland, Kevin N., John Odling-Smee, and Marcus W. Feldman. 2000. “Niche Construction, Biological Evolution, and Cultural Change.” <em>Behavioral and Brain Sciences</em> 23(1): 131–146.</li>
+      <li>Sarasvathy, Saras D. 2001. “Causation and Effectuation: Toward a Theoretical Shift from Economic Inevitability to Entrepreneurial Contingency.” <em>Academy of Management Review</em> 26(2): 243–263.</li>
+    </ol>
+  </div>
+
+  <section id="ai-summary">
+    <p class="ai-head">✦ AI 阅读总结</p>
+    <p class="ai-sub">本文为「万维钢·现代思维工具100讲」第21讲《赛道选择：做天兵天将，还是做孙悟空？》的整篇阅读总结。</p>
+
+    <p class="one-liner">一句话概括：在重尾世界里大成就靠“乘法”而非“努力积分”，所以最重要的选择是——先想清楚自己玩的到底是体制内（天兵）还是体制外（悟空）的游戏，再用对的心智模型去玩，最怕错位。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li><strong>选择大于努力的数学直觉：</strong>加法世界里结果正态分布、一分努力一分收获；但在重尾世界，想有大成就就得跟人做乘法——乘对指数放大，乘错甚至为负。高回报不是对辛苦的补偿，世界奖励的是不对称优势，你要在正确的时机出现在正确的一方。</li>
+      <li><strong>赛道选择的本质：</strong>不是选岗位、选专业，而是选“玩什么游戏”，它选的其实是人生叙事权——天兵天将是别人故事里的 NPC，孙悟空是自己宇宙的叙事原点。作者用一个“修仙千年只当上天兵”的段子点破：做题家式每一步都走对，最后不过是个平庸的编号。</li>
+      <li><strong>两条路线的分野：</strong>体制内（天兵）是适应别人建立的体制，钻研“人际关系逻辑”，地位来自被分配的位置，核心风险是规则突然变了（上级倒台、部门裁撤、指标口径调整）；体制外（悟空）直面真实世界、承担全部风险，研究“物理世界逻辑”，地位是自己创造出来的。</li>
+      <li><strong>幸存者偏差的提醒：</strong>大多数想做悟空的人最终只是被轻松剿灭的普通妖怪，悟空是孤独的幸存者；但两者体感完全不同。真正危险的是用天兵的心智在重尾赛道求稳，或用悟空的性格在科层体系求自由——那只会落得一大堆抱怨。</li>
+      <li><strong>天兵的第一修行：</strong>警惕古德哈特定律——别把指标（metrics）当目的（purpose），指标只是工具；与其内卷指标，不如管理预期；与其比拼执行力，不如竞标解释权。政治技巧是可习得的技术科目，与晋升、声誉、职业成功稳定正相关。</li>
+      <li><strong>给自己留一条花果山副本：</strong>即便已是天庭猛将，也要谨记“能耐寻求定理”，平时多给自己赋能，最好有一个不依赖组织的秘密项目，让十年枪法不会因规则突变而瞬间过气。</li>
+      <li><strong>悟空的两大战略工具：</strong>利基构建（Niche Construction）——不找生态位而是直接构建生态位，像河狸筑坝一样改造选择压力，出作品、积累用户、发展不需要人批准的影响力；效应化（Effectuation）——先看手头有什么资源再组合迭代（打开冰箱看有什么菜就做什么饭），做你“能做”的事而非“该做”的事，这是供给侧心态。</li>
+      <li><strong>选定了就得尊重玩法：</strong>两条路线都有存在的合理性，但选择不是和稀泥。赛道选择是选“在什么结构里、和谁一起、被什么力量放大”，本质上也是选一种痛苦的方式——忍受听命于人的憋屈，还是忍受随时一无所有的焦虑。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li><strong>本周做一次“自测三问”：</strong>写下自己每天主要焦虑什么、最怕什么、想成为“职称”还是“功能”，如实打分判断自己更像天兵还是悟空——不急着换赛道，先看清自己的心智底色。</li>
+      <li><strong>若你在体制内：</strong>找出影响你最大的三个考核指标，逐个追问“它真的等于组织的目标吗”；挑其中一个尝试“管理预期”而非硬卷，并练一次把工作成果讲成故事、让关键的人“看见”你干了什么。</li>
+      <li><strong>无论在哪条赛道，启动一个“花果山副本”：</strong>每周固定 2–3 小时，做一个与主业无关但能积累可迁移资产的秘密项目（写文章、做小工具、攒作品集），让自己永远有退路和选择权。</li>
+      <li><strong>练一个不对称技能（七十二变）：</strong>选一个身边几乎没人专门练、练成后有碾压式差异的能力（快速看懂一个行业的模式、把复杂问题讲明白、跨领域翻译），连续投入 30 天，不求多只求尖。</li>
+      <li><strong>实践一次“效应化”：</strong>本周盘点手头现成的资源——技能、人脉、工具、信息，试着组合出一个小东西给 3–5 个人用，亲身体会“打开冰箱做饭”而不是“照着菜谱买菜”。</li>
+      <li><strong>做一次“乘法对象”盘点：</strong>列出你日常最依赖的 3 个人/平台/组织，判断与它们相乘是放大你还是稀释你；对“乘负数”的关系主动做减法或重设边界，把时间投向能指数放大你的人。</li>
+      <li><strong>接受“痛苦方式”的选择题并提前对冲：</strong>若倾向体制内，主动管理对“稳定”的预期，同时积累随时带得走的技能；若倾向体制外，先建安全垫（约 6 个月生活费、首批用户、作品样本），再决定投入节奏。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul class="quote-list">
+      <li>“高回报不是对辛苦的补偿，大成就不是对努力的积分。”</li>
+      <li>“赛道选择选的不是岗位，而是人生叙事权。”</li>
+      <li>“天兵天将是别人故事里的 NPC；孙悟空是自己宇宙的叙事原点。”</li>
+      <li>“天兵填写别人设计好的表格，悟空另开一张表。”</li>
+    </ul>
+
+    <p class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer class="site-foot">万维钢 · 现代思维工具100讲 · 第21讲 ｜ 手机阅读版</footer>
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('backTop');
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    bar.style.width = p + '%';
+    btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  onScroll();
+})();
+</script>
+</body>
+</html>

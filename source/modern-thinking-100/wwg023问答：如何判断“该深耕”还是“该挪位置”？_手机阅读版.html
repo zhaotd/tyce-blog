@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第23讲 问答：如何判断“该深耕”还是“该挪位置”？ — 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;            /* 暖纸浅底 */
+    --card:#fffdf8;
+    --text:#2b2620;
+    --text-soft:#6b6155;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --border:#e5dccb;
+    --quote-border:#c9a87c;
+    --summary-bg:#f4ead8;
+    --summary-border:#c9a87c;
+    --divider:#d8cbb4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;          /* 暖纸深底 */
+      --card:#201d19;
+      --text:#e8e0d2;
+      --text-soft:#a99f8d;
+      --accent:#d9a86a;
+      --accent-soft:rgba(217,168,106,.12);
+      --border:#3a342a;
+      --quote-border:#8a6a3f;
+      --summary-bg:#241f16;
+      --summary-border:#8a6a3f;
+      --divider:#4a4232;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    padding:0 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  /* 顶部阅读进度条 */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#c98d4e);
+    z-index:99;
+  }
+  .container{max-width:700px;margin:0 auto;}
+
+  /* 文档头 */
+  header.doc-head{padding:44px 4px 8px;}
+  .tag{
+    display:inline-block;
+    font-size:12.5px;letter-spacing:1px;color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--border);
+    padding:4px 12px;border-radius:999px;
+    margin-bottom:16px;
+  }
+  h1{
+    font-size:23px;line-height:1.45;font-weight:700;color:var(--text);
+    text-align:left;margin-bottom:14px;
+  }
+  .meta{
+    font-size:13px;color:var(--text-soft);
+    display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;
+  }
+  .meta .dot{color:var(--divider);}
+
+  /* 小节 */
+  section.qa-block{margin-top:34px;}
+  .src-note{
+    font-size:12.5px;color:var(--text-soft);
+    border-left:3px solid var(--quote-border);
+    padding:2px 0 2px 10px;margin:26px 0 14px;
+  }
+
+  /* 问答卡片 */
+  .qa-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 16px;
+    margin:14px 0;
+    box-shadow:0 1px 3px rgba(60,40,10,.05);
+  }
+  .qa-card .who{
+    display:flex;align-items:baseline;gap:8px;
+    font-weight:700;color:var(--accent);
+    font-size:14.5px;margin-bottom:8px;
+  }
+  .qa-card .who .role{font-size:12px;color:var(--text-soft);font-weight:400;}
+  .qa-card p{margin-bottom:10px;}
+  .qa-card p:last-child{margin-bottom:0;}
+  .qa-card.ask .who::before{content:"问";font-size:11px;color:#fff;background:var(--accent);border-radius:4px;padding:1px 6px;flex:none;}
+  .qa-card.reply{background:var(--bg);border-color:var(--border);}
+  .qa-card.reply .who::before{content:"答";font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px;flex:none;}
+
+  /* 要点列表 */
+  ul.pts{margin:8px 0 10px;padding-left:0;list-style:none;}
+  ul.pts li{
+    position:relative;padding-left:20px;margin-bottom:10px;
+  }
+  ul.pts li::before{
+    content:"";position:absolute;left:2px;top:.68em;
+    width:7px;height:7px;border-radius:2px;background:var(--accent);
+  }
+  ul.pts li b{color:var(--accent);}
+
+  /* 金句引用块 */
+  blockquote.quote{
+    margin:14px 0;padding:10px 16px;
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    color:var(--text);
+  }
+  blockquote.quote p{margin:0 0 6px;}
+  blockquote.quote p:last-child{margin:0;}
+
+  /* 居中分隔装饰 */
+  .sep{
+    display:flex;align-items:center;gap:12px;
+    margin:30px auto;max-width:80%;color:var(--divider);
+  }
+  .sep::before,.sep::after{content:"";flex:1;height:1px;background:var(--divider);}
+  .sep span{font-size:12px;letter-spacing:6px;}
+
+  /* 注释区 */
+  .notes{
+    margin-top:36px;padding:14px 16px;
+    border:1px dashed var(--border);border-radius:12px;
+    background:var(--card);
+    font-size:13.5px;color:var(--text-soft);line-height:1.7;
+  }
+  .notes h4{font-size:13px;color:var(--accent);margin-bottom:6px;}
+
+  /* AI 总结区块 */
+  #ai-summary{
+    margin-top:44px;
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+    border-radius:12px;
+    padding:22px 18px;
+  }
+  #ai-summary .ai-title{
+    display:flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:700;color:var(--accent);
+    margin-bottom:6px;
+  }
+  #ai-summary .ai-title::before{
+    content:"✦";font-size:16px;
+  }
+  #ai-summary .one-line{
+    font-weight:700;color:var(--text);
+    margin:8px 0 14px;line-height:1.75;
+  }
+  #ai-summary h3{
+    font-size:15px;color:var(--accent);
+    margin:18px 0 8px;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:22px;margin:6px 0 10px;}
+  #ai-summary li{margin-bottom:8px;}
+  #ai-summary .quotes blockquote{
+    border-left:3px solid var(--summary-border);
+    padding:4px 12px;margin:8px 0;
+    color:var(--text);
+    font-size:15px;
+  }
+  #ai-summary .foot{
+    margin-top:16px;padding-top:12px;
+    border-top:1px solid var(--summary-border);
+    font-size:12px;color:var(--text-soft);text-align:center;
+  }
+
+  /* 回到顶部按钮 */
+  #backTop{
+    position:fixed;right:18px;bottom:calc(28px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card);color:var(--accent);
+    font-size:18px;cursor:pointer;z-index:98;
+    box-shadow:0 2px 10px rgba(60,40,10,.15);
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #backTop.show{opacity:1;pointer-events:auto;}
+  @media (min-width:640px){
+    body{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第23讲</span>
+    <h1>问答：如何判断“该深耕”还是“该挪位置”？</h1>
+    <div class="meta">
+      <span>作者：万维钢</span><span class="dot">·</span>
+      <span>课程问答精选</span><span class="dot">·</span>
+      <span>现代思维工具100讲</span>
+    </div>
+  </header>
+
+  <!-- 问答一：AI 能否代替人连接圈子 -->
+  <section class="qa-block">
+    <div class="src-note">本节来自《社交资本、结构洞和搬家：容易向上流动的位置》</div>
+
+    <div class="qa-card ask">
+      <div class="who">读者 玥</div>
+      <p>其实我有个疑问，就是这些圈子互通，难道 AI 不能做吗？我认为 AI 比人更能连接每个圈子，然后让每个圈子的人都能认识到彼此的知识。</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>同伴之间互相学习知识、积累社交资本，这些恰恰不是 AI 能代替我们做的，而是人必须在现场才行。</p>
+      <p>首先，大量的知识，特别是那些真正有用的、能形成竞争力的知识，往往不是写在书本上的，甚至都无法用语言表达，只有在现场看人做才能学会。这叫做「默会知识（Tacit Knowledge）」，我们后面还会专门讲。</p>
+      <p>更重要的是，两个人建立信任关系，有个很奇特的特点：即便你把这个人的详细履历、推荐信、包括朋友对他的评价全部摆出来，你还是不能决定是否值得信任他 —— 必须是这个人出现在你面前，跟你相处过一段时间，你才能真正信任他。</p>
+      <p>可能一个人在学生面前是个和蔼可亲的师长，但是对自己的妻子却非常刻薄；可能这个人对天下的人都很好，唯独对你很冷漠。那你还会信任他吗？</p>
+      <blockquote class="quote">
+        <p>信任不是一种个人品质，而是一种互动。你最关心的是在跟他相处的时候，如果你暴露了一些弱点，他是接住这个弱点帮你补救，还是忽略你的弱点，还是防御，甚至利用你的弱点。你关心的是两个人能不能配合好。</p>
+      </blockquote>
+      <p>这些东西不能用一组指标来描写。我们可以在网上买鞋，因为鞋基本上只有一个指标，就是一个鞋号。但是人身上有无数个指标，而且这些指标是动态的，根据情境在不同人面前都不一样，我们怎么可能通过指标来判断一个人是否可信呢？</p>
+      <p>所以信任只有真正相互接触一段时间才能达成，这就是为什么商界人士必须到处跟人见面，甚至吃吃喝喝。而信任一旦建立起来，合作水平就完全不同。</p>
+      <p>并不是所有人都有条件搬家，更不是所有人都能上名校。任何地方肯定都有机会。丘成桐以前有句话说，如果你真的愿意做数学，在新疆也能研究数学……但是我们得说，难度肯定不一样。有困难肯定有人可以克服困难，但如果我们说哪个大学都一样搬不搬家无所谓，那就是对社会规律的无视。</p>
+      <p>有的读者表示，我知道你说的这些道理，但是我目前没有这个条件，请问我该怎么办？—— 我没有一个能轻易克服困难的办法。位置只是决定一个人成就的众多条件之一，并不是说位置不好就绝对不行。但位置是需要我们正视的。</p>
+      <p>社会科学的贡献就是告诉你，做某些事情，能把你成功的概率提高一点；而做很多别的事情没用。我们不能说这样也行那样也行一切皆有可能，我们不能活在梦中。</p>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答二：该深耕还是该挪位置 -->
+  <section class="qa-block">
+    <div class="qa-card ask">
+      <div class="who">读者 咚咚锵</div>
+      <p>如果“位置”这么重要，那普通人在人生前期做选择时，到底该怎么分辨：自己现在待的地方，只是暂时不顺，还是已经属于那种继续熬下去也很难产生新连接、新视野、新机会的位置？有没有实用的信号，能帮助人早点判断“该深耕”还是“该挪位置”？</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>至少有三个信号可以看。</p>
+      <ul class="pts">
+        <li><b>观察「参考类」</b>：也就是这个地方那些和你背景差不多的人，他们都怎么样了？他们得到了发展，还是说几十年都在干同样的事？那些能上去的人，是凭能力上去的，还是凭关系上去的？如果你没有关系，你还应不应该指望这场游戏？</li>
+        <li><b>看宏观的市场前景</b>：宏观分析在当今这个时刻是有用的。比如说你是一个县城的中学老师，有编制，目前收入稳定地位高，一切都还可以。但是你观察到县城的人口正呈现明显的下降趋势，一方面是出生率低，一方面是很多人搬到省会城市去了……你们中学的学生还挺多，但是小学都没招满，幼儿园更是没几个孩子，那你就可以预见这个岗位没有前途。</li>
+      </ul>
+      <p>这跟个人努力没有任何关系。你说我能力强，到时候就算十个老师留一个也得留我 —— 那你既然能力这么强，早点去别的地方干不是更好吗？</p>
+      <ul class="pts">
+        <li><b>看个人的体感</b>：最关键的就是，你是不是在积累复利？</li>
+      </ul>
+      <p>比如虽然过程很困难，但你确实解决了一些难题，而且接到的项目一个比一个难，你能感到自己在进步，那你就最好别走，应该抓住这个进步的势头多学点东西。反过来说如果你越干存在感越低，连跟人对接的机会都没几个，每天干的活儿千篇一律，那你何必在这儿浪费时间呢？</p>
+      <blockquote class="quote">
+        <p>如果连场域的规则都没看明白，那这个“暂时的不顺”就是需要克服的，这是一个你需要学习的地方。如果已经把一切都看清楚了，知道自己被一些硬条件限制，根本就不可能发挥，那就必须得走。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答三：认知重评会不会变成阿Q精神 -->
+  <section class="qa-block">
+    <div class="src-note">本节来自《认知解耦：三步调节负面情绪》</div>
+
+    <div class="qa-card ask">
+      <div class="who">读者 K Z</div>
+      <p>万老师，认知重评用多了会不会就变成了阿 Q 精神？</p>
+    </div>
+    <div class="qa-card ask">
+      <div class="who">读者 猴子不败</div>
+      <p>万老师，当认知解耦遇到真实不公平时，怎么样避免变成自我安慰？比如在工作中，别人抢功、推责、信息不透明等，这时候我可以做认知重评，但怎么判断自己是在成熟处理还是在替一个有问题的环境合理化？</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>阿 Q 精神，也就是精神胜利法，确实有点像「认知重评」。还有一个有点像的是“塞翁失马，焉知非福”那种朴素辩证法。我们把这三个东西并列说一说。</p>
+      <ul class="pts">
+        <li><b>阿 Q 精神</b>是「我没输，我只是以另一种方式赢了」，是对不利事实的合理化，甚至是直接无视事实，是一种自我欺骗，目的是为了保护自己的 ego。比如说，明明失败了，却说自己在道义上赢了；明明被人家羞辱了，却说他羞辱我是因为他嫉妒；明明吃亏了，却说我其实本来就不在乎 —— 保住了自我叙事，但是对局面于事无补。</li>
+        <li><b>辩证法</b>是「我输了，但是这次失败里有损失也有信息，有痛苦也有暴露，我总结教训将来未必不能迎来转机。」辩证法拒绝把现状当成终局，认为不能过早宣布这个事情全部的意义，应该保留未来的开放性。</li>
+        <li><b>认知重评</b>，则是「我承认我输了，但我拒绝让“输了”自动推出“我完了”。」认知重评是在不篡改事实的前提下，改写事实对你的意义。目的是为了让你更好地行动，而不是逃避现实。</li>
+      </ul>
+      <p>比如说你搞研究做出了一项发现，辛苦写了一篇论文给一个主流期刊投稿，结果被拒了 ——</p>
+      <p><b>阿 Q 精神是</b>「这帮人根本没看懂。他们拒我恰恰说明我太原创太超前，他们根本理解不了。我这样的天才，注定会被时代误解。质疑我的人越多，越证明我的不凡。」</p>
+      <p>你看他不是重新理解失败，他是把失败当成赢的证据。尊严保住了，但是封死了进步的空间。</p>
+      <p><b>辩证法是</b>「这次投稿被拒，是坏事，但坏事并不见得坏到底。局部的失败不等于整体失败，现在的失败也不等于最终的失败。我毕竟收获了第一次反馈，我也许可以借此机会改进，我将来会更成熟。」</p>
+      <p>这套说辞在世界观上绝对是正确的，但问题就在于它过于宏观、可以用于任何场合，以至于没什么用。不管谁失败了，你都可以讲一番辩证法，但是这种大道理没有办法真正地安慰一个人，只是一种宽心而已。</p>
+      <p><b>认知重评则是</b>「投稿被拒，我的第一反应是我不行，我没有科研能力，但这个反应是不对的。被拒只能说明我这次产出的某些维度没有达标。审稿意见里边有些是我可以修正的问题。我现在应该专注的真正问题，不是我这个人有没有价值，而是我怎么具体改进，提高这篇文章的通过率。」</p>
+      <p>认知重评的好处是它能精准干预情绪，它承认当前事实，但又提出不同的意义，能让人采取具体行动。这是一种工程化的解决方案，非常可操作。</p>
+      <blockquote class="quote">
+        <p>也许你可以说阿 Q 精神和辩证法都是某种意义上的认知重评，但真正的认知重评跟阿 Q 精神的区别是事实，跟辩证法的区别是具体。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答四：好妈妈与工作 -->
+  <section class="qa-block">
+    <div class="src-note">本节来自《身份认同：元认知黑魔法》</div>
+
+    <div class="qa-card ask">
+      <div class="who">读者 冬瓜茶</div>
+      <p>万老师，我是一个八岁孩子的妈妈，我的自我认同是我是一个负责的好妈妈，但是我现在积极找工作，找到合适的就得兼顾工作和孩子，放学孩子就得上晚托，没那么多时间陪她，还有可能会偶尔把工作的情绪带回家影响她，但是我也需要一个能实现自己价值的工作，而不只是妈妈。您说的这个身份认同的黑魔法，用在家人以外的人际关系中可能相对容易实现，但是对亲人的责任这块，我该要怎么样处理呢？</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>这里的关键在于，“好妈妈”这个社会角色的定义是什么。到底是你的在场总时长，还是你的在场质量：当你跟孩子在一起的时候，你们的互动有没有被工作情绪不停地打断？你是不是心不在焉？你能不能稳定地提供注意力和回应？</p>
+      <p>并没有任何研究说母亲工作会对孩子成长不利。研究说的是，让孩子感到被忽略，会对孩子成长很不利。</p>
+      <blockquote class="quote">
+        <p>可能有些家长恨不得把一切都给孩子，但孩子并没有要求得到你的一切，而且那也不健康。“社会对你的期待”往往存在于人的想象之中，这个角色应该由自己定义。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答五：应该相信什么 -->
+  <section class="qa-block">
+    <div class="qa-card ask">
+      <div class="who">读者 崂仔</div>
+      <p>请问万老师，如果不想“什么都能理解，什么都不再相信”，您建议应该相信什么？是逻辑还是人与人的关系？</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>我建议相信很多东西。你应该相信逻辑，相信人与人之间可以有好的关系，要相信善意能促进合作，并且终将战胜恶意；我们还应该相信世界会变好，我们对世界的探索还不够，还有很多惊喜在等着我们等等。</p>
+      <p>这些几乎是直接拿过来就相信的东西，叫做「先验（priors）」。先验不仅是我们能够稳定行事的前提，也是我们做任何决策的基础，咱们后面讲到决策的时候会专门说。</p>
+      <p>先验决定了你的人生 Purpose，也就是目的感，还决定了你对一大堆事情的价值函数。先验是可以变的，但是相当稳定。目的感和价值函数带给我们人生的意义。先验、目的感和价值函数，比「身份」更为深刻，是身份背后的那个更真实的自我。</p>
+      <p>那些“什么都理解、什么都不再相信”的人，其实也不是完全没有先验。他们也相信一些东西。比如他们相信市侩哲学，相信人就是自私的，相信其他人都是不可信任的等等。这些信念会让他们很不幸福。</p>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答六：被依赖与背负他人人生 -->
+  <section class="qa-block">
+    <div class="src-note">本节来自《安全感：人需要有所依靠》</div>
+
+    <div class="qa-card ask">
+      <div class="who">读者 赵棹</div>
+      <p>老师，我有一个疑问：您如何理解「被依赖，是当今世界给你最好的待遇」与「不要背负他人的人生，不要成为他人的依赖」这两者之间的矛盾？</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>前者是你的存在对他人很重要，所以你很有意义。你甚至在一定程度上对局面有掌控，所以这种局面、这种感觉都很好。我们本来就是互相依赖的。有些事他不依赖你，也得依赖别人；他在依赖你的同时，可能你也在依赖他。没有一个人能够独立完成所有的事情。</p>
+      <p>而后者所谓“背负他人的人生”，那就完全不一样了。这等于说对方把人生的运转整个外包给了你，责任都由你来承担，你成了他的生命维持系统。这是非常不健康的关系，对你，对他，都不对。</p>
+      <blockquote class="quote">
+        <p>好的依赖关系不是“你替我活”，而是“有你在，我更有底气自己活”。那么你对别人的帮助应该是给人赋能，而不是让人失能。依赖关系最好是互惠的，一定要有边界，而不是一方把另一方当工具。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="sep"><span>✦ ✦ ✦</span></div>
+
+  <!-- 问答七：天兵天将和悟空之外的赛道 -->
+  <section class="qa-block">
+    <div class="src-note">本节来自《赛道选择：做天兵天将，还是做孙悟空？》</div>
+
+    <div class="qa-card ask">
+      <div class="who">读者 此心安处即吾家</div>
+      <p>除了天兵天将的赛道和悟空的赛道，那还有没有其他的赛道？那就选了天兵天将赛道却最终没有成为天兵天将的，他们该怎么面对和生活呢？那些并不是完全想要悟空赛道，但又是小妖的该怎么选呢？希望万 sir 把这个话题再深入一点。</p>
+    </div>
+
+    <div class="qa-card reply">
+      <div class="who">万维钢 回复</div>
+      <p>是的，除了天兵天将和孙悟空，世界上还有很多别的选择：</p>
+      <ul class="pts">
+        <li><b>一个是太上老君</b>，也就是借组织炉子练自己的丹。挂靠在体制内，但是拥有相对独立的空间。比如中国有很多企业名义上是民企，其实是靠给国企做外包生存 —— 当然你得跟人搞好政治关系和利益结算。</li>
+        <li><b>一个是工匠</b>，也就是专业技术人员。我不参与政治，不领兵、不打仗、也不封侯，但是你们谁上台都得用我，因为我这个技术很有用，不可替代。</li>
+        <li><b>一个是散仙</b>，也就是自由职业者。不开公司，每次跟人临时合作做项目。项目开始时大家聚在一起，项目结束了就各自分开，追求一点点行业声望。</li>
+        <li><b>还有就是小妖</b>，没有融资、没有宏大叙事、就在巨头的缝隙之间做点小生意：可能给大平台做个供货商，可能靠一种专业手艺，提供一种地区性的服务，自负盈亏，赚钱不多但是现金流稳定。就经营这一座山，不闹天宫。</li>
+      </ul>
+      <blockquote class="quote">
+        <p>其实做哪个都可以，但是我觉得最好应该把自己的定位想清楚。比如说，如果你就想当个工匠，你其实可以生活得很好。但前提是，你真的不应该参与政治。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 注释（本讲正文未含脚注，此区留白备用） -->
+  <div class="notes">
+    <h4>注</h4>
+    <p>本讲为课程问答精选，共收录七组读者来信与万维钢老师的回复；各节出处已在上方小注中标明。</p>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <div class="ai-title">AI 阅读总结</div>
+
+    <p class="one-line">一句话概括：本讲用七组真实问答，讲清了三件事——如何用“参考类、宏观前景、个人体感”三个信号判断该深耕还是该挪位置；如何区分自我欺骗的阿 Q 精神、宽慰人心的辩证法和真正可操作的认知重评；以及如何自己定义“好妈妈”的角色、相信什么样的先验、建立健康的依赖关系、选择天兵天将与悟空之外的人生赛道。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><b>信任必须现场建立，AI 替代不了。</b>真正有用的知识多是「默会知识」，无法写成文字，只能在现场看人做才能学会；而信任更不是一堆指标能描写的——鞋只有一个鞋号指标，人却有无数个动态指标。你必须跟一个人真实相处一段时间，看他如何接住你的弱点，才能真正信任他，所以商界人士必须到处见面应酬。</li>
+      <li><b>判断“该深耕还是该挪位置”有三个信号：</b>①观察「参考类」——和你背景相似的人都发展得如何、是凭能力还是凭关系上去的；②看宏观市场前景——如县城人口下降、生源萎缩，就能预见某个岗位没有前途，这与个人努力无关；③看个人体感——是否在积累复利，接的项目是否一个比一个难、能否感到自己在进步。</li>
+      <li><b>位置必须正视但不能迷信。</b>位置只是决定成就的众多条件之一，不好不一定绝对不行；但说“哪个大学都一样、搬不搬家无所谓”就是无视社会规律。连场域规则都没看明白时，不顺是需要克服的学习机会；把一切都看清了、却被硬条件限制无法发挥时，就必须得走。</li>
+      <li><b>阿 Q 精神、辩证法、认知重评是三样东西。</b>阿 Q 精神是「我没输，只是以另一种方式赢了」，把失败当赢的证据，自我欺骗、封死进步空间；辩证法是「我输了，但失败里有信息」，世界观正确却过于宏观，谁都安慰不了；认知重评是「我承认输了，但拒绝让“输了”推出“我完了”」，在不篡改事实的前提下改写事实对你的意义。</li>
+      <li><b>认知重评的判据是“事实”与“具体”。</b>它与阿 Q 精神的区别在于尊重事实，与辩证法的区别在于具体可操作——它承认当前事实，但指向具体的改进动作（如被拒稿后专注“哪些维度没达标、怎么改”），能精准干预情绪，是一种工程化的解决方案。</li>
+      <li><b>“好妈妈”由自己定义，关键是在场质量。</b>没有任何研究说母亲工作对孩子不利，不利的是“让孩子感到被忽略”。社会对你的期待往往存在于想象之中，孩子并没有要求你的一切——与其纠结在场总时长，不如保证互动时不被工作情绪打断、能稳定提供注意力和回应。</li>
+      <li><b>要相信「先验」。</b>应该相信逻辑、相信善意能促进合作并终将战胜恶意、相信世界会变好。先验决定人生的目的感和价值函数，是身份背后更真实的自我；“什么都理解、什么都不再相信”的人其实相信着市侩哲学，那些信念会让他们很不幸福。</li>
+      <li><b>健康的依赖与多元的赛道。</b>被依赖说明你的存在对他人重要且有掌控感，而“背负他人人生”是把对方的人生整个外包给你，是失能的病态关系；好的依赖是「有你在，我更有底气自己活」，帮助要赋能而非让人失能。除天兵天将与悟空外，还有太上老君（借组织炉子炼丹）、工匠（技术不可替代）、散仙（自由职业）、小妖（缝隙小生意）等赛道，关键是想清楚自己的定位。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><b>本周做一次“参考类”盘点。</b>找出三五位与你背景相似、年龄相仿的人，看看他们近五年是向上发展还是原地打转、是靠能力还是靠关系上去的，据此校准你对自身处境的判断。</li>
+      <li><b>用“复利自测”评估当前岗位。</b>回顾最近三个月：你解决的问题是不是一个比一个难？对接的人和机会在变多还是变少？如果活儿千篇一律、存在感越来越低，就把“挪位置”正式列入日程。</li>
+      <li><b>每月十分钟看宏观硬数据。</b>你所在城市的人口、生源、行业政策这类数据，不需要专业分析，只看趋势方向——别让“我能力强”的自信盖过结构下行的信号。</li>
+      <li><b>下次挫折时做一次真正的认知重评。</b>先写下“事实是什么”，再写下“我能在一两个具体维度上改进什么”，把注意力从“我是不是完了”切换到“我下一步做什么”，警惕任何“他们不懂我”的自我安慰。</li>
+      <li><b>重新定义你最重要的那个角色。</b>无论是“好妈妈”还是“好员工”，写下你认可的在场质量指标（稳定的注意力、及时的回应），并和家人约定：工作情绪如何在回家前消化、如何不打断陪伴。</li>
+      <li><b>检查最紧密的关系是赋能还是失能。</b>想想有没有人把人生运转整个外包给了你；若有，划定边界、把属于他的责任还回去。同时明确你想当工匠、散仙还是小妖——如果只想当工匠，就真的别掺和政治。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="quotes">
+      <blockquote>“信任不是一种个人品质，而是一种互动。”</blockquote>
+      <blockquote>“真正的认知重评跟阿 Q 精神的区别是事实，跟辩证法的区别是具体。”</blockquote>
+      <blockquote>“好的依赖关系不是‘你替我活’，而是‘有你在，我更有底气自己活’。”</blockquote>
+      <blockquote>“如果已经把一切都看清楚了，知道自己被一些硬条件限制，根本就不可能发挥，那就必须得走。”</blockquote>
+    </div>
+
+    <p class="foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),
+      btn=document.getElementById('backTop'),
+      doc=document.documentElement;
+  window.addEventListener('scroll',function(){
+    var max=doc.scrollHeight-window.innerHeight,
+        p=max>0?doc.scrollTop/max:0;
+    bar.style.width=(p*100)+'%';
+    btn.classList.toggle('show',doc.scrollTop>400);
+  },{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

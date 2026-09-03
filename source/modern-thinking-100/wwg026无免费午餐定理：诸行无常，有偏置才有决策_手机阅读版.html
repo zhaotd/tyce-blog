@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第26讲 无免费午餐定理：诸行无常，有偏置才有决策</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --card-2:#f2ebe0;
+    --text:#2b2620;
+    --text-soft:#6b6257;
+    --accent:#8a5a2b;
+    --accent-soft:#a06b34;
+    --line:#e4d9c8;
+    --summary-bg:#f0e5d1;
+    --summary-border:#8a5a2b;
+    --quote-bg:#f6efe2;
+    --code:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#211d18;
+      --card-2:#262019;
+      --text:#eae2d4;
+      --text-soft:#a89d8b;
+      --accent:#c9965e;
+      --accent-soft:#d8a86e;
+      --line:#3a322a;
+      --summary-bg:#2a2318;
+      --summary-border:#c9965e;
+      --quote-bg:#221d16;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  /* 顶部阅读进度条 */
+  #progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+    z-index:999;transition:width .08s linear;
+  }
+  .container{
+    max-width:700px;margin:0 auto;padding:0 20px 80px;
+  }
+  /* 文档头 */
+  .doc-header{padding:34px 0 22px;border-bottom:1px solid var(--line);margin-bottom:26px;}
+  .course-tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.06em;
+    color:var(--accent);border:1px solid var(--accent);
+    border-radius:999px;padding:3px 12px;margin-bottom:14px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin:0 0 12px;text-align:left;}
+  .meta{font-size:13px;color:var(--text-soft);text-align:left;}
+  h3{
+    font-size:18px;line-height:1.5;margin:34px 0 12px;color:var(--accent);
+    text-align:left;position:relative;padding-left:12px;
+  }
+  h3::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--accent);}
+  p{margin:0 0 14px;}
+  strong{color:var(--accent-soft);}
+  /* 居中分隔线（替代原文 ✵ 装饰） */
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:30px 0;color:var(--accent);font-size:14px;user-select:none;
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line);}
+  /* 金句引用块 */
+  blockquote.quote{
+    margin:20px 0;padding:14px 18px;background:var(--quote-bg);
+    border-left:4px solid var(--accent);border-radius:0 10px 10px 0;
+    color:var(--text);font-size:16px;
+  }
+  blockquote.quote cite{display:block;margin-top:8px;font-size:13px;font-style:normal;color:var(--text-soft);text-align:right;}
+  /* 要点列表 */
+  ul.points{margin:0 0 16px;padding-left:0;list-style:none;}
+  ul.points li{
+    position:relative;padding:6px 0 6px 24px;margin-bottom:6px;
+  }
+  ul.points li::before{
+    content:"";position:absolute;left:6px;top:16px;width:7px;height:7px;
+    border-radius:50%;background:var(--accent);
+  }
+  /* 收束小诗 */
+  .poem{
+    margin:26px 0;padding:22px 16px;text-align:center;background:var(--card-2);
+    border-radius:12px;border:1px dashed var(--accent);
+  }
+  .poem .poem-title{font-size:14px;letter-spacing:.3em;color:var(--accent);margin-bottom:12px;}
+  .poem p{font-size:16.5px;line-height:2;margin:0;}
+  /* 注释 */
+  .notes{
+    margin:26px 0;padding:16px 18px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;
+  }
+  .notes h4{font-size:14px;color:var(--accent);margin-bottom:10px;letter-spacing:.1em;}
+  .notes ol{margin:0;padding-left:20px;}
+  .notes li{font-size:12.5px;line-height:1.7;color:var(--text-soft);margin-bottom:6px;text-align:left;}
+  /* 用户留言 */
+  .comments{margin:26px 0;}
+  .comments h4{font-size:14px;color:var(--accent);margin-bottom:12px;letter-spacing:.1em;}
+  .comment-card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:14px;
+  }
+  .comment-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;text-align:left;}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;flex:none;
+    background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;
+  }
+  .comment-name{font-size:14.5px;font-weight:600;color:var(--text);}
+  .comment-date{font-size:12px;color:var(--text-soft);margin-top:1px;}
+  .comment-topic{
+    display:inline-block;font-size:12px;color:var(--accent);
+    background:var(--quote-bg);border-radius:999px;padding:2px 10px;margin-bottom:8px;
+  }
+  .comment-text p{font-size:15.5px;margin:0 0 10px;}
+  .comment-stats{font-size:12px;color:var(--text-soft);margin-top:4px;text-align:right;}
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin:38px 0 0;padding:24px 22px;border-radius:12px;
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+  }
+  #ai-summary .ai-title{
+    font-size:19px;font-weight:700;color:var(--accent);
+    text-align:center;margin-bottom:6px;letter-spacing:.12em;
+  }
+  #ai-summary .ai-sub{font-size:12.5px;color:var(--text-soft);text-align:center;margin-bottom:16px;}
+  #ai-summary h5{
+    font-size:16px;color:var(--accent);margin:18px 0 10px;text-align:left;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;font-size:16px;line-height:1.75;padding:12px 14px;
+    background:var(--card);border-radius:10px;margin-bottom:6px;
+  }
+  #ai-summary ol{margin:0;padding-left:22px;}
+  #ai-summary ol li{margin-bottom:9px;text-align:justify;}
+  #ai-summary blockquote.quote{margin:8px 0;background:var(--card);}
+  #ai-summary .ai-foot{
+    margin-top:16px;padding-top:12px;border-top:1px dashed var(--summary-border);
+    font-size:11.5px;color:var(--text-soft);text-align:center;
+  }
+  /* 回到顶部 */
+  #back-top{
+    position:fixed;right:18px;bottom:calc(28px + env(safe-area-inset-bottom));
+    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:20px;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);z-index:998;
+  }
+  #back-top:active{transform:scale(.94);}
+  footer.site-foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--text-soft);text-align:center;}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<article class="container">
+
+  <header class="doc-header">
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第26讲</div>
+    <h1>无免费午餐定理：诸行无常，有偏置才有决策</h1>
+    <div class="meta">作者：万维钢 · 第二个板块「决策与判断」开篇</div>
+  </header>
+
+  <p>这一讲我们进入第二个板块，决策与判断，说白了就是如何发现最好的选项，如何评估局面，然后才是拍板执行。你想必已经听说过很多关于决策的说法了，我们这里的思维工具会给你更深的洞见 —— 但我想先跟你讲讲一切决策的「元规则」。</p>
+  <p><strong>这个规则就是：世界上不存在完美的决策。</strong></p>
+
+  <h3>完美决策，只是妄念</h3>
+  <p>人们爱幻想完美决策。比如《三国演义》里，赵云保护刘备前往东吴，临行前诸葛亮送给他三个锦囊，说你遇到危难就拆开一个依计行事即可。结果果然好使。谁不想有个算无遗策的军师，谁不希望得到锦囊妙计呢？</p>
+  <p>可惜真实世界不是小说。秦始皇和朱元璋都曾经试图给后世搞好一揽子顶层设计，可是局面都很快就超出了他们的想象。但我们并没有吸取教训。</p>
+  <p>我们想要人生算法。我们希望有个课程直接说该选哪个专业怎么赚钱。我们建议用大数据找最优解。我们盼望 AI 提供最佳决策选项。就算这些做不到，我们也要求决策至少是"客观中立"的：排除所有的情绪和个人偏见，像解数学题一样算出正确答案。</p>
+  <p><strong>我要说的是，这一切都是妄念。</strong></p>
+  <p>世界上根本没有那么好的事儿。不管是诸葛亮、秦始皇还是朱元璋，你都不可能给事情做出完美的预先安排。人生没有算法，不存在放之四海而皆准的正确决策。</p>
+  <p>而且所谓"客观中立"，根本就是一个错误的要求。你要坚持客观中立，你就什么都干不了。<strong>只要是决策就不可能是客观中立的。</strong>我敢这么说是因为这里有一个强硬的理论支持，叫做「无免费午餐定理（No Free Lunch Theorem，简称 NFL）」。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>无免费午餐定理：不存在"屠龙刀"式的万能算法</h3>
+  <p>无免费午餐定理出自计算机科学的算法优化理论，是两个计算机科学家，大卫·沃尔珀特（David Wolpert）和威廉·麦克雷迪（William Macready）1997 年提出来的 <a style="color:var(--accent)" href="#notes">[1]</a>。我真心希望你无论是搞哲学也好、社会科学也好，最好能有点跨界意识，了解一点计算机科学。这个定理就极为深刻，它等于是给智能提出了一个限制。</p>
+  <p>故事是这样的。当时的计算机科学界就好像武林大会一样，各家都在提出自己的优秀算法。有人说我这个遗传算法本来是模拟生物进化的，但我能用它发现工程上的解。有人说我这个模拟退火算法出自物理学，但它能帮你跳出数学上的局部最优。各家心想，我能不能找到一把"屠龙刀"，凭一套算法解决一大堆问题呢？或者干脆说，世界上有没有一个最好最通用的算法，能解决所有的问题呢？</p>
+  <p>沃尔珀特和麦克雷迪这个定理说，没有。他们用严格的数学证明：<strong>如果你把"所有可能问题"都平均起来看，那么任何两个算法的表现都是一样的。</strong></p>
+  <p>换句话说，也许你这个算法在一类特定问题上表现得很出色，那么换到其他问题上，它必然就会失效。综合而论，如果一定想要求解所有问题，那么一个先进的设计芯片线路的算法，和一个只靠瞎蒙的随机猜测算法，表现是一样的。</p>
+  <blockquote class="quote">这就叫「世界上没有免费的午餐」：你想要在一个领域里表现得比别的算法好，你就必然在另一个领域里表现得比别的算法差。</blockquote>
+  <p>AlphaGo 之所以下围棋那么厉害，是因为它偏科 —— 它为围棋这个特定问题进行了极度的优化 —— 你让它去画画它就完全不行了。</p>
+  <p><strong>你必须为优化付出代价。</strong></p>
+
+  <div class="divider">✵</div>
+
+  <h3>科学版的「诸行无常」</h3>
+  <p>佛学爱好者应该好好思考一下这个无免费午餐定理。我私下以为，无免费午餐定理等于宣告了任何有用之法，或者说「有为之法」，都是「有漏之法」：它一定不能解决所有的问题，一定是局限的。</p>
+  <p>你说「一切有为法，如梦幻泡影」，那么定理说这个世界根本就不存在圆满。什么都不做才是圆满。你但凡有点追求，就得使用有为之法，就得有漏，就得为优化付出代价，就得为了得到一些东西而放弃另一些东西，就得承受「有漏皆苦」。</p>
+  <p><strong>所以「无免费午餐定理」就是科学版的「诸行无常」。</strong></p>
+  <p>那些是题外话，但这个要点是：<strong>入世必须使用有漏法。</strong></p>
+
+  <div class="divider">✵</div>
+
+  <h3>归纳偏置：你必须先押注结构</h3>
+  <p>好消息是你可以自己选择你要解决哪一类问题，而这个选择一定是主观的。怎么选择呢？我们需要借用一个来自机器学习领域的术语，叫「归纳偏置（Inductive Bias）」。</p>
+  <p>所谓学习，就是从有限的过去经验中，归纳出无限的未来规律。可是人家大卫·休谟（David Hume，1711—1776）早就说了 <a style="color:var(--accent)" href="#notes">[2]</a>，归纳法在逻辑上是无法自洽的：昨天太阳升起，前天太阳升起，你凭什么就能推断明天太阳也会升起？也许明天宇宙的参数就变了呢？</p>
+  <p>机器要学习，就必须先把这个逻辑鸿沟填上。计算机科学家找到的答案是它必须先<strong>盲目相信</strong>点什么才行 <a style="color:var(--accent)" href="#notes">[3]</a> —— 也就是你得有「先验（Priors）」。你得先不问理由地相信点什么，才可能从有限经验中学习。</p>
+  <p>比如卷积神经网络（CNN）之所以处理图像特别厉害，是因为它预先植入了一个先验：它坚信"局部的特征组合起来是有意义的"以及"图像的特征在平移后是近似不变的"。循环神经网络（RNN）之所以处理语言厉害，是因为它的先验是坚信"前一个词和后一个词之间存在时间上的关联"。</p>
+  <p>站在绝对客观中立的立场上，那些先验并没有道理：你凭什么相信我们这个世界的结构是这样的？也许世界随时就会变得散乱呢？但我们不管了 —— 我们宁可要这个偏见。预设的先验，就是归纳偏置。</p>
+  <p>如果没有这些偏置，也就是不带任何预设眼镜观察世界，那么你看到的其实是一片点阵和一串噪音。那些海量的数据会让算法觉得这种可能性也对、那种可能性也对，最后陷入瘫痪。</p>
+  <blockquote class="quote">你必须先押注结构，才能找到结构，才能判断好结构。</blockquote>
+
+  <div class="divider">✵</div>
+
+  <h3>决策的初心，一定是一个「任性」</h3>
+  <p>决策也是如此。说我老老实实坐在这里，调出这个世界所有的变量，进行精确的推演，算出所有的概率，让结果展现给我一个攻略，告诉我最应该做什么……这纯属妄想，因为违反无免费午餐定理。</p>
+  <p>现实是世界上有无数可以做的事，每个领域都有可能做成功。<strong>你必须先主观地选择一个领域，设定你对这个领域的归纳偏置，才可以展开具体调研，推算最佳决策。</strong></p>
+  <p>比如你有一天突发奇想，说"我要去广州工作赚钱" —— 这其实不是一个决策，这是「发愿」。但这个发愿对决策至关重要，没有发愿就没有决策。世界这么大，人可以在各种各样的地方做各种各样的事，追求各种各样的目的，而你偏偏选择了去广州工作赚钱。没有任何科学决策理论能证明你这个想法是对还是错。有的人去广州工作是为了跟自己的女朋友在一起，有的人用别的方式赚钱，他们也都是对的。</p>
+  <p>"去广州"是你把搜索空间圈起来；"赚钱"是你把目标函数定下来；而你对"去广州可能赚钱"的直觉与信念，是你的归纳偏置。有了这个发愿，才谈得上决策：决策是我们<strong>已经知道你想干啥了</strong>，然后调研论证一番，看看在广州具体做什么工作、怎么做最能帮你赚钱。</p>
+  <blockquote class="quote">无免费午餐定理说：不管决策的过程有多么理性，决策的初心一定是一个任性。事实上，任性是决策必不可少的成分。</blockquote>
+  <p>没有任何决策系统能够料事如神。最强 AI 也不可能把一件事儿的几个选项的概率分布以及有可能付出的代价给你清清楚楚地列明白，像古代谋士一样给你提供上、中、下三策，说主公你选一个就好。<strong>未来不但有不确定性而且有不可量化的不确定性，也就是连概率分布本身都具有不确定性。</strong></p>
+  <p>这就意味着你算到最后总会有一些算不出来的地方。你归根结底会有一个时刻，心想："不管了，我就非得这么干了，无所谓了。"还是法国哲学家德里达（Jacques Derrida）那句话说得最好：</p>
+  <blockquote class="quote">「一个决断如果没有穿过无可决断之折磨，那它将不可能是一个自由的决断，它只会是程序化的应用或一个计算好的过程的展开。」<cite>—— 德里达 <a style="color:var(--accent)" href="#notes">[4]</a></cite></blockquote>
+  <p><strong>决断不是展开，而是承担。</strong>这就是为什么 AI 再强，也得有一大堆各种各样的「微决策」必须留给人来做。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>决策的元认知心法：总共三步</h3>
+  <p>承认没有免费的午餐，理解了决策本质上是主观的冒险，可不是说我们就不要决策科学了。决策科学的作用有限，但往往很关键。这里咱们先说一说做决策的元认知心法，总共就三步。</p>
+
+  <h3>第一步：必须有一个「强先验（Strong Prior）」，也就是设定偏置</h3>
+  <p>为什么天下有这么多生意你不做，你非得做这个生意？为什么有这么多行业、这么多赛道你不选，你非得选这个赛道？没有客观答案。同样面对一个受伤的人，杀手需要的策略和医生需要的策略截然不同。你必须先有主观选择。</p>
+  <p>可能那是你的直觉，可能那是你的人生愿景，可能那是你纯粹莫名其妙的喜好，纯属偏见完全不讲道理 —— 但你必须先选一个方向才行。你如果不选，你就谈不上使用算法，在数学上你就是死路一条。<strong>有一张错误的地图也比没有地图强。</strong></p>
+  <p>但偏置并非无章可循，它基本上来自两个地方 ——</p>
+  <ul class="points">
+    <li>一个是你的「价值观」，也就是什么东西对你来说是不可协商的：这辈子你绝对不做什么？什么代价你绝对不愿意支付？你非得追求什么？你认为什么最宝贵？AI 工程师会说这些是你给模型设定的「价值函数」或者说目标函数。</li>
+    <li>一个是「你对世界的基本假设」：你认为当前这个领域更像"线性递增"还是"重尾爆发"？你更相信"复利"还是"爆款"？这决定了你的搜索方向。</li>
+  </ul>
+  <p><strong>先有立场，才有展开。没有立场就无从搜索信息。</strong></p>
+
+  <h3>第二步：算法搜索</h3>
+  <p>无免费午餐定理说不存在放之四海而皆准的好算法，但是它允许在每个特定的局部问题上，存在一个最强算法。</p>
+  <p>我们要找到那个算法。我们要做好调研，进行分析推理、模拟未来演化。我们要寻找最佳选项，考虑值得付出的代价。如果人人拥有最高智能，最佳算法就是由你上一步设定的价值函数，也就是你的偏置所决定的。任何一个决策都是在一定的条件下对方程求解：你想把那个价值函数给最大化。</p>
+  <p>到这一步你就必须非常理性客观了，得尊重世界的硬条件。那么这基本上是一个工程问题。我们后面所要讨论的各种决策工具，大多就在这一步。</p>
+
+  <h3>第三步：系统化冒险</h3>
+  <p>也就是你得承认你正在冒险，你不能一条道走到黑。我们一直说设定「偏置（bias）」，我们说的可不是「偏执（Dogmatism）」。偏置是启动时候不得不先采取一个立场；而偏执则是一种执念，是环境已经反馈告诉你事情不是你想的那样，你一开始采取的那个立场是错的，你还要强行坚持。</p>
+  <blockquote class="quote">偏置是剑，偏执是枷锁。老百姓要么"无偏置"（优柔寡断，试图客观），要么"全偏执"（一条道走到黑）。高水平决策者则一定是「强偏置、弱偏执」：带着偏见上路，但发现走错了会马上换一种偏见。</blockquote>
+  <p>这样你才能既能决策，又能调整和退出决策。</p>
+
+  <div class="divider">✵</div>
+
+  <h3>有立场，但无执念</h3>
+  <p>为什么苹果的那套设计美学强，难道别的公司就没想到吗？答案是那只是乔布斯个人的审美偏置。你可以做大众化的兼容机个人电脑，也可以做美但是贵的电脑；你可以搞一个开放但无序的生态，也可以搞一个封闭但质量有保证的生态，这里没有对错。</p>
+  <p>巴菲特搞价值投资，买几只股票常年不动；可是文艺复兴科技的詹姆斯·西蒙斯（Jim Simons）搞量化交易，玩的是用算法在几毫秒的时间内做判断。那你说到底是巴菲特做得对，还是西蒙斯做得对呢？答案是都对 —— 能赚钱就是对的 —— 他们只是选择了不同的偏置。</p>
+  <p>如果这个东西又便宜又好，那个东西又贵又不好，人人都知道该选又便宜又好的，那不叫做决策。<strong>决策往往是在两难之中做选择：</strong>这个工作稳定但是上限低，那个工作有可能让你暴富但是波动大，你选哪个？没有客观中立的标准答案，你的决策归根结底取决于你的偏置。</p>
+  <p>世人总爱说什么要客观中立、要保持开放，但做事的前提恰恰是不中立、不尊重所有的意见、有立场、有方向。<strong>你要是不敢弄脏自己的手，你就永远不是局内人。</strong></p>
+  <p>有了价值设定之后的判断要尽量客观，但是价值本身必须主观。无免费午餐定理要求你做一个有立场的能动者。有立场，但无执念；有权起心动念但也有权根据现实调整。避免"既要、又要、还要"，用自己的核心偏好设定价值函数，牺牲掉一部分维度来换取在另一部分维度上获得超额回报，这才叫决策。</p>
+  <p><strong>AGI 时代人的核心价值就在于设定偏置：</strong>你决定要解决什么问题，你定义什么是好什么是坏，你在空白的纸面上画下第一笔。</p>
+  <blockquote class="quote">什么都不做才是最完美、最没有偏见的状态。偏见是你生命力的证明。</blockquote>
+
+  <div class="poem">
+    <div class="poem-title">收 束 小 诗</div>
+    <p>混沌海中无智愚，<br>只有因缘聚此身。<br>万法皆空无定相，<br>一念起处是真神。</p>
+  </div>
+
+  <section class="notes" id="notes">
+    <h4>注 释</h4>
+    <ol>
+      <li>Wolpert, David H., and William G. Macready. 1997. "No Free Lunch Theorems for Optimization." IEEE Transactions on Evolutionary Computation 1 (1): 67–82.</li>
+      <li>Hume, David. 1748. An Enquiry Concerning Human Understanding.</li>
+      <li>Mitchell, Tom M. 1980. "The Need for Biases in Learning Generalizations." Technical Report, Rutgers University.</li>
+      <li>Derrida, Jacques. 1992. "Force of Law: The 'Mystical Foundation of Authority.'" In Deconstruction and the Possibility of Justice, edited by Drucilla Cornell, Michel Rosenfeld, and David Gray Carlson, 3–67. New York: Routledge.</li>
+    </ol>
+  </section>
+
+  <section class="comments">
+    <h4>用 户 留 言</h4>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">至</div>
+        <div>
+          <div class="comment-name">至尊女宝</div>
+          <div class="comment-date">4月14日 · 湖北</div>
+        </div>
+      </div>
+      <span class="comment-topic"># 小小的改变也很厉害</span>
+      <div class="comment-text">
+        <p>西游记里的那些妖精们要不是过场太多，抓住唐僧不用洗不用请别人上来就咬一口，哪有后面那多事嘛。很明显他们就没学这课，理工科思维里做事习惯先给边界条件再求解，可人生的边界条件不是给定的，是你自己画的。无免费午餐定理说得很清楚，没有一个算法能通吃所有问题。你在一个领域表现好，必然在另一个领域表现差。你让韦神给大家唱个歌估计他眼里就是最大的虐待，这就像佛学说的有漏皆苦，但凡你有追求，用了有为之法，就得付出代价。</p>
+        <p>这意味着决策的起点一定是任性的。你想去广州赚钱，这个想去不是算出来的，是发愿。没有这个发愿，所有可能性在逻辑上等价，你就永远站在原点。必须先画一个圈，圈里的事才能谈理性。所以归纳偏置不是缺陷，是你展开搜索的前提。</p>
+        <p>我当年跳槽，在原来单位和创业公司之间列了表格打分，算来算去两边差不多。最后选创业公司，不是算赢了，而是我受够了安稳。这个受够就是我的偏置。去了之后我也留了后路，没切断原单位的联系。后来公司真出危机，我也回去帮助了他们解决问题，并没有影响我的工作，反而有了专业上的精进，因为后面业务板块又到了全国，我还可以到处走走，这就是韧性，比当初选对更重要。</p>
+        <p>没有完美决策，就像没有完美的人。这不悲观，反而让人松一口气。既然不存在绝对正确，你就不必怕选错。带上偏见，保持调整的能力，走错了调头就是。什么都不做才最完美，但那不是活着。所以我可不是娇滴滴的女王，有的是力气，没有手段！哈哈，为什么我想到了琵琶精。</p>
+      </div>
+      <div class="comment-stats">点赞 8 · 评论 22 · 分享 171</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">C</div>
+        <div>
+          <div class="comment-name">Christy</div>
+          <div class="comment-date">4月14日 · 广东</div>
+        </div>
+      </div>
+      <span class="comment-topic"># 学决策算法，解人生难题</span>
+      <div class="comment-text">
+        <p>决策就是在相互冲突的目标之间做出明确取舍，而不是追求不切实际的全面满足。决策的能力不是拥有完美选项，而是在局限的掌握中最大化价值的方法论。决策能力不在于等待完美选项的出现，而是在信息不全、资源有限、条件约束的现实困境中，通过系统性思维与果断行动，实现价值的最大化。真正的决策高手并非拥有更多选择，而是具备在模糊与不确定中识别关键变量、权衡取舍、并承担后果的能力。</p>
+        <p>需要做重要决策时先明确自己的核心偏好，识别对你最重要的目标或价值，将它设为决策的"北极星指标"，所有的判断以此为核心。接受不完美是决策的起点，所有选择都伴随代价，所谓"最优解"往往是基于当下信息与认知的相对最优。与其追求绝对正确，不如明确目标优先级，在动态调整中不断推进。</p>
+        <p>人生就是这样，永远不能两全其美，取了这个就要舍去那个。人生就是一边拥有，一边失去；一边选择，一边放弃。有所取就有所舍。有所得必有所失。</p>
+      </div>
+      <div class="comment-stats">点赞 7 · 分享 165</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">左</div>
+        <div>
+          <div class="comment-name">左星星</div>
+          <div class="comment-date">4月14日 · 上海</div>
+        </div>
+      </div>
+      <div class="comment-text">
+        <p>跑鞋适合跑步，走路也还行，但你穿它去踢球、爬雪山、参加婚礼，就都不合适。你不能因为它在一个场景里很好用，就指望它解决所有问题。因为它本来就是为"跑步"这个场景优化出来的。无免费午餐定理，说的就是这个。任何优化都有边界，你在一个地方做得更好，往往就意味着在别的地方做出让步。没有一种方法，可以在所有问题上都同时最优。</p>
+        <p>"偏置"听起来像坏词，其实不是。它更像是你看世界时戴上的一副眼镜。没有这副眼镜，你反而什么都看不清。</p>
+        <p>高考那年，我妈问我报哪里，我说只去上海。全国那么多城市、那么多大学，为什么偏偏选上海？也许是受影视影响，也许是觉得它更开放，也可能只是直觉上的偏好。这些都谈不上客观，但正因为先有了这个方向，我才有了后续的选什么专业、进什么行业、未来怎么发展。偏置不是错误，它是决策的起点。</p>
+        <p>养孩子也是一样。有的家长的"偏置"是成绩，会优先投入补课；有的家长的"偏置"是主动性，会把时间放在运动和体验上。面对同一个孩子，不同的偏置，会引导出完全不同的选择路径。</p>
+        <p>无免费午餐定理，是告诉你别做"万能幻想"；偏置，是提醒你先选边站，再开始思考。没有偏置的人，看起来很客观，实际上常常什么也做不了。真正会决策的人，不是没有偏好，而是知道自己的偏好是什么，也知道什么时候该调整它。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <div class="ai-title">AI 阅读总结</div>
+    <div class="ai-sub">通读全文后生成 · 供个人学习参考</div>
+
+    <p class="one-liner">一句话概括：世界上不存在完美、客观中立的决策 —— 任何真正的好决策，都始于你主动设定的偏置（价值观＋对世界的基本假设），并愿意为它付出代价、承担冒险；这正是「无免费午餐定理」留给人类的最深洞见与最大自由。</p>
+
+    <h5>一、核心内容总结</h5>
+    <ol>
+      <li>「无免费午餐定理」（NFL，沃尔珀特与麦克雷迪 1997 年提出）用严格数学证明：把所有可能问题平均来看，任何两个算法的表现都一样。没有能通吃一切问题的"屠龙刀"算法，想在一个领域胜过别人，就必然在另一个领域付出代价 —— 你必须为优化付费。</li>
+      <li>完美决策纯属妄念：诸葛亮式的锦囊只存在于小说，秦始皇、朱元璋的顶层设计都很快被现实超越；"排除所有偏见、像解数学题一样算出正确答案"的客观中立幻想，是对决策的根本误解 —— 坚持客观中立，就什么都干不了。</li>
+      <li>从佛学视角看，NFL 就是科学版的「诸行无常」：一切有为之法都是「有漏之法」，必然局限；凡有追求就要为优化付出代价、承受「有漏皆苦」，什么都不做才是圆满，但入世必须使用有漏法。</li>
+      <li>学习必须依赖「归纳偏置」：休谟早已指出归纳在逻辑上无法自洽，机器必须先"盲目相信"某些先验（如 CNN 相信局部特征、RNN 相信时间关联）才能从有限经验中学到规律；没有偏置，世界只是一片点阵和噪音，算法会陷入瘫痪。</li>
+      <li>决策的起点是主观的「发愿」："我要去广州工作赚钱"不是决策而是发愿 —— 它圈定搜索空间、定下目标函数、提供归纳偏置；决策是我们已经知道你想干啥之后才谈得上的事，所以决策的初心一定是一个「任性」，而任性正是决策必不可少的成分。</li>
+      <li>未来存在不可量化的不确定性，连概率分布本身都不确定，所以你算到最后总有算不出来的地方；最强 AI 也无法料事如神，必须把大量「微决策」留给人 —— 决断不是展开，而是承担（德里达）。</li>
+      <li>决策的元认知心法只有三步：① 强先验 —— 用价值观（不可协商之物）和对世界的基本假设（线性递增还是重尾爆发）设定偏置；② 算法搜索 —— 在特定局部问题上找到最强算法，理性调研推演、尊重硬条件，这基本是个工程问题；③ 系统化冒险 —— 偏置是剑、偏执是枷锁，要「强偏置、弱偏执」，发现走错马上调整退出。</li>
+      <li>有立场但无执念：价值设定必须主观，判断要尽量客观；避免"既要、又要、还要"，牺牲一部分维度换取另一维度的超额回报；AGI 时代人的核心价值就是设定偏置 —— 决定解决什么问题、定义好坏、在空白纸面上画下第一笔。</li>
+    </ol>
+
+    <h5>二、给个人的行动建议</h5>
+    <ol>
+      <li>本周花 20 分钟写一份「偏置清单」：列出你绝对不做什么（不可协商的底线）、绝不愿付的代价、以及最想追求的东西，再写下你对当前领域的基本假设（更像线性递增还是重尾爆发）。它就是你的价值函数与搜索方向。</li>
+      <li>做重要选择前，先"发愿"再"打分"：先明确"我要去往哪里、要做什么"，把它当作圈定搜索空间的一笔，再去列表格、做调研；不要试图调出所有变量求一个全局最优解 —— 那是违反无免费午餐定理的妄想。</li>
+      <li>选定方向后切换到「算法搜索」模式：把偏好转化为可量化的目标，像做工程一样调研、推演、比较各选项的期望与代价，这一阶段要尽量客观理性、尊重事实。</li>
+      <li>给自己的偏置设一个"反悔机制"：预先想好什么信号出现就说明偏置失效（数据证伪、成本失控、方向偏离初心），并设好止损线 —— 强偏置、弱偏执，走错了调头就是。</li>
+      <li>停止"既要、又要、还要"：面对"稳定低上限 vs 波动高上限"这类两难，承认取舍不可避免，按自己的核心偏好果断拍板，并为放弃的部分心甘情愿买单。</li>
+      <li>接纳"算不清"的那一刻：当推理走到尽头，允许自己说出"不管了，就这么干" —— 那不是失误，而是自由决断的开始；同时像留言里的跳槽者一样，给自己留一条后路，保持随时调整的韧性。</li>
+      <li>把无免费午餐定理当作减压器：既然不存在绝对正确的选项，你就不必害怕选错；带着偏见上路，保持调整的能力，这比"选对"本身更重要。</li>
+    </ol>
+
+    <h5>三、金句摘录</h5>
+    <blockquote class="quote">「世界上没有免费的午餐」：你想要在一个领域里表现得比别的算法好，你就必然在另一个领域里表现得比别的算法差。</blockquote>
+    <blockquote class="quote">你必须先押注结构，才能找到结构，才能判断好结构。</blockquote>
+    <blockquote class="quote">决断不是展开，而是承担。</blockquote>
+    <blockquote class="quote">什么都不做才是最完美、最没有偏见的状态。偏见是你生命力的证明。</blockquote>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+  <footer class="site-foot">万维钢 · 现代思维工具100讲 · 第26讲《无免费午餐定理：诸行无常，有偏置才有决策》</footer>
+</article>
+
+<button id="back-top" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress-bar');
+  var top = document.getElementById('back-top');
+  function update() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    top.style.display = h.scrollTop > 600 ? 'flex' : 'none';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  update();
+})();
+</script>
+</body>
+</html>

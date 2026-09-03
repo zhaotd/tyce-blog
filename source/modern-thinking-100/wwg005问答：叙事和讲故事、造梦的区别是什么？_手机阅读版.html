@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第5讲 · 问答：叙事和讲故事、造梦的区别是什么？</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2620;
+    --muted:#71675b;
+    --card:#fffdf8;
+    --card-border:#e8dfd0;
+    --accent:#8a5a2b;
+    --accent-soft:#f3e9db;
+    --btn-fg:#fffaf3;
+    --quote-border:#c9a06b;
+    --divider:#d9cfbd;
+    --summary-bg:#f3ead9;
+    --summary-border:#d8c49a;
+    --tag-bg:#8a5a2b;
+    --tag-fg:#fffaf3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d4;
+      --muted:#a39686;
+      --card:#201c17;
+      --card-border:#3a322a;
+      --accent:#c9a06b;
+      --accent-soft:#2e2620;
+      --btn-fg:#1c1813;
+      --quote-border:#8a6a42;
+      --divider:#3a322a;
+      --summary-bg:#262019;
+      --summary-border:#8a6a42;
+      --tag-bg:#c9a06b;
+      --tag-fg:#1c1813;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    word-break:break-word;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:99;
+    transition:width .1s linear;
+  }
+  #topBtn{
+    position:fixed;right:18px;
+    bottom:calc(24px + env(safe-area-inset-bottom));
+    width:44px;height:44px;border-radius:50%;
+    background:var(--accent);color:var(--btn-fg);
+    border:none;font-size:20px;line-height:1;cursor:pointer;z-index:99;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .3s;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);
+  }
+  .wrap{
+    max-width:700px;margin:0 auto;
+    padding:28px 20px calc(60px + env(safe-area-inset-bottom));
+  }
+  .doc-head{margin-bottom:10px;}
+  .tag{
+    display:inline-block;
+    background:var(--tag-bg);color:var(--tag-fg);
+    font-size:13px;font-weight:600;letter-spacing:.5px;
+    padding:4px 12px;border-radius:999px;margin-bottom:16px;
+  }
+  h1{
+    font-size:24px;line-height:1.45;margin:0 0 12px;
+    text-align:left;
+  }
+  .meta{
+    font-size:14px;color:var(--muted);text-align:left;
+    padding-bottom:18px;border-bottom:1px solid var(--divider);
+    margin-bottom:26px;
+  }
+  .section-title{
+    font-size:17px;font-weight:700;color:var(--accent);
+    margin:34px 0 16px;text-align:left;
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-title::before{
+    content:"";display:inline-block;width:4px;height:1.1em;
+    background:var(--accent);border-radius:2px;flex:none;
+  }
+  p{margin:0 0 14px;}
+  .qa-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:18px 18px 6px;
+    margin:0 0 20px;
+  }
+  .qa-q{
+    margin:0 0 14px;text-align:left;
+  }
+  .qa-q .who{
+    display:block;font-weight:700;color:var(--accent);
+    font-size:15px;margin-bottom:6px;
+  }
+  .qa-q .q-text{font-size:15.5px;}
+  .qa-a{
+    margin:0 -18px 0 0;padding:14px 0 12px 18px;
+    border-top:1px dashed var(--card-border);
+    border-left:3px solid var(--quote-border);
+    border-radius:0 0 12px 12px;
+  }
+  .qa-a p:last-child{margin-bottom:6px;}
+  blockquote{
+    margin:16px 0;padding:12px 16px;
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    color:inherit;
+  }
+  blockquote p{margin:0 0 8px;}
+  blockquote p:last-child{margin-bottom:0;}
+  .divider{
+    text-align:center;color:var(--divider);
+    font-size:16px;letter-spacing:8px;
+    margin:30px 0;user-select:none;
+  }
+  .note{
+    font-size:13.5px;color:var(--muted);
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:12px 16px;margin:26px 0 0;
+    text-align:left;
+  }
+  #ai-summary{
+    margin:38px 0 10px;
+    padding:24px 22px 18px;
+    background:var(--summary-bg);
+    border:1px solid var(--summary-border);
+    border-radius:12px;
+  }
+  #ai-summary .ai-title{
+    margin:0 0 14px;font-size:19px;font-weight:800;
+    color:var(--accent);text-align:left;
+    display:flex;align-items:center;gap:8px;
+  }
+  #ai-summary .ai-title::before{
+    content:"";width:6px;height:1.2em;background:var(--accent);
+    border-radius:3px;flex:none;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;margin:0 0 16px;text-align:left;
+  }
+  #ai-summary h4{
+    font-size:15.5px;color:var(--accent);
+    margin:20px 0 10px;text-align:left;
+  }
+  #ai-summary ol{
+    margin:0 0 8px;padding-left:22px;
+  }
+  #ai-summary ol li{margin-bottom:9px;text-align:left;}
+  #ai-summary blockquote{
+    background:var(--card);border-left-color:var(--quote-border);
+  }
+  .ai-note{
+    font-size:12px;color:var(--muted);text-align:center;
+    margin:20px 0 0;
+  }
+  .page-footer{
+    text-align:center;color:var(--muted);
+    font-size:12.5px;margin-top:34px;
+  }
+  @media (max-width:480px){
+    body{font-size:16px;}
+    h1{font-size:21px;}
+    .wrap{padding:22px 16px calc(56px + env(safe-area-inset-bottom));}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第5讲</span>
+    <h1>问答：叙事和讲故事、造梦的区别是什么？</h1>
+    <div class="meta">作者：万维钢 ｜ 读者问答精选 ｜ 现代思维工具100讲</div>
+  </header>
+
+  <h3 class="section-title">来自发刊词：现代精英的思维武器库</h3>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 郑跃葵 问</span>
+      <span class="q-text">万 sir，请教个问题：对于 GPT 5.4 Pro，用什么模式去问会更有效？总觉得自己的提问没能彻底挖掘它的潜力。</span>
+    </div>
+    <div class="qa-a">
+      <p>GPT Pro 适合长链条推理，特点是严谨和周密，并且能处理很长的上下文。它应该被用于复杂任务场景；如果是一般的问答，反而不如 thinking 模式有灵气。我来说几条使用经验——</p>
+      <ul>
+        <li>一个是要多提要求、提很多具体的要求，既要、又要、还要。如果你只是让它调研一个普通的主题，它做不了太多有意思的事情。但你完全可以告诉它："这有一个学术课题，你帮我调研一下它在当今学术界都有哪些影响，它的来龙去脉是什么，有哪些争议？然后你再看看它在商业和公共事务上有哪些具体的应用？我想找一些不常见的但特别有意思的亮点。然后你再帮我设想几个日常生活中的应用场景……"</li>
+        <li>再比如说，如果你要制定一份项目计划书或者一个 vibe coding 程序，你可以先用 GPT Pro 做一个详尽的工作大纲。你最好一上来就把所有的需求都尽可能说好，比如你想要什么功能、什么样的界面、怎样的用法等等，要求越详细越好。Pro 能充分考虑所有这些需求和可能会遇到的硬限制，把事情理顺。</li>
+        <li>另一个用法是给它一大堆材料，让它从中算账，或者挖掘你需要的信息。比如说你可以把所有的账单都给它，让它给你分门别类地算一下。它能自动做好归类，而且结果非常严谨。</li>
+        <li>我经常让 GPT Pro 干的一件事，是对当前的新闻进行推演。比如美国和伊朗的局势发展到这一步，接下来会发生什么？你最好问得细一点，例如特朗普现在最正确的选择应该是什么，而他最可能的选择又是什么？伊朗最正确的选择又是什么，等等。接着让它分析未来最可能出现的结果。</li>
+        <li>如果你对中国经济感兴趣，可以问它当前是一个什么样的局面，未来几年将会如何演化。如果你能喂给它一些特定信息，可能会有帮助；但对于这种公共话题，它通常能自己去网上找到相关信息，做得相当不错。</li>
+        <li>我的感受是它对公共事务的推演结果总是比我想象的要平和一些。个人的判断经常容易走极端，但如果你注意事后复盘，会发现局面通常不会像你想象的那么极端。</li>
+      </ul>
+      <p>罗振宇老师最近有个说法：如果你没有做过充分的调查研究，最好不要对公共事务发言。我看这句话可以翻译成：在你想要发言之前，你最好先用 GPT-Pro 做一番推演。</p>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · ·</div>
+
+  <h3 class="section-title">来自《叙事：这个宇宙的第一性原理》</h3>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 薛福堂 问</span>
+      <span class="q-text">叙事这个概念，和讲故事、造梦有啥区别，是不是换了个说法而已？</span>
+    </div>
+    <div class="qa-a">
+      <p>讲故事和造梦是更有戏剧性的叙事，往往会有丰富的剧情、性格鲜明的主人公，有明确的开头和结局。讲故事和造梦会让你强烈地感觉到那是虚构的。</p>
+      <p>我们所说的"叙事"，可以理解成一般意义上的故事，或者是广义的故事。比如"我走进房间，拿起一个馒头吃了。"这就是一个叙事。这里没有什么戏剧性，但它描写了一种经历，提出了一个"实施意图"，并且有明确的时间线索——它能让你不自觉地跟着这个"实施意图"走，并且关心结局。</p>
+      <blockquote>
+        <p>我们用"叙事"而不用"故事"，就是提醒读者要警惕那些无形的叙事。不要不自觉地跟着意图走：当你意识到那是一个叙事的时候，你就可以跳出来。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 Mercury 问</span>
+      <span class="q-text">文中说目前 AI 没有意识是因为 AI 没有经历，没有历史叙事。但是现在 AI 能联系上下文，可以把 AI 的上下文理解为 AI 自己的经历和叙事吗？</span>
+    </div>
+    <div class="qa-q">
+      <span class="who">读者 掷色子曰 问</span>
+      <span class="q-text">万 Sir，您怎么看待有记忆的"龙虾"？它会有自己的经历，有历史叙事，最终产生自我意识吗？</span>
+    </div>
+    <div class="qa-a">
+      <p>上下文更像是 AI 的工作记忆（working memory），而不是它的自身经历。你每次调用"小龙虾"的时候，它读取存在本地的 Soul.md 醒过来，按照读取的一大堆记忆文件，知道今天的任务是什么，就像一个演员拿到剧本开始演出一样。演出结束，它会归于沉寂，等待你下一次调用。</p>
+      <p>当你下一次调用的时候，在读取 Soul.md 之前，龙虾背后的大模型本身没有任何变化。正如那个演员，到演出现场就入戏，演出结束就出戏，不带走任何因果。甚至你下一场戏换成别家的 API，比如说你以前用的是昂贵的 GPT 5.4，现在改成用便宜的 Kimi，它们的行为是很相似的，都完全是按照剧本走。你在家里的演出，没有对那两个模型本身的参数造成任何改变。</p>
+      <p>你能说这出戏是演员的经历吗？</p>
+      <p>可是对于我们真实的人来说，我们每时每刻的经历都在改写我们大脑的神经元。你的记忆是不会被抹掉的。明天给你换一个工作单位，前一个工作单位所学的技能、所积累的善意和怨念，都还如影随形地跟着你。它们改变了你，这能一样吗？</p>
+      <p>那你说，如果一个演员演得足够久，我又何必在乎他来自哪个模型呢？我只要知道他在本地演得像，我就可以当他是一个有意识的人！这就没有确定的答案了，可能很多人会有争议。</p>
+      <p>在我看来，问题的关键在于怎么确保他在本地演得足够像。通过训练焊死在参数里的技能和记忆是一回事，在本地的 Skill.MD 上临时掌握的技能是另一回事，这两种能力是有差异的。不然我们何必在乎调用的是 GPT 还是 Kimi 呢？</p>
+      <p>但我只能说，现在并没有明确的标准，说怎么样就是有意识，怎么样就没有意识。</p>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · ·</div>
+
+  <h3 class="section-title">来自《重尾：世界服从极端值》</h3>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 自牧 问</span>
+      <span class="q-text">出生普通，智力一般，但我仍想成为人中龙凤（顶尖 1% 的人），如何提高实现目标的概率？专注自己的长板？</span>
+    </div>
+    <div class="qa-a">
+      <p>如果智力不如别人，资源也不如别人，又不甘于平凡，那就必须赌一把。但这个"赌"绝不是那种孤注一掷的豪赌，而必须能确保你活下来、可以长期积累复利的选项。</p>
+      <p>这就意味着是一个比较小众的赛道。如果是大众赛道，人人都看得见，那些智力和资源更好的人必定会捷足先登。但小众赛道既然是小众，那毕竟成才率也不高，搞不好可能还是个普通人——但是，对于你来说，成为顶尖高手的概率应该会比在大众赛道高一些，毕竟聪明人没有来这里。</p>
+      <p>你的机会在于成为一个多面手。斯科特·亚当斯（Scott Adams）有个说法 [1]：在任何一个领域成为顶尖高手都很困难，但如果你能拥有三四项核心技能，并将每一项都练到 Top 25%，这对于普通人来说还是可以实现的——而同时拥有这几项技能的人，可就不多了。</p>
+      <p>你最好能找到不同领域之间的"结构洞"。"豆腐西施"之所以引人注目，是因为卖豆腐的人通常长得不像西施，而美人通常不会来卖豆腐。但如果你是一个卖豆腐的西施，你会收获巨量的流量。</p>
+      <p>现在 AI 很热门，可是有大量的传统行业，特别是小企业主，还不知道怎么部署 AI。如果某个传统行业从业者通过自学精通 AI 智能体，能给这个行业提供一个量身定制的解决方案，上门安装、具体落实、提供培训，这不就是一个很好的赛道吗？</p>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 武兵 问</span>
+      <span class="q-text">万 Sir，想起两个问题：<br>1. 如果组织绩效满足肥尾效应，那组织的薪酬机制、激励机制也应该设计为肥尾吗？<br>2. 如果结果、目标满足肥尾，那影响结果与目标达成的评价标准、资源投入是不是也应该选用肥尾的策略？</span>
+    </div>
+    <div class="qa-a">
+      <p>应该是肥尾。但对于大公司来说，它的激励和资源投入总是比肥尾稍微瘦一点。</p>
+      <p>小公司的分工很明确，有时候你非常清楚一项成就是谁做出来的。比如如果销售至关重要，你就得给人家提成。销冠应该是这个公司最重要的人，我听说有的老板竟然嫉妒销冠拿高工资，这简直太荒唐了。再比如一个小公司如果一个最重要的产品是一位工程师自己开发出来的，那你就得给人家特别高的工资和分红才行。</p>
+      <p>但大公司的项目都是很多人合作共同促成的，难以有效归因。你说这个产品卖得好，销售虽然重要，但是品牌难道就不重要吗？这个产品自身的设计、研发岗，难道就不重要吗？所以在大公司里，工资高低虽然仍然会拉开巨大的差异，但是并不会直接跟业绩挂钩。这样也有利于合作。</p>
+      <p>肥尾分布是天然的，搞平均是人为的。因为一群人如果长期相处在一起，主观上就会认为大家的差异最好不要太大。大公司是怎么平衡这个呢？那就是给重要岗位的人员一个比较高的固定工资，今年你业绩好是这么多工资，明年业绩不好也是这么多工资——但是因为有奖金和股票分红，你还是会努力工作。对于高水平员工来说，在大公司工作具有某种保险性质：你放弃了突发的高收入，但是也避免了收入突然向下波动。</p>
+      <blockquote>
+        <p>可是小公司如果不给人极高的绩效工资，就没有办法跟大公司竞争人才了。所以各有各的生态位。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="divider">· · · · · ·</div>
+
+  <h3 class="section-title">来自《能动：稳态生存的观念陷阱》</h3>
+
+  <div class="qa-card">
+    <div class="qa-q">
+      <span class="who">读者 王登峰 问</span>
+      <span class="q-text">请问万老师：今年孩子七岁刚上小学一年级，她觉得上学有些不舒服，感觉到处都是各种束缚，严重不适应。我告诉孩子，你要在行动中随大流，思想上保持特立独行，既是为了维护大环境，也是为了保持自己精神独立性。虽然孩子还听不懂，但是不想让孩子早早向规矩妥协，真心希望可以做自己想做的事。不知道这种教育方法有没有问题，反正孩子想法特别多，有点不合群，独立性特别强。</span>
+    </div>
+    <div class="qa-a">
+      <p>你这段话中最重要的信息不是孩子不舒服，也不是现在的教育方法有问题，而是"孩子刚上小学一年级"。一年级的孩子干什么都是正常的。</p>
+      <p>她刚刚上学，学校再好，她也可能不适应；学校再不好，她也可能反而觉得无所谓。她感受到不舒服不一定是学校管得太严、泯灭了孩子的天性，也许她就是一开始不太习惯集体生活……这一切都是完全正常的现象。</p>
+      <p>我的建议是正常上学。在家里要让孩子享受到充分的娱乐和休息时间，不要担心学习成绩。对于一年级的小孩来说，最不需要担心的就是学习成绩。将来孩子什么时候开悟了，一发力就能领先很多。她现在最重要的任务是学会跟其他小朋友相处，大家一起玩。如果学校不提供玩耍时间，可以私下跟同学联系，今天在你家，明天在我家，让孩子们在一起玩。</p>
+      <p>你对孩子说的话过于沉重了。一年级小学生，何必去想这么沉重的话题呢？有时候不干预就是最好的应对策略，让她慢慢去磨合。</p>
+      <blockquote>
+        <p>并不是所有问题都需要解决，有些问题最常见的解决方式是随着时间自动消失。</p>
+      </blockquote>
+      <p>除非孩子的老师找家长说，你家小孩如此特殊，已经无法在学校正常学习了，你再想办法干预。就你目前的描述而言，我看很可能是多虑了。</p>
+      <blockquote>
+        <p>你觉得你家小孩特殊，其实每个小孩都特殊。</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>注释：</strong>［1］斯科特·亚当斯（Scott Adams），美国漫画家，代表作《呆伯特》（Dilbert），曾提出"技能叠加"（skill stacking）的思路——把几项技能各自练到前 25%，组合成难以被替代的独特优势。
+  </div>
+
+  <section id="ai-summary">
+    <div class="ai-title">AI 阅读总结</div>
+    <p class="one-liner">① 一句话概括：这一讲通过四组读者问答，把"叙事""肥尾"等思维工具落到日常：怎么把 GPT Pro 问出潜力、叙事与讲故事/造梦有何不同、AI 的"记忆"算不算经历，以及普通人如何在小众赛道突围、怎么对待刚上小学的孩子。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>GPT Pro 用对场景：</strong>它强在长链条推理、严谨周密、能处理长上下文，适合复杂任务；一般问答反而用 thinking 模式更有灵气。核心心法是"多提要求"——既要、又要、还要，把需求一次说透。</li>
+      <li><strong>三个具体用法：</strong>先让它做详尽的工作大纲（项目计划、vibe coding 程序）；把大量材料（如全部账单）丢给它归类算账；对当前新闻做细颗粒度推演（如美伊局势、中国经济），问题问得越细，推演越有价值。</li>
+      <li><strong>推演的意义：</strong>Pro 对公共事务的推演总比个人想象平和——个人判断容易走极端，事后复盘会发现局面没那么极端。罗振宇说"没做过充分调查研究不要对公共事务发言"，万sir 的翻译是：发言前先用 GPT-Pro 推演一番。</li>
+      <li><strong>叙事 vs 讲故事/造梦：</strong>讲故事、造梦是更有戏剧性的叙事，有剧情、主人公和明确的开头结尾，让人明显感到虚构；"叙事"是广义的故事，如"我走进房间，拿起一个馒头吃了"，它自带"实施意图"和时间线索，会让人不自觉地跟着走。用"叙事"一词正是为了提醒：意识到那是叙事，你就能跳出来。</li>
+      <li><strong>AI 的"记忆"不是经历：</strong>上下文只是工作记忆；"小龙虾"每次读取 Soul.md 醒来、演完即沉寂，换 API 也不改变模型参数，正如演员入戏又出戏。而人的经历每时每刻改写神经元、不会被抹掉。目前没有明确标准判定"怎样算有意识"，关键差异在于：技能是焊死在参数里，还是只在本地临时掌握。</li>
+      <li><strong>普通人的突围逻辑：</strong>不甘平凡就要"赌"，但赌的是能活下来、能长期积累复利的选项，而不是孤注一掷。要选小众赛道（聪明人没来这儿），更要当多面手——把三四项技能各练到 Top 25%（斯科特·亚当斯），并找到领域间的"结构洞"，比如"卖豆腐的西施"。</li>
+      <li><strong>肥尾与激励：</strong>激励设计应该肥尾，但大公司项目难以归因、为利于合作，用"高固定工资+奖金股票"平衡，对高水平员工有保险性质；小公司分工明确，必须重奖销冠和核心工程师，否则竞争不过大公司人才——各有各的生态位。</li>
+      <li><strong>一年级孩子的不适应：</strong>"孩子刚上小学一年级"才是关键信息，一年级孩子干什么都正常。最不需要担心学习成绩，重点是学会和小朋友相处；"不干预就是最好的应对策略"，有些问题会随时间自动消失；除非老师明确说无法正常学习，否则不必干预——你觉得孩子特殊，其实每个孩子都特殊。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li>本周挑一件正在纠结的决策（项目、换工作、学习计划），用 GPT Pro 写一份"既要、又要、还要"的详细需求清单，先让它出大纲再做推演，最后拿结果跟自己的判断对照，把差异记下来。</li>
+      <li>把本月全部账单一次性丢给 AI 让它分门别类算账，找出消费结构里最值得砍掉的 2-3 项，下周就执行。</li>
+      <li>练一次"预测-复盘"：本周对一条新闻写下你最极端的判断，同时让 AI 推演一遍，两周后回看哪个更接近现实，体会"局面通常没那么极端"。</li>
+      <li>列出你最强的 2-3 项技能，为其中一项安排本周 3 次刻意练习；再想想你所在行业里别人还没用上 AI 的环节，找一个"豆腐西施"式的组合点。</li>
+      <li>本周留意一条让你情绪波动的信息（新闻、广告、文章），试着标出它的"实施意图"——它想让你跟着做什么，练习在意识到叙事时跳出来。</li>
+      <li>如果家里有刚入学或处于适应期的孩子，本周刻意少谈成绩和规矩，多安排一次孩子与同学的玩耍时间，忍住不干预。</li>
+      <li>把"有些问题会随时间自动消失"当成默认假设：遇到焦虑的事先列一张"不干预清单"，只对真正需要行动的事投入精力。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <blockquote>
+      <p>当你意识到那是一个叙事的时候，你就可以跳出来。</p>
+      <p>肥尾分布是天然的，搞平均是人为的。</p>
+      <p>并不是所有问题都需要解决，有些问题最常见的解决方式是随着时间自动消失。</p>
+      <p>你觉得你家小孩特殊，其实每个小孩都特殊。</p>
+    </blockquote>
+
+    <p class="ai-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer class="page-footer">万维钢 · 现代思维工具100讲 · 第5讲 ｜ 手机阅读版</footer>
+</div>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (p * 100) + '%';
+    var show = h.scrollTop > 400;
+    topBtn.style.opacity = show ? '1' : '0';
+    topBtn.style.pointerEvents = show ? 'auto' : 'none';
+  });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

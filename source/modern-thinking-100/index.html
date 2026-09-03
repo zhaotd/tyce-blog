@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="万维钢《现代思维工具100讲》手机阅读版导航 — 全部讲次与词典的索引页">
+<title>万维钢·现代思维工具100讲 · 阅读导航</title>
+<style>
+  :root{
+    --bg:#faf7f1; --card:#ffffff; --text:#2b2b2b;
+    --text-soft:#77736a; --accent:#8a5a2b; --accent-soft:#f3ead9;
+    --line:#e3dacb; --qa:#3a5f8a; --qa-soft:#e8eef5;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#171512; --card:#1f1c17; --text:#e8e2d5;
+      --text-soft:#a49c8c; --accent:#d9a86c; --accent-soft:#3a2f20;
+      --line:#3a332a; --qa:#7fa7d0; --qa-soft:#243140;}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 18px 90px;}
+  .top{text-align:center;padding:20px 0 24px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .top .tag{display:inline-block;font-size:13px;color:var(--accent);
+    background:var(--accent-soft);border-radius:999px;padding:4px 14px;margin-bottom:10px;}
+  .top h1{font-size:24px;line-height:1.4;margin-bottom:6px;letter-spacing:.5px}
+  .top .sub{font-size:14px;color:var(--text-soft)}
+  .top .stats{margin-top:14px;font-size:14px;color:var(--text-soft)}
+  .top .stats b{color:var(--accent);font-weight:700}
+  .nav{position:sticky;top:0;background:var(--bg);
+    padding:10px 18px;margin:0 -18px 18px;
+    border-bottom:1px solid var(--line);
+    font-size:13.5px;overflow-x:auto;white-space:nowrap;
+    -webkit-overflow-scrolling:touch;z-index:90}
+  .nav a{color:var(--text);text-decoration:none;margin-right:14px;
+    border-bottom:2px solid transparent;padding-bottom:2px;}
+  .nav a:active{border-color:var(--accent)}
+  .module{margin-bottom:30px}
+  .module h2{font-size:18px;color:var(--accent);
+    padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  @media (min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+  .card{display:block;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;
+    transition:transform .12s ease,border-color .12s ease;
+    -webkit-tap-highlight-color:transparent;}
+  .card:active{transform:scale(.98);border-color:var(--accent)}
+  .card .label{display:inline-block;font-size:11.5px;
+    color:var(--accent);background:var(--accent-soft);
+    border-radius:6px;padding:2px 8px;margin-bottom:8px;
+    letter-spacing:.5px;font-weight:600}
+  .card.qa .label{color:var(--qa);background:var(--qa-soft)}
+  .card .title{font-size:15.5px;line-height:1.5;font-weight:600}
+  .tips{margin-top:36px;padding:18px;
+    background:var(--card);border:1px dashed var(--line);
+    border-radius:12px;font-size:14px;line-height:1.85;color:var(--text-soft)}
+  .tips h3{font-size:15px;color:var(--text);margin-bottom:8px}
+  .tips ol{padding-left:22px}
+  .tips li{margin-bottom:4px}
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#d9a86c);z-index:99;transition:width .1s linear;}
+  #backTop{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));
+    width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;
+    font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.25);
+    opacity:0;pointer-events:none;transition:opacity .25s;z-index:98;}
+  #backTop.show{opacity:1;pointer-events:auto}
+  footer{margin-top:36px;text-align:center;font-size:12px;color:var(--text-soft);line-height:1.7}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+<div class="top">
+  <span class="tag">万维钢 · 现代思维工具100讲</span>
+  <h1>阅读导航</h1>
+  <div class="sub">点击任意讲次卡片，跳转到对应手机阅读版</div>
+  <div class="stats"><b>84</b> 篇内容 · <b>7</b> 个模块 · 由 AI 通读整理</div>
+</div>
+
+<nav class="nav"><a href="#m0">🎁 起点 · 课程导览</a><a href="#m1">🌐 基础世界观（模块一）</a><a href="#m2">🚀 人生成长战略（模块二）</a><a href="#m3">📊 决策与判断（模块三）</a><a href="#m4">📚 学习与教育（模块四）</a><a href="#m5">💰 赚钱与事业（模块五）</a><a href="#m6">🌍 社会与复杂系统（模块六）</a></nav><section class="module" id="m0">  <h2>🎁 起点 · 课程导览</h2>  <div class="grid">    <a class="card" href="wwg000发刊词_手机阅读版.html"><span class="label">发刊词</span><div class="title">现代精英的思维武器库</div></a>    <a class="card" href="wwg000赠送《现代思维工具词典》_手机阅读版.html"><span class="label">赠品·词典</span><div class="title">现代思维工具词典（20个核心工具卡片）</div></a>  </div></section><section class="module" id="m1">  <h2>🌐 基础世界观（模块一）</h2>  <div class="grid">    <a class="card" href="wwg001叙事：这个宇宙的第一性原理_手机阅读版.html"><span class="label">第1讲</span><div class="title">叙事：这个宇宙的第一性原理</div></a>    <a class="card" href="wwg002重尾：世界服从极端值_手机阅读版.html"><span class="label">第2讲</span><div class="title">重尾：世界服从极端值</div></a>    <a class="card" href="wwg003能动：稳态生存的观念陷阱_手机阅读版.html"><span class="label">第3讲</span><div class="title">能动：稳态生存的观念陷阱</div></a>    <a class="card" href="wwg004约束：先尊重，再行动_手机阅读版.html"><span class="label">第4讲</span><div class="title">约束：先尊重，再行动</div></a>    <a class="card qa" href="wwg005问答：叙事和讲故事、造梦的区别是什么？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">叙事和讲故事、造梦的区别是什么？</div></a>    <a class="card" href="wwg006可能：不确定性是意义的燃料_手机阅读版.html"><span class="label">第5讲</span><div class="title">可能：不确定性是意义的燃料</div></a>    <a class="card" href="wwg007内核：你的三个「自我」_手机阅读版.html"><span class="label">第6讲</span><div class="title">内核：你的三个「自我」</div></a>  </div></section><section class="module" id="m2">  <h2>🚀 人生成长战略（模块二）</h2>  <div class="grid">    <a class="card" href="wwg008能耐寻求定理：君子不器_手机阅读版.html"><span class="label">第7讲</span><div class="title">能耐寻求定理：君子不器</div></a>    <a class="card" href="wwg009供给侧心态：怎样在正和的世界合作（以及竞争）_手机阅读版.html"><span class="label">第8讲</span><div class="title">供给侧心态：怎样在正和的世界合作</div></a>    <a class="card" href="wwg010复利：可积累的优势_手机阅读版.html"><span class="label">第9讲</span><div class="title">复利：可积累的优势</div></a>    <a class="card qa" href="wwg011问答：为什么承认“原来我是错的”那么难？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">为什么承认"原来我是错的"那么难？</div></a>    <a class="card" href="wwg012特别放送：基本世界观模块答疑直播笔记_手机阅读版.html"><span class="label">🎁 特别放送</span><div class="title">基本世界观模块答疑直播笔记</div></a>    <a class="card" href="wwg012自我决定理论：一流人物不可能是痛苦的卷王_手机阅读版.html"><span class="label">第10讲</span><div class="title">自我决定理论：一流人物不是痛苦的卷王</div></a>    <a class="card" href="wwg013自由能原理：活着就是对齐_手机阅读版.html"><span class="label">第11讲</span><div class="title">自由能原理：活着就是对齐</div></a>    <a class="card" href="wwg014主动高认知负荷：注意力的 Pro 模式_手机阅读版.html"><span class="label">第12讲</span><div class="title">主动高认知负荷：注意力的 Pro 模式</div></a>    <a class="card" href="wwg015WOOP：从生活的默认设置中觉醒_手机阅读版.html"><span class="label">第13讲</span><div class="title">WOOP：从生活的默认设置中觉醒</div></a>    <a class="card" href="wwg016社交资本、结构洞和搬家：容易向上流动的位置_手机阅读版.html"><span class="label">第14讲</span><div class="title">社交资本、结构洞和搬家</div></a>    <a class="card qa" href="wwg017问答：为什么喜欢的事却难以启动？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">为什么喜欢的事却难以启动？</div></a>    <a class="card" href="wwg018认知解耦：三步调节负面情绪_手机阅读版.html"><span class="label">第15讲</span><div class="title">认知解耦：三步调节负面情绪</div></a>    <a class="card" href="wwg019身份认同：元认知黑魔法_手机阅读版.html"><span class="label">第16讲</span><div class="title">身份认同：元认知黑魔法</div></a>    <a class="card" href="wwg020安全感：人需要有所依靠_手机阅读版.html"><span class="label">第17讲</span><div class="title">安全感：人需要有所依靠</div></a>    <a class="card" href="wwg021赛道选择：做天兵天将，还是做孙悟空？_手机阅读版.html"><span class="label">第18讲</span><div class="title">赛道选择：做天兵天将，还是孙悟空？</div></a>    <a class="card" href="wwg022场域：识时务者为俊杰_手机阅读版.html"><span class="label">第19讲</span><div class="title">场域：识时务者为俊杰</div></a>    <a class="card qa" href="wwg023问答：如何判断“该深耕”还是“该挪位置”？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">如何判断"该深耕"还是"该挪位置"？</div></a>    <a class="card" href="wwg024探索与利用：怎样继续做个年轻人_手机阅读版.html"><span class="label">第20讲</span><div class="title">探索与利用：怎样继续做个年轻人</div></a>    <a class="card" href="wwg025共鸣：高级生活的秘密_手机阅读版.html"><span class="label">第21讲</span><div class="title">共鸣：高级生活的秘密</div></a>  </div></section><section class="module" id="m3">  <h2>📊 决策与判断（模块三）</h2>  <div class="grid">    <a class="card" href="wwg026无免费午餐定理：诸行无常，有偏置才有决策_手机阅读版.html"><span class="label">第22讲</span><div class="title">无免费午餐定理：诸行无常</div></a>    <a class="card" href="wwg027概率分布：到底什么是决策？_手机阅读版.html"><span class="label">第23讲</span><div class="title">概率分布：到底什么是决策？</div></a>    <a class="card" href="wwg028颗粒度和因果中介：用模型思考_手机阅读版.html"><span class="label">第24讲</span><div class="title">颗粒度和因果中介：用模型思考</div></a>    <a class="card qa" href="wwg029问答：没有机缘得到使命召唤怎么办？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">没有机缘得到使命召唤怎么办？</div></a>    <a class="card" href="wwg030贝叶斯先验：判断是主观的，但可以更科学一点_手机阅读版.html"><span class="label">第25讲</span><div class="title">贝叶斯先验：判断是主观的，但可以更科学</div></a>    <a class="card" href="wwg031信息价值：怎样区分沙子和金子_手机阅读版.html"><span class="label">第26讲</span><div class="title">信息价值：怎样区分沙子和金子</div></a>    <a class="card" href="wwg032凯利公式：乘法世界里的认知变现_手机阅读版.html"><span class="label">第27讲</span><div class="title">凯利公式：乘法世界里的认知变现</div></a>    <a class="card" href="wwg033非遍历性：玩家怕方差，庄家爱方差_手机阅读版.html"><span class="label">第28讲</span><div class="title">非遍历性：玩家怕方差，庄家爱方差</div></a>    <a class="card" href="wwg034脆弱和反脆弱：怎样利用非对称风险_手机阅读版.html"><span class="label">第29讲</span><div class="title">脆弱和反脆弱：怎样利用非对称风险</div></a>    <a class="card qa" href="wwg035问答：怎样培养自己找到最佳模型的能力？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">怎样培养自己找到最佳模型的能力？</div></a>    <a class="card" href="wwg036期权：保留可选项的特权_手机阅读版.html"><span class="label">第30讲</span><div class="title">期权：保留可选项的特权</div></a>    <a class="card" href="wwg037状态杠杆：你不是不努力，你是没做在点子上_手机阅读版.html"><span class="label">第31讲</span><div class="title">状态杠杆：你不是不努力</div></a>    <a class="card" href="wwg038选择偏差：就算无人说谎，你看到的也不是真实世界_手机阅读版.html"><span class="label">第32讲</span><div class="title">选择偏差：就算无人说谎，你看到的也不是真实世界</div></a>    <a class="card" href="wwg039回归均值：不要大惊小怪，要有点定力_手机阅读版.html"><span class="label">第33讲</span><div class="title">回归均值：不要大惊小怪，要有点定力</div></a>    <a class="card" href="wwg040前景理论：让人铤而走险的不是贪婪，而是不甘_手机阅读版.html"><span class="label">第34讲</span><div class="title">前景理论：让人铤而走险的不是贪婪，而是不甘</div></a>    <a class="card qa" href="wwg041问答：设计结构矩阵和甘特图的区别是什么？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">设计结构矩阵和甘特图的区别是什么？</div></a>    <a class="card" href="wwg042参考类：当局者迷，旁观者清，你不特殊_手机阅读版.html"><span class="label">第35讲</span><div class="title">参考类：当局者迷，旁观者清</div></a>    <a class="card" href="wwg043超级预测：给不确定性命名，给自己打分_手机阅读版.html"><span class="label">第36讲</span><div class="title">超级预测：给不确定性命名，给自己打分</div></a>    <a class="card" href="wwg044OODA 环：不是反应快，而是换脑快_手机阅读版.html"><span class="label">第37讲</span><div class="title">OODA 环：不是反应快，而是换脑快</div></a>  </div></section><section class="module" id="m4">  <h2>📚 学习与教育（模块四）</h2>  <div class="grid">    <a class="card" href="wwg045认知负荷理论：因为文具多，所以是差生_手机阅读版.html"><span class="label">第38讲</span><div class="title">认知负荷理论：因为文具多，所以是差生</div></a>    <a class="card" href="wwg046ICAP 框架：最高效的学习方法_手机阅读版.html"><span class="label">第39讲</span><div class="title">ICAP 框架：最高效的学习方法</div></a>    <a class="card qa" href="wwg047问答：我们能不能加大自己的「内存」？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">我们能不能加大自己的「内存」？</div></a>    <a class="card" href="wwg048刻意练习：天赋的作用究竟是什么？_手机阅读版.html"><span class="label">第40讲</span><div class="title">刻意练习：天赋的作用究竟是什么？</div></a>    <a class="card" href="wwg049表征、图式、心智模型和解释框架：学习学的是什么_手机阅读版.html"><span class="label">第41讲</span><div class="title">表征、图式、心智模型和解释框架</div></a>    <a class="card" href="wwg050综合调研：在没有教科书的地方挖掘真知_手机阅读版.html"><span class="label">第42讲</span><div class="title">综合调研：在没有教科书的地方挖掘真知</div></a>    <a class="card" href="wwg051默会知识：（但愿）AI 永远都不可能替代的技能_手机阅读版.html"><span class="label">第43讲</span><div class="title">默会知识：AI 永远都不可能替代的技能</div></a>    <a class="card" href="wwg052可取（以及不可取）的困难：把身心调到最适合学习的状态_手机阅读版.html"><span class="label">第44讲</span><div class="title">可取的困难：把身心调到最适合学习的状态</div></a>    <a class="card qa" href="wwg053问答：靠自学可以成为高手吗？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">靠自学可以成为高手吗？</div></a>    <a class="card" href="wwg054人力资本、信号筛选和社交资本：学校教育到底是干啥的？_手机阅读版.html"><span class="label">第45讲</span><div class="title">人力资本、信号筛选和社交资本</div></a>    <a class="card" href="wwg055自主支持：「献祭式养育」终结者_手机阅读版.html"><span class="label">第46讲</span><div class="title">自主支持：「献祭式养育」终结者</div></a>    <a class="card" href="wwg056拥抱和桥接：知识迁移，学以致用_手机阅读版.html"><span class="label">第47讲</span><div class="title">拥抱和桥接：知识迁移，学以致用</div></a>  </div></section><section class="module" id="m5">  <h2>💰 赚钱与事业（模块五）</h2>  <div class="grid">    <a class="card" href="wwg057经济租：赚钱的秘密_手机阅读版.html"><span class="label">第48讲</span><div class="title">经济租：赚钱的秘密</div></a>    <a class="card" href="wwg058阿尔法：优势战略意识_手机阅读版.html"><span class="label">第49讲</span><div class="title">阿尔法：优势战略意识</div></a>    <a class="card qa" href="wwg059问答：怎样跟青春期的孩子沟通？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">怎样跟青春期的孩子沟通？</div></a>    <a class="card" href="wwg060商业杠杆：把一个创造卖一百万次_手机阅读版.html"><span class="label">第50讲</span><div class="title">商业杠杆：把一个创造卖一百万次</div></a>    <a class="card" href="wwg061机会窗口：是盲目跟风，还是顺应大势？_手机阅读版.html"><span class="label">第51讲</span><div class="title">机会窗口：是盲目跟风，还是顺应大势？</div></a>    <a class="card" href="wwg062效果推理：不知道该干什么的时候该干什么_手机阅读版.html"><span class="label">第52讲</span><div class="title">效果推理：不知道该干什么的时候该干什么</div></a>    <a class="card" href="wwg063沃德利地图：独一无二的自己做，能外包的尽量外包_手机阅读版.html"><span class="label">第53讲</span><div class="title">沃德利地图：独一无二的自己做</div></a>    <a class="card" href="wwg064鲍莫尔成本病：物便宜则人贵_手机阅读版.html"><span class="label">第54讲</span><div class="title">鲍莫尔成本病：物便宜则人贵</div></a>    <a class="card qa" href="wwg065问答：战略取舍中，怎么区分专注和固执？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">战略取舍中，怎么区分专注和固执？</div></a>    <a class="card" href="wwg066杰文斯悖论：AI 会增加人的工作岗位_手机阅读版.html"><span class="label">第55讲</span><div class="title">杰文斯悖论：AI 会增加人的工作岗位</div></a>    <a class="card" href="wwg067平台：现代世界最厉害的商业模式_手机阅读版.html"><span class="label">第56讲</span><div class="title">平台：现代世界最厉害的商业模式</div></a>    <a class="card" href="wwg068托付：世界奖励把不确定性变成确定性的人_手机阅读版.html"><span class="label">第57讲</span><div class="title">托付：世界奖励把不确定性变成确定性的人</div></a>  </div></section><section class="module" id="m6">  <h2>🌍 社会与复杂系统（模块六）</h2>  <div class="grid">    <a class="card" href="wwg069地位：社会参与的第一性原理_手机阅读版.html"><span class="label">第58讲</span><div class="title">地位：社会参与的第一性原理</div></a>    <a class="card" href="wwg070礼：社会互动协议_手机阅读版.html"><span class="label">第59讲</span><div class="title">礼：社会互动协议</div></a>    <a class="card qa" href="wwg071问答：处于被领导做空地位的状态怎么办？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">处于被领导做空地位的状态怎么办？</div></a>    <a class="card" href="wwg072激励相容：好的制度不应该指望人“畏威怀德”_手机阅读版.html"><span class="label">第60讲</span><div class="title">激励相容：好制度不靠"畏威怀德"</div></a>    <a class="card" href="wwg073柠檬市场：不要直接扬善惩恶，要让好坏可验证_手机阅读版.html"><span class="label">第61讲</span><div class="title">柠檬市场：让好坏可验证</div></a>    <a class="card" href="wwg074外部性：为什么自由社会也需要强制_手机阅读版.html"><span class="label">第62讲</span><div class="title">外部性：为什么自由社会也需要强制</div></a>    <a class="card" href="wwg075保护费和公共契约：政府的演化_手机阅读版.html"><span class="label">第63讲</span><div class="title">保护费和公共契约：政府的演化</div></a>    <a class="card" href="wwg076软预算约束：有人兜底，责任就会变形_手机阅读版.html"><span class="label">第64讲</span><div class="title">软预算约束：有人兜底，责任就会变形</div></a>    <a class="card qa" href="wwg077问答：什么时候用礼，什么时候用契约？_手机阅读版.html"><span class="label">💬 问答</span><div class="title">什么时候用礼，什么时候用契约？</div></a>    <a class="card" href="wwg078可读性：编户齐民中的米提斯_手机阅读版.html"><span class="label">第65讲</span><div class="title">可读性：编户齐民中的米提斯</div></a>    <a class="card" href="wwg079共同知识：让众人服从的神器_手机阅读版.html"><span class="label">第66讲</span><div class="title">共同知识：让众人服从的神器</div></a>    <a class="card" href="wwg080替罪羊：从“找坏人”到“看系统”_手机阅读版.html"><span class="label">第67讲</span><div class="title">替罪羊：从"找坏人"到"看系统"</div></a>    <a class="card" href="wwg081非预期后果：好意图怎么会带来坏结果？_手机阅读版.html"><span class="label">第68讲</span><div class="title">非预期后果：好意图怎么会带来坏结果？</div></a>  </div></section>
+<div class="tips">
+  <h3>📱 手机阅读建议</h3>
+  <ol>
+    <li>点击任意讲次卡片直接打开对应的手机阅读版</li>
+    <li>右上角 Safari/Chrome 菜单 → <b>添加到主屏幕</b>，下次像打开 App 一样直接访问</li>
+    <li>每篇文末都有 AI 通读全文后总结的要点 + 个人行动建议</li>
+    <li>建议从"发刊词"开始，建立整套课程的元认知框架</li>
+    <li>遇到感兴趣的问答篇，可以从对应主讲的总结里反查上下文</li>
+  </ol>
+</div>
+
+<footer>
+《万维钢·现代思维工具100讲》全套手机阅读版<br>
+AI 辅助从 PDF 重排 + 总结 · 共 84 篇
+</footer>
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('backTop');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop)/max:0;
+    bar.style.width=(p*100)+'%';
+    btn.classList.toggle('show',(h.scrollTop||document.body.scrollTop)>400);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

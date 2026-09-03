@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲 · 第64讲：鲍莫尔成本病：物便宜则人贵</title>
+<style>
+  :root {
+    --bg: #faf7f1;
+    --text: #2b2620;
+    --text-soft: #6b6257;
+    --accent: #8a5a2b;
+    --accent-soft: rgba(138, 90, 43, 0.10);
+    --card: #ffffff;
+    --card-border: #e8dfd2;
+    --divider: #d9cdbb;
+    --summary-bg: #f3ead9;
+    --summary-border: #c9a876;
+    --quote-border: #b98a4e;
+    --code-bg: #f2ece2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --text: #e9e2d6;
+      --text-soft: #a89e8e;
+      --accent: #c99a5e;
+      --accent-soft: rgba(201, 154, 94, 0.14);
+      --card: #211d18;
+      --card-border: #3a332a;
+      --divider: #4a4135;
+      --summary-bg: #241f18;
+      --summary-border: #8a6a3f;
+      --quote-border: #c99a5e;
+      --code-bg: #2a241d;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.82;
+    padding: 0 16px calc(80px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+  }
+  #reading-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0;
+    background: linear-gradient(90deg, #b98a4e, #8a5a2b);
+    z-index: 999; border-radius: 0 2px 2px 0;
+  }
+  .container { max-width: 700px; margin: 0 auto; }
+
+  header.doc-head {
+    padding: 44px 0 28px;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 28px;
+  }
+  .course-tag {
+    display: inline-block;
+    font-size: 13px; letter-spacing: 0.5px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--quote-border);
+    padding: 4px 12px; border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 27px; line-height: 1.4;
+    font-weight: 700; letter-spacing: 0.3px;
+    margin-bottom: 14px;
+  }
+  .meta {
+    font-size: 14px; color: var(--text-soft);
+    display: flex; flex-wrap: wrap; gap: 6px 14px;
+  }
+
+  .ornament {
+    border: none; text-align: center; margin: 34px auto;
+    height: 18px; line-height: 18px; font-size: 14px; color: var(--accent);
+  }
+  .ornament::after { content: "✵"; letter-spacing: 10px; }
+
+  h2 {
+    font-size: 20px; font-weight: 700; color: var(--accent);
+    margin: 40px 0 14px; padding-left: 12px;
+    border-left: 4px solid var(--quote-border);
+    line-height: 1.5;
+  }
+  h3 {
+    font-size: 17.5px; font-weight: 700;
+    margin: 32px 0 10px; line-height: 1.5;
+  }
+  p { margin: 0 0 16px; text-align: justify; }
+  p.lead { font-size: 17px; }
+  strong { color: var(--accent); font-weight: 700; }
+  em { font-style: normal; color: var(--accent); }
+
+  blockquote {
+    margin: 24px 0; padding: 14px 18px;
+    border-left: 4px solid var(--quote-border);
+    background: var(--accent-soft);
+    border-radius: 0 12px 12px 0;
+    font-size: 17px; font-weight: 600; color: var(--text);
+    line-height: 1.8;
+  }
+  blockquote .src { display: block; margin-top: 8px; font-size: 13.5px; font-weight: 400; color: var(--text-soft); }
+
+  ul.tips { margin: 8px 0 20px; padding-left: 0; list-style: none; }
+  ul.tips li {
+    position: relative; padding: 12px 14px 12px 40px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; margin-bottom: 12px;
+    text-align: justify;
+  }
+  ul.tips li::before {
+    content: attr(data-n); position: absolute; left: 12px; top: 13px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); color: var(--bg);
+    font-size: 12px; font-weight: 700; text-align: center; line-height: 20px;
+  }
+  ul.tips li b { color: var(--accent); }
+
+  .notes {
+    margin-top: 44px; padding: 18px 18px 6px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+  .notes h3 { margin: 0 0 12px; font-size: 16px; color: var(--accent); }
+  .notes p { font-size: 13px; line-height: 1.7; color: var(--text-soft); margin-bottom: 10px; text-align: left; word-break: break-all; }
+  .notes a { color: var(--accent); text-decoration: none; word-break: break-all; }
+
+  .comments { margin-top: 36px; }
+  .comments > h3 { font-size: 17px; color: var(--accent); margin-bottom: 14px; }
+  .comment-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 14px;
+  }
+  .comment-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .comment-name { font-weight: 700; font-size: 15px; }
+  .comment-meta { font-size: 12.5px; color: var(--text-soft); }
+  .comment-card p { font-size: 14.5px; line-height: 1.75; margin: 0; color: var(--text); }
+
+  #ai-summary {
+    margin-top: 48px; padding: 24px 22px 18px;
+    background: var(--summary-bg);
+    border: 2px solid var(--summary-border);
+    border-radius: 14px;
+  }
+  #ai-summary .summary-tag {
+    display: inline-block; font-size: 13px; font-weight: 700;
+    color: #fff; background: var(--accent);
+    padding: 4px 14px; border-radius: 999px; margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  #ai-summary h2 { margin-top: 22px; border-left-color: var(--summary-border); }
+  #ai-summary h2:first-of-type { margin-top: 0; }
+  #ai-summary .one-liner {
+    font-weight: 700; font-size: 16.5px; line-height: 1.75;
+    padding: 12px 14px; background: var(--card);
+    border-radius: 10px; border-left: 4px solid var(--accent);
+  }
+  #ai-summary ol { margin: 6px 0 0; padding-left: 22px; }
+  #ai-summary li { margin-bottom: 10px; text-align: justify; line-height: 1.75; }
+  #ai-summary .summary-quote {
+    margin: 6px 0 8px; padding: 10px 14px;
+    background: var(--card); border-radius: 10px;
+    border-left: 3px solid var(--quote-border);
+    font-size: 15px; line-height: 1.75;
+  }
+  #ai-summary .summary-footer {
+    margin-top: 18px; padding-top: 12px;
+    border-top: 1px dashed var(--summary-border);
+    font-size: 12.5px; color: var(--text-soft); text-align: center;
+  }
+
+  #back-to-top {
+    position: fixed; right: 18px; bottom: calc(24px + env(safe-area-inset-bottom));
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer; z-index: 998;
+    background: var(--accent); color: var(--bg);
+    font-size: 20px; line-height: 1;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #back-to-top:active { transform: scale(0.94); }
+</style>
+</head>
+<body>
+<div id="reading-progress"></div>
+
+<div class="container">
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第64讲</span>
+    <h1>鲍莫尔成本病：物便宜则人贵</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>《万维钢·现代思维工具100讲》</span>
+      <span>来源：课程讲稿</span>
+    </div>
+  </header>
+
+  <article>
+
+    <p class="lead">长期在国外生活的中国人回到中国都会有一个由衷的感慨：中国实在太方便了。点外卖、叫跑腿、修水管、搬东西，手机上一点，半小时之内世界为你运转……而且花不了多少钱。美国中产阶层并不经常点外卖，更常见的做法是打电话到店里订餐，然后自己开车去取——不是热爱劳动，实在是配送费太贵了。像理发、修水管这样的服务，价格更是中国的几倍甚至十几倍。你在美国年收入20万美元，要论生活的便利程度，大概比不上在中国年收入20万人民币。</p>
+
+    <p>那你说是不是人民币被大大低估，美元被大大高估了呢？现在到底谁是发达国家？</p>
+
+    <p>先别听某些人喊赢，我们换一个视角再算算：如果你不是点外卖的消费者，而是外卖员呢？</p>
+
+    <p>在中国，一个外卖员送一单的收入大约是5到7块人民币，而一部新款高配手机是7000块钱，也就是说他大概要跑一千单才能买一部好手机。在美国，外卖员送一单的配送费加小费大概是7到10美元；手机1000美元，他只要跑一百多单就够了。</p>
+
+    <p>这当然只是局面的一角，但是，如果你的任务是“送外卖攒钱买手机”，在美国干这行显然要容易得多。</p>
+
+    <p>这个道理是，你的生活方便不方便，不只取决于你的绝对收入高不高，还取决于<strong>别人的时间便宜不便宜</strong>。</p>
+
+    <p>这不是文化问题，不是制度问题，也不是人口问题，更不是谁更勤劳的问题，甚至不是公平问题：美国服务贵是注定的，而且中国也在往那个方向走——任何经历经济增长走向富裕的社会，都必然是<strong>物越来越便宜，人越来越贵</strong>。以至于你的体感是，怎么周围的人越富，我越不方便呢？</p>
+
+    <hr class="ornament">
+
+    <h2>一、先看美国各类消费价格的宿命</h2>
+
+    <p>美国经济学家马克·佩里（Mark J. Perry）做过一张很有名的图，后来年年更新，被称为“世纪图表（Chart of the Century）”——</p>
+
+    <p>上图追踪了2000到2025年间美国各类消费品和服务的名义价格变化。你一眼看上去，就如同现代文明被劈成了两半——</p>
+
+    <ul class="tips">
+      <li data-n="1"><b>东西越来越便宜：</b>电视机按质量折算价格降了98%；软件、玩具、手机费的价格大幅下降；衣服几乎没怎么涨；新车价格涨了24.7%，但远低于接近90%的整体通货膨胀。</li>
+      <li data-n="2"><b>服务越来越贵：</b>医院服务涨了271%，大学学费涨了194%，大学教材涨了180%，儿童看护涨了152%……</li>
+    </ul>
+
+    <p>一方面是物质极大丰富，一方面是很多项目上的负担越来越重。</p>
+
+    <p>其实这并不矛盾。这是现代经济一条特别硬的规律，叫<strong>「鲍莫尔成本病（Baumol's Cost Disease）」</strong>。</p>
+
+    <hr class="ornament">
+
+    <h2>二、鲍莫尔成本病是什么</h2>
+
+    <p>「鲍莫尔成本病」这个理论最早是美国经济学家威廉·鲍莫尔（William J. Baumol）和威廉·鲍恩（William G. Bowen）在1965年提出来的。</p>
+
+    <p>他们最初的灵感来自表演艺术，咱们直接推演一个经典例子：贝多芬第14号弦乐四重奏。</p>
+
+    <p>这首曲子在1828年首次演出的时候，需要四名专业音乐家演奏40分钟。时间快进到两百年后的2026年，同样的曲目，你依然需要四个人演40分钟。这你没法机械化，只有这么演，才能给观众提供真正的现场音乐体验。</p>
+
+    <p>可是与此同时，外面的世界经历了生产率的飞速增长。今天的一个工人借助机器、软件和全球供应链，能生产远远超过过去数量的商品。他创造了这么多财富，自然应该涨工资，对吧？生产率提高的好处就是工人的工资在上涨，产品的价格却在下降，大家都越来越用得起，没错吧？</p>
+
+    <p>那么悖论出现了：请问那四位音乐家怎么办？他们的生产率没有任何提高，似乎不应该涨工资。可是如果不给人家涨工资，他们就会转行。于是我们为了把他们留在剧院，就必须被动地给涨工资。医生、老师、保姆、园丁、水管工也都是如此。</p>
+
+    <p>鲍莫尔把现在的经济划分为两个部门：「进步部门（progressive sector）」，包括制造、软件和物流等等，生产率在提高，产品单位成本在下降，工资在上涨；「停滞部门（stagnant sector）」，包括艺术、医疗、教育和理发之类的服务业，生产率很难提高——但是又必须跟全社会一起涨工资。</p>
+
+    <blockquote>那么结果就是：停滞部门的相对成本——主要用于支付从业者工资——注定会不可遏制地上升。你发现，服务怎么变贵了？这就是鲍莫尔成本病。</blockquote>
+
+    <hr class="ornament">
+
+    <h2>三、鲍莫尔成本病对社会的影响</h2>
+
+    <p>鲍莫尔成本病对社会的影响是巨大的。<strong>首先在消费观念上，人们越来越倾向于“修不如买”。</strong></p>
+
+    <p>几十年前，衣服破了应该找裁缝补，电器坏了应该请师傅修，现在很多东西坏了却应该直接换新的——这不是浪费，是省钱。一辆车发生碰撞事故，直接换个新车门用不了多少钱——新车门是大工厂用规模化机器压出来的——可是如果让修车师傅给你手工敲平那个旧车门，可就太贵了。现实是受损稍微严重一点，保险公司就会干脆给你一笔钱让你再买一辆，把旧车报废。</p>
+
+    <p><strong>再者，医疗和教育变成了预算黑洞。</strong>几十年前看病和上学也不是免费的，可是在大多数人的记忆中，那肯定不是像今天这样，是中产阶级最深重的焦虑来源。</p>
+
+    <p>美国2024年医疗支出大约是5.3万亿美元，占GDP 18%，对政府、对老百姓都是沉重负担。但你别以为中国看病便宜，国家卫健委的口径是2024年中国卫生总费用是9.09万亿元，占GDP 6.7%——但是增速很快。</p>
+
+    <p>这里有行业保护和寻租的原因，也有效率低的原因，也有随着生活水平提高人们更加重视医疗和教育的原因——但最根本的原因还是鲍莫尔成本病。医生面诊病人的时间、老师批改论文的心血，你无法用机器提效100倍。今天的医院能治过去治不了的病，今天的老师素质也比以前高，但从看病和教学需要花费真人时间这一点上来说，这两个部门属于停滞部门。</p>
+
+    <p>综合起来，因为停滞部门显得越来越贵，它们占预算的份额越来越大，社会劳动力和支出就会越来越流向这些部门。</p>
+
+    <p>这就使得整个经济看起来越来越涨不动，像是得了病。当中国人在制造业、在专精特新领域集中投入的时候，美国人却把越来越多的钱交给了医生、律师、大学和公共服务。你站在旁边看，心想美国是不是病得不轻？</p>
+
+    <blockquote>可那是富裕社会的宿命。</blockquote>
+
+    <hr class="ornament">
+
+    <h2>四、澄清一个误会：这不是“病”</h2>
+
+    <p>咱们必须澄清一个误会。我们说鲍莫尔成本病让医疗和教育越来越贵，并不是说社会整体上已经“买不起”这些服务、或者说社会变穷了。恰恰相反，鲍莫尔晚年特别强调：<strong>正是因为社会整体变得极其富裕，人们才负担得起日益昂贵的服务</strong>。</p>
+
+    <p>这就好比一个家庭，以前月入1万，花1000块钱投入教育（占10%）；现在因为月入3万了，买家用电器和日用品都绰绰有余，于是就愿意花更多钱在教育上，每月花6000块给孩子上辅导班（占20%）。教育的占比确实变大了，绝对价格也变贵了，但你的生活还是比过去富裕。</p>
+
+    <p>现实是，今天穷人的痛苦不但不比过去多，而且比过去少，只是<strong>痛苦的结构不一样</strong>。</p>
+
+    <p>以前人很便宜，物很贵，穷人可能买不起一件好衣服，但他能轻易找个人帮他跑腿。而在富裕的现代社会里，物很便宜，人变贵了。现在的穷人能轻易买到高清大电视、智能手机、看起来相当不错的衣服和超加工食品，但是负担不起好医生、好学校、好律师、好照护。</p>
+
+    <p>这样说来，鲍莫尔成本病也许不应该被称为一种“病”，它只是社会必然经历的阶段而已。</p>
+
+    <blockquote>现代化并没有消灭稀缺，只是把稀缺从物转移到了人。</blockquote>
+
+    <hr class="ornament">
+
+    <h2>五、你的“富有感”，取决于能调用多少别人的时间</h2>
+
+    <p>在这个意义上，你的“富有感”，在相当程度上是取决于<strong>能调用多少别人的服务时间</strong>。</p>
+
+    <p>一个有意思的规律是越是贫富差距大的地方，餐馆越好吃、服务越周到。人家在背后付出了那么多功夫，给你精雕细刻了一道菜，你随便吃两口就完事了，这个体验你说应该值多少钱？人家费那么大周章把荔枝运到长安，你看一眼就放下了，你说这多厉害。</p>
+
+    <p>反过来说，普遍富裕的地方，谁也不愿意出来费那么多功夫给别人做菜，餐馆就容易走向标准化，甚至预制化。</p>
+
+    <p>发达国家通常的办法是把低端服务业交给外来移民去做，但现在似乎有了一个新希望，<strong>AI</strong>。</p>
+
+    <hr class="ornament">
+
+    <h2>六、AI 能治好鲍莫尔成本病吗？</h2>
+
+    <p>王煜全老师有个说法叫<strong>「服务业的规模化」</strong>。物之所以越来越便宜，是因为你可以上杠杆，可以把一次设计卖出无数次；而人之所以贵，是因为人是不可复制的。那如果我们用机器人替代人来做这些服务工作，这不就实现了服务业的规模化，服务不就变便宜了吗？</p>
+
+    <p>在一定程度上的确如此。我们享受的服务中有相当一部分本质上是提供信息，是可复制的。比如炒菜操作流程、合同初稿、客服问答、医疗诊断甚至手术操作，这些机器可以做得很好，甚至比人更好。还有一些服务涉及到协调和管理，比如保险理赔，其中涉及到人的主观判断，但也可以被机器大大加速。</p>
+
+    <p>但有一些服务项目，就是要人的在场。AI的诊断书很完美，但是谁来帮患者权衡利弊，谁来让患者别害怕，谁来签字承担误诊的风险？AI可以不厌其烦地把一道题讲很多遍，但你需要一个人类老师告诉学生：“你别装了，你就是没好好学。”一个护工照顾一个老人，和一个护工借助机器人照顾一百个老人，<strong>前者是关怀，后者叫饲养</strong>。</p>
+
+    <p>所以我不认为AI能替代所有的服务，它也不应该替代所有的服务。也许AI的作用是把人从那些可复制、可压缩、可自动化的事务之中解放出来，去从事<strong>责任、信任、判断、陪伴、审美和伦理权衡</strong>这些真正的服务。</p>
+
+    <blockquote>鲍莫尔成本病恰恰让真正的人类时间更贵。</blockquote>
+
+    <hr class="ornament">
+
+    <h2>七、怎么利用鲍莫尔成本病赚钱？</h2>
+
+    <p>首先请注意：<strong>鲍莫尔成本病说的是高成本，而高成本可不等于高利润</strong>。</p>
+
+    <p>医疗贵，医生可没暴富；教育贵，可没有人靠当教授发家；养老贵，也没见人人抢着去做护工。鲍莫尔成本病说的是停滞部门的工资会被进步部门拉着走，可没说停滞部门有权要求超额利润。</p>
+
+    <p>不过鲍莫尔成本病的确提供了一个<strong>防守优势</strong>。只要服务真有需求，你的收入是稳定的，永远都不会太差。这只是防守，但是有了这个防守基础，你的确可以做一些事情。</p>
+
+    <h3>五个办法，把防守变成进攻</h3>
+    <ul class="tips">
+      <li data-n="1"><b>给技能接上虚拟杠杆：</b>跟某种虚拟成分联系起来，调动杠杆，让你的技能可复制。设计师不要只卖设计小时，要让设计进入量产；老师不要只讲一节课，要把课程、题库、训练体系、反馈机制产品化；医生不要只坐诊，要让诊疗流程、随访系统和患者教育形成组织能力。<strong>把判断和执行分开，就是你的杠杆。</strong></li>
+      <li data-n="2"><b>做认证和责任背书：</b>无论是诊断、合同，还是工程图纸，就让AI去生成答案吧，但是你看一眼，你签字盖章，你承担责任。只要你在其中做出一些「微决策」，确保内容符合现场的需要，能配得上你的个人品牌，你这个承诺就价值千金。</li>
+      <li data-n="3"><b>做服务供需平台：</b>在没有AI的时代，人类大部分服务时间并不是在提供实质的服务，而是在填报表、获客、合规、记录、支付这些事情上。平台可以减少这些后台摩擦，把这些辅助性的动作全部标准化、自动化。你提高了效率，你就有理由从中赚钱。</li>
+      <li data-n="4"><b>走奢侈品路线：</b>如果你坚持一对一，那就提供称得上是奢侈的服务。你卖的不再是技能和时间，而是身份、信任和超行业水平的效果。私人医生、高端家教、顶级顾问，都是这个逻辑。<strong>也许你的服务水平只比AI高20%，但是有人会愿意多出200%的价格。</strong></li>
+      <li data-n="5"><b>「寻租」：</b>美国考医生、考律师之所以那么难，既不是因为医生和律师就真的需要那么高的考试能力，也不是因为这两个行业不需要更多的人，而是为了限制从业者人数，维持收租水位。那是一个比鲍莫尔成本病所要求的更高的水位。</li>
+    </ul>
+
+    <hr class="ornament">
+
+    <h2>八、历史的趋势：人应该贵</h2>
+
+    <p>不管是美国还是中国，历史的大趋势是，农业从业人口比例随着工业化急剧下降，最终只需要1%；工业从业人数随着自动化逐渐下降，最终也成为少数；绝大多数就业者都在服务业。正是因为鲍莫尔成本病，才使得这些人的工资水平跟上了时代的进步，他们得以分享现代化的红利。</p>
+
+    <p>如果所谓的服务便利就是有人在低价出售自己的时间，我们不应该怀念那种便利。</p>
+
+    <p>你知道吗，中国历史上曾经有过不愿让人当牛马的时代。宋人笔记记载，王安石、司马光、程颐这些士大夫到老都是有的骑驴，有的骑马，坚决不乘坐轿子，不让人抬。哪怕是在山中，路实在太险了，别人劝他们坐轿，他们也不坐，他们宁可拄着拐杖走。这可不是故作清高，唐宋官场规矩就是除非你德高望众，“百官出入皆乘马”。</p>
+
+    <blockquote>为啥？用王安石的话说：「未尝敢以人代畜也。」</blockquote>
+
+    <p>是南宋时候，江南多雨路滑，高宗才准许朝臣坐轿；大明朝原本是三品以上京官方可乘轿，后来限制逐渐放宽；到清朝，轿子才成了从一品到七品官场的主要交通工具。</p>
+
+    <p>王安石他们对此一定会说，人不应该这么用，人应该贵。</p>
+
+    <blockquote>他们会说鲍莫尔成本病是个好事儿。</blockquote>
+
+    <div class="notes">
+      <h3>注释</h3>
+      <p>[1] <a href="https://www.aei.org/carpe-diem/chart-of-the-day-or-century-2/">https://www.aei.org/carpe-diem/chart-of-the-day-or-century-2/</a>；这里是更新的版本，出自 <a href="https://humanprogress.org/time-pricing-mark-perrys-latest-chart-of-the-century/">https://humanprogress.org/time-pricing-mark-perrys-latest-chart-of-the-century/</a></p>
+      <p>[2] Baumol, William J., and William G. Bowen. "On the Performing Arts: The Anatomy of Their Economic Problems." The American Economic Review 55, no. 1/2 (1965): 495–502.</p>
+      <p>[3] Baumol, William J. "Macroeconomics of Unbalanced Growth: The Anatomy of Urban Crisis." The American Economic Review 57, no. 3 (1967): 415–426.</p>
+      <p>[4] Hartwig, Jochen. "What Drives Health Care Expenditure? Baumol's Model of 'Unbalanced Growth' Revisited." Journal of Health Economics 27, no. 3 (2008): 603–623.</p>
+      <p>[5] Baumol, William J. The Cost Disease: Why Computers Get Cheaper and Health Care Doesn't. New Haven: Yale University Press, 2012.</p>
+      <p>[6] 宋人邵伯温《邵氏闻见录》记载，王安石辞相后住钟山，"惟乘驴"，有人劝他坐肩舆，他回答："未尝敢以人代畜也。"同一卷还说司马光"不喜肩舆，山中亦乘马"。《二程外书》记载，程颐"自少时未尝乘轿"，在蜀地游山时被劝乘轿，他说："某不忍乘，分明以人代畜。"</p>
+      <p>[7] 《建炎以来朝野杂记·甲集·卷三》"百官肩舆"条说得很清楚："故事，百官出入皆乘马。建炎初，上以维扬砖滑，谓大臣曰：'君臣一体，朕不忍使群臣奔走危地。可特许乘轿。'"后面又说，东都旧制下，只有妇人乘车，年高德重的大臣或近支尊长宗室，特旨许乘肩舆，已经算"异礼"。</p>
+    </div>
+
+    <div class="comments">
+      <h3>用户留言</h3>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="comment-name">至尊女宝</span>
+          <span class="comment-meta">昨天 · 福建</span>
+        </div>
+        <p>工程界众所周知，考过注册岩土工程师的人不是人，是神！这本证书的含金量绝对的碾压其他证书，需熟练掌握上百本规范，无现场经验难上手，据说通过率3%，所以我说个黑色幽默：你花了五年时间，刷了三千道案例题，把「土力学」翻到书脊断裂，最后走进考场，发现那道最要命的题，考的既不是理论，也不是经验，而是——你猜这次地下水位到底在哪儿。这不是笑话。这是最真实的困境：你面对的不是代码，不是图纸，是大地。而大地从来不讲道理。</p>
+        <p>三十年前，一个老工程师在野外编录钻孔，拿锤子敲岩芯，趴在地上写记录。今天，我们有无人机、有数字式静力触探、有三维地质建模软件，可到最后，你还是得有人站在钻机旁边，去判断那一层突然出现的软土到底是夹层还是断层，去决定这个钻孔要不要加深两米。这两米，软件算不出来。这两米，就是这个证书的通过率为什么只有3%的根本原因。</p>
+        <p>一个岩土工程师审一份勘察报告，跟三十年前的前辈花的时间差不多。你要对地层、辨异常、查矛盾、定参数，每一步都是非标作业。你可以用软件帮你算沉降，但软件不会告诉你：这个粉质粘土的含水率数据明显偏高了，可能是取样时水加多了。这种事，只有干过现场的人才看得出来。这就是为什么注册岩土证书这么值钱，又这么难考。它不是在考你记了多少规范，而是在考你有没有建立起那种面对不确定性时的判断力。这种判断力的养成周期极长，代价极高，而且无法被算法压缩。</p>
+        <p>曾经有个老前辈，退休前一年终于考过了，大家给他庆祝，他喝了两杯酒，红着眼说：我考了十二年。有人问：值得吗？他说：你知道我这十二年最大的收获是什么吗？不是那张证。是我终于敢在图纸上签字了。我以前签的时候手抖，现在不抖了。因为每一道题、每一个坑、每一次补考，都把我摁在地上摩擦了一遍。我踩过的错误，比我带过的徒弟还多。大地骗不了人，你骗了大地，它迟早塌给你看，全场沉默。然后有人说：那你这十二年，少赚了多少钱？他乐了：少赚的，就当我交给大地的学费。大地收学费，从来不开发票，但保证让你刻骨铭心！宿命的另一面是体面：因为难，所以值钱。因为慢，所以可靠。因为只能靠人，所以人越来越贵。我崇拜他，尊敬他，也只能仰望他！</p>
+      </div>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="comment-name">常觉不住</span>
+          <span class="comment-meta">昨天 · 保加利亚</span>
+        </div>
+        <p>这篇最打动我的，不只是中国方便、美国服务贵的比较，而是它把「方便」这个日常体感拆开来看，最后指向一个关于时间定价的问题。</p>
+        <p>所谓方便，很多时候是大量廉价时间被组织起来，快速送到我面前；所谓高价服务，则是少量昂贵时间里凝结了判断、责任和信任。</p>
+        <p>AI真正改变的，也许不是让所有人类服务消失，而是改变这两种时间之间的转换率：把可复制、可标准化的时间压低，把真正需要判断和承担的时间凸显出来。AI介入之后，真正被改变的不是服务业有没有人，而是哪些时间值得由人来花。</p>
+      </div>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="comment-name">左星星</span>
+          <span class="comment-meta">昨天 · 上海</span>
+        </div>
+        <p>得到APP其实就是"鲍莫尔成本病"的一个成功案例。如果万维钢老师只能一对一讲课，那他的服务一定会很贵，但得到把课程变成了数字产品，一节课写出来，可以卖给10万人听，这就把"人的时间"接上了"虚拟产品"的杠杆。《精英日课》已经从第一季更新到第六季，某种意义上也完成了产品化。就像苹果每年发布新iPhone一样，很多得到同学每年也会期待《精英日课》上新一季。这里卖的已经不只是知识点，而是一种稳定的判断风格和认知陪伴。</p>
+        <p>如今，AI已经让这种模式往前走了一步。比如课程内容、资料整理、初步思路，完全可以让AI先生成。但关键不在于AI写了什么，而在于万老师看不看、改不改、删不删、认不认可。只要最后是他签字盖章、承担品控责任，这个内容就有了信用。AI负责提高产能，真正值钱的仍然是万老师的判断和责任背书。</p>
+        <p>得到还可以继续往"奢侈品服务"方向走。万老师本人当然不可能一对一服务每个用户，但"AI万维钢"也许可以部分实现。根据每个人的学习记录、提问习惯、职业处境，匹配一个定制版的学习助手，用万老师的知识框架和表达风格，给出千人千面的建议。这不是普通聊天机器人，而是把一个顶级知识服务者的判断方式，变成可调用的私人教练。</p>
+        <p>得到还可以进一步做温和版本的"认证水位"。比如高质量的训练营、学习社群、罗胖认证、万维钢盖章，不是人人随便进，而是需要完成学习、输出罗胖风格或者万维钢风格作品、通过测评，才能获得身份标签。这种门槛如果真的代表学习质量、表达能力和可信度，就会变成一种有价值的认证。</p>
+        <p>得到的未来不只是卖课，而是把知识服务从"老师讲、用户听"，升级为"内容产品化、判断可复制、服务可定制、成长可认证"。</p>
+      </div>
+    </div>
+
+    <section id="ai-summary">
+      <span class="summary-tag">AI 阅读总结</span>
+
+      <p class="one-liner">一句话概括：任何走向富裕的社会都注定"物越来越便宜、人越来越贵"，这不是病，而是现代化把稀缺从物转移到人身上——你的富有感取决于能调用多少别人的时间，而AI只会让真正的人类时间更值钱。</p>
+
+      <h2>一、核心内容总结</h2>
+      <ol>
+        <li><strong>便利感的真相是"别人的时间便宜"：</strong>中国"方便"是因为大量廉价人力时间被组织起来；美国服务贵（理发、修水管、配送费达中国数倍至十几倍）不是因为更富裕，而是因为别人的时间贵。反观攒钱买手机，美国外卖员跑一百多单即可，中国要跑约一千单。</li>
+        <li><strong>鲍莫尔成本病的定义与机制：</strong>1965年鲍莫尔与鲍恩提出，源自表演艺术（贝多芬弦乐四重奏1828年需四人演40分钟，2026年仍如此）。经济分"进步部门"（制造、软件、物流，生产率高、单位成本降）与"停滞部门"（艺术、医疗、教育、理发，生产率难提升），但停滞部门被迫跟着全社会涨工资，于是相对成本注定上升。</li>
+        <li><strong>"世纪图表"的证据：</strong>2000—2025年美国电视机按质量折算降价98%，软件、玩具、手机费大降；而医院服务涨271%、大学学费涨194%、教材涨180%、儿童看护涨152%——物质极大丰富与负担越来越重并存。</li>
+        <li><strong>两大社会后果：</strong>一是消费观转向"修不如买"（换新车门比手工敲平旧车门便宜，保险公司直接报废旧车）；二是医疗与教育成为预算黑洞（美国2024年医疗支出5.3万亿美元占GDP 18%，中国卫生总费用9.09万亿元占GDP 6.7%且增速快），核心原因都是真人时间无法被机器提效。</li>
+        <li><strong>这不是"病"，而是富裕的标志：</strong>鲍莫尔晚年强调，正因为社会整体变富，人们才负担得起越来越贵的服务；今天穷人的痛苦不比过去多，只是结构变了——买得起大电视和手机，却负担不起好医生、好学校、好照护。现代化没有消灭稀缺，只是把稀缺从物转移到了人。</li>
+        <li><strong>AI能部分"治愈"但替代不了人：</strong>炒菜流程、合同初稿、客服问答、诊断等可复制信息类服务可以被机器规模化；但责任、信任、判断、陪伴、审美、伦理权衡必须人在场——"一个护工照顾一个老人是关怀，借助机器人照顾一百个老人叫饲养"。AI真正的价值是把人从可自动化事务中解放出来。</li>
+        <li><strong>利用成本病赚钱的五条路径：</strong>高成本不等于高利润（医生没暴富、教授没发家），但可借防守优势进攻：①给技能接虚拟杠杆、把判断与执行分开；②做认证与责任背书（AI生成、人签字担责的"微决策"）；③做服务供需平台，标准化自动化后台摩擦；④一对一走奢侈品路线（水平只高20%，价格可多收200%）；⑤寻租（抬高执业门槛限人数，维持收租水位）。</li>
+        <li><strong>历史大趋势与人本立场：</strong>农业从业最终约1%、工业成少数、绝大多数人进入服务业，鲍莫尔成本病恰恰让服务从业者分享了现代化红利；我们不应怀念"有人在低价出售时间"的便利。宋代王安石、司马光、程颐宁骑驴不坐轿——"未尝敢以人代畜也"——人会认同：人应该贵，成本病是好事。</li>
+      </ol>
+
+      <h2>二、给个人的行动建议</h2>
+      <ol>
+        <li><strong>盘点并产品化你的核心技能：</strong>本周就列出你最有价值的一项技能，想清楚它能不能被拆成"判断"和"执行"两部分——把可重复的执行部分做成文档、模板、课程、流程或自动化脚本，让一次投入可以被反复卖出，而不是只按小时卖自己。</li>
+        <li><strong>练习"AI生成、你背书"的工作流：</strong>选一件日常交付物（报告、方案、合同初稿、周报），让AI先做，然后你只做审阅、修改、签字三个动作，并记录你每次改了什么——这些"微决策"就是你未来不可替代的资产。</li>
+        <li><strong>主动购买别人的时间，把省下的时间投资自己：</strong>与其事事亲力亲为，不如把低价值杂务（跑腿、整理、重复性劳动）外包出去，把腾出的时间用于学习、锻炼和思考——因为你自己的时间正随着社会发展越来越贵。</li>
+        <li><strong>别再用"修不如买"的旧习惯浪费钱：</strong>修家电、补衣服前先算清人工成本；同时反向利用规律——需要"人"的判断类服务（装修监理、保险理赔咨询、健康面诊）正在涨价，尽早建立可靠的长期关系，锁定优质服务者。</li>
+        <li><strong>给职业加一道"认证水位"：</strong>如果你的行业有高门槛证书（如注册类考试），认真规划备考；如果行业没有，就在自己的领域建立可验证的成果集和口碑记录，让别人为你的"签字"付费。</li>
+        <li><strong>重新定义你的"富有感"：</strong>把"我能调用多少优质时间"当成衡量生活质量的指标——每月至少一次，用省下的钱请专业的人（教练、医生、律师、顾问）为你服务，体验并理解高质量人类时间的价值。</li>
+        <li><strong>用AI清理时间，把精力留给"关怀"：</strong>把AI当杠杆，批量处理可复制事务（写作初稿、资料整理、客服应答），然后把省下的时间留给陪伴家人、面谈客户、深度思考——这些"人在场"的时刻才是未来最稀缺、最值钱的部分。</li>
+      </ol>
+
+      <h2>三、金句摘录</h2>
+      <div class="summary-quote">「现代化并没有消灭稀缺，只是把稀缺从物转移到了人。」</div>
+      <div class="summary-quote">「一个护工照顾一个老人，和一个护工借助机器人照顾一百个老人，前者是关怀，后者叫饲养。」</div>
+      <div class="summary-quote">「也许你的服务水平只比AI高20%，但是有人会愿意多出200%的价格。」</div>
+      <div class="summary-quote">「未尝敢以人代畜也。」</div>
+
+      <div class="summary-footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+    </section>
+
+  </article>
+</div>
+
+<button id="back-to-top" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('reading-progress');
+  var btn = document.getElementById('back-to-top');
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    var show = h.scrollTop > 300;
+    btn.style.opacity = show ? '1' : '0';
+    btn.style.pointerEvents = show ? 'auto' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+</body>
+</html>

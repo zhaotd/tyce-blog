@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第35讲 · 问答：怎样培养自己找到最佳模型的能力？</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2f2a24;
+    --muted:#8a847a;
+    --accent:#8a5a2b;
+    --accent-soft:#a97a47;
+    --card:#ffffff;
+    --card-alt:#f3ecdf;
+    --border:#e4dbc9;
+    --qbg:#f4ecdd;
+    --qbdr:#e0d2b8;
+    --rbg:#fbfaf6;
+    --sum-bg:#efe6d5;
+    --sum-bdr:#d6c5a4;
+    --sum-title:#6f4518;
+    --quote:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e9e3d8;
+      --muted:#a29a8e;
+      --accent:#c9995e;
+      --accent-soft:#d9ab72;
+      --card:#211d18;
+      --card-alt:#2a251f;
+      --border:#3d362c;
+      --qbg:#2a2318;
+      --qbdr:#54462f;
+      --rbg:#241f1a;
+      --sum-bg:#262019;
+      --sum-bdr:#574a31;
+      --sum-title:#e0b27c;
+      --quote:#d9ab72;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    line-height:1.82;
+    padding:0 0 60px;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+    z-index:999;transition:width .08s linear;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px 20px;
+  }
+  .doc-head{padding:8px 2px 22px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+  .tag{
+    display:inline-block;
+    font-size:12.5px;
+    color:var(--accent);
+    background:var(--qbg);
+    border:1px solid var(--qbdr);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:23px;
+    line-height:1.45;
+    font-weight:700;
+    margin-bottom:12px;
+    color:var(--text);
+  }
+  .meta{
+    font-size:13px;
+    color:var(--muted);
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 10px;
+  }
+  .meta span::before{content:"｜";color:var(--qbdr);margin-right:10px;}
+  .meta span:first-child::before{content:"";margin:0;}
+  .divider{
+    text-align:center;
+    color:var(--accent-soft);
+    font-size:14px;
+    letter-spacing:8px;
+    margin:34px 0;
+    opacity:.75;
+    user-select:none;
+  }
+  .qa-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px 18px;
+    margin-bottom:26px;
+    box-shadow:0 1px 3px rgba(60,45,20,.05);
+  }
+  .src-line{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .label{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    border-radius:6px;
+    padding:2px 10px;
+    margin-bottom:10px;
+    letter-spacing:1px;
+  }
+  .label.q{background:var(--qbg);color:var(--accent);border:1px solid var(--qbdr);}
+  .label.a{background:var(--accent);color:#faf7f1;}
+  @media (prefers-color-scheme: dark){.label.a{color:#171512;}}
+  .question{background:var(--qbg);border:1px solid var(--qbdr);border-radius:10px;padding:14px 16px;font-size:15.5px;color:var(--text);}
+  .question .who{font-weight:600;color:var(--accent);display:block;margin-bottom:4px;font-size:14px;}
+  .answer{margin-top:16px;}
+  .answer p{margin:10px 0;text-align:justify;}
+  .answer p:first-of-type{margin-top:4px;}
+  .answer ol,.answer ul{margin:10px 0 10px 22px;text-align:justify;}
+  .answer li{margin:5px 0;}
+  .answer h3{
+    font-size:15.5px;
+    color:var(--accent);
+    margin:18px 0 6px;
+    font-weight:700;
+  }
+  blockquote{
+    margin:16px 0;
+    padding:12px 16px;
+    border-left:3px solid var(--quote);
+    background:var(--rbg);
+    border-radius:0 10px 10px 0;
+    color:var(--text);
+    font-size:15.5px;
+    line-height:1.8;
+  }
+  .strong{font-weight:600;color:var(--accent);}
+  .notes{
+    background:var(--card-alt);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 18px 14px;
+    margin:34px 0 26px;
+  }
+  .notes h2,.comments h2,.sum-head{
+    font-size:16px;
+    color:var(--accent);
+    margin-bottom:12px;
+    font-weight:700;
+    letter-spacing:1px;
+  }
+  .notes ol{margin-left:22px;}
+  .notes li{font-size:12.5px;color:var(--muted);line-height:1.7;margin:4px 0;}
+  .comments .c-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 16px 14px;
+    margin-bottom:16px;
+  }
+  .c-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:2px 10px;margin-bottom:8px;}
+  .c-name{font-size:14px;font-weight:600;color:var(--accent);}
+  .c-time{font-size:12px;color:var(--muted);}
+  .c-card p{font-size:14.5px;text-align:justify;margin:8px 0;}
+  #ai-summary{
+    background:var(--sum-bg);
+    border:1.5px solid var(--sum-bdr);
+    border-radius:12px;
+    padding:22px 20px;
+    margin-top:40px;
+  }
+  #ai-summary h2{
+    font-size:17px;
+    color:var(--sum-title);
+    margin-bottom:14px;
+    letter-spacing:1px;
+    display:flex;align-items:center;gap:8px;
+  }
+  #ai-summary h3{
+    font-size:15px;
+    color:var(--sum-title);
+    margin:18px 0 8px;
+    font-weight:700;
+  }
+  #ai-summary p,#ai-summary li{
+    font-size:14.5px;
+    text-align:justify;
+    line-height:1.8;
+  }
+  #ai-summary ul{margin-left:20px;}
+  #ai-summary li{margin:6px 0;}
+  .one-liner{font-weight:700;font-size:15px;color:var(--text);}
+  .sum-foot{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:18px;
+    border-top:1px dashed var(--sum-bdr);
+    padding-top:12px;
+  }
+  #toTop{
+    position:fixed;
+    right:18px;
+    bottom:calc(24px + env(safe-area-inset-bottom));
+    width:44px;height:44px;
+    border-radius:50%;
+    border:1px solid var(--qbdr);
+    background:var(--card);
+    color:var(--accent);
+    font-size:19px;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.18);
+    display:none;
+    z-index:998;
+    line-height:1;
+  }
+  #toTop.show{display:block;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<main class="container">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第35讲</span>
+    <h1>问答：怎样培养自己找到最佳模型的能力？</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>时间：2026 年（据正文引注推断）</span>
+      <span>形式：问答特辑</span>
+    </div>
+  </header>
+
+  <!-- ========== 问答一 ========== -->
+  <section class="qa-card">
+    <div class="src-line">来自《颗粒度和因果中介：用模型思考》</div>
+    <div class="question">
+      <span class="who">读者 · 崂仔</span>
+      在当下的复杂情况下没找到那个优秀的模型，有点纠结在终点和细节上了。万老师，有没有什么操作层面的工具？
+    </div>
+    <div class="answer">
+      <span class="label a">万维钢 回复</span>
+      <p>这一讲有好几个读者问：有没有一个通用的方法，能在任何事物中发现模型和关键的中介？有没有一本专门构建模型的书？怎样能培养自己找到最佳模型的能力？的确有一些方法，比如我们精英日课专栏专门讲过斯科特·佩奇的《模型思考者》<sup>[1]</sup> 和朱迪亚·珀尔的《为什么》<sup>[2]</sup>，这两本至今是关于模型思考的最好的书。</p>
+      <p>我们还曾经讲过史蒂文·舒斯特的《系统思维的艺术》<sup>[3]</sup> 和唐内拉·梅多斯（Donella H. Meadows）的《系统思维入门》<sup>[4]</sup>，这两本书把事物想象成一个系统，是一种特殊视角下的建模。它让你考虑流量、存量、反馈回路和稳定性这些要素，这个思路对分析一家公司的生意特别有用。咱们这个课程后面有一个板块叫「演化者」，其中讲到复杂系统时，我还会再次讲到「反馈回路」这个思维工具。</p>
+      <p><span class="strong">但是，用模型思考不是看几本书掌握通用方法就行，</span>它需要你分析过、并且能记住一些模型。你脑子里有料，看见事情才有思路。这就如同你已经听过很多出戏，看任何人际关系场景都知道大家唱的是哪一出。</p>
+      <blockquote>这里最重要的一个教训是：世界上不存在客观的建模。你总是先有一个先入为主的起点，然后根据数据去修正你的模型。</blockquote>
+      <p>我前段时间正好看到一篇文章<sup>[5]</sup>，是一本医学专业期刊的社论。这篇文章说现在大家习惯用随机对照实验或者被动统计的方法来发现事物的因果关系，越来越迷信数据分析——但这些方法其实并不是做研究的根本！<span class="strong">关键思想在于：你得先有一个模型，才能谈得上如何设计实验去验证它。</span></p>
+      <p>你需要先<em>想象</em>出一个中间变量，然后才能用统计方法去检验这个变量是否有用。数据并不会自动告诉你因果关系是什么，你必须先发明一个因果关系，再看看能不能用数据填充。</p>
+      <p>这完全符合自由能原理和贝叶斯主义：你总是先有模型才谈得上观察，没有模型你都不知道该往哪看。所以脑子里有料是很重要的。咱们后面还会专门讲如何积累心智模型。</p>
+    </div>
+  </section>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ========== 问答二 ========== -->
+  <section class="qa-card">
+    <div class="src-line">来自《贝叶斯先验：判断是主观的，但可以更科学一点》</div>
+    <div class="question">
+      <span class="who">读者 · 开心就好</span>
+      万老师您好，我请教一个问题，我有一个五岁半的儿子，我希望通过某种合适的方式，可以在他的人生中尽早植入一些关于世界最先进的思维模型，这样是否合适？其中的度应该如何把握？
+    </div>
+    <div class="answer">
+      <span class="label a">万维钢 回复</span>
+      <p>五岁半不太可能理解什么叫「非遍历性」，但你的确可以——而且也有必要——干预一下他的世界观。也就是<span class="strong">「先验」</span>。你希望他有一套有利于成长的先验。我们曾经列举过很多研究，包括这个课程里也说过一些，至少以下这几个先验对儿童成长很重要——</p>
+      <ul>
+        <li>一个是<span class="strong">「安全依恋」</span>：你希望他能早形成安全依恋，建立起对亲密的人的信任感。</li>
+        <li>一个是<span class="strong">「自主性」</span>：你希望他拥有一定的能动性，能自己想要探索、学习和工作，而不是只知道服从命令干和取悦师长。</li>
+        <li>一个是<span class="strong">「心智理论」</span>：你希望他能感知到身边的人在想什么，比如他做一件事儿，别人是高兴还是不高兴，别人愿不愿意跟他合作。</li>
+        <li>还有特别重要的一个是：如果家里条件不错，预期将来孩子的生活条件也不错，就不要给孩子灌输匮乏的思维模式，什么男孩穷养、没苦硬吃。<span class="strong">匮乏感对人的限制实在太大了。</span></li>
+      </ul>
+      <p>我们专栏还讲过一个研究叫「原始世界信念」<sup>[6]</sup>。心理学家发现，以下三个维度的信念会对孩子长大后的性情产生重大影响：</p>
+      <ul>
+        <li>世界是安全的还是危险的</li>
+        <li>世界是精彩的还是无趣的</li>
+        <li>世界是活的（能跟你互动）还是机械运作的</li>
+      </ul>
+      <p>这些都是孩子所能感知的。并不是说你要直接给他灌输，而是潜移默化地、在日常互动中施加影响。</p>
+      <p>今天正好赶上 GPT-5.5 发布，我就让 5.5 Pro 列举它所能想到的、五岁的孩子有什么样的好先验最有利于成长。它一口气列了 20 条，我一看说得实在是漂亮，干脆都摘抄在这里——</p>
+      <ol>
+        <li>世界总体是安全的，但不是围着我转的</li>
+        <li>人大体有善意，但善意需要边界</li>
+        <li>父母是可靠基地，而不是随叫随到的仆人</li>
+        <li>我不是最重要的人，但我是重要的人</li>
+        <li>事情有原因，不只是"就是这样"</li>
+        <li>错误是信息，不是羞耻</li>
+        <li>能力是可以长出来的，但不是靠喊口号长出来的</li>
+        <li>不懂可以问，问问题不是丢脸</li>
+        <li>事实比面子重要</li>
+        <li>我有选择，但选择有后果</li>
+        <li>资源有限，所以要取舍</li>
+        <li>金钱是工具，不是人的价值</li>
+        <li>别人的感受是真实的，但我不需要负责所有人的感受</li>
+        <li>规则不是压迫，规则保护大家一起玩</li>
+        <li>身体和情绪是信号，不是敌人</li>
+        <li>注意力很宝贵</li>
+        <li>世界很大，我现在看到的不是全部</li>
+        <li>合作通常比单打独斗更强</li>
+        <li>好奇心比表现更重要</li>
+        <li>我可以爱这个世界，也可以改造这个世界</li>
+      </ol>
+      <blockquote>但是成年人，难道不也应该学一学这二十条吗？</blockquote>
+    </div>
+  </section>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ========== 问答三 ========== -->
+  <section class="qa-card">
+    <div class="src-line">来自《信息价值：怎样区分沙子和金子》</div>
+    <div class="question">
+      <span class="who">读者 · 彬彬来了</span>
+      今天的课让我很有挫败感。因为听上去我就是开始说的 FOMO，似乎一直在学习，在成长，但是回头看，其实很少应用在自己的生活和工作，似乎一直沉浸于智力游戏。也许智识上在提高，但是并没有带来实质性价值，有时还会带来一些不易察觉的优越感，形成自我蒙蔽，自鸣得意，却看不见自己的原地踏步。万老师有没有一些加强版的 Tips，能够改善这种情况？
+    </div>
+    <div class="answer">
+      <span class="label a">万维钢 回复</span>
+      <p><span class="strong">你需要建立一套可成长的系统，把你那个加法游戏变成乘法游戏。</span>一个人有没有系统，最明显的区分就是看他有没有一套笔记。</p>
+      <p>以我写作来说，早在 2010 年，那时候距离我辞职专业写作还有六年，我已经非常有意识地积累写作经验。我在 Evernote 专门开了个笔记本，叫"写作心得"，其中有些是摘抄别人的心法，有些是我自己的感悟。</p>
+      <p>我搞了一个动态文档，有点像今天给 AI 智能体写的 Skill.md，叫《文章应该如何写成》，从开头、选题到编辑审稿一条条"怎么做"全列出来。我每次有新的感悟就会做一点修改。</p>
+      <p>现在我的"写作心得"笔记本中已经有 247 条笔记了。我仍然在追求精通写作这门技艺，最近 AI 带给我很多新的洞见。我希望获得写作的神通。</p>
+      <p><span class="strong">但你不需要我的心得文档，你需要试炼你自己的系统。</span></p>
+      <blockquote>说什么自我更新，你得让那个进度可见才行，你得留下痕迹才行，你得知道你现在到了哪儿才行，你得随时总结经验和教训才行。</blockquote>
+    </div>
+  </section>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ========== 问答四 ========== -->
+  <section class="qa-card">
+    <div class="src-line">来自《凯利公式：乘法世界里的认知变现》</div>
+    <div class="question">
+      <span class="who">读者 · AOLIELIU</span>
+      凯利公式要求我们估计胜率 p，但现实世界中很多决策的概率根本无法估计。在这种情况下，我们如何判断自己是否真的拥有 edge？
+    </div>
+    <div class="answer">
+      <span class="label a">万维钢 回复</span>
+      <p>简单说就是——你是否知道别人不知道的？你是否会别人不会的？你是否拥有别人没有的？</p>
+      <p>如果你通过合法渠道掌握了一条别人不掌握的关键信息，你可以用它炒股，你甚至可以到 Polymarket 上去下注赌一把。如果你在某个机构里学会了一门独门功夫，然后下沉到一个领域，你认为你可以吊打那里的人，那这个领域非常需要你。如果你拥有一个特别好的销售渠道，你应该出来做生意。</p>
+      <p><span class="strong">而不能只是你比别人更勤奋、更聪明，或者有更强的意愿。</span>我们后面有个板块叫「赚钱」，我们会再次讲到这个问题。</p>
+    </div>
+  </section>
+
+  <div class="divider">✦ ✦ ✦</div>
+
+  <!-- ========== 问答五 ========== -->
+  <section class="qa-card">
+    <div class="src-line">来自《非遍历性：玩家怕方差，庄家爱方差》</div>
+    <div class="question">
+      <span class="who">读者 · 许晓萌</span>
+      万老师，请问金融市场这样的非遍历性系统，是因为什么原因导致它的非遍历性呢？是因为个人的时间和金钱有限，没办法做到遍历，或是政策和真实世界发生的事件的反复导致可能性暴增，还是其他什么原因？或者我简单理解，金融市场是肥尾的，而城市交通是钟形曲线？
+    </div>
+    <div class="answer">
+      <span class="label a">万维钢 回复</span>
+      <p><span class="strong">根本的原因就是每一次的风险经历会不会改变你。</span></p>
+      <p>投资股市，每一次冒险之后，你的本金会发生变化，以至于当下一局来临的时候，坐在牌桌上的已经不是之前的那个你了。但是对于城市交通来说，不管前一天你是遭遇了堵车还是一路畅通，都不影响你今天出现在街头的面貌。</p>
+      <p><span class="strong">这也是乘法游戏跟加法游戏的根本区别。</span>做乘法使你的整体都发生了改变；做加法只改变你的一小部分，而并不影响第二天的你。</p>
+      <p>就拿我们文中那个掷硬币游戏来说，如果我们不是每次都 all-in，而是每次投入 1 万元，玩一百次，不管这次输赢下一把你还是投入 1 万元，那这个游戏对你来说就是遍历的，你可以拿到算术平均值。类似地，如果一个人每个月把自己工资的一定比例（比如说 10%）投入股市，那么股市这个游戏对他来说也是遍历性的——因为他下个月还会有新的工资入账，股市对他的工资没有任何影响。</p>
+      <p>但正如你所能想见，加法游戏没有太大前途。<span class="strong">你希望被系统改变，你希望成长，你希望积累复利，你希望明天的自己不再是今天的自己。</span>只有非遍历性游戏才可以提供从量变到质变的成长性。</p>
+      <p>这也是为什么金融市场是肥尾的，城市交通是钟型曲线。</p>
+      <p>正因为这种成长性，才会使得有些人成为巨富。当然，代价是这里有清零的风险。</p>
+      <p>像那个每个月定投股市的兄弟，如果他玩着玩着已经在股市里积累了一大笔钱，他就面临一个选择：要不要把盈利取出来？不取，这笔钱留在股市就会经历非遍历性的成长和风险；取出，那就是在坚持玩一个遍历性的游戏，的确没风险，但是也就永远都做不大。</p>
+      <p><span class="strong">凯利公式的价值，恰恰就是既尽可能地享受成长性，又尽可能规避非遍历性风险</span>，它在其中找到了一个最优点。但现实世界没有这么精确的测算，你总要做些取舍。</p>
+      <p>因为算不准，所以我们还是回到塔勒布的杠铃原则和"脆弱/反脆弱"这套思想：<span class="strong">保持基础的稳定，同时拿出一部分资源来积极冒险。</span></p>
+    </div>
+  </section>
+
+  <!-- ========== 注释 ========== -->
+  <section class="notes">
+    <h2>注释</h2>
+    <ol>
+      <li>[1] 《模型思考者》1：把思考正规化</li>
+      <li>[2] 《为什么》：相关不是因果，那到底什么是因果？</li>
+      <li>[3] 系统思维的艺术 1：线性思维和系统思维</li>
+      <li>[4] 系统思维的艺术 4：好系统的三个特征</li>
+      <li>[5] De Jong, Audrey, Romain Pirracchio, and Antoine Kimmoun. "Checking Methodology and Statistics When Reading an Observational Study." <em>Intensive Care Medicine</em> 52 (2026): 356–362.</li>
+      <li>[6] 你和你对世界的信念</li>
+    </ol>
+  </section>
+
+  <!-- ========== 用户留言 ========== -->
+  <section class="comments">
+    <h2>用户留言</h2>
+
+    <div class="c-card">
+      <div class="c-head">
+        <span class="c-name">至尊女宝</span>
+        <span class="c-time">昨天 · 江苏</span>
+      </div>
+      <p>学友说五岁半的孩子，父母的心情真能理解，可你跟她讲资源有限所以要取舍，她可能点头，但她理解的那个「取舍」和成年人想的应该不是一回事。你跟她讲「合作比单打独斗强」，可这个年纪的小朋友连轮流滑滑梯都要哭鼻子，不是不懂道理，是那个负责自我控制的大脑还没长好，别太担心和着急。</p>
+      <p>我不是专家，我只是一个普通妈妈。我自己的做法很简单：我不焦虑她有没有提前掌握什么思维模型，我只在意两件事：她敢不敢试，她还想不想问。</p>
+      <p>敢试，就是自信。搭积木倒了，她自己捡起来再搭一次，不需要我在旁边喊你真棒，我只要不冲过去帮她搭好，自信就有了。</p>
+      <p>想问，就是好奇心。她问我云为什么不会掉下来，我说妈妈也不知道，我们一起查，我不需要她知道答案，我需要她觉得问问题是正常的、好玩的。</p>
+      <p>所以我的看法很简单，也很小声：五岁半的孩子，不需要那么多模型。给她一个安全的、可以犯错的环境，保护好她问「为什么」的冲动，这两件事做到及格线以上，她长大不会差的。复杂系统里，少量的核心参数往往决定整体行为。自信和好奇心，就是那两个参数。如果我的想法有冒犯，一百二十度鞠躬，我无恶意，多多原谅。</p>
+    </div>
+
+    <div class="c-card">
+      <div class="c-head">
+        <span class="c-name">Christy</span>
+        <span class="c-time">昨天 · 广东</span>
+      </div>
+      <p>在这个碎片化的时代要将自己收集到的信息进行整合，必须要保持输入和坚持输出。输出绝对是最好的内化知识和得到外界反馈去自我迭代的方法。能让自我成长的每一步都清晰可循，并能建立可追踪的进度系统、持续积累实践痕迹。</p>
+      <p>每天最少写一篇课程感悟或思考所想已经坚持 5 年多了，这是我记录我的世界的一种方式。输出是没有难度，持续不断输出有难度，持续稳定地高质量输出更是难上加难。不断的输出需要大量的输入才能维持平衡，而输入则需要大量的积累。</p>
+      <p>我认为输出能力就像身体的状态一样。强的输出能力首先需要足够量的阅读，阅读量等于一个人吃的食物，以及消化能力。好的表达，还需要有意识的锻炼。无论是说还是写，都要让它成为生活的一部分。</p>
+      <p>输入与输出是相辅相成、缺一不可的认知闭环。高质量的输入为输出提供素材和基础，而输出则是对输入的理解、内化与验证过程，能够反向促进更深层次的学习与思考。</p>
+    </div>
+
+    <div class="c-card">
+      <div class="c-head">
+        <span class="c-name">左星星</span>
+        <span class="c-time">11小时前 · 上海</span>
+      </div>
+      <p>笔记当然重要，因为它能留下痕迹，让成长变得可见。但我觉得，除了笔记，还需要至少三种系统。</p>
+      <p>第一种是"输出系统"。学完一个东西，必须逼自己用出来。比如读了脱不花的《沟通的方法》，不要只写"很有启发"，而是立刻改一封邮件、准备一次谈话，或者写一段朋友圈文案。只有输出过，才知道自己到底懂没懂。知识如果不能变成表达，就还只是脑子里的装饰。</p>
+      <p>第二种是"项目系统"。不要只问"我学到了什么"，而要问"我正在用它解决哪个问题"。比如学 AI 工具，就不要只是收藏教程，而是设一个具体项目：用 AI 做一份面试准备材料，整理一套财务分析模板，或者优化一篇公众号文章。项目会自动暴露问题，也会逼着知识落地。</p>
+      <p>第三种是"复盘系统"。行动之后，要定期回头看：这次哪里有效？哪里只是自我感动？下次怎么改？比如每周留半小时，把这一周学到的东西分成三类：已经用上的、准备试用的、暂时无用的。这样学习就不会无限堆积，而会进入筛选和迭代。</p>
+      <p>建立系统的关键，不只是记录，而是形成一个闭环：输入、输出、实践、反馈、修正。笔记像仓库，但人不能只建仓库，还要有车间。真正的成长，不是脑子里装了多少东西，而是这些东西有没有改变你的行动方式。</p>
+    </div>
+  </section>
+
+  <!-- ========== AI 阅读总结 ========== -->
+  <section id="ai-summary">
+    <h2>📖 AI 阅读总结</h2>
+
+    <p class="one-liner">一句话概括：这期问答教人如何"用模型思考"——先让脑子里有料（先验与模型），再让数据来修正；同时用笔记、输出与复盘建立可成长的系统，把"加法游戏"变成"乘法游戏"。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li>培养"找到最佳模型"的能力没有捷径可走，但读书是好起点：斯科特·佩奇的《模型思考者》与朱迪亚·珀尔的《为什么》是关于模型思考最好的两本书；舒斯特的《系统思维的艺术》与梅多斯的《系统思维入门》则提供了"系统视角"的建模方式，关注流量、存量、反馈回路与稳定性，特别适合分析公司生意。</li>
+      <li>世界上不存在"客观的建模"：你总是先有一个先入为主的起点（先验），再根据数据修正它。做研究同样如此——必须先"想象"出一个中间变量，才能设计实验去检验它；数据不会自动告诉你因果，你必须先发明一个因果关系，再尝试用数据填充。这完全符合自由能原理与贝叶斯主义。</li>
+      <li>给五岁半的孩子植入思维模型"合适且有必要"，但关键在于把握"度"：不是直接灌输，而是在日常互动中潜移默化地塑造先验——安全依恋、自主性、心智理论，以及最重要的：条件不错就不要灌输匮乏感，"匮乏感对人的限制实在太大了"。</li>
+      <li>"原始世界信念"研究发现，孩子在三个维度上的信念会深刻影响长大后的性情：世界是安全的还是危险的、精彩的还是无趣的、活的还是机械运作的。</li>
+      <li>摆脱"一直在学习却很少应用"的 FOMO，办法是把加法游戏变成乘法游戏，而判断一个人有没有系统的标志，就是看他有没有一套笔记——万维钢自 2010 年起积累"写作心得"笔记，如今已有 247 条，还维护着一份类似 Skill.md 的动态文档《文章应该如何写成》。自我更新的前提是：让进度可见、留下痕迹、知道自己在哪、随时总结教训。</li>
+      <li>判断自己是否真正拥有 edge，不看是否更勤奋、更聪明，而看三点：你是否知道别人不知道的、是否会别人不会的、是否拥有别人没有的——关键信息、独门功夫或稀缺渠道。</li>
+      <li>金融市场之所以非遍历，根本原因在于"每一次的风险经历会不会改变你"：冒险后本金变化，下一局的你已不是原来的你；而交通等加法系统不会改变第二天的你。只有非遍历性游戏才能带来从量变到质变的成长，代价是存在清零风险；这正是金融市场肥尾、城市交通呈钟形曲线（正态）的原因。</li>
+      <li>凯利公式的价值在于为"享受成长性"与"规避非遍历性风险"找到最优点；但现实算不准，最终要回到塔勒布的杠铃原则：保持基础稳定，同时拿出一部分资源积极冒险。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li>本周就建一个"心得笔记本"：每次读完书、听完课或做完一个项目，记一条"我学到了什么、下次怎么做"，让成长留下可见痕迹——系统感从一本笔记开始。</li>
+      <li>把学习方式从"收藏"改成"输出"：学完一个东西立刻用一次——改一封邮件、写一段总结、做一个具体项目，只有输出过才知道自己到底懂没懂。</li>
+      <li>遇到新问题先写假设再找数据：先写下你心中的因果链条和中间变量，再去找数据检验，而不是等着数据"告诉"你答案——这是把"先模型后观察"用到日常决策里。</li>
+      <li>为自己建一份类似《文章应该如何写成》的动态"操作手册"（Skill.md）：把一件事从开头到收尾的"怎么做"一条条列出来，每次有新感悟就修订，让经验沉淀成可迭代的系统。</li>
+      <li>如果你是定投者，认真想一次"盈利要不要取出"：不取就要接受非遍历性的成长与风险，取出就等于接受做不大——用凯利/杠铃的思路，给自己设定一个明确的冒险比例上限，其余部分保持稳定。</li>
+      <li>如果你是家长：别急着给孩子讲模型，先检查自己传递的先验——安全依恋、自主性、允许犯错、不灌输匮乏感；盯住"敢不敢试、想不想问"这两个核心参数就够了。</li>
+      <li>每周留半小时做复盘：把本周学到的东西分成"已经用上的、准备试用的、暂时无用的"三类，让学习进入筛选与迭代，而不是无限堆积。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <ul>
+      <li>"用模型思考不是看几本书掌握通用方法就行，它需要你分析过、并且能记住一些模型。你脑子里有料，看见事情才有思路。"</li>
+      <li>"你总是先有一个先入为主的起点，然后根据数据去修正你的模型。"</li>
+      <li>"说什么自我更新，你得让那个进度可见才行，你得留下痕迹才行，你得知道你现在到了哪儿才行，你得随时总结经验和教训才行。"</li>
+      <li>"你希望被系统改变，你希望成长，你希望积累复利，你希望明天的自己不再是今天的自己。"</li>
+    </ul>
+
+    <p class="sum-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</main>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('toTop');
+  function onScroll(){
+    var st=document.documentElement.scrollTop||document.body.scrollTop;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?(st/h*100):0)+'%';
+    if(st>400){btn.classList.add('show');}else{btn.classList.remove('show');}
+  }
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

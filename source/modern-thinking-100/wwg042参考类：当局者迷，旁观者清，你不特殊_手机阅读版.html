@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第42讲 · 参考类：当局者迷，旁观者清，你不特殊 — 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2620;
+    --muted:#8a8378;
+    --accent:#8a5a2b;
+    --card-bg:#ffffff;
+    --border:#e8e0d3;
+    --quote-border:#c9a062;
+    --summary-bg:#f3ead9;
+    --tag-bg:#efe5d3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e2d8;
+      --muted:#9b9385;
+      --accent:#d9a45f;
+      --card-bg:#201d19;
+      --border:#352f26;
+      --quote-border:#8a5a2b;
+      --summary-bg:#24201a;
+      --tag-bg:#2b241b;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:var(--accent);z-index:1000;
+    transition:width .1s linear;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:32px;width:46px;height:46px;
+    border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:22px;line-height:1;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+    display:none;z-index:1000;
+  }
+  .container{
+    max-width:700px;margin:0 auto;padding:28px 22px 72px;
+  }
+  .doc-head{padding:12px 0 22px;}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    background:var(--tag-bg);border:1px solid var(--border);
+    border-radius:999px;padding:5px 14px;margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin:6px 0 12px;}
+  .meta{font-size:14px;color:var(--muted);}
+  article{padding-top:6px;}
+  article p{
+    font-size:17px;line-height:1.82;text-align:justify;
+    margin:0 0 1.05em;
+  }
+  h3{
+    font-size:19px;font-weight:700;line-height:1.5;
+    color:var(--accent);margin:1.9em 0 .8em;
+    padding-left:12px;border-left:4px solid var(--accent);
+  }
+  ul,ol{margin:0 0 1.2em;padding-left:1.5em;}
+  ul li,ol li{
+    font-size:17px;line-height:1.8;text-align:justify;
+    margin-bottom:.5em;
+  }
+  blockquote{
+    border-left:3px solid var(--quote-border);
+    background:var(--card-bg);
+    border-radius:0 12px 12px 0;
+    padding:14px 18px;margin:1.2em 0;
+    font-size:17px;line-height:1.85;text-align:justify;
+  }
+  .divider{
+    text-align:center;color:var(--accent);font-size:16px;
+    letter-spacing:.6em;margin:1.6em 0;opacity:.7;
+  }
+  .lead{color:var(--fg);}
+  .notes{
+    margin-top:2.4em;padding:18px 20px;
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:12px;
+  }
+  .notes h3{font-size:17px;margin:0 0 .8em;}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.7;text-align:left;margin-bottom:.7em;}
+  .notes p:last-child{margin-bottom:0;}
+  .comments{margin-top:2.4em;}
+  .comments h3{font-size:18px;}
+  .comment{
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:12px;padding:18px 18px 14px;margin-bottom:16px;
+  }
+  .comment .who{
+    font-size:14px;font-weight:700;margin-bottom:2px;
+  }
+  .comment .when{font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .comment p{font-size:15px;line-height:1.8;text-align:justify;margin-bottom:.6em;}
+  #ai-summary{
+    margin-top:2.6em;padding:24px 22px;
+    background:var(--summary-bg);
+    border:1px solid var(--accent);border-radius:12px;
+  }
+  #ai-summary h2{
+    font-size:20px;color:var(--accent);margin-bottom:4px;
+    display:flex;align-items:center;gap:8px;
+  }
+  #ai-summary .summary-tag{
+    display:inline-block;font-size:12px;background:var(--accent);
+    color:#fff;border-radius:6px;padding:3px 8px;margin-right:8px;
+    vertical-align:middle;
+  }
+  #ai-summary h4{
+    font-size:16px;color:var(--accent);margin:1.2em 0 .5em;
+  }
+  #ai-summary .one-liner{font-weight:700;font-size:16.5px;line-height:1.75;}
+  #ai-summary ul,#ai-summary ol{margin-bottom:.6em;}
+  #ai-summary li{font-size:15px;line-height:1.78;text-align:justify;margin-bottom:.45em;}
+  #ai-summary blockquote{
+    border-left:3px solid var(--accent);background:transparent;
+    padding:8px 14px;margin:.6em 0;font-size:15.5px;
+  }
+  #ai-summary .footnote{
+    margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);
+    font-size:12px;color:var(--muted);text-align:center;
+  }
+  @media (max-width:480px){
+    .container{padding:22px 16px 64px;}
+    h1{font-size:21px;}
+    article p,ul li,ol li{font-size:16px;line-height:1.8;}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" title="回到顶部" aria-label="回到顶部">↑</button>
+<main class="container">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第42讲</span>
+    <h1>参考类：当局者迷，旁观者清，你不特殊</h1>
+    <p class="meta">作者：万维钢 ｜ 《现代思维工具100讲》 · 第42讲</p>
+  </header>
+
+  <article>
+
+    <p>一个高中生每天刷题到深夜，常被自己流下的汗水感动。父母都说他一定行，他也认定只要这么拼命，就一定能考上清华。</p>
+    <p>一个都市女性坚信自己只要不将就，一定能等到那位身披金甲圣衣脚踏七彩祥云非她不娶的盖世英雄。</p>
+    <p>一个创业者刚刚想出了一个产品雏形，就已经在脑子里把用户增长曲线画成了火箭。</p>
+    <p>这些都是非常可爱的人。他们身上有一种真诚的英雄主义，他们是生活的主角，世界因为他们而精彩。但是他们都活在梦中。</p>
+    <p>我们说了，这个宇宙的第一性原理是叙事。人需要叙事给自己意义。我们都最好有一点热情，有一点想象，甚至有一点自我感动。可你要想科学计划，对未来做出靠谱预测，最有效的指导可不是你梦中的叙事，而是同类人、同类事已经发生过的经验。</p>
+    <p>这一讲的思维工具叫「参考类预测（Reference Class Forecasting, 简称 RCF）」。它本是一个预测算法，但在我看来，它更像是一个“反自恋装置”。如果你认为“我很特殊”、“我这次一定不一样”，你最好先用一下这个工具。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>一、规划谬误：现实往往比你最悲观的估计还要悲观</h3>
+    <p>关于梦想和现实的差距，有个现成的规律，叫「规划谬误（Planning Fallacy）」。</p>
+    <p>心理学家罗杰·比勒（Roger Buehler）等人的一个研究是这样的 <b>[1]</b>。让一群学生估算他们各自完成毕业论文还需要多少天，学生们平均给出的预期是 33.9 天。比勒说不行，你们太乐观了，你们来一个最悲观的估计！这回平均是 48.6 天。</p>
+    <p>你猜他们实际上用了多少天？<b>55.5 天</b>。</p>
+    <p>规划谬误说的就是人一做计划，就会系统性地低估时间、成本和风险，同时还高估收益。<b>现实往往比你最悲观的估计还要悲观。</b></p>
+    <p>那你说是不是只有普通人这样，要是做正规大项目人们就会准确估计呢？不是。我们前面提到过的丹麦经济学家傅以斌（Bent Flyvbjerg）是大型项目专家，他跟合作者研究了 258 个交通基础设施项目，发现普遍存在延期和成本超支 —— 其中铁路项目平均超支 45%，桥梁和隧道 34%，公路 20% <b>[2]</b>。傅以斌专门写了本书谈论大项目规划失败问题 <b>[3]</b>，其中最著名的例子是悉尼歌剧院：原本预算 700 万美元，计划 4 年完工，结果花到 1.02 亿美元，14 年才完工。</p>
+
+    <h3>二、大脑里的“幻觉生成器”</h3>
+    <p>规划谬误是「一厢情愿」这个成语的现代版，它是大脑里一系列幻觉生成器共同造就的 ——</p>
+    <ul>
+      <li>「乐观偏差（Optimism Bias）」告诉你“这次一定顺”；</li>
+      <li>「确认偏误（Confirmation Bias）」让你只搜集利好证据；</li>
+      <li>「控制错觉（Illusion of Control）」让你以为世界井井有条、意外情况都在掌控之中；</li>
+      <li>「自利归因（Self-Serving Attribution）」让你把上次翻车怪到天气、队友和甲方头上；</li>
+      <li>「幸存者偏差（Survivor Bias）」和「可得性偏差（Availability Bias）」让你只看见成功故事而看不见沉在水底的尸体……</li>
+      <li>最后「叙事谬误（Narrative Fallacy）」则负责把这些碎片拼成一部热血电影。</li>
+    </ul>
+    <blockquote>你脑子里排练的是剧本，而不是真实世界。</blockquote>
+    <p>而你之所以用剧本思考，是因为你使用的是「内部视角（inside view）」。你自己看自己，就只知道盯着这一件事的细节、你的努力、你的诚意、你的资源配置 —— 你心想这还能有啥问题？</p>
+    <p>当局者迷旁观者清，你需要外部视角。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>三、内部视角与外部视角</h3>
+    <p>「外部视角（Outside View）」和参考类预测都起源于卡尼曼 <b>[4]</b>，后来则是由傅以斌把参考类预测从心理学推广到了工程实践 <b>[5]</b>。</p>
+    <p>简单说，内部视角看的是你的个案信息（singular information），而外部视角看的则是分布信息（distributional information）：<b>在别人眼里，你只是一个受制于客观规律的统计学数据点，你并不特殊。</b></p>
+    <p>外部观察者关心的是跟你条件差不多的同类事情 —— 也就是你的「参考类（Reference Class）」—— 的分布：平均水平如何、中位数是什么、尾部风险是怎样、失败率是多少，并且以这些统计数据来推测你会如何。</p>
+    <p>内部视角盯住本项目，外部视角先看同类项目，这就是「当局者迷，旁观者清」的现代认知科学版本。</p>
+    <blockquote>旁观者未必比你聪明，但旁观者的好处是没有你那么多自恋情结：人家把你当成样本，而不是当主角。</blockquote>
+
+    <h3>四、卡尼曼的经典故事：8 年 vs 2 年</h3>
+    <p>这里有个最经典的故事，来自卡尼曼本人，收录在《思考，快与慢》一书中。</p>
+    <p>1970 年代，卡尼曼带队编写一本给高中生的决策学教材。团队第一次开会，卡尼曼问，我们多长时间能把这本书编完？大家群情激昂，信誓旦旦地说：两年！最多两年就能搞定！但卡尼曼留了个心眼，转头问团队里一位教育专家：“你认识的、跟我们条件差不多的团队，编这样一本书通常要几年？”专家说大概 7 到 10 年，而且有 40% 的团队最后干脆放弃了。</p>
+    <p>卡尼曼很震惊，但他想我们团队肯定不至于，我们效率更高。</p>
+    <p>……结果卡尼曼团队花了整整 <b>8 年</b>才把书搞出来。而那时候教育部已经取消了这门课的教学需求。</p>
+    <blockquote>你以为你们不一样，其实每个人都觉得自己不一样。现实是，在统计学意义上大家都一样。</blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>五、参考类预测（RCF）三步法</h3>
+    <p>傅以斌把参考类预测标准化成了三个步骤 <b>[6]</b>：</p>
+    <ol>
+      <li>第一步，找一个数量足够多的、包含和你类似的项目的「参考类」—— 不是你喜欢的榜样，而是找一组和你足够相似、而且已经结束的案例；</li>
+      <li>第二步，看看这个参考类的分布，找到它的基准线，包括平均成本、时间、失败率等等；</li>
+      <li>第三步，把你自己的项目放进去对比，根据客观情况做微调：我更像是中位数，还是应该更保守一点？</li>
+    </ol>
+    <p>第三步是最考验人的一步。其实最简单的办法就是直接用参考类里的中位数来预测自己。傅以斌再三强调，<b>如果你非要说你跟别人不一样，那你就必须有非常强硬的证据才行</b> —— 不然你就是在把偏见又偷偷放回来。</p>
+    <p>有些现代机器学习算法的底层逻辑就是参考类预测。一切归结于你的“训练集（参考类数据）”有多大，以及你的“相似性度量（similarity metric）”抓得准不准，说白了就是把“找同类”这个动作给工业化了 <b>[7]</b>。</p>
+    <p>要知道自己做这件事会怎样，你最该考察的是和你相似的人、在做相似的事情时，最后都怎么样了。</p>
+    <blockquote>参考类预测（RCF）就是强迫你从“我是一个故事”切换到“我是一个样本”—— 故事负责解释你是谁，参考类负责预测你会怎样。</blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>六、RCF 的几个耀眼应用</h3>
+    <p>每个自命不凡的项目都会被 RCF 教训。咱们看几个比较耀眼的应用。</p>
+    <p><b>大型工程和公共投资</b> —— 这是 RCF 的主战场。傅以斌看过那么多项目之后的结论是：如果不用 RCF 强制纠偏，你的工程几乎一定会超期和超支。怎么纠偏呢？香港政府给了一个范例。</p>
+    <p>2012 年，香港开始把参考类预测引入道路工程评估。他们把自己的 25 个道路项目，跟 863 个国际同类项目做比较，先看同类工程过去通常会怎么超支、怎么拖期，再反过来修正自己的计划。结果发现，在项目的筹备论证（Category C）阶段，因为方案还比较粗、不确定性大，如果你希望把风险控制到各自 P80 —— 也就是有 80% 的把握不超预算、不拖工期 —— 那么一开始报上来的数字就不能照单全收，而是要做「上调（uplift）」：<b>成本要上调 44%，工期要上调 75%</b> <b>[8]</b>。</p>
+    <p>越是项目刚起步，大家最有激情、最容易拍胸脯的时候，你越不能信内部视角。</p>
+    <blockquote>工程界最贵的一句话，就是“我们这次能控制得住。”</blockquote>
+    <p><b>企业并购</b> —— 每个 CEO 都喜欢收购别人的公司，因为这能让你的权力扩大，属于开疆拓土。CEO 说并购会带来协同效应，我们战略互补必能整合市场……但你只要看一看参考类就知道，<b>平均而言，收购方公司的业绩并不会因为并购而改善，甚至会受到轻微负面影响</b> <b>[9]</b>。</p>
+    <p>CEO 对此会说：“别的公司并购失败是因为他们整合能力不行，我们公司这次不一样，我们的企业文化天下无敌！”学者们不得不想出更先进的办法，用机器学习把 RCF 自动化 <b>[7]</b>，提高预测准确率 —— 从历史上找一批和这次高度相似的并购，把它们的结局摆出来，完了再听 CEO 解释为什么这次不会翻车。</p>
+    <p><b>电影票房</b> —— 如果你要投巨资拍一部大片，你最好先有效预测一下它能不能火。而以前好莱坞的火是一种玄学：2008 到 2012 年美国上映的电影里，超过一半都没有盈利，而前 10% 的电影却能吃掉将近 70% 的票房收入……可是没人知道谁能进前 10%。</p>
+    <p>与其讲情怀，不如看 RCF。2023 年发表的研究中 <b>[10]</b>，有人用基于 RCF 的“随机森林（Random Forest）”模型，使用更细的颗粒度把电影进行分类，把“能否覆盖成本”预测准确度提高到了 90%。</p>
+    <p><b>核聚变（进行时）</b> —— 现在 AI 算力中心导致美国电力不堪重负，科技巨头纷纷考虑用核聚变发电。我以前就是研究核聚变的，我非常不相信十年之内核聚变有商业化的可能性，可是巨头们明显要乐观得多。</p>
+    <p>OpenAI CEO 山姆·奥特曼（Sam Altman）自己就投了一家核聚变公司，叫 Helion。2021 年的时候，Helion 曾经宣称要在 2024 年发电。可是等到 2023 年跟微软签约时，电力交付的时间表被推迟到了 2028 年。2025 年 Helion 才开始建设面向微软供电的厂址。到 2026 年，Helion 说他们的原型机取得了“新的里程碑”……我不知道里程碑到底前进了多少，但我知道发电时间表一直在后退。</p>
+    <p>因为现在还没有一家核聚变设施能发电，我们没有现成的参考类，但是我们可以参考类似高复杂度的项目。有研究 <b>[11]</b> 用相似高难度项目估算，聚变的上调大约是 118%；如果你用国际级大型科研基础设施做参考类，上调甚至可能达到 220%。</p>
+    <p>简单说就是，<b>如果一个核聚变项目说要多少投资，你最好准备三倍以上的钱。</b></p>
+    <p>就连号称整天思考「第一性原理」的马斯克，也逃不掉规划谬误。他承诺的特斯拉全自动驾驶（FSD）几乎每年都说“明年就能实现”，拖了将近十年。当年创办 SpaceX，马斯克用内部视角做预算，认为 1 亿美元足够发射 3 次火箭，怎么也成功了 —— 结果三次全部爆炸，公司濒临破产，最后靠砸锅卖铁凑出来的第 4 次发射才侥幸成功。最近马斯克又说 xAI 将很快大幅度领先所有 AI 公司，请问你信吗？</p>
+
+    <div class="divider">✵</div>
+
+    <h3>七、回到你自己：学习、搬家、装修、求职</h3>
+    <p>当你开始学习一门新技能，认为自己一个月就能精通，两个月就能靠它赚到钱的时候，当你准备周末搬家，认为半天就能打完包的时候，当你给新房装修设定 30 万元预算和三个月时间的时候，请你想一想前面这几个案例，和卡尼曼当年那个故事。</p>
+    <blockquote>豪情万丈的愿望不是预测，下决心努力不是预测，基于需求的计划表更不是预测。</blockquote>
+    <p>你最好先想想自己过去那三次学习新技能，都是在第几天放弃的；看看别人家搬家平均会出几次幺蛾子；问问同小区、同户型，装修平均拖几天，超多少钱。</p>
+    <p>把自己只当个样本，会让你的计划精确很多，而且可以让你更有底气。</p>
+    <p>很多求职者，尤其刚毕业的大学生，对钱没有概念，不知道该要多少工资。有些人倾向于多要，但也有很多人是要少了。你应该考虑的不是你每月房租和生活开销需要多少钱，而是参考类。到各大招聘网站调研一番，找师兄师姐问一问，像你这样的学历和技能，在相应的城市大概值多少钱。别忘了，招聘方可是早就把你这样的人给研究得明明白白。</p>
+    <p>这就如同找对象，如果你想的是“像我这么优秀的人，必须配什么样什么样的人”这种内部叙事，靠谱的婚介服务给你的推荐就一定会让你失望 —— 因为它用的是 RCF。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>八、尾声：你不特殊，但你可能属于下一个参考类</h3>
+    <p>当然不是每个人都应该活成中位数。很多人都在某一方面与大多数人不同 —— 但如果你找对了参考类，你会发现你跟不在少数的人很相似。</p>
+    <p>每个人都是特殊的。但你的天赋、资源和方法论，是否特殊到让你不属于当前这个参考类呢？如果是那样的话，你还是不能听从内部叙事 —— <b>你属于下一个参考类</b>。</p>
+    <p>每个进京赶考的读书人都觉得自己会拯救中国，打算主导改革匡扶正义。殊不知主考官看到的不是热血，而是你的门路、师承、年龄和品性 —— 他们太知道像你这样开局的人最后都去了哪里了……</p>
+    <blockquote>具体做事，不妨用内部叙事给自己打气；决策，却必须用外部参考类给自己泼冷水。</blockquote>
+
+  </article>
+
+  <section class="notes">
+    <h3>注释</h3>
+    <p>[1] Buehler, Roger, Dale Griffin, and Michael Ross. 1994. “Exploring the ‘Planning Fallacy’: Why People Underestimate Their Task Completion Times.” Journal of Personality and Social Psychology 67 (3): 366–81.</p>
+    <p>[2] Flyvbjerg, Bent, Mette K. Skamris Holm, and Søren L. Buhl. 2003. “How Common and How Large Are Cost Overruns in Transport Infrastructure Projects?” Transport Reviews 23 (1): 71–88.</p>
+    <p>[3] Flyvbjerg, Bent, and Dan Gardner. How Big Things Get Done: The Surprising Factors That Determine the Fate of Every Project, from Home Renovations to Space Exploration and Everything In Between. New York: Currency, 2023. 我们专栏有过解读：《精英日课》第五季，怎样做成大事 1：慢慢谋定，快速行动</p>
+    <p>[4] Kahneman, Daniel, and Dan Lovallo. 1993. “Timid Choices and Bold Forecasts: A Cognitive Perspective on Risk Taking.” Management Science 39 (1): 17–31.</p>
+    <p>[5] Flyvbjerg, Bent. 2008. “Curbing Optimism Bias and Strategic Misrepresentation in Planning: Reference Class Forecasting in Practice.” European Planning Studies 16 (1): 3–21.</p>
+    <p>[6] Bent Flyvbjerg. "From Nobel Prize to Project Management: Getting Risks Right." Project Management Journal, 37(3): 5–15, 2006.</p>
+    <p>[7] Bi, Wenbin, and Qiusheng Zhang. 2021. “Forecasting Mergers and Acquisitions Failure Based on Partial-Sigmoid Neural Network and Feature Selection.” PLOS ONE 16 (11): e0259575.</p>
+    <p>[8] Flyvbjerg, Bent, Chi-keung Hon, and Wing Huen Fok. 2016. “Reference Class Forecasting for Hong Kong’s Major Roadworks Projects.” Proceedings of the Institution of Civil Engineers 169 (6): 17–24.</p>
+    <p>[9] King, David R., Dan R. Dalton, Catherine M. Daily, and Jeffrey G. Covin. 2004. “Meta-Analyses of Post-Acquisition Performance: Indications of Unidentified Moderators.” Strategic Management Journal 25 (2): 187–200.</p>
+    <p>[10] Einberg, Isak, and Arian Hanifi. 2023. Forecasting U.S. Movie Gross Revenues: A Random Forest Classifier Approach Based on Pre-production Data. Stockholm: KTH; de Souza, Thiago L. D., et al. 2023. “Revisiting Predictions of Movie Economic Success: Random Forest Applied to Profits.” PLOS ONE 18 (3).</p>
+    <p>[11] Brown, Chris, Hanni Lux, and James R. Cowan. 2024. “Reference Class Forecasting and Its Application to Fusion Power Plant Cost Estimates.” IEEE Transactions on Plasma Science 52 (9): 3628–33.</p>
+  </section>
+
+  <section class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <p class="who">至尊女宝</p>
+      <p class="when">9小时前 · 四川</p>
+      <p>此刻我还在医院，脸肿得像如花。目前也没查到过敏源，不是夸张。护士递体温计的时候多看了我两眼，我猜她脑子里正在做面部识别匹配到底是谁。医生问：吃什么了？我说没吃什么特别的。他问：海鲜？没有。芒果？没有。我说我吃东西从不过敏，没有过敏史，吃海鲜都没事。医生没接话，在病历上写了「过敏」。等抽血结果的时候我就在想，我这辈子所有的不靠谱决策，源头都长一个模样：用「我以前没事」来推导「现在也不会有事」。这是典型的采样偏差。我只采了自己历史里那几样顺遂的数据点，就把它们当成了全部分布。</p>
+      <p>可惜人天生抵触这套。我们总觉得我跟别人不一样。过敏的时候觉得自己皮实，做项目的时候觉得自己利索，立 flag 的时候觉得自己自律。样本方差再大，那个离群值也必须是我自己。现在脸还肿着。过敏原检测要等两周，医生说有可能是辣条里的添加剂，有可能是一小时前摸过的那只野猫，有可能是今天换了新牌子的洗衣液。你看，一个系统的输出异常，输入变量多到你根本没法凭直觉定位。</p>
+      <p>这时候最理性的做法不是拍脑袋说不会，而是认怂，我不是头一个过敏的人类，别人踩过的坑，大概率也是我的坑。所以我现在学会了一件事：嘴比脑子快的时候，先闭嘴。想说自己特殊时候，先搜一下同类案例中位数是多少。当然，这句话的有效期到下一次脸消肿为止。希望如花尽快变成人样吧……</p>
+    </div>
+
+    <div class="comment">
+      <p class="who">左星星</p>
+      <p class="when">昨天 · 上海</p>
+      <p>夏天快到了，朋友圈里又出现不少“励志帖”——一个月不瘦 10 斤不换头像。内部视角看到的是决心、健身课表、体脂秤和朋友圈宣言；RCF 会问的却是：你过去三次减肥，平均坚持了几天？你身边和你作息、饮食习惯差不多的人，半年后有多少真的瘦下来了？如果大多数人都是在第 14 天被奶茶、火锅和加班击穿，那计划里就不能只写“每天健身一小时”，而要先设计“第 14 天危机预案”。</p>
+      <p>这个五一假期带孩子和老人出门玩，原计划上午孩子爬山，老人逛寺庙；中午回酒店休息；下午孩子玩水上乐园，老人逛公园。听起来很完美，但 RCF 会追问：孩子和老人多大年纪？过去出门，平均多久喊累？是不是每次都会在排队、吃饭、找厕所、买水、临时改路线中耗掉大量时间？带孩子和老人出门的参考类，不是地图上两点之间的距离，而是过去带同龄孩子和老人出门的真实损耗。半天只安排一个重点项目，反而更可能玩得舒服。</p>
+      <p>RCF 的关键，是把“我这次一定不一样”的热血，先放回现实的“凉水”里冷却一下。愿望不是预测，努力也不是保证。真正靠谱的计划，不是从理想中的自己出发，而是从过去类似的人、类似的事出发。先承认自己大概率不是例外，再为例外创造条件。</p>
+    </div>
+
+    <div class="comment">
+      <p class="who">常觉不住</p>
+      <p class="when">昨天 · 美国</p>
+      <p>参考类预测当然有用。它最擅长做的一件事，就是把人从“我这次一定不一样”的梦里拉出来。但我读这一讲时，心里冒出另一个问题：如果一个人已经不太做梦了呢？年轻人常常需要被 RCF 泼冷水，因为他们太容易相信自己的汗水、激情和主角剧本。可是到了一定年纪，情况有时候会反过来。你看过太多失败，知道太多限制，也知道世界不会因为你的诚意就替你开路。于是连自己的勇气，都开始引用统计资料来反驳自己。</p>
+      <p>这时候，RCF 就不只是预测工具了。它可能变成一种判决。工程项目不会因为你预测它会超支，就自己先放弃施工；桥也不会因为你估计它会延误，就突然失去意志。可是人会。人一旦相信自己属于某个失败率很高的参考类，就很容易提前收手，然后真的被归入“没有做成”的那一类。这是 RCF 用在人身上最麻烦的地方：它本来只是描述分布，最后却可能改变人。</p>
+      <p>我想到自己最近做一个软件新产品。如果只看参考类，冷水很多，而且都不是假的：小团队，面对大市场、大厂商、漫长销售周期，还有不确定的 AI 挑战，胜率能有多高？这些问题都该问。不问，就是自恋。但问完以后，还有第二个问题：我是不是已经把这些统计资料，偷偷变成了不行动的理由？</p>
+      <p>有些人是太相信自己特殊，所以需要参考类把他拉回地面；但也有些人是太快相信自己不特殊，还没真正打仗，就先把自己放进失败样本里。所以这一讲对我的提醒，不只是“不要做梦”。更准确地说，是：做梦以前，先看样本；看完样本以后，再问自己，愿不愿意付出足够具体的代价，去争取成为另一类样本。RCF 可以告诉我，大多数相似的人后来怎样。但剩下那一小步，还是只能自己走。</p>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <h2><span class="summary-tag">AI</span>AI 阅读总结</h2>
+
+    <p class="one-liner">一句话概括：用「参考类预测（RCF）」把自己从“故事主角”降格成“统计学样本”，用同类人、同类事已经发生过的客观分布来代替自我叙事，才能做出靠谱的计划与决策——你不特殊，你的特殊只属于下一个参考类。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li>开篇的刷题高中生、等待盖世英雄的都市女性、把增长曲线画成火箭的创业者，都真诚可爱，但都活在自我叙事之梦中。宇宙的第一性原理虽是叙事，但做靠谱预测最有效的依据，不是梦中的故事，而是同类人、同类事已经发生过的经验。</li>
+      <li>规划谬误（Planning Fallacy）：人一做计划就系统性低估时间、成本与风险、高估收益。学生估毕业论文平均预期 33.9 天，最悲观估计 48.6 天，实际却用了 55.5 天；傅以斌研究 258 个交通项目普遍延期超支（铁路超支 45%、桥隧 34%、公路 20%），悉尼歌剧院从预算 700 万美元、4 年完工，变成 1.02 亿美元、14 年完工。</li>
+      <li>规划谬误是一系列幻觉生成器共同作用的结果：乐观偏差、确认偏误、控制错觉、自利归因、幸存者偏差、可得性偏差，最后由叙事谬误拼成一部“热血电影”——你脑子里排练的是剧本，而不是真实世界。</li>
+      <li>内部视角 vs 外部视角：内部视角盯住自己项目的个案细节（努力、诚意、资源配置），外部视角看的是同类事情的分布信息（平均水平、中位数、尾部风险、失败率）。旁观者未必更聪明，只是没有你的自恋情结——人家把你当成样本，而不是当主角。</li>
+      <li>卡尼曼教材案例：团队信誓旦旦两年编完，专家说同类团队要 7 到 10 年且 40% 放弃；结果卡尼曼团队用了整整 8 年，书编完时教育部已取消这门课——“每个人都觉得自己不一样，现实是统计学上大家都一样”。</li>
+      <li>RCF 三步法：① 找一个数量足够、与你足够相似且已结束的案例作参考类；② 看参考类的基准线（平均成本、时间、失败率）；③ 把自己放进去对比微调——最简单的办法是直接用中位数预测，非要说自己不一样，必须拿出强硬证据，否则就是把偏见偷偷放回来。</li>
+      <li>应用案例：香港道路工程对照 863 个国际项目，筹备阶段成本上调 44%、工期上调 75%（P80 把握）；企业并购平均并不改善收购方业绩甚至轻微受损；随机森林模型把电影“能否覆盖成本”的预测准确率提到 90%；核聚变参照高复杂度项目需上调 118%–220%，“说多少投资最好准备三倍以上的钱”——连马斯克的 FSD 与 SpaceX 也逃不掉规划谬误。</li>
+      <li>落到个人生活：学新技能、搬家、装修、求职谈薪、婚恋择偶都应先查参考类；愿望、决心、需求式计划表都不是预测。做事时可用内部叙事给自己打气，决策时却必须用外部参考类泼冷水。每个人都是特殊的，但若真特殊到不属于当前参考类，你也只是属于下一个参考类。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li>本周就为你手头最大的一个计划（学习、项目、搬家或装修）建一份“参考类清单”：找到 3–5 个条件相近、已经做完的同类案例，记下各自的真实耗时与花费，用中位数替换你的第一直觉估计。</li>
+      <li>下次写计划前，先做一次“最悲观估计”再乘上余量：回看你过去三次类似经历实际超支、延期的比例，把新计划的时间和预算按该比例整体上调，并写进日历提醒自己。</li>
+      <li>求职谈薪前先做市场调研：上招聘网站、问师兄师姐，查清同城市、同学历、同技能的薪资分布，用中位数作报价锚点，而不是按自己的房租花销倒推“我该要多少”。</li>
+      <li>立 flag（减肥、健身、学技能）时先看历史数据：你过去几次都是在第几天放弃的？把“第 14 天危机预案”式设计写进计划——提前预设最可能崩掉的节点和应对动作，而不是只写理想中的每日安排。</li>
+      <li>下次脱口而出“我们这次不一样/我这次一定行”时，先强制回答两个问题：我的参考类是什么？我偏离参考类中位数的证据有多硬？拿不出硬证据，就按中位数做保守计划。</li>
+      <li>做重大个人决策（换工作、创业、投资、装修）前，主动检索同类失败案例：搜出同类项目的失败率与高频踩坑点，把尾部风险写进自己的决策备忘，而不是只搜成功故事。</li>
+      <li>把“讲故事”和“做预测”分开：执行时用内部叙事给自己热情与动力，决策时切换到外部视角泼冷水——记住 RCF 只是描述分布，别让它变成你不行动的判决书，看完样本后仍要自己走剩下那一小步。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <blockquote>“你脑子里排练的是剧本，而不是真实世界。”</blockquote>
+    <blockquote>“旁观者未必比你聪明，但旁观者的好处是没有你那么多自恋情结：人家把你当成样本，而不是当主角。”</blockquote>
+    <blockquote>“故事负责解释你是谁，参考类负责预测你会怎样。”</blockquote>
+    <blockquote>“具体做事，不妨用内部叙事给自己打气；决策，却必须用外部参考类给自己泼冷水。”</blockquote>
+
+    <p class="footnote">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</main>
+<script>
+(function(){
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('toTop');
+  function onScroll(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var y = window.pageYOffset || doc.scrollTop || 0;
+    bar.style.width = (max > 0 ? (y / max * 100) : 0) + '%';
+    btn.style.display = y > 600 ? 'block' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

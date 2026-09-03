@@ -29,9 +29,9 @@ menu:
     行业发展洞察: /categories/行业发展洞察/ || fas fa-binoculars
     斜杠技能应用: /categories/斜杠技能应用/ || fas fa-bolt
     资源分享下载: /categories/资源分享下载/ || fas fa-cloud-download-alt
-
-   # 案例库: 直接链接到一个名为“案例库”的分类页面
-  案例库: /categories/案例库/ || fas fa-project-diagram
+    案例库: /categories/案例库/ || fas fa-project-diagram
+  个人成长区 || fas fa-seedling:
+    现代思维工具100讲: /modern-thinking-100/ || fas fa-lightbulb
   关于我: /about/ || fas fa-user
   联系我: /contact/ || fas fa-envelope
 

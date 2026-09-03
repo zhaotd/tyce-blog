@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第80讲 · 替罪羊：从“找坏人”到“看系统”</title>
+<style>
+  :root{
+    --bg:#faf7f1; --card:#fffdf8; --text:#2b2622; --muted:#8a8578;
+    --accent:#8a5a2b; --accent-soft:#f3e9db; --border:#e6dccb;
+    --quote-bar:#c9a06a; --summary-bg:#f4e8d5; --shadow:0 2px 12px rgba(90,60,20,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512; --card:#201d19; --text:#e8e2d8; --muted:#9b948a;
+      --accent:#c99a66; --accent-soft:#2e271e; --border:#3a342b;
+      --quote-bar:#8a5a2b; --summary-bg:#241f18; --shadow:0 2px 12px rgba(0,0,0,.45);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:17px; line-height:1.85; text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* 顶部阅读进度条 */
+  #progress-wrap{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:transparent}
+  #progress-bar{display:block;height:100%;width:0;background:var(--accent)}
+  /* 回到顶部按钮 */
+  #to-top{
+    position:fixed;right:18px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fffdf8;font-size:20px;line-height:1;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.25);z-index:1000;
+  }
+  #to-top:hover{filter:brightness(1.1)}
+  .container{max-width:700px;margin:0 auto;padding:28px 20px 60px}
+  /* 文档头 */
+  .course-tag{
+    display:inline-block;font-size:13px;letter-spacing:.5px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:999px;padding:4px 12px;margin-bottom:16px;
+  }
+  h1{font-size:26px;line-height:1.45;text-align:left;margin-bottom:12px}
+  .meta{font-size:13.5px;color:var(--muted);text-align:left;padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:26px}
+  /* 正文 */
+  p{margin:0 0 16px}
+  h3{font-size:19px;margin:34px 0 14px;text-align:left;color:var(--text)}
+  h3::before{content:"◆ ";color:var(--accent);font-size:14px}
+  ul{margin:0 0 16px;padding-left:1.3em}
+  li{margin-bottom:10px}
+  .ref{font-size:11px;color:var(--accent);text-decoration:none;vertical-align:super}
+  /* 金句引用块 */
+  blockquote{
+    margin:20px 0;padding:12px 18px;border-left:4px solid var(--quote-bar);
+    background:var(--accent-soft);border-radius:0 12px 12px 0;
+    color:var(--text);font-style:normal;
+  }
+  blockquote p{margin:0}
+  /* 分隔符 */
+  .divider{text-align:center;color:var(--accent);font-size:16px;letter-spacing:8px;margin:34px 0;opacity:.8}
+  /* 小诗 */
+  .poem{
+    margin:22px 0;padding:22px 18px;text-align:center;
+    background:var(--accent-soft);border:1px solid var(--border);border-radius:12px;
+    font-family:"Songti SC","STSong","SimSun",serif;font-size:17px;line-height:2.1;
+  }
+  .poem .poem-title{font-family:inherit;font-weight:bold;color:var(--accent);margin-bottom:10px}
+  /* 注释 */
+  .notes{margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);line-height:1.7;text-align:left}
+  .notes h3{font-size:16px;margin:0 0 12px}
+  .notes ol{padding-left:1.4em;margin:0}
+  .notes li{margin-bottom:8px}
+  /* 用户留言 */
+  .comments{margin-top:44px}
+  .comments h3{font-size:16px;margin:0 0 6px}
+  .comment{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:16px 0;box-shadow:var(--shadow)}
+  .comment-meta{font-size:13px;color:var(--accent);font-weight:bold;margin-bottom:8px;text-align:left}
+  .comment-meta span{color:var(--muted);font-weight:normal;margin-left:6px}
+  .comment p{font-size:15px;line-height:1.8;margin-bottom:10px}
+  .comment p:last-child{margin-bottom:0}
+  /* AI 总结 */
+  #ai-summary{
+    margin:48px 0 20px;padding:24px 20px;border-radius:12px;
+    background:var(--summary-bg);border:2px solid var(--accent);box-shadow:var(--shadow);
+  }
+  #ai-summary .sum-title{
+    font-size:19px;font-weight:bold;color:var(--accent);margin-bottom:14px;text-align:left;
+    display:flex;align-items:center;gap:8px;
+  }
+  #ai-summary .sum-title::before{content:"✦";font-size:15px}
+  #ai-summary h4{font-size:16px;color:var(--text);margin:18px 0 10px;text-align:left}
+  #ai-summary p{margin-bottom:10px;font-size:15.5px}
+  #ai-summary .one-liner{font-weight:bold;font-size:16px;background:var(--card);border-radius:10px;padding:12px 14px;border-left:4px solid var(--accent);text-align:left}
+  #ai-summary ol,#ai-summary ul{margin:0 0 8px;padding-left:1.35em;font-size:15.5px}
+  #ai-summary li{margin-bottom:9px}
+  #ai-summary .quote-list li{font-style:normal;color:var(--text)}
+  #ai-summary .disclaimer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px;border-top:1px dashed var(--border);padding-top:12px}
+  footer{text-align:center;font-size:12.5px;color:var(--muted);margin-top:26px}
+</style>
+</head>
+<body>
+
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+<button id="to-top" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- ===== 文档头 ===== -->
+  <span class="course-tag">万维钢 · 现代思维工具100讲 · 第80讲</span>
+  <h1>替罪羊：从“找坏人”到“看系统”</h1>
+  <div class="meta">作者：万维钢　｜　课程：现代思维工具100讲　｜　主题：系统思维 · 社会归因 · 公正文化　｜　手机阅读版</div>
+
+  <!-- ===== 开场 ===== -->
+  <p>学者思考社会问题跟老百姓有一个特别重要的区别：老百姓总是问好人坏人，而学者倾向于琢磨系统。</p>
+  <p>老百姓眼中办好事的是清官，办坏事的是贪官，开国之君一定英明神武，亡国之君一定昏聩无能……这可以说是「戏曲思维」：把历史想象成几个红脸白脸在台上唱念做打。</p>
+  <p>可如果你能回到历史现场全面考察一番，你会发现根本不是那么回事儿。就拿明朝灭亡来说，真实历史更接近于崇祯皇帝殚精竭虑夙夜在公，文官个个自认是在为国分忧，武将人人也都有自己的忠诚和难处。吴三桂原本不想卖国，祖大寿曾经很想为国家战死。这些人不是没有缺点也不是不贪污不怕死，但他们都是正常人 <a class="ref" href="#note1">[1]</a>。</p>
+  <p>你应该问的不是这些人有多坏，而是朝廷为什么不得不加征三饷，官员为什么非得报喜不报忧，农民为什么不能老实种地而只能造反？</p>
+  <p>你应该研究的是，为什么一群正常人在理性行事之下，把系统搞崩溃了。</p>
+  <p>你需要用系统思维取代戏曲思维。那么你必须克服给系统失败找「替罪羊（scapegoat）」的倾向。</p>
+  <blockquote><p>我们不能读那么多历史只读出一出又一出的道德戏剧，我们得琢磨制度工程。</p></blockquote>
+
+  <div class="divider">✵ ✵ ✵</div>
+
+  <!-- ===== 第一节 ===== -->
+  <h3>一、先跳出来：个人困扰与公共议题</h3>
+  <p>首先你得从个体归因的习惯中跳出来。</p>
+  <p>社会学家 C. 赖特·米尔斯（C. Wright Mills）在 1959 年出版的《社会学的想象力》（The Sociological Imagination）一书中有个说法：你得学会区分「个人困扰（personal troubles）」和「公共议题（public issues）」<a class="ref" href="#note2">[2]</a>。</p>
+  <p>米尔斯说，一座十万人口的城市里有一个人失业，这大概只是个人困扰，他应该反思自己的技能、努力、性格和运气。但是如果一个五千万劳动力的国家里，有一千五百万人失业，这就不是“求职者眼高手低”能解释的了。这是公共议题：你必须去看经济制度、产业结构、政策周期和社会资源配置。</p>
+  <p>一家公司里有一个员工造假，可以说这个员工品行不好；可如果一个部门、一个大区、一个公司成百上千人都在造假，那你就不能再问“怎么这么多坏人”。你得问这里的指标、奖惩、管理文化，是不是正在系统性地逼人作恶。</p>
+  <p>不是说人没有责任。但是人的能动性（agency）会强烈受到他所处的场域结构（structure）的限制。就连整天喊着改造世界的马克思，都在《路易·波拿巴的雾月十八日》一文中说：人们创造自己的历史，但不是在他们自己选择的条件下创造，而是在既定的、从过去承继下来的条件下创造 <a class="ref" href="#note3">[3]</a>。</p>
+  <p>拿破仑发动政变是悲剧，他侄子路易·波拿巴发动政变则是闹剧……可偏偏侄子当上了长久的皇帝。你说上哪说理去？</p>
+  <blockquote><p>人有选择，但选择发生在结构里。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第二节 ===== -->
+  <h3>二、个体归因，一个极为顽固的倾向</h3>
+  <p>个体归因实在是一个极为顽固的倾向。</p>
+  <p>如果你周围一切本来好好的，突然之间发生了一个变化，那么你会强烈地感到，这个变化是一个有意图的行动者造成的。</p>
+  <p>这个倾向在原始环境中很有用。草丛突然动了一下，你最好把它理解成是有一只豹子正在走过来，而不是风吹的；你宁可误判，也别漏报来自他人的恶意。</p>
+  <p>所以要是遇到瘟疫、股灾、事故、危机，我们的大脑就很难接受“这是复杂系统在某个临界点的涌现”。它一定要问：是谁干的？</p>
+  <p>我们不但认为一定是有人干的，而且还会认为一定是那个人<em>故意</em>干的，是他的本性就是如此！</p>
+  <p>社会心理学家李·罗斯（Lee Ross）在 1977 年提出一个概念叫「基本归因谬误（fundamental attribution error）」<a class="ref" href="#note4">[4]</a>，意思是我们解释他人行为的时候，往往高估性格、品质和意图的因素，低估处境和结构的原因。</p>
+  <p>比如别人迟到了，我们的第一反应是“这个人没时间观念”，而很少想他是不是遇上了堵车什么的突发情况。一个基层员工犯错，我们第一反应是“他责任心差”；而很少想他的工作量是不是超载，培训是不是缺失，流程是不是有问题。</p>
+  <p>如果你相信事情是行动者导致的，又相信行动者的行为是因为他的品质，那么你就会把一个坏的结果归咎于坏人。我们真的很喜欢听有反派的故事。这不就是戏曲思维吗？</p>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第三节 ===== -->
+  <h3>三、借鉴安全工程：人因视角与系统视角</h3>
+  <p>怎么跳出戏曲思维，看见系统呢？咱们可以借鉴安全工程中的学说。</p>
+  <p>英国心理学家詹姆斯·瑞森（James Reason）有个说法，比如发生了一起重大事故，你可以有两种视角：「人因视角（person approach）」和「系统视角（system approach）」<a class="ref" href="#note5">[5]</a>。人因视角盯着一线人员：是不是这些人疏忽、懒惰、违规导致的？系统视角则问：防线为什么失效？这个系统为什么能让人犯这么大的错误？</p>
+  <p>不是说人没错误，但是人犯的可能只是「显性失误（active failures）」，系统的问题则是「潜在条件（latent conditions）」。</p>
+  <p>一线人员当场犯的错，比如按错按钮、判断失误、忘了检查，这些是显性失误。而管理决策、组织设计、预算压力、设备缺陷、培训不足、监管松弛长期埋下的雷，则是事故的潜在条件。这些潜在条件可能已经潜伏了很多年，一直都没事儿，实则正在等着某个倒霉的一线人员来引爆。</p>
+  <p>那哥们儿那天也是不小心，按错了按钮，结果系统就崩溃了……可是你能说这全是他的责任吗？</p>
+
+  <!-- ===== 第四节 ===== -->
+  <h3>四、瑞士奶酪模型：多道防线同时失效</h3>
+  <p>就好像有人碰倒了一张牌，导致一整排多米诺骨牌都倒了。这个人也不是没有责任，可是更大的问题难道不是这个系统为什么会被弄成多米诺骨牌吗？</p>
+  <p>瑞森研究航空、医疗、核电这些高风险组织里的事故，提出一个「瑞士奶酪模型（Swiss Cheese Model）」<a class="ref" href="#note6">[6]</a>。他说复杂系统通常有很多层防线：设计规范、培训流程、检查表、报警系统、监管制度、现场操作……每一层防线都可能有漏洞，合在一起就好像一块瑞士奶酪一样，中间有很多洞。</p>
+  <p>平时这些洞是错开的，危险穿不过去。</p>
+  <p>可是某个时刻，奶酪每一层上的洞刚好排成一条直线，事故就贯穿而出了……也就是说，重大事故很少是单一原因造成的——那是多道防线同时失效的结果。</p>
+  <p>所以你最该整改的不是显性失误，而是潜在条件。</p>
+  <blockquote><p>用瑞森自己的话说，就是「我们无法改变人的本性，但可以改变人们工作的条件。」<a class="ref" href="#note5">[5]</a></p></blockquote>
+  <p>这不是说要宽恕犯错的人，而是提醒你：如果你只处理人，不处理条件，你下一次还会得到同样的事故。</p>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第五节 ===== -->
+  <h3>五、真实案例一：波音 737 MAX 的两场空难</h3>
+  <p>看两个真实案例。出了事儿人们总是倾向于先找人，但其实你应该找条件。</p>
+  <p>2018 年 10 月 29 日，印尼狮航 610 航班坠毁，189 人遇难，飞机机型是波音 737 MAX。波音公司对此的反应是立即找替罪羊，说是飞行员操作不当。是啊，波音是什么公司？人家的飞机都是经过美国联邦航空局（FAA）认证的，肯定是外国航空公司的飞行员出错了！</p>
+  <p>可是紧接着，2019 年 3 月 10 日，埃塞俄比亚航空 302 航班坠毁，157 人遇难。又是波音 737 MAX，而且是以相似的方式坠毁。</p>
+  <p>这可就压不住了。后来的调查显示，真正的问题恰恰是一串系统性的洞排成了直线 <a class="ref" href="#note7">[7]</a>——</p>
+  <ul>
+    <li>最靠近事故现场的那一层的洞，是一个软件，叫「机动特性增强系统（Maneuvering Characteristics Augmentation System, MCAS）」。它的作用是在特定飞行状态下自动压低机头，补偿新发动机带来的气动变化。这个软件一旦遇到传感器给出错误数据，就可能误判飞机要失速，于是反复把机头往下压。</li>
+    <li>第二层的洞，是飞行员没经历过针对这种错误的模拟训练。波音为了尽量避免要求航空公司花大钱重新培训飞行员，在培训手册中淡化了 MCAS 的存在。那你说为啥非要有这么一个软件呢？</li>
+    <li>第三层的洞，是波音面对空客 A320neo 的竞争，必须尽快推出新机型，就在老 737 平台上换装了更大、更靠前的发动机，导致飞机气动特性变了，可是又不想对飞机大改，才搞了这么一个用软件对付的办法。</li>
+    <li>第四层的洞，是波音这么干，竟然没人管。FAA 长期采用一种授权委任机制，把大量认证工作交给波音内部人员完成……等于是波音自己监管自己。</li>
+  </ul>
+  <p>所以你能只怪飞行员操作失误吗？你能说这是因为工程师写错了代码吗？这是整个系统的问题。</p>
+
+  <!-- ===== 第六节 ===== -->
+  <h3>六、真实案例二：得州大停电，谁是真凶？</h3>
+  <p>第二个案例是 2021 年，一场极端寒潮袭击了美国得克萨斯州，数百万户家庭停电，很多人失去供暖和饮用水。</p>
+  <p>灾难刚发生右翼舆论就找到一个替罪羊：风力发电机。天一冷，风机就冻住了，这不就说明新能源不可靠、绿色能源害死人吗？左派果然是反派啊！</p>
+  <p>可是后续调查显示 <a class="ref" href="#note8">[8]</a>，得州电网崩溃还真不能说是“风电害的”：风机确实有冻结停摆，但天然气、煤炭、核电等传统能源系统也在恶劣天气中大规模失效——其中天然气机组占了故障机组的 58%。</p>
+  <p>真正的问题是得州电网的结构。为了躲避联邦监管，这个电网是个孤立的电网，跟别的州没有联系，邻州的电在有事的时候送不进来。</p>
+  <p>也正是因为不受联邦监管，它没有做强制的防冻改造，没有足够的冗余设计。</p>
+  <p>特别是，天然气和电力互相拖死：发电需要天然气，可是采气输气本身又需要电力，那是一个死亡螺旋！</p>
+  <p>事实是那个电网早就不行……风机冻住只不过是出事的一个契机而已。</p>
+  <blockquote><p>你看，像这样分析出系统的原因，不比骂左派右派有用多了吗？如果不分析系统原因，像发生金融危机的时候只知道骂华尔街太贪婪，有什么用呢？</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第七节 ===== -->
+  <h3>七、替罪羊机制：文明最古老的止痛药</h3>
+  <p>出事儿找替罪羊，不只是一个认知错误，而且还满足了人类更深层的心理需求。法国哲学家勒内·吉拉尔（René Girard）有一套著名理论，就叫「替罪羊机制（scapegoat mechanism）」<a class="ref" href="#note9">[9]</a>。</p>
+  <p>这个理论说，当一个共同体内部的矛盾越来越大，冲突快要失控的时候，人们会无意识地把分散的敌意集中到一个具体对象身上。这个对象可以是外族人、异教徒、某个少数群体、或者某个倒霉的个人。然后通过共同迫害这个替罪羊，大家就可以暂时恢复团结。</p>
+  <p>瘟疫来了，经济坏了，社会焦虑升高，人们处理不了，甚至理解不了这些复杂的危机，但是必须采取一个什么行动出口恶气。这时候就迫切需要找到一个“投毒者”、一个“阴谋集团”、一个“内部敌人”。</p>
+  <p>说得再直白一点，替罪羊机制就是人群为了从“所有人斗所有人”走出来，去“所有人斗一个人”。咱们回忆一下人类历史，是不是这样？</p>
+  <blockquote><p>替罪羊不是被找出来的原因，而是被选出来的出口。</p></blockquote>
+  <p>替罪羊机制是文明最古老的止痛药。它从不治本，但是它能管一阵子用。</p>
+  <p>把坏事归到具体的少数人头上，社会就不用反思了。我们没问题！都是他们的错！这其实是权力最喜欢的因果模型：责任下沉，合法性就上移。</p>
+  <p>你知道最可悲的是什么吗？最热衷于维护替罪羊解释的人，恰恰是系统里最弱势的群体 <a class="ref" href="#note10">[10]</a>。为什么？因为“有个坏人害了我”，至少还是一个有希望的故事——抓住坏人，换个清官，日子就能好。而“压迫你的是整个结构，根本没有一个单独坏人可恨”，那可太绝望了。</p>
+  <p>也许戏曲思维最深的根，就在那一点心酸的希望里。</p>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第八节 ===== -->
+  <h3>八、到底什么是坏人：公正文化算法</h3>
+  <p>我们还可以从另一个角度考虑替罪羊机制：到底什么是坏人？</p>
+  <p>一个官员因为收受贿赂，把工程包给了一家不称职的建筑公司，导致桥梁倒塌。你说这个官员是坏人吗？他是怎么个坏法呢？</p>
+  <p>美国安全工程顾问戴维·马克思（David Marx）有个学说叫「公正文化算法（the Just Culture algorithm）」<a class="ref" href="#note11">[11]</a>，把造成坏后果的行为分成三类，认为应该区别对待——</p>
+  <ul>
+    <li>第一类是「人人都可能有的差错（human error）」，也就是无心之失。医生疲劳状态下看错一个药名，飞行员在混乱报警中漏掉一个步骤，对这种错误最好的办法不是惩罚，而是安慰当事人、修正系统。因为你惩罚无心之失就会让人隐瞒错误。而隐瞒错误，系统就无法学习。</li>
+    <li>第二类是「冒险行为（at-risk behavior）」，它不是有意作恶，但的确冒了不该冒的险。通常是人为了省时间、图方便、赶指标，慢慢偏离安全做法。比如本来应该双人复核，大家觉得麻烦就长期省掉；本来有安全流程，现场为了赶进度就绕过去。对这种行为必须纠正，但重在训练而不是惩罚，特别是要消除系统中的错误激励。</li>
+    <li>第三类是「鲁莽违规行为（reckless behavior）」，是明知道存在重大且不正当的风险，却为了私利硬要去做。比如明知桥梁材料不合格还放行，明知药品造假还签字，明知安全隐患严重还强令生产。对这种人，那没话说，必须严厉追责。</li>
+  </ul>
+  <blockquote><p>人之所以走捷径，往往是因为系统在奖励走捷径。</p></blockquote>
+  <p>这样一看就清楚了，贪官其实是第三类人。恐怕没有哪个官员一心就想“我要把国家搞坏，我要残害老百姓，我要让这个工程变成豆腐渣”，他们想的往往是“这家公司可能不如最好的公司，但应该也能干；这个材料便宜一点，应该也不会出事……”</p>
+  <p>所以贪官被捕之后都说“我当时抱有侥幸心理。”</p>
+  <p>有了这个三分法，我们就能避免两种幼稚病：一种是出了事一定抓坏人，一种是反正都是系统问题，谁都不用负责。其实事情往往既有人的责任，也有系统的责任。至少达到这样的颗粒度，我们才能合理追责、改进系统。</p>
+
+  <div class="divider">✵</div>
+
+  <!-- ===== 第九节 结语 ===== -->
+  <h3>九、结语：质疑系统是现代人的本分</h3>
+  <p>世界上当然有坏人。鲁莽、恶意、腐败、欺诈，都应该追责。但我们还是需要一点社会学的想象力。</p>
+  <p>如果一个坏人欺负了一个人，我们完全可以说就是因为他本身是个坏人。但如果一个坏人造成了天大的事故，甚至长期为害一方，那我们就必须问一问：这个系统到底是怎么回事，能给他那么大的杠杆？</p>
+  <blockquote><p>找替罪羊是人的本能，但质疑系统也是现代人的本分。</p></blockquote>
+
+  <div class="poem">
+    <div class="poem-title">【收束小诗】</div>
+    桥倾众怒索人偿，锈入榫间水啮梁。<br>
+    一足岂能成巨祸，千钉早已对寒霜。<br>
+    责归末手添新祭，因溯深层见旧章。<br>
+    莫向戏台寻白脸，且从制度问兴亡。
+  </div>
+
+  <!-- ===== 注释 ===== -->
+  <div class="notes" id="notes">
+    <h3>注释</h3>
+    <ol>
+      <li id="note1">侯杨方，《明亡清兴：1618—1662 年的战争、外交与博弈》。人民日报出版社，2025。</li>
+      <li id="note2">Mills, C. Wright. <em>The Sociological Imagination</em>. New York: Oxford University Press, 1959.</li>
+      <li id="note3">Marx, Karl. <em>The Eighteenth Brumaire of Louis Bonaparte</em>. 1852.</li>
+      <li id="note4">Ross, Lee. “The Intuitive Psychologist and His Shortcomings: Distortions in the Attribution Process.” In <em>Advances in Experimental Social Psychology</em>, vol. 10, 1977.</li>
+      <li id="note5">Reason, James. “Human Error: Models and Management.” <em>BMJ</em> 320, no. 7237 (2000): 768–770.</li>
+      <li id="note6">Reason, James. <em>Human Error</em>. Cambridge: Cambridge University Press, 1990; <em>Managing the Risks of Organizational Accidents</em>. Aldershot: Ashgate, 1997.</li>
+      <li id="note7">U.S. House Committee on Transportation and Infrastructure. <em>Final Committee Report: The Design, Development &amp; Certification of the Boeing 737 MAX</em>. September 2020.</li>
+      <li id="note8">FERC and NERC. <em>The February 2021 Cold Weather Outages in Texas and the South Central United States</em>. Final Report, 2021.</li>
+      <li id="note9">Girard, René. <em>Violence and the Sacred</em>. Baltimore: Johns Hopkins University Press, 1977; <em>The Scapegoat</em>. Baltimore: Johns Hopkins University Press, 1986. 另见《精英日课》第五季，《欲望》序：社会秩序的隐秘机制。</li>
+      <li id="note10">Jost, John T., and Mahzarin R. Banaji. “The Role of Stereotyping in System-Justification and the Production of False Consciousness.” <em>British Journal of Social Psychology</em> 33, no. 1 (1994): 1–27.</li>
+      <li id="note11">Marx, David. <em>Patient Safety and the “Just Culture”: A Primer for Health Care Executives</em>. New York: Columbia University, 2001; Dekker, Sidney. <em>Just Culture: Balancing Safety and Accountability</em>. Farnham: Ashgate, 2012.</li>
+    </ol>
+  </div>
+
+  <!-- ===== 用户留言 ===== -->
+  <div class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <div class="comment-meta">左星星<span>昨天 · 上海</span></div>
+      <p>2025 年 9 月，某食品企业向上海全市 211 所学校供应疑似变质虾仁菜品，其中 161 所学校及时回收，仍有 50 所学校在通知前已完成供餐，相关企业实际控制人等 8 名责任人随后被依法逮捕。事件发生后，公众第一反应几乎都是愤怒：供应商失责、学校失守、必须严惩。这种情绪完全可以理解，因为校园食品直接关系到孩子健康，容不得任何侥幸。</p>
+      <p>但如果只停留在“某家公司坏”或“几个人失职”，其实并没有真正解释问题。我在国际学校工作多年，也参与过食堂供应商管理，知道校园餐从来不是后厨单点问题，而是一整条链路：前端有招标与准入，中间有采购、冷链、验收、留样，后端还有加工、现场管理、学生反馈、家校沟通以及监管抽查。任何一环松动，风险都会被放大。</p>
+      <p>这次事件之所以令人不安，不只是某一批食材出了问题，而是多道防线同时失效：供应商未能及时自检，现场执行存在疏漏，学校端验收与反馈未能触发预警，外部监管也没能提前发现异常。最终呈现给公众的，是一顿问题午餐，但背后是系统性失守。</p>
+      <p>更关键的问题其实是：为什么这么多环节，没有任何一个节点把风险拦住？如果只寻找替罪羊，情绪很快会被平息，但问题不会消失；如果不修补系统漏洞，同类事件仍会在不同主体、不同时间重复发生。真正有效的改进，不在于惩罚结束，而在于让每一道防线重新真正起作用。</p>
+    </div>
+
+    <div class="comment">
+      <div class="comment-meta">左星星<span>昨天 · 上海</span></div>
+      <p>因恒大地产财务造假，2024 年 9 月，财政部与证监会对审计师普华永道作出处罚，合计罚没约 4.41 亿元，暂停部分业务 6 个月，撤销广州分所，并吊销 4 名签字注册会计师的执业资格。</p>
+      <p>事情发生后，大家自然会问：谁签了字，谁该负责？这很正常。审计报告关系到投资者和市场信任，出了重大问题，签字会计师、项目负责人和事务所都必须承担责任。</p>
+      <p>但如果只把问题理解为“几个人失职”，就太简单了。我在普华永道工作过，知道大型审计项目不是一个人关门完成的。它有客户压力、收费压力、赶进度的压力，也有一层层复核和审批。签字人很关键，但他是在整套机制里工作，不是孤零零站在外面。</p>
+      <p>恒大这样的大规模造假，也不是审计这一环单独能解释的。企业内部要有人做假，管理层要推动，融资方要相信，市场要配合，中介机构和监管也要及时把关。只要其中一道门真正关上，问题可能就不会滚到后来那么大。可现实是，很多道门同时松了。</p>
+      <p>这不是替任何人开脱。明知有问题还放行的人，必须追责。但追责之后，更该问：为什么这么多人、这么多流程，都没能把问题挡住？</p>
+      <p>找替罪羊最容易，也最解气；但如果只处理几个人，不修补让问题发生的系统，下一个“倒霉的签字人”还会出现，类似风险也可能换个地方重演。</p>
+    </div>
+
+    <div class="comment">
+      <div class="comment-meta">李盈<span>9小时前 · 天津</span></div>
+      <p>自从波音 737 MAX 事件之后，波音的各种问题就陆续暴露出来，原先认为的偶发事件现在越看越像系统性风险。其实在波音之前，俄罗斯民航才是不靠谱的典型。</p>
+      <p>如果以国家来统计，苏俄历史上空难死亡人数超过 8000 人，断崖式领先其他国家。每一次事故看上去都是偶然的，都可以归结于不靠谱的飞行员、工程师和其他工作人员。</p>
+      <p>但是如果从树木视角切换成森林视角，我们就会发现，对于这个热衷于实现政治目标和大规模生产的国家来说，质量和安全从来不是他们考虑的优先目标，这才是症结。</p>
+      <p>现在年轻的同学可能没有坐过图 154 这个机型，咱们中国当年也引进了一些，北京飞乌鲁木齐就有。后来发生过两起严重的空难，这个机型在 2002 年就全面停飞了。</p>
+    </div>
+  </div>
+
+  <!-- ===== AI 阅读总结 ===== -->
+  <div id="ai-summary">
+    <div class="sum-title">AI 阅读总结</div>
+
+    <p class="one-liner">一句话概括：本文以“用系统思维取代戏曲思维”为主线，从个人困扰与公共议题、基本归因谬误、人因视角与系统视角、瑞士奶酪模型到公正文化算法层层递进，用明朝灭亡、波音 737 MAX 空难、得州大停电三个案例示范“出事后先找替罪羊是本能，但现代人更该追问系统结构”——找坏人容易，看系统才见真章。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>戏曲思维 vs 系统思维：</strong>老百姓习惯把历史当成“几个红脸白脸唱念做打”的道德戏剧，问好人坏人；学者则琢磨系统。明朝灭亡的真相更接近崇祯殚精竭虑、文官自认分忧、武将各有难处——他们都不是坏人，却在一群正常人理性行事之下把系统搞崩溃了，所以该研究的是制度工程，而不是上演道德戏剧。</li>
+      <li><strong>个人困扰与公共议题（米尔斯）：</strong>一个人失业可能是个人困扰，该反思技能与努力；一千五百万人失业就是公共议题，必须看经济制度、产业结构、政策周期与资源配置。一个员工造假是品行问题，成百上千人造假就得问指标、奖惩与管理文化是否在系统性逼人作恶。人的能动性受场域结构强烈限制——人有选择，但选择发生在结构里。</li>
+      <li><strong>基本归因谬误（李·罗斯，1977）：</strong>解释他人行为时，我们总高估性格、品质、意图，低估处境与结构。面对瘟疫、股灾、危机，大脑难以接受“复杂系统的涌现”，非要追问“是谁干的、是不是故意干的、他本性是否如此”——这是原始环境留下的生存本能，却在现代社会成为看清真相的障碍。</li>
+      <li><strong>显性失误与潜在条件（瑞森）：</strong>一线人员按错按钮、忘了检查只是“显性失误”，管理决策、预算压力、设备缺陷、培训不足、监管松弛等长期埋下的“潜在条件”才是事故的雷。瑞士奶酪模型说明：重大事故很少由单一原因造成，而是多道防线同时失效，洞刚好排成直线。所以最该整改的是条件而非个人——“我们无法改变人的本性，但可以改变人们工作的条件”。</li>
+      <li><strong>波音 737 MAX 两起空难：</strong>狮航 610（2018）与埃航 302（2019）接连坠毁，波音最初把锅甩给飞行员操作不当，而调查显示真正原因是一串系统性漏洞排成直线：MCAS 软件缺陷、飞行员缺乏针对性训练（波音刻意淡化）、为对抗空客而仓促改装老平台、FAA 授权波音自我监管。这是整个系统的问题，不能只怪飞行员或写代码的工程师。</li>
+      <li><strong>得州寒潮大停电：</strong>舆论第一时间把罪责归于冻住的风力发电机，调查却显示天然气机组占了故障机组的 58%，风电只是契机。真正的病根是得州为躲避联邦监管而孤立的电网：没有强制的防冻改造、没有冗余设计，天然气与电力互相拖死形成“死亡螺旋”。分析出系统原因，比骂左派右派有用得多。</li>
+      <li><strong>替罪羊机制（吉拉尔）：</strong>共同体矛盾失控时，人们会把分散的敌意集中到一个具体对象身上，通过共同迫害暂时恢复团结——“从所有人斗所有人”变成“所有人斗一个人”。替罪羊不是被找出来的原因，而是被选出来的出口，是文明最古老的止痛药，不治本但管一阵子用；权力最喜欢它，因为责任下沉、合法性上移。最可悲的是，最热衷维护替罪羊解释的恰恰是最弱势的群体：“有个坏人害了我”是有希望的故事，而“压迫你的是整个结构”太绝望。</li>
+      <li><strong>公正文化算法（戴维·马克思）：</strong>把造成坏后果的行为分为三类区别对待——无心之失（安慰当事人、修正系统，惩罚只会让人隐瞒错误、让系统无法学习）、冒险行为（纠正但重在训练，尤其要消除系统里奖励走捷径的错误激励）、鲁莽违规（明知风险为私利硬干，必须严厉追责）。贪官多属“抱有侥幸心理”的中间地带；这个三分法能避免“出事必抓坏人”和“全是系统问题无人负责”两种幼稚病。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li>遇到任何坏事或事故，先别急着下结论，给自己立一条规矩：写下“谁干的”之前，必须先写出至少两个“什么条件造成的”（流程、激励、制度、环境），用这个动作把个体归因的惯性刹车。</li>
+      <li>团队或家庭里有人出错时，用“公正文化三分法”过一遍：无心之失就安慰并改流程；走捷径就查哪里在奖励走捷径；明知故犯才严肃追责。把话说到这个颗粒度再批评人，既公正又不放过真坏人。</li>
+      <li>把“个人困扰/公共议题”用在身边事上：亲友失业、企业暴雷、行业动荡时，先看周期与结构，再谈个人努力——既别把系统问题误当个人问题苛责自己，也别用个人问题掩盖系统问题逃避改进。</li>
+      <li>热点事件（食品安全、空难、停电、造假）发生后，练习“延迟站队 24 小时”，主动去找调查报道与结构性解释，警惕“找出一个坏蛋就能解释一切”的叙事——尤其是让你感到解气的那个版本。</li>
+      <li>为自己所在的小系统做一次“瑞士奶酪”体检：选一件重要的事（项目交付、家庭财务、孩子安全），列出它有几层防线（检查表、复核、预警、备份），找出哪几层的“洞”目前是重合的，本周就补上一道。</li>
+      <li>建立“错误即数据”的文化：在团队里明确“惩罚无心之失 = 鼓励隐瞒错误 = 系统停止学习”，设立匿名上报渠道，让失误成为改进系统的免费样本，而不是追责的证据。</li>
+      <li>做一个月“读史/读新闻”练习：每看到一个“坏人”故事，要求自己先找到两个结构因素（制度、激励、流程、竞争压力）再谈人物好坏，一个月后你会发现自己看世界的方式已经变了。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul class="quote-list">
+      <li>“你应该问的不是这些人有多坏，而是朝廷为什么不得不加征三饷，官员为什么非得报喜不报忧，农民为什么不能老实种地而只能造反？”</li>
+      <li>“人有选择，但选择发生在结构里。”</li>
+      <li>“我们无法改变人的本性，但可以改变人们工作的条件。”</li>
+      <li>“找替罪羊是人的本能，但质疑系统也是现代人的本分。”</li>
+    </ul>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </div>
+
+  <footer>万维钢 · 现代思维工具100讲 · 第80讲 · 手机阅读版</footer>
+</div>
+
+<script>
+  var bar = document.getElementById('progress-bar'),
+      btn = document.getElementById('to-top');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement, s = h.scrollTop, max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (s / max * 100) : 0) + '%';
+    btn.style.display = s > 400 ? 'flex' : 'none';
+  }, { passive: true });
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+
+</body>
+</html>

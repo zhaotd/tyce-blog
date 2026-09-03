@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)">
+<title>第13讲 自由能原理：活着就是对齐｜万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#fffdf8;
+    --text:#2b2620;
+    --muted:#8a8578;
+    --accent:#8a5a2b;
+    --border:#e8e0d3;
+    --quote-bg:#f3ece0;
+    --comment-bg:#f7f2e8;
+    --summary-bg:#efe7d8;
+    --btn-text:#fffdf8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d18;
+      --text:#e8e2d8;
+      --muted:#9a9285;
+      --accent:#c99b6a;
+      --border:#3a342b;
+      --quote-bg:#241f18;
+      --comment-bg:#1f1c17;
+      --summary-bg:#2a2418;
+      --btn-text:#171512;
+    }
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    padding:0 18px 110px;
+  }
+  .wrap{ max-width:700px; margin:0 auto; }
+
+  /* 阅读进度条 */
+  #progress{ position:fixed; top:0; left:0; height:3px; width:0; background:var(--accent); z-index:99; }
+
+  /* 回到顶部按钮 */
+  #toTop{
+    position:fixed; right:18px; bottom:42px;
+    width:46px; height:46px; border-radius:50%;
+    border:none; background:var(--accent); color:var(--btn-text);
+    font-size:20px; cursor:pointer; z-index:99;
+    display:none; align-items:center; justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.28);
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  /* 文档头 */
+  .doc-head{ padding:44px 2px 10px; }
+  .tag{
+    display:inline-block; font-size:13px; letter-spacing:.5px;
+    color:var(--accent); border:1px solid var(--accent);
+    border-radius:999px; padding:3px 12px; margin-bottom:18px;
+  }
+  h1{ font-size:26px; line-height:1.45; font-weight:700; margin-bottom:12px; text-align:left; }
+  .meta{ font-size:14px; color:var(--muted); text-align:left; }
+
+  /* 正文 */
+  .body-content{ margin-top:6px; }
+  p{ margin:0 0 16px; }
+  h3{
+    font-size:18px; font-weight:700; color:var(--accent);
+    margin:34px 0 14px; padding-left:12px;
+    border-left:4px solid var(--accent); text-align:left;
+  }
+  ul,ol{ margin:0 0 16px; padding-left:1.35em; }
+  li{ margin-bottom:10px; }
+  strong{ font-weight:700; }
+  em{ font-style:normal; color:var(--accent); }
+
+  /* 金句引用块 */
+  blockquote.quote{
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    padding:14px 16px; margin:20px 0;
+    font-weight:600; color:var(--text);
+  }
+
+  /* 居中装饰分隔线 */
+  .divider{
+    text-align:center; color:var(--accent);
+    font-size:15px; letter-spacing:10px; margin:30px 0;
+    user-select:none;
+  }
+
+  /* 注释 */
+  .notes{
+    background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:18px 20px; margin-top:38px;
+    font-size:13.5px; line-height:1.75; color:var(--muted);
+  }
+  .notes h2{ font-size:15px; color:var(--accent); margin-bottom:10px; text-align:left; }
+  .notes p{ margin:0 0 10px; }
+  .notes p:last-child{ margin-bottom:0; }
+  .notes a{ color:var(--accent); word-break:break-all; }
+
+  /* 用户留言 */
+  .comments{ margin-top:30px; }
+  .comments h2{ font-size:15px; color:var(--accent); margin-bottom:12px; text-align:left; }
+  .comment{
+    background:var(--comment-bg); border:1px solid var(--border);
+    border-radius:12px; padding:16px 18px; margin-bottom:16px;
+  }
+  .comment .who{ font-size:15px; font-weight:700; text-align:left; }
+  .comment .when{ font-size:12.5px; color:var(--muted); margin-left:8px; font-weight:400; }
+  .comment p{ font-size:15px; margin:8px 0 0; }
+
+  /* AI 阅读总结 */
+  #ai-summary{
+    background:var(--summary-bg);
+    border:2px solid var(--accent);
+    border-radius:12px;
+    padding:24px 22px;
+    margin-top:40px;
+    font-size:15.5px;
+  }
+  #ai-summary .ai-title{
+    text-align:center; font-size:19px; font-weight:700; color:var(--accent);
+    margin-bottom:4px;
+  }
+  #ai-summary .ai-sub{ text-align:center; font-size:12.5px; color:var(--muted); margin-bottom:18px; }
+  #ai-summary .one-liner{
+    background:var(--card); border-radius:10px;
+    padding:12px 14px; margin-bottom:20px;
+    font-size:15.5px; line-height:1.8;
+  }
+  #ai-summary h3{ margin:22px 0 10px; }
+  #ai-summary ul, #ai-summary ol{ padding-left:1.3em; }
+  #ai-summary li{ margin-bottom:9px; }
+  #ai-summary .quote-mini{
+    border-left:3px solid var(--accent);
+    padding-left:10px; margin:8px 0; font-weight:600;
+  }
+  .ai-foot{
+    margin-top:20px; padding-top:12px;
+    border-top:1px dashed var(--border);
+    font-size:12px; color:var(--muted); text-align:center;
+  }
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第13讲</span>
+    <h1>自由能原理：活着就是对齐</h1>
+    <div class="meta">万维钢 主讲 ｜ 精英日课第六季 · 2025 年</div>
+  </header>
+
+  <article class="body-content">
+
+    <h3>一、什么是自由能原理</h3>
+    <p>这一讲的思维工具叫「自由能原理（Free Energy Principle, FEP）」，它是英国神经科学家卡尔·弗里斯顿（Karl Friston）最早在 2005 年前后提出来的。我们之前提到了一点点，你可能也从别处听说过这个名词，但你未必知道它的厉害。</p>
+    <p>弗里斯顿 2010 年的一篇讲自由能理论的综述论文 [1] 现在是神经科学领域被引用次数最高的文献之一。自由能原理号称是"神经科学的大统一理论"，被认为是物理学、生物学、神经科学与控制论的集大成之作……因为它既回答了「生命是什么」，又告诉我们「生命应该干什么」。</p>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <h3>二、生命是什么：恒星与种子</h3>
+    <p>你不妨自己先想想生命是什么。</p>
+    <p>一颗恒星，盛年时期那么壮观，质量大到吓人，能量输出高到离谱，可它最后还是<strong>会湮灭散开，它不会给你生出一颗新的恒星来</strong>。而一粒种子，风一吹就跑，但它居然能一层层长出结构，维持结构，复制结构，乃至于长成大树还繁衍后代。它们的区别在哪呢？</p>
+    <p>从物理学的角度看，走向无序是最自然的事情，这就是熵增定律！你再强，终究也得跟自然完全融为一体，再也看不出来。</p>
+    <p>可是生命体，却是一种长期都"搅不匀"的东西。它能在时间里保持形状、保持边界、保持自我。当然这并不违反熵增定律，因为如果你把它和周围环境在一起算总账，熵还是增加——但生命个体作为一个开放系统，却做到了长期保持结构不散，而且还能繁衍后代。</p>
+    <p>生命是怎么做到的呢？我们如果知道这个秘密，就可以主动把这件事儿做得更好，岂不是获得更蓬勃的生命力吗？</p>
+
+    <h3>三、最小化自由能：活着就是对齐</h3>
+    <p>弗里斯顿的自由能原理说，生命的策略是<strong>把生存当成一个优化问题</strong>：你要想持续活着而不被打散，就得尽量把「自由能」给最小化。</p>
+    <p>且听我细说。这可能是有史以来讲解自由能原理最通俗易懂的版本。</p>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <p>想象你是水里的一条鱼，你怎样才能愉快地生活呢？很多养生之道说什么要"融入自然"——但你不可能完全融入环境，否则你就成了一堆水而不是鱼。</p>
+    <p>在水里做水是容易的，你没有内外之别，外界怎么变，你就怎么变；你不需要感知、记忆和智能，你随波逐流甚至连形状都谈不上。但做鱼，可就不容易了。因为你非得坚持有个形状、非得保留独立性，所以你很脆弱。</p>
+    <p>有形状就有边界，有边界就有"我"和"非我"，有"我"，就得确保这个"我"别被环境抹平。</p>
+    <p>熵增定律会强烈地想要把你抹平。为了不被抹平，你必须确保自己跟环境能融洽地相处。为了保持融洽，你就必须做两件事儿——</p>
+    <ul>
+      <li>一个是<strong>改造自己</strong>，让自己的结构更能适应环境；</li>
+      <li>一个是<strong>改造环境或者换环境</strong>，让环境的秩序对自己更友好。</li>
+    </ul>
+    <blockquote class="quote">简单说，活着就是让自己跟环境双向「对齐」。</blockquote>
+
+    <h3>四、生命是一台预测机器</h3>
+    <p>这就是自由能原理最根本的洞见。我对比一下你就明白了。以前人们的认识，是说生命是靠「刺激-反应」活着：看到吃的就张嘴，看到危险就跑。自由能原理告诉你，不是。那样太慢了容易死，因为环境是复杂多变的！真正的生命必须有智能，必须是一台「预测机器」：你不能等着环境来弄你，你必须走在时间前面——所谓对齐，就是你不断地预测环境会发生什么，让你的预期和你接收到的输入别差得太离谱，确保环境的变化符合你的生存需求。</p>
+    <p>所谓「自由能」，原本是个物理学术语，弗里斯顿借来专门描写这种对齐的失败程度。这里有复杂的数学，严格说来应该叫「变分自由能」……但是那些你都不用管，你只需要知道 [2]：</p>
+    <blockquote class="quote">自由能 ≈ 惊讶（Surprise）。</blockquote>
+    <p>这个惊讶可不是惊喜，而是统计学意义上的意外，或者说就是你跟环境的不融洽程度。</p>
+    <p>比如你是一条热带鱼，基因设定的生活环境是 25℃ 的水里。如果感官告诉你现在水温是 25℃，你就一点都不惊讶，自由能很低，你很舒服。而如果感官告诉你现在水温是 5℃，你就很惊讶了：不解决这个高自由能，你的系统就会崩溃。</p>
+    <p>自由能原理的核心思想，就是<strong>凡是能长期存在的系统，都在一直努力最小化自由能，也就是最小化惊讶</strong>。</p>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <h3>五、马尔可夫毯：我与世界的交界面</h3>
+    <p>要理解生命具体是怎么做的，我们先要了解一个概念叫「<strong>马尔可夫毯（Markov blanket）</strong>」。它相当于是把生命系统和外部环境分开来的那张皮，也就是"我"和世界的交界面。</p>
+    <p>马尔可夫毯包含两类状态：「感官状态（sensory states）」是外部影响内部的唯一入口；「行动状态（active states）」是内部影响外部的唯一出口。</p>
+    <p>你只能通过马尔可夫毯上的感官状态去推测外面的世界正在发生什么，你看的不是世界本身，而是世界打在你毯子上的投影。同样地，你是通过马尔可夫毯干预外界。</p>
+    <p>马尔可夫毯就是你连接内外的信息输入输出接口。生命想活着就必须经营好这张毯子：<strong>让入口足够可靠，让出口足够有效，让内外之间形成可持续的耦合</strong>。</p>
+    <p>如果你的预测跟感官状态一致，你很好；但我们的预测常常跟感官状态不一致，总有惊讶。对此你有两个基本对策，对应于前面说的改造自己和改造环境——</p>
+    <ul>
+      <li><strong>第一招是改变想法去适应世界，这叫「知觉推断（Perceptual Inference）」。</strong>比如你走夜路看到前方有个黑影，还以为是鬼，走近才发现是树桩。于是你更新信念，说啊，那是树桩。这就是通过改变内部模型来降低自由能。</li>
+      <li><strong>第二招是改变世界去符合自己的想法，这叫「主动推断（Active Inference）」。</strong>比如你的生理构造要求环境必须是暖和的，可是现在房间里很冷，你总不能临时改变生理构造。你可以穿上厚衣服或者打开暖气，这就通过行动改变了周围的小环境，也是降低自由能。</li>
+    </ul>
+    <p>不过主动推断还不只是改造环境，它还包括<strong>主动到外边探测一下周围的环境</strong>，以便更新信念。知觉推断的精度也很关键，你得能判断哪些信息是重要的信号，哪些只不过是噪声，哪些该相信哪些应该忽略。</p>
+    <p>你品一品这个意境。我们前面说的内核自我，就可以看作是信息边界包围下的一个集合体。<strong>一切都是信息。</strong></p>
+
+    <h3>六、万物皆系统：公司也是消除惊讶的机器</h3>
+    <p>在这个视角下，不只是动植物，还包括一个细胞、一家公司、一个组织、一种文化，只要它们作为系统能稳定存在一段时间，就必定遵循了最小化自由能的策略。</p>
+    <p>要想在不确定环境里维持边界，你就必须形成某种「<strong>预测—误差—更新/行动</strong>」的闭环。</p>
+    <p>就拿公司来说，它所处的环境就是市场；它的自身结构就是战略、文化、流程、团队能力。它的马尔可夫毯上的感官状态就是用户反馈、财务数据和市场信号；行动状态就是产品迭代、销售策略和组织调整。公司是一台<strong>消除惊讶的机器</strong>，管理公司就是要快速收集惊讶（客户投诉、市场异动），然后通过高频的知觉推断（复盘、调整战略）和主动推断（发布新产品、改变市场规则）消除误差。</p>
+    <p>想要延续自己的独立性，防止崩溃，你这个系统就必须跟环境融洽相处——也就是尽量降低自由能。</p>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <h3>七、惊讶的"度"：恰到好处的小惊讶</h3>
+    <p>这听起来似乎很简单，你可能马上说，那我直接找个最熟悉的环境待着不就行了？我完全没有任何惊讶！其实不行，因为你需要觅食、你需要繁衍、你需要发展壮大，而且你不变环境也可能变，所以你必须主动出去探索才行。</p>
+    <blockquote class="quote">你不是为了"预测"而预测，你是为了<span style="text-decoration:underline;">生存</span>而预测。</blockquote>
+    <p>所以你不能寻求直接把惊讶变成 0。为了将来的惊讶不至于措手不及，你现在最好来点有限的小惊讶。<strong>一切的艺术就在于这个惊讶的「度」：太大你容易崩溃，太小你会被钝化。</strong></p>
+    <p>在我看来，操作自由能原理的一切心法，就在于怎么把握当前的惊讶度。</p>
+    <p>比如幼儿园孩子，本来就刚刚接触世界看什么都新鲜，你要是让他们每天接触太多新东西动不动就一惊一乍，他们肯定手足无措啥也学不会。最好让环境尽量稳定，每天稍微来点新东西，他们才能学进去。有人用自由能原理分析过蒙台梭利（Montessori）式教育 [3]，发现他们就是精心设计了一种低熵的教室环境，连每件教具都有固定位置，这就降低了儿童探索时的无效惊讶，才能专注学习。</p>
+    <p>恰到好处的惊讶，正是「刻意练习」理论说的那个「学习区」（对比于舒适区和恐慌区），也是「心流」和「自我决定理论」说的那种「胜任感」，也是我们精英日课专栏一再讲过的那个「喜欢 = 熟悉 + 意外」，也是咱们前面刚说过的适当来点不确定性。<strong>这就是生命的一个最基本性质！</strong></p>
+    <p>我们需要降低惊讶，但我们也需要稍微有点惊讶。平时来点可控的小惊讶，你才能提前对齐，才不至于面对崩溃式的大惊讶。</p>
+    <p>这也是「好奇心」的根本。<strong>好奇心不是可有可无的情绪调料，而是智能的战略设定</strong> [4]。</p>
+
+    <h3>八、自由能原理与 AI</h3>
+    <p>现在主流 AI 都是基于强化学习训练，对好奇心接纳不足。弗里斯顿本人已经加入了一家 AI 创业公司叫 VERSES AI [5]，打算用自由能原理的思想开发新型神经网络。</p>
+    <blockquote class="quote">真正的稳定不是把变化消灭，而是把变化纳入模型。</blockquote>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <h3>九、日常应用：对齐、小惊讶与拖延症</h3>
+    <p>咱们看几个自由能原理的日常应用。</p>
+    <p><strong>最基本的用法</strong>是当你遭遇任何难以接受的惊讶的时候，你都应该想一想让谁跟谁对齐：是自己这个模型不对，还是外界环境不对？如果你发现周围同事水平都太低，那可能是环境不对你需要换环境；但如果你发现社会很不公平、这个世界整个就不对，那你也许需要更新自己的认知模型。</p>
+    <p><strong>更好的用法</strong>是主动寻求「小惊讶」。比如考前复习，多数人喜欢看笔记甚至对着课本猛念，因为这样惊讶最小最舒服——可是你此时不惊讶，考试就得面临大惊讶。正确做法是主动推断，找些测试题来做，制造适度的惊讶，暴露你模型的漏洞，才能把不确定性压下去。</p>
+    <blockquote class="quote">人们最常犯的错误就是因为害怕大惊讶而沉溺于当前的不惊讶。</blockquote>
+    <p>比如说「拖延症」。你明明有篇论文需要写，可是你不写——这其实不是懒，是你在躲避预期的高惊讶。你正确地预测到写论文这个活动会遇到很多困难、可能失败，所以你自动转向最小化预期自由能的路径，也就是躺在床上刷手机。</p>
+    <p>可是你终将面对交稿日期。自由能原理的建议是<strong>把宏观预测改成微观预测</strong>：我只想打开电脑，建一个空白文档，写个标题，这总能做到吧？你做到，让预测成功，获得微小的多巴胺，动能就起来了。</p>
+
+    <h3>十、模型太硬：抑郁与习惯</h3>
+    <blockquote class="quote">很多痛苦不是你的情绪太强，而是你的模型太硬。</blockquote>
+    <p>有一种计算精神病学视角的解释框架认为，「抑郁症」是因为患者持有关于未来的极度负面的先验信念 [6]，比如"我做什么都是失败的"。结果就算外界给正反馈，比如家人鼓励、做事取得小成功，你明明看到了自己预测的误差，却直接给当作低精度噪音忽略了。你的模型无法更新，就陷入自我验证的负面循环。</p>
+    <p>也许抑郁是因为马尔可夫毯过滤掉了好的信息。那你能不能对好的信息更敏感一点？如果你预测自己发出这封邮件人家也不会回，可是事实证明人家真回了，你能不能修改自己的模型，变振作一点？</p>
+    <p>按照自由能原理，你的性格、偏好和价值观，你的内核自我，本质上是你过去为了适应环境而固化下来的、具有极高精度的预测模型；而你的习惯，则是模型的自动化执行，它节省了计算自由能的能量成本。为什么改变习惯这么难？因为改变意味着拆解模型，得让系统暂时暴露在焦虑和不确定——也就是高自由能——之中。</p>
+    <blockquote class="quote">你难以改变习惯是因为你不愿意支付短期自由能上升的成本。</blockquote>
+    <p><strong>制造一个小到几乎不会失败的行动，让正面预测成真，是主动改进模型的通用好办法。</strong></p>
+
+    <div class="divider" aria-hidden="true">✵</div>
+
+    <h3>十一、总结：活着就是对齐</h3>
+    <p><strong>总而言之，活着就是对齐：要么让你的理解跟世界对齐，要么让世界跟你对齐。</strong>我们不能只是被动地靠知觉推断，我们必须主动出去探索和行动——这是作为独立个体维护自身不崩溃的基本义务。</p>
+    <p>因为你不想在水里做一堆水，你坚持要做鱼。</p>
+    <p>你跟环境必须内外有别，又必须融洽相处。</p>
+    <p>我问 AI 对自由能原理还有没有更深的洞见，Gemini 说了一个特别浪漫的：所谓爱一个人，就是将对方纳入了自己的马尔可夫毯之内——花时间相处，你们学习了对方的生成模型，最终双方的相互预测误差降到最低。你不需要言语就能懂他，他不需要解释就能懂你。你们形成一种共享的低熵状态。</p>
+    <p>在这个混乱的宇宙里找到一个能与你共同最小化自由能的人，建立一个共同抵抗风雨的超生物体，这不就是最科学的爱情吗？</p>
+
+  </article>
+
+  <section class="notes" aria-label="注释">
+    <h2>注释</h2>
+    <p>[1] Friston, Karl. "The Free-Energy Principle: A Unified Brain Theory?" <em>Nature Reviews Neuroscience</em> 11, no. 2 (2010): 127–138.</p>
+    <p>[2] 这句话的严格说法是：变分自由能是"异度/意外度（surprisal）"的可计算上界。但你不必介意。</p>
+    <p>[3] Laura Desirèe Di Paolo, Ben White, Avel Guénin-Carlut, Axel Constant, Andy Clark; Active inference goes to school: the importance of active learning in the age of large language models. <em>Philos Trans R Soc Lond B Biol Sci</em> 7 October 2024; 379 (1911): 20230148.</p>
+    <p>[4] 精英日课第六季，《智能简史》3：学习的革命</p>
+    <p>[5] Denise Holt, Friston's AI Law is Proven: FEP Explains How Neurons Learn, Medium, Aug 15, 2023. <a href="https://medium.com/@deniseholt1/fristons-ai-law-is-proven-fep-explains-how-neurons-learn-3718d3be69ac">https://medium.com/@deniseholt1/fristons-ai-law-is-proven-fep-explains-how-neurons-learn-3718d3be69ac</a></p>
+    <p>[6] Chekroud, Adam M. "Unifying Treatments for Depression: An Application of the Free Energy Principle." <em>Frontiers in Psychology</em> 6 (2015): 153.</p>
+  </section>
+
+  <section class="comments" aria-label="用户留言">
+    <h2>用户留言</h2>
+
+    <div class="comment">
+      <div class="who">至尊女宝<span class="when">昨天 · 四川</span></div>
+      <p>成都的人民公园相亲角你会看到一种奇特的景观。成百上千张相亲信息风中摇摆，像一场沉默的集市。这么给你说吧，假设我在这里如果找对象，能看上我的只有一个 67 岁的丧偶退休电工，我真的有认真看过「附图」。这里男的在找，女的也在找，可放眼望去，那些信息仿佛被施了咒，挂了一年又一年，却始终无法与另一张信息产生真正的化学反应。自由能原理的角度看，这里正在上演一场盛大的"对齐"失败。</p>
+      <p>每个人手上都有一张马尔可夫毯，上面写着最精炼的感官状态和行动状态——身高、收入、房产、户口、年龄。这些是他们用来接收外界信号的窗口，也是他们向外界展示自己的唯一出口。问题在于，这张毯子太硬了。当一个人的预测模型被固化为"必须月入一万以上"、"必须有独立婚房"、"必须本地户口"时，他就把自己的马尔可夫毯变成了一堵密不透风的墙。他把投影当成了真实。他以为自己在寻找一个活生生的人，实际上只是在用几个冰冷的数据去匹配另一个数据。</p>
+      <p>而那些被过滤掉的信息——一个人的幽默感、他说话时的眼神、她笑起来的样子、你们之间那种难以言说的默契——这些真正能降低长期自由能的东西，全都被挡在了毯子之外。于是我们看到一个荒诞的循环：每个人都在主动推断，都在积极地寻找，可他们的主动被死死的框架框住了，无法产生真正的碰撞。他们宁愿让那张纸在风中挂上三年，也不愿意稍微调整一下自己的预测模型，去接纳一个月入八千但灵魂有趣的人。</p>
+      <p>这何尝不是一种拖延症的变体？表面上是在行动，实际上是在用最低成本的方式维持"我在努力"的幻觉，来逃避真正让自己暴露在"惊讶"之中的风险——那些在风中摇晃的纸张，或许正在等待一个愿意松动一点边界的人。所以我们不应该是环境的奴隶，而是自己模型的建筑师，不是命运的接受者，而是惊讶的管理者。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">常觉不住<span class="when">21小时前 · 美国</span></div>
+      <p>模型改了之后，最难的是忍住不动。最近几个月，我们和 Claude code 做完新产品之后，又重做了公司网页。开始效果很不好。后来和 ChatGPT 反复对齐，我才明白，问题不只是页面写得好不好，而是我们原来一直在用"单页思维"在做网站。ChatGPT 提醒我们，要用 cluster 的方式组织内容，让相关页面彼此支撑，让 Google 看懂你在这个领域有没有系统性的能力。</p>
+      <p>另外一个让我印象很深的提醒是 discipline：不是想改就改，而是慎重想清楚，改完以后让它稳定三周到一个月，不要一直动，给环境时间反馈。后来一个月后，我们网站的一些页面在做关键词搜索的时候真的做到了 Google 第一。这让我很有共鸣：很多时候，问题不是不努力，而是理解环境的方式出了偏差。而模型改了之后，最难的是忍住不动——你明明焦虑，但你得让环境自己回应你。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">黄加伦—我叫张子鸣<span class="when">昨天 · 广东</span></div>
+      <p>现代思维工具 100 讲「自由能原理」。老书记看到我的时候，最常说的一句话就是年轻真好。他说年轻就是资本，它意味着你可以多些去经历，去尝试自己没有做过的事情，这个时候你没有负担，也承受得了试错成本。</p>
+      <p>他告诉我，这是他在八几年的时候听到了一首歌叫《趁你还年轻》，里面的歌词给他的启发："趁你还不需要翻来覆去考虑又考虑，趁你还不知道为什么叹气，趁你还没学会装模作样证明你自己，你想什么什么就是你"。</p>
+      <p>虽然听到这首歌的时候，他已经 40 岁了，但是他依旧觉得自己应该青春一把，去做一些新鲜的事情。那个时候，他已经是市里的地政科长，一路走来，这种日子一眼看得到头。他需要一点小惊讶。</p>
+      <p>他从小就是爱折腾的人，所以想要有些不同的体验。当时，他的妻子继承了岳父的一间小的渔船修理厂，他想要打造起来。他就一边做科长，一边研究渔船，他们主要卖的动力系统，他擅长物理学，所以挺有兴趣。他觉得他们厂需要一个很厉害的动力系统供应商，这样才能让他们在品牌上有个保障。</p>
+      <p>于是他保职停薪几年，和他妻子在国内一直寻找优秀的供应商，最后跑到国外去。那是九十年代，他们竟然就谈下了美国著名的动力设备制造商康明斯的代理权。回来后，他们果然大发展，小厂变成大公司。他妻子连续成为市里的纳税大户，还做了全国人大代表。公司走上轨道了，他还回到单位去，继续当科长，这次他满足了。</p>
+      <p>一直到了退休，才回到公司。在儿子可以接班公司的时候，他又需要小惊讶了。所以他以 75 岁高龄回到村里当书记，报答养他育他的家乡。</p>
+      <p><strong>只要你还想要小惊讶，你就还年轻。</strong></p>
+    </div>
+  </section>
+
+  <section id="ai-summary" aria-label="AI 阅读总结">
+    <div class="ai-title">AI 阅读总结</div>
+    <div class="ai-sub">通读全文 · 核心梳理 · 行动建议</div>
+
+    <p class="one-liner"><strong>一句话概括：</strong>生命不是侥幸的奇迹，而是一套持续运行的算法——所有能长期存在的系统都在最小化"自由能"（也就是"惊讶"、与环境的错位程度）；活着，就是不断预测、对齐、行动，让自己与世界的双向匹配尽量不出差错，并聪明地管理惊讶的"度"。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li>自由能原理（FEP）由英国神经科学家卡尔·弗里斯顿提出，是神经科学领域被引用次数最高的理论之一，号称"神经科学的大统一理论"，同时回答了"生命是什么"和"生命应该干什么"。</li>
+      <li>生命对抗熵增的秘诀，不是违反物理定律，而是把生存当作优化问题：作为开放系统长期保持结构、边界与自我，靠的是持续最小化自由能——"活着就是让自己跟环境双向对齐"。</li>
+      <li>生命不是"刺激—反应"的被动机器，而是一台走在时间前面的"预测机器"：自由能 ≈ 惊讶（统计意义上的意外），即你与环境的融洽程度；热带鱼在 5℃ 水中的崩溃，就是高惊讶的代价。</li>
+      <li>马尔可夫毯是"我"与世界的交界面：感官状态是信息入口，行动状态是干预出口。生命必须经营好这张毯子，形成"预测—误差—更新/行动"的闭环——从细胞到公司、组织、文化，皆遵循此道。</li>
+      <li>降低自由能有两大对策：知觉推断（改变自己的模型去适应世界，如把黑影认成树桩）与主动推断（改变世界或主动探测以符合预期，如开暖气、做测试题）。</li>
+      <li>惊讶要讲究"度"：太大让人崩溃，太小让人钝化。蒙台梭利式低熵教室、刻意练习的学习区、心流、胜任感、"喜欢 = 熟悉 + 意外"，本质都是"恰到好处的小惊讶"——好奇心不是情绪调料，而是智能的战略设定。</li>
+      <li>真正的稳定不是消灭变化，而是把变化纳入模型。主流 AI 的强化学习对好奇心接纳不足，弗里斯顿已加入 VERSES AI 探索基于自由能原理的新型神经网络。</li>
+      <li>应用层面：拖延症是躲避预期中的大惊讶，解法是把宏观预测拆成微观预测（先打开文档、写个标题）；抑郁等痛苦往往不是情绪太强，而是模型太硬——把好消息当作低精度噪音过滤掉，陷入自我验证的负面循环；改变习惯难，是因为不愿支付短期自由能上升的成本。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ol>
+      <li>遭遇难以接受的"惊讶"时先做归因：本周挑一件反复让你难受的事，问自己"该让谁跟谁对齐"——是环境不对（考虑换环境），还是自己的模型该更新（调整认知）？</li>
+      <li>用自测制造小惊讶：复习、汇报或面试前，别只重复看笔记，主动做题、模拟提问，让可承受的小惊讶暴露模型漏洞，避免临场的大惊讶。</li>
+      <li>用"微观预测"治拖延：把大任务拆成小到几乎不会失败的一步——打开电脑 → 建空白文档 → 写个标题。让预测成功、拿到微小的正反馈，先把动能带起来。</li>
+      <li>把负面先验当"待检验的假设"：当你默认"发了也没人回""做了也白做"时，留意事实证据——别人真回了、事情真成了，就允许自己更新模型，对好消息更敏感一点。</li>
+      <li>改变习惯前先接受代价：改变意味着短期自由能上升、暂时暴露在焦虑中。别指望无痛切换，给自己留出缓冲，用"小步改模型"代替"一次性大重构"，改完让它稳定几周再动。</li>
+      <li>像经营公司一样经营自己：定期收集"惊讶"（真实反馈、市场异动），高频复盘（知觉推断），再用小实验快速迭代（主动推断），形成自己的"预测—误差—更新"闭环。</li>
+      <li>设计低熵环境：教育孩子或自学时，让环境尽量稳定、每次只引入一点新内容，把注意力留给真正重要的学习；同时保留一点可控的小惊讶，防止自己被钝化。</li>
+    </ol>
+
+    <h3>三、金句摘录</h3>
+    <div class="quote-mini">"活着就是让自己跟环境双向「对齐」。"</div>
+    <div class="quote-mini">"真正的稳定不是把变化消灭，而是把变化纳入模型。"</div>
+    <div class="quote-mini">"很多痛苦不是你的情绪太强，而是你的模型太硬。"</div>
+    <div class="quote-mini">"你不是为了'预测'而预测，你是为了生存而预测。"</div>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),btn=document.getElementById('toTop');
+  function onScroll(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop/max)*100:0).toFixed(2)+'%';
+    btn.style.display=h.scrollTop>400?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

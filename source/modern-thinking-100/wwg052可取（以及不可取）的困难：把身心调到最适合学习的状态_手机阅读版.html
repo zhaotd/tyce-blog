@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>可取（以及不可取）的困难：把身心调到最适合学习的状态｜万维钢·现代思维工具100讲 第52讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2620;
+    --muted:#7a7166;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.1);
+    --border:#e6ddd0;
+    --quote-border:#c9a26b;
+    --divider:#d8cdbb;
+    --shadow:0 1px 3px rgba(80,60,30,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#1f1c18;
+      --text:#e8e0d4;
+      --muted:#a29685;
+      --accent:#c99a5e;
+      --accent-soft:rgba(201,154,94,.12);
+      --border:#3a342b;
+      --quote-border:#8a6a45;
+      --divider:#3a342b;
+      --shadow:0 1px 3px rgba(0,0,0,.4);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 80px;
+  }
+  /* 阅读进度条 */
+  #progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#8a5a2b,#c99a5e);
+    z-index:1000;
+  }
+  /* 回到顶部按钮 */
+  #back-top{
+    position:fixed;right:18px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card);color:var(--accent);
+    font-size:20px;line-height:1;cursor:pointer;
+    box-shadow:var(--shadow);
+    display:none;align-items:center;justify-content:center;
+    z-index:999;opacity:.92;
+  }
+  #back-top.show{display:flex;}
+  #back-top:active{transform:scale(.94);}
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px 20px;
+  }
+  /* 文档头 */
+  .doc-head{
+    margin-bottom:26px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--border);
+  }
+  .course-tag{
+    display:inline-block;
+    font-size:13px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius:999px;
+    padding:3px 12px;
+    margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:24px;
+    line-height:1.45;
+    font-weight:700;
+    margin-bottom:12px;
+    color:var(--text);
+    text-align:left;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:6px 14px;
+  }
+  /* 正文 */
+  h2{
+    font-size:20px;
+    font-weight:700;
+    margin:34px 0 12px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+    line-height:1.4;
+    text-align:left;
+  }
+  h3{
+    font-size:17px;
+    font-weight:700;
+    margin:24px 0 10px;
+    color:var(--accent);
+    text-align:left;
+  }
+  p{margin:0 0 14px;}
+  .lead{
+    font-size:18px;
+    font-weight:600;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+  /* 要点列表 */
+  ul,ol{margin:0 0 16px;padding-left:24px;}
+  li{margin-bottom:10px;}
+  li strong{color:var(--accent);}
+  /* 金句引用块 */
+  blockquote{
+    margin:18px 0;
+    padding:14px 18px;
+    border-left:4px solid var(--quote-border);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    color:var(--text);
+    font-size:16.5px;
+  }
+  blockquote p{margin:0;}
+  /* 分隔线（原文 ✵） */
+  .divider{
+    text-align:center;
+    color:var(--accent);
+    margin:30px 0;
+    letter-spacing:12px;
+    font-size:14px;
+    opacity:.75;
+  }
+  .divider::before,.divider::after{
+    content:"";
+    display:inline-block;
+    width:38px;height:1px;
+    background:var(--divider);
+    vertical-align:middle;
+    margin:0 10px;
+  }
+  /* 要点卡片（三大心法、四个心法） */
+  .method-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:0 0 12px;
+    box-shadow:var(--shadow);
+  }
+  .method-card .m-title{
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:6px;
+    display:block;
+  }
+  /* 小测验式要点 */
+  .formula{
+    background:var(--card);
+    border:1px dashed var(--quote-border);
+    border-radius:12px;
+    padding:14px 18px;
+    text-align:center;
+    font-weight:700;
+    font-size:17px;
+    color:var(--accent);
+    margin:16px 0;
+  }
+  /* 诗歌区块 */
+  .poem{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:12px 0 18px;
+    box-shadow:var(--shadow);
+    font-family:Georgia,"Songti SC","STSong","SimSun",serif;
+    font-size:16px;
+    text-align:center;
+    line-height:2;
+  }
+  .poem .poem-title{display:block;font-weight:700;color:var(--muted);font-size:13.5px;margin-bottom:6px;font-family:inherit;}
+  /* 注释 */
+  .notes{
+    margin-top:36px;
+    padding:16px 18px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    font-size:12.5px;
+    line-height:1.7;
+    color:var(--muted);
+    text-align:left;
+  }
+  .notes h3{font-size:14px;color:var(--muted);margin:0 0 8px;text-align:left;}
+  .notes ol{padding-left:20px;}
+  .notes li{margin-bottom:6px;word-break:break-all;}
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin-top:38px;
+    padding:22px 20px;
+    background:var(--accent-soft);
+    border:1.5px solid var(--accent);
+    border-radius:12px;
+  }
+  #ai-summary .ai-badge{
+    display:inline-block;
+    background:var(--accent);
+    color:var(--bg);
+    font-size:13px;
+    font-weight:700;
+    border-radius:6px;
+    padding:3px 12px;
+    margin-bottom:14px;
+    letter-spacing:1px;
+  }
+  #ai-summary h3{
+    font-size:16px;
+    color:var(--accent);
+    margin:18px 0 10px;
+  }
+  #ai-summary p{margin-bottom:10px;}
+  #ai-summary .one-liner{
+    font-weight:700;
+    font-size:16.5px;
+    line-height:1.7;
+    margin-bottom:6px;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:22px;}
+  #ai-summary li{margin-bottom:9px;}
+  #ai-summary .quote-line{
+    border-left:3px solid var(--accent);
+    padding-left:12px;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  #ai-summary .ai-foot{
+    margin-top:16px;
+    padding-top:12px;
+    border-top:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+  }
+  /* 用户留言（无内容时隐藏，保留样式备用） */
+  .comments{display:none;}
+  @media (max-width:480px){
+    h1{font-size:21px;}
+    body{font-size:16px;}
+    .container{padding:20px 16px;}
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<button id="back-top" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第52讲</span>
+    <h1>可取（以及不可取）的困难：把身心调到最适合学习的状态</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>课程：现代思维工具100讲</span>
+      <span>来源：《精英日课》专栏</span>
+    </div>
+  </header>
+
+  <!-- 正文 -->
+  <p class="lead">我们已经讲了那么多学习的方法和内容，这一讲咱们说说姿势。你说学习，是需要吃苦的吗？</p>
+
+  <h2>一、没苦硬吃：一种愚蠢的自我感动</h2>
+  <p>民间智慧认为学习就得苦：什么"头悬梁锥刺股"，什么"学海无涯苦作舟"，似乎如果不伴随着某种程度的肉体折磨和精神压抑，那就不叫学习而叫"玩"。再加上稳态生存观念把吃苦当成美德，人们不但歌颂吃苦，而且还要自找苦吃、没苦硬吃。</p>
+  <p>我当年上学的时候，中国已经很进步了。我做梦都想不到，今天的中国反倒成了这个样子：学生们一大早就被叫起来跑操、跑操的时候都要带着一本书背、课间十分钟都被取消、中午吃个饭都吃不消停、长期睡眠不足、还要被搞当众羞辱式的挫折教育……</p>
+  <p>这些真的是考出好成绩的必要条件吗？还是说那些学得轻松、睡得饱、心情舒畅的孩子都是纨绔？</p>
+  <p>2024 年一项汇总 439 项研究的系统综述估计，中国儿童和青少年抑郁症状检出率已经达到了 <strong>26.17%</strong>！这个局面很不正常，而它恰恰是由没苦硬吃的学习压力造成的。我为什么敢这么说呢？</p>
+  <ul>
+    <li>有针对 20 万中小学生的研究发现：在 2021 年国务院推出"双减"政策——也就是减轻作业负担、减轻校外培训——之后，学生的睡眠时长增加了，抑郁和焦虑感就下降了。</li>
+    <li>一项针对深圳学生的研究发现：作业时长与睡眠、心理健康之间并不是简单的"作业越多健康越差"，而是有一个<strong>阈值</strong>：超过阈值才开始恶化。</li>
+    <li>最关键的是，为了写作业而牺牲睡眠，哪怕单纯从学习成绩角度看，也是不可取的——一项对上海学生的研究发现：<strong>最有利于学习成绩的睡眠时长是每天 8 小时</strong>。</li>
+  </ul>
+  <blockquote><p>一帮中小学生，能有什么大不了的学习内容，连睡眠都得牺牲？没苦硬吃是愚蠢的自我感动，是拿神经系统的磨损冒充认知能力的增长。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>二、一个知识点是怎么进入大脑的</h2>
+  <p>咱们从微观尺度考虑，一个知识点要想进入大脑，必须解决两个层次的问题：第一层是<strong>"能不能学进去"</strong>，也就是在这一刻，这个东西能不能被你注意到、你的大脑是否判断它值得写入；第二层是<strong>"能不能理解"</strong>，也就是你有没有能力把它写成可用的知识。</p>
+  <h3>第一层：能不能学进去（毫秒级价值判断）</h3>
+  <p>能不能学进去，这一层发生在毫秒到一秒的时间尺度上。大脑会做一个迅速的价值判断，但它问的可不是这题难不难、也不是这事儿苦不苦，而是<strong>这个东西新不新、值不值得关心、有没有奖励</strong>——如果答案是正面的，大脑就会释放多巴胺，让海马体愿意开门，让这个东西能够被记住。</p>
+  <p>这就是为什么说「兴趣是最好的老师」，为什么好奇心最能吸引学习注意力。这也是为什么有些孩子对课堂知识怎么也学不好，但是对打游戏之类的事儿一学就会。研究发现，如果一个问题能真正勾起好奇心，人学过之后对这个问题答案的记忆通常会更好，因为多巴胺给海马体加了 buff。</p>
+  <h3>第二层：能不能理解（关键是唤醒度）</h3>
+  <p>对能不能理解这一层来说，大脑最重要的指标是<strong>「唤醒度（arousal）」</strong>，也就是紧张兴奋的程度，主要由去甲肾上腺素调节。如果唤醒度太低，人心不在焉，甚至感到很困，那当然学不好；但是唤醒度太高也不行，紧张慌乱也没法学习。</p>
+  <p>学习需要<strong>中等的唤醒度</strong>。理想的情绪状态是一种可控的兴奋：我知道这个事儿很重要，我有点上头，现在很投入，但是我不害怕。</p>
+  <p>如果你已经很困了，需要"头悬梁、锥刺股"才能让自己保持清醒，那你这个状态并不适合学习。父母用高压逼着孩子写作业，甚至在旁边打骂，那更不是学习状态。</p>
+  <p>现实是高压刺激会直接打击大脑的<strong>前额叶皮层</strong>，削弱前额叶的控制力。威胁和评判会降低工作记忆表现，干扰相关脑区的活动。压力一旦冲过头，前额叶就容易掉线，结果灵活推理、工作记忆和认知控制都会受损，人会更僵硬、更短视……那个状态更像是在避险而不是在学习。</p>
+  <blockquote><p>简单说，恐惧制造服从，而不是制造理解。</p></blockquote>
+  <p>学习不是干体力活，不是咬咬牙就能再坚持一下、或者用鞭子抽就能更卖力。学习是一种非常精巧的大脑活动，需要一定的氛围。最有利于学习的情绪配方是：</p>
+  <div class="formula">安全感打底 + 好奇心点火 + 适度压力提速</div>
+  <p>但学习毕竟不是玩。你不可能刷刷短视频就能成为高考状元，你必定要克服一些困难才行。那是什么样的困难呢？</p>
+
+  <div class="divider">✵</div>
+
+  <h2>三、可取困难（Desirable Difficulties）</h2>
+  <p>答案是<strong>「可取困难（Desirable Difficulties）」</strong>。这个思维工具是加州大学洛杉矶分校（UCLA）的心理学家罗伯特·比约克（Robert Bjork）在 1990 年代提出来的。</p>
+  <blockquote><p>可取困难是对学习有益的阻力。</p></blockquote>
+  <p>比约克和他妻子伊丽莎白（Elizabeth Bjork）共同做了大量的研究，他们一个最重要的洞见是：你必须把<strong>"表现（performance）"</strong>和<strong>"学习（learning）"</strong>分开。</p>
+  <p>比如今天作业是十道练习题，小明拿过来刷刷刷很快就做完了，家长很开心，说这孩子真爱学习。但那并不是学习，那只是表现。那些题对他来说没有任何难度，他没有从这次作业中学到任何东西。同样道理，把教科书翻来覆去读上一百遍，你会读得很流畅，这种流畅感会给你带来一种"我已经掌握了"的错觉，但那也不是学习。</p>
+  <p>其实咱们前面讲过「刻意练习」，你已经知道这个道理了：在「学习区」练习才叫学习。比约克夫妇则是从微观角度强调，阻力——也就是「可取困难」——虽然会让你的短期表现变差，但能让你的<strong>长期记忆和迁移能力</strong>变强。</p>
+  <p>关于「可取困难」的实验研究很多，我们这里列举三个最实用的操作心法——</p>
+
+  <div class="method-card">
+    <span class="m-title">第一，提取练习（Retrieval Practice）</span>
+    <p>也就是多搞小测验。一次小测验比重读一遍书有效得多，因为你必须费力地想，这是可取困难。</p>
+  </div>
+  <div class="method-card">
+    <span class="m-title">第二，时间间隔（Spacing）</span>
+    <p>与其一天猛学 5 小时，不如每天学 1 小时，连续学 5 天。每次重新拿起书本，回想前一天"断开"的那个点，这种遗忘感，是一种可取困难。当你集中注意力工作的时候你不希望被打断，但是对于学习，每天打断一次反而是好事。在你费力地回忆上次学的内容的时候，你的大脑正在加强突触连接。</p>
+  </div>
+  <div class="method-card">
+    <span class="m-title">第三，交错学习（Interleaving）</span>
+    <p>不要这一周只学数学，下一周只学英语，要把不同学科、或者同一学科的不同内容混搭，交错进行。切换带来的混乱感能加深记忆，还能逼迫大脑去识别问题的深层结构，判断"这题到底是哪一类"，而不是调用肌肉记忆。</p>
+  </div>
+
+  <p>其实还有一个方法是让学生"先猜后学"：给个新内容让他们自己先试一试，然后老师再讲解。但是我们前面讲「认知负荷理论」的时候说过，这种教法过于高级，往往不如直接教学效果好。</p>
+  <p>简单说，可取困难是让学生跟所学的内容较劲，是在<strong>内在负荷</strong>的范围内折腾；不可取的困难则是从外部施压，给学生增加毫无价值的<strong>外在负荷</strong>，让他们跟疲劳、干扰和威胁较劲。</p>
+  <p>而且可取困难不会增加焦虑。有研究发现，<strong>72%</strong> 的初高中学生报告说，提取练习让他们在正式考试时没那么紧张。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>四、把状态再调高一点：锻炼与睡眠</h2>
+  <p>说到这里你可能会想，如果学习有适合状态和不适合状态，那我能不能再做一点别的事情来提高这个状态呢？我不搞头悬梁锥刺股，我想用科学的方法，让脑力再提高一点，让学习效果再好一点，行不行呢？可以。</p>
+  <h3>1. 锻炼：20 分钟中等强度的急性运动</h3>
+  <p>比如说你马上要参加考试，或者要去学一个比较难的内容，想要在短时间内提高脑力，最好的办法并不是喝咖啡，而是出去搞一把 <strong>20 分钟左右中等强度的急性运动</strong>。比如快走、慢跑、爬楼梯、跳绳、做几组深蹲。</p>
+  <p>运动不但能把你从昏睡状态提升到竞技状态，提高唤醒度，而且还能产生乳酸。有研究表明，运动产生的乳酸可以跨越血脑屏障进入大脑，直接为神经元提供能量，甚至能刺激一种叫做<strong>「脑源性神经营养因子（BDNF）」</strong>的物质分泌。这种营养因子被称为"大脑的化肥"，能促进神经元的生长和突触的连接，从而加强学习和记忆。</p>
+  <p>当然你不能指望出去跑两圈回来立即就变聪明很多。那个效应并没有那么大，但是它非常可靠，它稳定地存在。</p>
+  <blockquote><p>所以让孩子们在课间 10 分钟去操场上玩一会儿，哪怕跑一身汗回来，那也不是浪费时间，那是在促进学习。</p></blockquote>
+  <h3>2. 睡眠：学习的一道工序</h3>
+  <p>古代教师最大的一个认知错误，就是把睡眠视为懒惰。其实<strong>睡眠是学习的一道工序</strong>。</p>
+  <p>这是因为睡眠不只是休息，更是大脑的"清理和归档"时间。当你睡觉时，大脑的<strong>类淋巴系统（glymphatic system）</strong>会清除代谢垃圾（如β-淀粉样蛋白）——这种"脑脊液洗脑"的物理冲刷过程几乎只在睡眠中发生。同时你的海马体会把白天的短期记忆转写到大脑皮层，变成长期记忆。包括睡觉做梦，都是对白天所学知识的演练。</p>
+  <p>现在科学家越来越重视睡眠，我们《精英日课》专栏已经讲过太多跟睡眠有关的研究了——但知识的作用是有限的，现在的问题是青少年睡眠明显不足。</p>
+  <ul>
+    <li>如果你每天睡不到 6 小时，你会有积累认知损伤的风险，会伤害长期记忆。</li>
+    <li>成年人每天应该睡至少 7 小时；研究共识对青少年的建议是每天睡 <strong>8 到 10 个小时</strong>。这意味着学校应该把晚自习和早自习都取消，少留点作业，让孩子们多睡会儿。</li>
+    <li>没有任何一个教练会让自己的运动员少睡，还说这叫磨练意志。那为什么老师和家长不创造条件让孩子们多睡会儿呢？有识之士主张，中学上学时间不应该早于 8:30。</li>
+  </ul>
+  <p>那你说作业写不完怎么办？写不完应该抵制。其实我们该学的东西就这么多，只要方法得当，根本不需要熬夜。<strong>学习讲的是强度而不是时长</strong>、不是做了多少张卷子。真正的刻意练习都是高强度的，一般每天能保证三、四个小时就够了，其他都是辅助时间，该放松放松，该睡觉睡觉。如果不能在保证充足睡眠的前提下学好那些东西，不充足睡眠就只能更学不好。</p>
+  <blockquote><p>人困了应该睡觉，而不是用针扎自己。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>五、具身认知：让身体帮大脑思考</h2>
+  <p>如果你还想进一步用身体帮助大脑思考，那就要用到现代神经科学和心理学的<strong>「具身认知（Embodied Cognition）」</strong>学说。我们上一讲说「默会知识」时提到过具身认知，这是更有人类特色的一种认知方式。</p>
+  <p>具身认知，就是说身体的动作、姿势、触觉和空间定位都会参与大脑的建模过程，"理解"并不只是发生在大脑里的符号运算。身体不只是服务大脑 CPU 的供电设备，<strong>身体是思考的一部分</strong>。很多时候不是你先想明白了才动手，而是你一动手，脑子才开始明白。</p>
+  <p>咱们讲四个基于具身认知的学习心法——</p>
+
+  <div class="method-card">
+    <span class="m-title">第一，动手做动作</span>
+    <p>做数学题，可以用手悬空比划；学习几何，可以用手沿着角边旋转方向去描摹。研究表明，特别是对于儿童，数学课上手能加强解题能力和概念理解。在外语课学新单词，如果是个动词，最好全身一起上阵，把这个动作做出来。学习解剖生理学的时候，对着模型或者图片指点、描摹，能够帮助加深理解和记忆。这些动作并不是装饰，而是在替你的<strong>工作记忆减负</strong>。</p>
+  </div>
+  <div class="method-card">
+    <span class="m-title">第二，手写</span>
+    <p>有大量研究表明，手写笔记比打字更能加深理解和记忆。打字的问题是速度太快、太容易，你更像是一个速记员。手写比较慢，所以你会被迫重新组织自己的语言，把内容翻译成自己的句法——这种"慢"反而是一种可取困难。研究发现手写时大脑的连通模式比打字更广泛、更复杂，手写激活了更丰富的<strong>感觉—运动整合</strong>过程。</p>
+  </div>
+  <div class="method-card">
+    <span class="m-title">第三，读纸质书</span>
+    <p>如果你读的是严肃内容，特别是如果有时间压力需要快速掌握和深层理解，你最好读纸质版。因为纸张提供了一个<strong>稳定的空间坐标</strong>。书里的内容有天然的位置感——它出现在书中多厚的地方，是在这一页的左上方还是右下角。这种位置感不是多余的信息，而是你挂靠记忆的地方：别忘了大脑中负责长期记忆的海马体，最早就是用来记忆空间位置和导航的。所以越难的东西，特别是需要你批注、划线的，最好上纸。另一个思路是给电脑上大屏幕、或者多给几块屏幕，也能增加位置感。</p>
+  </div>
+  <div class="method-card">
+    <span class="m-title">第四，想不出答案就站起来走几步</span>
+    <p>走路可以帮你拓展思路，生成创造性的想法。走路能稍微提高大脑的唤醒度，让你更精神一点。走路可以<strong>打破过度聚焦</strong>，因为有时候你想不出来是因为你盯得太死，只看见眼前那一点东西。走路会让你看见别的路径，联想到新的解法。如果是在比较安静、自然的物理环境里走，还能改善你的情绪和压力状况。</p>
+  </div>
+
+  <blockquote><p>作为碳基生物，知识不是被直接输入进我们的大脑的——知识是在身体的参与下"长"出来的结构。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>六、像运动员一样对待自己的身体和大脑</h2>
+  <p>我希望各位「学习员」，能像运动员那样对待自己的身体和大脑。你是碳基生物，你不是通电就能用，你有不同的状态。有些状态更适合学习，有些状态适合休息。修仙小说里的人经常要焚香沐浴，运动员上场之前都要热身、控压、找状态，我们也得有点仪式感。</p>
+  <p>一套最朴素的运动员式学习流程差不多是下面这样——</p>
+  <ul>
+    <li>学新东西前，先用一个问题把好奇心点亮。</li>
+    <li>正经用脑前，先动 10–20 分钟，稍微提高唤醒度。</li>
+    <li>学习时以提取、间隔、交错为主，不以重读为主。</li>
+    <li>难概念尽量手写，深阅读尽量纸读。</li>
+    <li>把睡眠写进学习计划，而不是写进忏悔录。</li>
+  </ul>
+  <p>最最重要的一点，<strong>学习需要可取的困难，但不是吃苦</strong>。学习是训练你，不是消耗你。一个学习高手应该让自己的身心处在一种灵动而不是僵化的状态。</p>
+
+  <div class="poem">
+    <span class="poem-title">Gemini 有诗赞曰——</span>
+    莫信悬梁苦作舟，徒熬心血几时休。<br>
+    愚痴错饮无端苦，造作空添不解愁。<br>
+    妙理全凭佳兴引，高才更向梦中留。<br>
+    吾今破妄传真谛，且驾长风立浪头！
+  </div>
+  <div class="poem">
+    <span class="poem-title">GPT 又曰——</span>
+    满堂犹拜苦行宗，错把摧残号圣功。<br>
+    困到神昏何见理，压成木石岂开蒙。<br>
+    真学本从疑处起，灵机偏向醒时通。<br>
+    若教后学寻真诀，莫向刑身问用功。
+  </div>
+
+  <!-- 注释 -->
+  <section class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Zhou, Jia, et al. "Prevalence of Depressive Symptoms among Children and Adolescents in China: A Systematic Review and Meta-Analysis." Child and Adolescent Psychiatry and Mental Health 18 (2024): 150.</li>
+      <li>Wang, D., et al. "Changes and Relevant Factors in Depressive and Anxiety Symptoms among Chinese Adolescents after the 'Double Reduction' Policy: A Repeated Cross-Sectional Survey with a Nested Longitudinal Subsample." Journal of Affective Disorders 365 (2024).</li>
+      <li>Liang, Kaixin, Diyang Qu, Anni Zhu, and Xinli Chi. "How Much Homework Is Too Much? Identifying Thresholds for Adolescent Sleep and Mental Health by School Stage." Journal of Affective Disorders 389 (2025): 119636.</li>
+      <li>Wang, Maohua, et al. "Sleep Duration and Subject-Specific Academic Performance among Adolescents in China." npj Science of Learning 10 (2025): 71.</li>
+      <li>Fandakova, Y., &amp; Gruber, M. J. (2021). States of curiosity and interest enhance memory differently in adolescents and in children. Developmental Science, 24, e13005.</li>
+      <li>O'Callaghan, Claire. "Noradrenaline Drives Learning across Scales of Time and Neurobiological Organisation." Trends in Cognitive Sciences (2025).</li>
+      <li>Arnsten, Amy F. T. "Stress Signalling Pathways that Impair Prefrontal Cortex Structure and Function." Nature Reviews Neuroscience 10 (2009): 410–422.</li>
+      <li>van Ast, Vanessa A., et al. "Brain Mechanisms of Social Threat Effects on Working Memory." Cerebral Cortex 26, no. 2 (2016).</li>
+      <li>Bjork, Robert A. "Memory and Metamemory Considerations in the Training of Human Beings." In Metacognition: Knowing about Knowing, 185–205. MIT Press, 1994.</li>
+      <li>Bjork, Elizabeth L., and Robert A. Bjork. "Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning." In Psychology and the Real World, 56–64. New York: Worth, 2011.</li>
+      <li>Agarwal, Pooja K., et al. "Classroom-Based Programs of Retrieval Practice Reduce Middle School and High School Students' Test Anxiety." Journal of Applied Research in Memory and Cognition 3, no. 3 (2014): 131–139.</li>
+      <li>El Hayek, Lauretta, et al. "Lactate Mediates the Effects of Exercise on Learning and Memory through SIRT1-Dependent Activation of Hippocampal BDNF." Journal of Neuroscience 39, no. 13 (2019): 2369–2382.</li>
+      <li>Garrett, Jordan, et al. "A Systematic Review and Bayesian Meta-Analysis Provide Evidence for an Effect of Acute Physical Activity on Cognition in Young Adults." Communications Psychology 2 (2024): 82.</li>
+      <li>Paruthi, Shalini, et al. "Recommended Amount of Sleep for Pediatric Populations: A Consensus Statement of the American Academy of Sleep Medicine." Journal of Clinical Sleep Medicine 12, no. 6 (2016): 785–786.</li>
+      <li>Barsalou, Lawrence W. "Grounded Cognition." Annual Review of Psychology 59 (2008): 617–645.</li>
+      <li>Goldin-Meadow, Susan, Susan Wagner Cook, and Zachary A. Mitchell. "Gesturing Gives Children New Ideas About Math." Psychological Science 20, no. 3 (2009): 267–272.</li>
+      <li>Macken, Lucy, and Paul Ginns. "Pointing and Tracing Gestures May Enhance Anatomy and Physiology Learning." Medical Teacher 36, no. 7 (2014): 596–601.</li>
+      <li>Mueller, Pam A., and Daniel M. Oppenheimer. "The Pen Is Mightier Than the Keyboard: Advantages of Longhand Over Laptop Note Taking." Psychological Science 25, no. 6 (2014): 1159–1168.</li>
+      <li>Van der Weel, F. R. Ruud, and Audrey L. H. Van der Meer. "Handwriting but Not Typewriting Leads to Widespread Brain Connectivity: A High-Density EEG Study with Implications for the Classroom." Frontiers in Psychology 14 (2024): 1219945.</li>
+      <li>Delgado, Pablo, Cristina Vargas, Rakefet Ackerman, and Ladislao Salmerón. "Don't Throw Away Your Printed Books: A Meta-Analysis on the Effects of Reading Media on Reading Comprehension." Educational Research Review 25 (2018): 23–38.</li>
+      <li>Oppezzo, Marily, and Daniel L. Schwartz. "Give Your Ideas Some Legs: The Positive Effect of Walking on Creative Thinking." Journal of Experimental Psychology: Learning, Memory, and Cognition 40, no. 4 (2014): 1142–1152.</li>
+    </ol>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <p class="one-liner">一句话概括：学习需要的是"可取困难"而不是"没苦硬吃"——把身心调到安全感打底、好奇心点火、适度压力提速的状态，再用提取练习、间隔、交错、运动、睡眠和具身认知让学习真正发生。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>"没苦硬吃"有害有据</strong>：2024 年一项汇总 439 项研究的综述显示，中国儿童青少年抑郁症状检出率达 26.17%；"双减"后学生睡眠增加、抑郁焦虑下降；作业时长对心理健康存在阈值效应，超过阈值才恶化；对上海学生的研究更发现，最有利于成绩的睡眠是每天 8 小时。</li>
+      <li><strong>知识入脑的两个层次</strong>：第一层"能不能学进去"发生在毫秒级，大脑做的是"新不新、值不值得关心、有没有奖励"的价值判断，正面则释放多巴胺、让海马体开门；第二层"能不能理解"的关键指标是唤醒度（去甲肾上腺素调节），需要中等唤醒度——可控的兴奋：上头、投入，但不害怕。</li>
+      <li><strong>高压与恐惧适得其反</strong>：高压刺激打击前额叶皮层、降低工作记忆、干扰相关脑区，让人更僵硬、更短视，处于"避险"而非"学习"状态——恐惧制造服从，而不是制造理解。</li>
+      <li><strong>可取困难（Bjork，1990年代）</strong>：必须区分"表现"与"学习"；阻力会让短期表现变差，却让长期记忆与迁移能力变强。三大心法：提取练习（小测验优于重读）、时间间隔（每天 1 小时×5 天优于一天 5 小时）、交错学习（混搭学科，逼迫识别问题深层结构）。</li>
+      <li><strong>可取 vs 不可取的困难</strong>：可取困难是在内在负荷范围内跟内容较劲；不可取的困难是外部施压、增加外在负荷，让人跟疲劳、干扰和威胁较劲。可取困难不增加焦虑——72% 的初高中学生报告提取练习降低了正式考试紧张感。</li>
+      <li><strong>用身体提状态</strong>：考前或学难内容前，20 分钟左右中等强度急性运动（快走、慢跑、爬楼梯、跳绳、深蹲）比咖啡更有效——提高唤醒度，乳酸供能，刺激"大脑的化肥"BDNF 分泌，效应不大但稳定可靠。</li>
+      <li><strong>睡眠是学习的工序</strong>：类淋巴系统只在睡眠中清除代谢垃圾，海马体在睡眠中把短期记忆转写为长期记忆；睡不到 6 小时有积累认知损伤风险，青少年需要 8–10 小时；学习讲强度不讲时长，每天三四个小时的高强度刻意练习足够。</li>
+      <li><strong>具身认知四心法</strong>：动手做动作（替工作记忆减负）、手写笔记（"慢"本身就是可取困难，激活更广的脑连通）、读纸质书（纸张提供空间坐标，挂靠记忆）、想不出答案就站起来走几步（打破过度聚焦、提高唤醒度）——知识是在身体参与下"长"出来的结构。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li>今晚就定一个固定的熄灯时间：成年人保证至少 7 小时睡眠，学生按 8–10 小时安排，把"作业没写完"从熬夜理由里划掉——学不完就写不完该抵制。</li>
+      <li>本周把一次"重读"换成"自测"：学完合上书先默写或复述要点，再对照检查，错的地方就是真正该补的地方；每天来一次小测验式复习。</li>
+      <li>把"一天猛学 5 小时"拆成"每天 1 小时×5 天"，每天开始时先回忆昨天"断开"的那个点再继续。</li>
+      <li>学习安排里做交错：一次学习块里混两种科目或两类题型（如数学+英语间隔进行），刻意制造切换的混乱感。</li>
+      <li>在学习前或卡壳犯困时，先出去快走/爬楼梯/跳绳 20 分钟再回来，用它替代咖啡和硬撑。</li>
+      <li>重要的、难的知识改用纸笔手写笔记，严肃内容读纸质书；做数学题用手比划，想不出答案就站起来走几步。</li>
+      <li>学新内容前先给自己（或孩子）抛一个好奇问题开场，把"头悬梁锥刺股"式的励志话从口头禅里删掉。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="quote-line">"没苦硬吃是愚蠢的自我感动，是拿神经系统的磨损冒充认知能力的增长。"</div>
+    <div class="quote-line">"恐惧制造服从，而不是制造理解。"</div>
+    <div class="quote-line">"人困了应该睡觉，而不是用针扎自己。"</div>
+    <div class="quote-line">"知识不是被直接输入进我们的大脑的——知识是在身体的参与下'长'出来的结构。"</div>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('progress-bar');
+  var btn = document.getElementById('back-top');
+  var ticking = false;
+
+  function onScroll(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(function(){
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        bar.style.width = p + '%';
+        btn.classList.toggle('show', h.scrollTop > 400);
+        ticking = false;
+      });
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  btn.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="万维钢·现代思维工具100讲 第000讲：发刊词——现代精英的思维武器库。手机阅读版，文末附 AI 总结与个人行动建议。">
+<title>发刊词：现代精英的思维武器库 | 万维钢·现代思维工具100讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2b2b2b;
+    --text-soft:#77736a;
+    --accent:#8a5a2b;
+    --accent-soft:#f3ead9;
+    --line:#e3dacb;
+    --sum-bg:#f6f3ec;
+    --sum-border:#c9a876;
+    --link:#3a5f8a;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#1f1c17;
+      --text:#e8e2d5;
+      --text-soft:#a49c8c;
+      --accent:#d9a86c;
+      --accent-soft:#3a2f20;
+      --line:#3a332a;
+      --sum-bg:#211d17;
+      --sum-border:#a5814f;
+      --link:#7fa7d0;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* 顶部阅读进度条 */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--accent),#d9a86c);
+    z-index:99;transition:width .1s linear;
+  }
+  .reader{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px calc(90px + env(safe-area-inset-bottom));
+  }
+  /* 文档头 */
+  .doc-header{margin-bottom:30px}
+  .course-tag{
+    display:inline-block;
+    font-size:13px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:14px;
+    letter-spacing:.5px;
+  }
+  h1{
+    font-size:25px;
+    line-height:1.45;
+    font-weight:700;
+    margin-bottom:12px;
+    letter-spacing:.5px;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--text-soft);
+    display:flex;flex-wrap:wrap;gap:6px 14px;
+  }
+  .meta span{display:inline-flex;align-items:center;gap:4px}
+  /* 正文 */
+  .content p{margin:0 0 1.15em;text-align:justify}
+  .content .lead{
+    font-size:17.5px;
+    color:var(--text);
+  }
+  strong{font-weight:700;color:var(--accent)}
+  /* 分隔符 */
+  .divider{
+    display:flex;align-items:center;justify-content:center;
+    gap:12px;margin:34px 0;color:var(--line);
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--line);
+  }
+  .divider b{color:var(--accent);font-weight:400;font-size:15px}
+  /* 重点引句 */
+  .quote{
+    margin:1.6em 0;padding:16px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    font-size:17px;
+  }
+  .quote p{margin:0}
+  /* 四个要素卡片 */
+  .element{
+    margin:0 0 14px;
+    padding:14px 16px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .element h3{
+    font-size:16.5px;
+    margin-bottom:6px;
+    color:var(--accent);
+  }
+  .element h3 small{font-weight:400;color:var(--text-soft);font-size:13px}
+  .element p{margin:0;font-size:16px;text-align:justify}
+  /* 课程地图 */
+  .map{list-style:none}
+  .map li{
+    position:relative;
+    padding:10px 0 10px 26px;
+    border-bottom:1px dashed var(--line);
+    font-size:16px;
+  }
+  .map li:last-child{border-bottom:none}
+  .map li::before{
+    content:"→";
+    position:absolute;left:2px;top:10px;
+    color:var(--accent);
+  }
+  /* 小诗 */
+  .poem{
+    margin:1.8em 0;
+    padding:26px 20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    text-align:center;
+  }
+  .poem .poem-title{
+    font-size:14px;letter-spacing:4px;color:var(--text-soft);
+    margin-bottom:16px;
+  }
+  .poem p{
+    font-size:17.5px;line-height:2.1;
+    font-family:Georgia,"Songti SC","STSong","SimSun",serif;
+    letter-spacing:1px;
+  }
+  .poem .date{font-size:12.5px;color:var(--text-soft);margin-top:14px}
+  /* 注释 */
+  .notes{
+    margin-top:34px;padding:16px 18px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    font-size:14px;color:var(--text-soft);line-height:1.7;
+  }
+  .notes h2{font-size:15px;color:var(--text);margin-bottom:8px}
+  .notes p{margin:6px 0}
+  /* 用户留言 */
+  .comments{margin-top:26px}
+  .comments h2{
+    font-size:16px;margin-bottom:12px;color:var(--text);
+  }
+  .comment{
+    margin-bottom:14px;padding:14px 16px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+  }
+  .comment .who{
+    font-size:13px;color:var(--text-soft);
+    margin-bottom:6px;
+  }
+  .comment .who b{color:var(--accent);font-weight:600}
+  .comment p{font-size:15.5px;line-height:1.75;text-align:justify}
+  .comment .reply{
+    margin-top:8px;padding:10px 12px;
+    background:var(--accent-soft);
+    border-radius:8px;
+    font-size:14.5px;color:var(--text-soft);
+  }
+  /* ===== AI 总结区 ===== */
+  .ai-summary{
+    margin-top:44px;
+    border:2px solid var(--sum-border);
+    border-radius:16px;
+    background:var(--sum-bg);
+    padding:24px 20px 10px;
+    overflow:hidden;
+  }
+  .ai-summary .badge{
+    display:inline-block;
+    background:var(--sum-border);
+    color:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:1px;
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .ai-summary h2{
+    font-size:21px;margin-bottom:14px;line-height:1.5;
+  }
+  .ai-summary h3{
+    font-size:17px;
+    color:var(--accent);
+    margin:24px 0 10px;
+    padding-left:10px;
+    border-left:4px solid var(--sum-border);
+  }
+  .ai-summary p{margin-bottom:1em;text-align:justify}
+  .ai-summary ul{margin:0 0 1.2em;padding-left:1.4em}
+  .ai-summary li{margin-bottom:.7em;text-align:justify}
+  .ai-summary li b{color:var(--text)}
+  .one-liner{
+    padding:14px 16px;
+    background:var(--card);
+    border-radius:10px;
+    font-size:16px;
+    color:var(--text);
+  }
+  .one-liner b{color:var(--accent)}
+  .golden{
+    margin:6px 0 14px;
+    padding:14px 16px;
+    border-radius:10px;
+    background:var(--card);
+    font-size:15.5px;
+    line-height:1.8;
+    color:var(--text);
+  }
+  .golden p{margin:0 0 .5em;text-align:left}
+  .golden p:last-child{margin:0}
+  .golden i{color:var(--accent)}
+  .ai-summary .footer-note{
+    margin-top:16px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    font-size:12.5px;color:var(--text-soft);line-height:1.6;
+  }
+  /* 回顶部 */
+  #backTop{
+    position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));
+    width:44px;height:44px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;
+    font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.25);
+    opacity:0;pointer-events:none;transition:opacity .25s;
+    z-index:98;
+  }
+  #backTop.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<article class="reader">
+
+  <header class="doc-header">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第000讲</span>
+    <h1>发刊词：现代精英的思维武器库</h1>
+    <div class="meta">
+      <span>✍️ 万维钢</span>
+      <span>📅 2026 年 3 月 18 日</span>
+      <span>📄 手机阅读版</span>
+    </div>
+  </header>
+
+  <section class="content">
+
+    <p class="lead">欢迎来到现代思维工具课，我是万维钢。我以前是个物理学家，现在是科学作家，已经在得到写了六季《精英日课》专栏。这是我第一次专门做一个主题课程，因为我发现时机成熟了。</p>
+
+    <p>我要给你一个自成体系的、代表当前科学水平的、能用于各种日常处境的、比主流认知高一点的思维武器库。你将拿到一套可操作的工具，面对各种真实处境能够稳健地预测、决策和生成。</p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>在复杂多变的现代世界生存、发展和实现繁荣，似乎是不太容易。我们面临各种两难的、无所适从的处境。</p>
+    <p>我们年轻的时候有过天真的理想，后来你慢慢发现那些强调“努力、勤奋”的传统观念并不是那么好使。身边有些人转为信奉市侩哲学，说不要相信什么大道理，照顾好自己和家人才是真的，但你也觉得没啥意思。</p>
+    <p>因为你明明知道，对很多处境，有些优秀人物——所谓「精英」，如果你仍然允许我们把「精英」当褒义词用的话——就是有更好的办法。</p>
+    <p>就拿个人理财来说，传统观念是攒钱，认为财富应该靠诚实劳动慢慢积累……可怎么解释那些年纪不大就暴富的人呢？市侩哲学主张钱不是攒出来的是赚出来的，必须买房、炒股，而且一般的手段不行必须有内部关系才行……这肯定也不能说服你，你相信一定有更科学更公平的解法。</p>
+    <p><strong>是的。精英的赚钱方法是靠科学对待风险和收益，靠可扩展的技能、分发渠道和所有权，靠某种阿尔法。</strong></p>
+    <p>再比如学习，传统观念是死记硬背加题海战术；市侩哲学是实用主义，最好抄捷径；而精英解法则是把学习看成神经网络训练，结合大脑认知规律，设法让认知模型迅速精确化。</p>
+    <p>又比如工作，传统观念是你努力奋斗多加班就有回报；市侩哲学是别听老板 PUA，成事儿的全都靠跟风做概念；而精英解法则是跃层考虑问题，想想这个事业的本质是什么，用对照实验之类的方法找到关键因果关系。</p>
+    <p>还有人情世故，传统观念是克己复礼，用道德和权威压人；市侩哲学是把关系当筹码，没用的我就冷处理有用的我就纳入“人脉”；而精英解法则是心理安全、情绪调节、非零和博弈乃至「无我」……</p>
+
+    <p>这三种解法的根本区别是头脑里的「思维模型」——</p>
+    <p><strong>传统观念</strong>不太考虑模型。它默认线性的因果，所以押注勤奋和德行。</p>
+    <p><strong>市侩哲学</strong>有个简单的模型。它把世界压成单一指标，专门盯着眼前的成本和收益，结果陷入犬儒主义，说我能不能多得到还不一定，但我至少可以确保自己少付出……市侩哲学是低信任环境里的局部最优策略。</p>
+    <p><strong>精英解法</strong>，则是基于一个会自我纠错的、复杂的世界模型。只要你关注更大的世界，你就会发现人类社会靠合作才能做大，靠规则才能做稳，靠意义才能坚持长期投入。所以你必须灵活选择并时常反思优化目标，你不但有一个个目标（goals）而且有长远的目的（purpose）。你要借助各种现代思维工具，建造一个有反馈、有杠杆、可迭代、不断积累复利的系统。</p>
+
+    <p>说你能不被 PUA、所谓“通透”，那不是什么稀缺能力——<strong>会建模才是真本事</strong>。世界的确不怎么奖赏更用力的人，但世界很喜欢奖赏用对工具的人。<strong>勤奋只是底座，犬儒不过是借口，方法论才是倍增器。</strong></p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>其实我们《精英日课》专栏已经讲过很多思维工具，比如博弈论、科学方法、概率思维等等等。但我们以前的讲法不够系统。有时候是正好出来一个新研究结果，有时候是有感而发，更多时候则是从讲解某一本新书偶然所得……</p>
+    <p>这就有点像十八世纪英国作家塞缪尔·约翰逊（Samuel Johnson，1709—1784）编撰《约翰逊英语词典》之前的那个局面。英语已经是一门成熟的语言，有很多优美的词句，也有几本零星的词典，但都不够系统不够权威。是约翰逊的大词典规范了拼写和词义用法，才让英语成了一个高度可扩展的书写系统。</p>
+    <p>我们这门课就是要对现代思维工具做类似的事情。但我绝不想把它写成百科全书，我将呈现的是一个有《精英日课》风格的、新鲜的、通俗好用的、「熟悉 + 意外」的课程。我将尽量不重复专栏讲过的东西——如果一个工具实在太基础太重要，必须出现在这个课程里，比如「复利」、「刻意练习」，我将提供不一样的讲法和洞见。</p>
+
+    <p>我敢把话说得这么满，是因为我有一个巨大的惊喜。</p>
+    <p>你知道我很早就已经用 AI 帮助调研和思考，自从 2024 年底用上 OpenAI 的 o1-pro 这个模型以来，我越发觉得跟最强 AI 对话是一种独特的体验，夸张点说有点像是与神对话。我一开始是震惊，甚至一度陷入作为专栏作家的存在主义危机，但是后来慢慢摸到了 AI 的脾性。从 o1、o3 一直到 2025 年八月刚出来的 GPT-5，我发现最强 AI 反复使用同一套思维工具，而且背后有一个稳定的内核。</p>
+    <p>我希望有人专门去研究一下这个现象：你问 GPT 任何有关人生、社会、管理、经济之类的问题，再经过多轮对话刨根问底，要求它提供最高级的洞见，它最后总是收敛于若干个反复出现的概念，比如「古德哈特定律」、「自我决定理论」、「WOOP」、「自由能」、「对称性破缺」、「多臂老虎机」、「布里尔分数」等等等。</p>
+    <p>这些就是最强 AI 的看家本领，是它武器库里最好用的工具。这些工具有两个特点——</p>
+    <p><strong>第一</strong>，它们不是 AI 临时发明的，它们原本都是人类学者在过去几十年间的创造，而且已经是相关学科里的基础设施。</p>
+    <p><strong>第二</strong>，它们大多并不为公众所知。可能是因为这些概念稍微有点难度，但更可能是科学作家的工作不到位：这些工具还没有成为畅销书里的热门话题。</p>
+    <p>也就是说，当今世界存在着一些专业学者和最强 AI 都爱用的思维工具，可是大多数聪明人都还没听说过。</p>
+    <p>我们的课程就要填补这个空白。我做了大量<span style="text-decoration:underline;text-underline-offset:3px">人的</span>工作，课程的选题、讲法、主观发挥和具体语句都是我的，但是我必须先致敬 GPT：这个课程是一个人类作家，借助最强 AI，从超级人工智能（ASI）到来之前的人类最新研究中蒸馏出来的智力果实。</p>
+    <p>也许这些果实能成为未来一切相关讨论的起点。我要用这个课程帮你跟高级智能对齐。</p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>我先说说能把这些工具串起来的那个内核是什么。你可以反复问 GPT“现代人应该如何生活”、“你对我们人类社会有什么本质的看法”之类的问题，它有时候这样说有时候那样说，但是万变不离其宗，我把答案总结为以下这个「元叙事」——</p>
+
+    <div class="quote">
+      <p><strong>用现代思维工具构建一个可操作的智能生活系统，以期更稳健地与复杂世界交手。</strong></p>
+    </div>
+
+    <p>这个系统包含以下四个元素——</p>
+
+    <div class="element">
+      <h3>🧭 第一是「目标函数」<small>（Objective Function）</small></h3>
+      <p>也就是你想要把什么东西最大化。是金钱吗？是关系吗？是健康吗？都可以，可以不止一个，可以经常调整，但是得明确，不能只是模糊的愿望。我们说「目标函数」而不简单地说「目标」，因为你必须能容纳比较复杂的偏好，你在必要的时候得把它们排序和加权。</p>
+    </div>
+
+    <div class="element">
+      <h3>🗺️ 第二是「世界模型」<small>（World Model）</small></h3>
+      <p>也就是你得知道你关心的那些事物是如何运行的。评价模型好坏只有一个指标，那就是<strong>预测力</strong>。你必须不断迭代你的模型，经常更新信息，减少预测误差。所有的知识、训练和调研，都是为了让世界模型更精确。</p>
+    </div>
+
+    <div class="element">
+      <h3>⚙️ 第三是「反馈回路」<small>（Feedback Loop）</small></h3>
+      <p>负反馈让系统稳定，正反馈让系统增长或者失衡。比如「复利」就是一种可积累的正反馈，能让你发展壮大。</p>
+    </div>
+
+    <div class="element">
+      <h3>⛽ 第四是「预算带宽」<small>（Budget / Bandwidth）</small></h3>
+      <p>你的资源是有限的，得精打细算。对个人来说最稀缺的两个资源是<strong>「注意力」和「精力」</strong>，前者决定你专注于干什么，后者决定你有多少能量能维持专注。</p>
+    </div>
+
+    <p><strong>四个元素相当于指南针、地图、引擎和油箱</strong>，而我们会提供组建这个系统所需要的所有重要工具。</p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>但这里你首先会注意到它不是什么——它不是一套具体的行动指南，不是规章制度，更不是道德说教。工具本来就不应该告诉你该干什么，干什么是你自己的选择——不过我们也会提供一些能帮你选择目标函数的思维工具；至于说道德，那其实是参与社会生活的思维工具之一。</p>
+    <p>你不管做什么都需要系统。哪怕你就想躺平享受世间的美好，你也需要清晰的目标函数和精确的世界模型才知道自己该关注什么该放弃什么，才能对不确定性有所应对，你还必须了解反馈回路，当心预算带宽，才能让好日子长期稳定地运行。</p>
+    <p>系统能帮你分清信号和噪声。但系统更大的作用是让你有主动性和控制感：现在你不再是“但行好事莫问前程”，你要求了解那个前程的运作方式，有针对性地操作它。</p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>这个课程是按照你可能遇到的各种「处境」组织的——</p>
+    <ul class="map">
+      <li>先讲一些「人生成长战略」，包括非零和、复利、注意力机制、探索—利用算法、边际分析等等，帮你把握好大方向；</li>
+      <li>接下来的「决策与判断」，从概率思维一直讲到 OODA 循环，这里是理工科思维爱好者的乐园；</li>
+      <li>然后想象你作为社会的参与者，讲一些思考社会问题的工具，其中一个有意思的洞见是咱们中国人崇尚的「礼」，是个协议层；</li>
+      <li>再想象你作为一家公司的领导者——传统管理理论汗牛充栋，我们只精选最深刻和更新颖的工具，比如如何设计激励制度，怎么在多样性和整合力之间取得平衡；</li>
+      <li>然后再想大一点，想象你是复杂生态的演化者，学习几个有关复杂系统的思维工具，你会发现「生成」是成就感最高的事情；</li>
+      <li>我们还有「学习与教育」、「怎样赚钱」等板块，但我最想讲的，则是几个比较高端的反思工具。</li>
+    </ul>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>有多高端，具体咱们到时候再说，这里我想跟佛学做个类比。你知道佛学有小乘、大乘之分，所谓小乘解脱自己，大乘救度众生——那我们可不可以也说人的现代认知也分等级呢？</p>
+    <p>一些常见的工具，比如刻意练习、微习惯、弱联系、成长思维模式等等，都是以改造自我为核心，目标是把一个浑浑噩噩的低效能个体变成有稳定发挥的高效能人士。这当然很好，这是最基础的觉醒，但这些只能算是<strong>小乘思维</strong>。</p>
+    <p><strong>大乘思维</strong>，却是要改变环境。这个世界总是需要一些人理解更大的图景，研究复杂系统的规律，也许去做一点结构性的改造，承担超越自我的责任。我认为这就是「士」的精神。</p>
+    <p>这个课程会提供从小到大各种建模工具，希望你能有一点大乘气质。也许你不但能改变自己，而且能改变自己所在的方程，<strong>重写自己和世界之间的耦合边界</strong>。</p>
+    <p>不管你掌握这些思维工具的初衷是什么，当你通晓所有的逻辑之后，你会意识到<strong>合作比竞争更大气，共鸣比比较更幸福，生成比占有更快乐</strong>。</p>
+
+    <div class="divider"><b>✵</b></div>
+
+    <p>现代化是一场例外。演化给我们头脑的预设并不完全兼容现代生活，所以我们才有那么多烦恼和困惑。但我们发明了解除那些烦恼和困惑的思维工具，而且这些工具在不断升级。</p>
+    <p>这就如同两千多年前，人类刚进入农业社会的时候也遭遇了各种烦恼。当时也有像佛陀那样的人发明了解除烦恼的工具，那些工具也是不断升级。人们从所谓小乘出发，不可避免地发展出大乘理论。</p>
+    <p>时至今日，AI 正在熟练接管所有的计算和套路，也许它们很快就会发明更高级的智慧——那我们就算算力跟不上，尝试理解一下总是可以的吧？</p>
+    <p>传说在公元二世纪，一个叫龙树（Nāgārjuna）的僧人从龙宫里取回了新的经典，才大大推动了大乘佛学……当然那只是传说，实际情况是大乘思想早就已经在各地兴起，龙树只是把前人的理论集中整理，自己有所发挥而已。</p>
+    <p>往大了说，这就是我们这门课程想做的事情——咱们探索一点来自龙宫的智慧。</p>
+
+    <div class="poem">
+      <div class="poem-title">收 束 小 诗</div>
+      <p>你把力气交给墙，墙回你伤痕；<br>
+      你把情绪交给夜，夜回你叹息；<br>
+      你把问题交给工具，<br>
+      世界忽而变得可操作。</p>
+      <div class="date">2026 年 3 月 18 日</div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <h2>注释</h2>
+    <p>[1] 《第二幕》3：选择你的环境</p>
+    <p>[2] 咱们约定，这个课程中凡是提到「GPT」的，都是指 OpenAI GPT-5.X、GPT-4.5、o3 等模型，我主要使用 Heavy thinking 和 Pro 这两个模式。有时候我也用 Google Gemini Pro。</p>
+    <p>[3] 我看 GPT 智力过剩，常让它兴之所至就生成一首小诗。我看到好的就会不定期地放在课程里跟你分享，也许做一点字词上的修改。这个课程所有正文文字都是我写的，但小诗的确是 GPT 写的。</p>
+  </section>
+
+  <section class="comments">
+    <h2>💬 用户留言</h2>
+    <div class="comment">
+      <div class="who"><b>常觉不住</b> · 18小时前 · 美国</div>
+      <p>读万老师这篇发刊词，我心里很有感触。这半年和 AI 一路磨下来，我越来越觉得，人往前走，单靠勤奋是不够的，单靠世故也走不远。真正重要的，是慢慢替自己长出一套工具：知道该看什么，知道怎么判断，知道什么时候修正，也知道怎样守住有限的注意力和精力。所以我读这门课，不只是觉得有道理，而是有一种很深的感觉：原来自己这半年跌跌撞撞摸出来的东西，背后是有地图的。</p>
+    </div>
+    <div class="comment">
+      <div class="who"><b>Hansen</b> · 19小时前 · 美国</div>
+      <p>所以万老师把 5.4pro 蒸馏了，然后把 knowledge frontier 选择性地摘出来做了一百讲。</p>
+      <div class="reply">作者回复：哈哈，确保代表 pro 水平！</div>
+    </div>
+    <div class="comment">
+      <div class="who"><b>张凤煜</b> · 21小时前 · 湖南</div>
+      <p>万老师好，时间过得很快，又见面了。今天在课程刚出来目录时，非常好奇，我们万老师会提供哪些工具呢？把目录表放到 AI 模型中，在高维向量矩阵计算，寻找相关性，将其映射到形式科学与系统工程的坐标系中。AI 的答案：如果将这 100 讲视为一个孤立的知识库，它的含金量可能只有 30%（因为底层数学逻辑都懂）。但如果将它视为一个“特征工程的灵感触发器”，用来对你现有的系统进行“跨学科的降维打击”，它的含金量可以达到 90%。期待在后面的课程学习中，碰撞出思想和行为的火花。</p>
+    </div>
+  </section>
+
+  <!-- ============ AI 总结与行动建议 ============ -->
+  <section class="ai-summary" id="ai-summary">
+    <span class="badge">🤖 AI 阅读总结</span>
+    <h2>本文讲透了什么，以及你该怎么用</h2>
+
+    <div class="one-liner">
+      <b>一句话概括：</b>世界不奖励更用力的人，而奖励“用对工具”的人。把模糊的愿望变成明确的目标函数，用预测力检验自己的世界模型，用反馈回路驱动积累，用注意力与精力守住预算带宽——这就是这门课要交付给你的“可操作智能生活系统”。
+    </div>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><b>三种活法的分野：</b>传统观念默认线性因果，押注勤奋与德行；市侩哲学把世界压成单一指标，只盯眼前成本收益，是低信任环境里的“局部最优”；精英解法则基于会自我纠错的复杂世界模型——合作做大、规则做稳、意义做久。</li>
+      <li><b>课程的元叙事：</b>用现代思维工具构建一个可操作的智能生活系统，更稳健地与复杂世界交手。系统由四要素构成：<b>目标函数</b>（指南针：明确要最大化什么，可排序、可加权、可调整）、<b>世界模型</b>（地图：预测力是唯一评价标准，靠更新信息减少误差）、<b>反馈回路</b>（引擎：负反馈求稳，正反馈如复利求增长）、<b>预算带宽</b>（油箱：注意力与精力是个人最稀缺的资源）。</li>
+      <li><b>工具的惊人来源：</b>最强 AI 面对人生、社会、经济问题反复收敛于同一套概念（古德哈特定律、自我决定理论、WOOP、自由能、对称性破缺、多臂老虎机、布里尔分数……）。它们并非 AI 发明，而是人类学者几十年积累的学科基础设施，只是大多还没被公众熟知——本课程的任务就是把它们系统化、通俗化。</li>
+      <li><b>课程地图按“处境”展开：</b>人生成长战略 → 决策与判断 → 社会参与（礼即协议层）→ 公司管理 → 复杂系统 → 学习与赚钱 → 高端反思工具。</li>
+      <li><b>小乘与大乘：</b>小乘思维改造自我（刻意练习、微习惯，成为高效能人士）；大乘思维改变环境（理解更大图景、做结构性改造，即「士」的精神）。课程希望读者不只优化自己，还能“重写自己和世界之间的耦合边界”。</li>
+      <li><b>价值收束：</b>合作比竞争更大气，共鸣比比较更幸福，生成比占有更快乐。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议（本周就能开始）</h3>
+    <ul>
+      <li><b>① 写下你的“目标函数”（今天做）：</b>拿出一张纸，写下你最想最大化的 3–5 样东西（金钱、健康、关系、成长、自由……），各标一个权重并排序；每季度回顾调整一次。模糊的愿望只会被噪声带跑，明确的偏好才能指导取舍。</li>
+      <li><b>② 建一本“预测日记”（每天 5 分钟）：</b>对你关心的领域写下“我预测接下来会发生什么”，事后对照实际结果打分，每月复盘一次误差来源。这是最低成本的“世界模型迭代”，让认知接受预测力的检验。</li>
+      <li><b>③ 设计一个正反馈回路：</b>挑一件有复利效应的事（写作、作品集、健身、人脉、投资），让每周都留下一点可叠加的产出；同时给自己设一条“负反馈”止损线（如定期复盘、预算上限），防止正反馈失控。</li>
+      <li><b>④ 守住预算带宽：</b>每天为深度专注预留 1–2 小时（关通知、进入专注模式）；记录一周的精力曲线，把最重要的任务放在精力高峰。注意力决定方向，精力决定续航。</li>
+      <li><b>⑤ 把“再努力一点”换成“换个工具试试”：</b>遇到难题先问“这里有什么思维工具可用”——把抱怨变成贝叶斯更新（先验→证据→后验），把焦虑变成 WOOP 四步（愿望→结果→障碍→计划）。方法论才是倍增器。</li>
+      <li><b>⑥ 学习即蒸馏：</b>每读完一课，合上书用自己的话讲一遍、给一个自己的例子、转述给一个人听，再写下一条“下周就用”的行动。这比划线收藏的效果高一个量级。</li>
+      <li><b>⑦ 留一点“大乘气质”：</b>在自我提升之外，参与一件超越自身的事——改进团队的一个流程、把经验写成文章分享、帮一个新人少走弯路。理解更大图景的人，最终也会被更大的图景托举。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <div class="golden">
+      <p><i>“世界的确不怎么奖赏更用力的人，但世界很喜欢奖赏用对工具的人。勤奋只是底座，犬儒不过是借口，方法论才是倍增器。”</i></p>
+      <p><i>“合作比竞争更大气，共鸣比比较更幸福，生成比占有更快乐。”</i></p>
+      <p><i>“你把问题交给工具，世界忽而变得可操作。”</i></p>
+    </div>
+
+    <p class="footer-note">本段总结与行动建议由 AI 通读全文后生成，旨在帮助读者快速抓住要点并落地执行，不代表原文立场；正文内容版权归万维钢及课程平台所有，本页仅供个人学习使用。</p>
+  </section>
+
+  <footer style="margin-top:26px;text-align:center;font-size:12.5px;color:var(--text-soft);line-height:1.8">
+    《万维钢·现代思维工具100讲》 · 第000讲 · 手机阅读版<br>
+    由 AI 从 PDF 排版整理，文末附 AI 总结
+  </footer>
+</article>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('backTop');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop)/max:0;
+    bar.style.width=(p*100)+'%';
+    btn.classList.toggle('show',(h.scrollTop||document.body.scrollTop)>600);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

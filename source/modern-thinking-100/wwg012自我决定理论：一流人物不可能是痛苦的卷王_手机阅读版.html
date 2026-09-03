@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲·第12讲：自我决定理论——一流人物不可能是痛苦的卷王</title>
+<style>
+  :root {
+    --bg: #faf7f1;
+    --text: #2e2922;
+    --muted: #7a6f5f;
+    --accent: #8a5a2b;
+    --card-bg: #fffdf9;
+    --border: #e7dfd1;
+    --quote-bg: #f3ecdf;
+    --quote-border: #c9a87c;
+    --poem-bg: #f7f2e8;
+    --summary-bg: #f4ecdd;
+    --summary-one-bg: rgba(138,90,43,.10);
+    --tag-bg: rgba(138,90,43,.08);
+    --accent-border: rgba(138,90,43,.45);
+    --progress-end: #d4a373;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --text: #e9e2d5;
+      --muted: #a89c8a;
+      --accent: #c99a63;
+      --card-bg: #221e19;
+      --border: #3a342b;
+      --quote-bg: #241f19;
+      --quote-border: #c99a63;
+      --poem-bg: #201c17;
+      --summary-bg: #241e15;
+      --summary-one-bg: rgba(201,154,99,.12);
+      --tag-bg: rgba(201,154,99,.12);
+      --accent-border: rgba(201,154,99,.5);
+      --progress-end: #c99a63;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", sans-serif;
+    font-size: 17px;
+    line-height: 1.82;
+    text-align: justify;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 20px 90px;
+  }
+  /* ---------- 文档头 ---------- */
+  .doc-header { padding: 6px 2px 14px; }
+  .tag {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: .5px;
+    color: var(--accent);
+    background: var(--tag-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 999px;
+    padding: 4px 13px;
+  }
+  h1 {
+    font-size: 26px;
+    line-height: 1.42;
+    margin: 16px 0 10px;
+    text-align: left;
+    letter-spacing: .5px;
+  }
+  .author-line { font-size: 14px; color: var(--muted); text-align: left; margin: 0; }
+  /* ---------- 正文 ---------- */
+  h3 {
+    font-size: 19px;
+    line-height: 1.45;
+    margin: 36px 0 12px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+    color: var(--accent);
+    text-align: left;
+  }
+  p { margin: 0 0 16px; }
+  strong { font-weight: 700; }
+  ul, ol { margin: 0 0 18px; padding-left: 1.45em; }
+  li { margin-bottom: 10px; }
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 30px 0;
+    color: var(--accent);
+  }
+  .divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+  .divider span { font-size: 15px; }
+  blockquote {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-left: 4px solid var(--quote-border);
+    background: var(--quote-bg);
+    border-radius: 0 12px 12px 0;
+  }
+  blockquote p { margin: 0; }
+  .ask-block {
+    margin: 18px 0 20px;
+    padding: 16px 18px;
+    background: var(--card-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  /* ---------- 小诗 ---------- */
+  .poem-title { text-align: center; color: var(--muted); font-size: 14px; margin: 28px 0 10px; }
+  .poem {
+    text-align: center;
+    background: var(--poem-bg);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    font-size: 16.5px;
+    line-height: 2.05;
+    letter-spacing: 2px;
+  }
+  /* ---------- 注释 ---------- */
+  .notes {
+    margin-top: 42px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .notes h3 { font-size: 16px; margin: 0 0 10px; }
+  .notes ol { padding-left: 1.3em; margin: 0; }
+  .notes li { margin-bottom: 8px; line-height: 1.7; text-align: left; }
+  /* ---------- 用户留言 ---------- */
+  .comments { margin-top: 14px; }
+  .comment-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .comment-head { display: flex; gap: 11px; align-items: center; margin-bottom: 10px; text-align: left; }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .name { font-weight: 700; font-size: 15px; }
+  .meta { font-size: 12.5px; color: var(--muted); }
+  .comment-card p { font-size: 15.5px; line-height: 1.8; margin: 0 0 10px; text-align: justify; }
+  .comment-card p:last-child { margin-bottom: 0; }
+  /* ---------- AI 阅读总结 ---------- */
+  #ai-summary {
+    margin-top: 46px;
+    background: var(--summary-bg);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 24px 20px 18px;
+  }
+  #ai-summary h2 { font-size: 20px; letter-spacing: 2px; color: var(--accent); margin: 0 0 16px; text-align: center; }
+  #ai-summary h3 { font-size: 16.5px; margin: 22px 0 8px; padding: 0; border: none; }
+  #ai-summary p, #ai-summary li { font-size: 15.5px; line-height: 1.8; }
+  #ai-summary ul, #ai-summary ol { padding-left: 1.4em; }
+  .summary-one {
+    font-weight: 700;
+    background: var(--summary-one-bg);
+    border-radius: 8px;
+    padding: 11px 13px;
+    margin: 0 0 4px;
+  }
+  .quote-mini { margin: 0 0 10px; }
+  .quote-mini li { list-style: none; margin-left: -1.1em; }
+  .ai-footer { margin-top: 20px; font-size: 12px; color: var(--muted); text-align: center; }
+  /* ---------- 浮动组件 ---------- */
+  #progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px; width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--progress-end));
+    z-index: 999;
+  }
+  #to-top {
+    position: fixed; right: 18px; bottom: 38px;
+    width: 46px; height: 46px;
+    border-radius: 50%; border: none;
+    background: var(--accent); color: #fff;
+    font-size: 20px; line-height: 1;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    cursor: pointer;
+    display: none; align-items: center; justify-content: center;
+    z-index: 998;
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<div class="container">
+
+  <!-- ============ 文档头 ============ -->
+  <header class="doc-header">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第12讲</span>
+    <h1>自我决定理论：一流人物不可能是痛苦的卷王</h1>
+    <p class="author-line">作者：万维钢 ｜ 课程：《万维钢 · 现代思维工具100讲》</p>
+  </header>
+
+  <article>
+
+    <p>老百姓对人才有个特别深的误解，那就是把「听话」当成「优秀」。你留个作业他能按时完成，你出几道题他能做对，你交代的任务他保质保量做好——你让干啥他就干啥，你不让干啥他就不干，你指向哪里他就打向哪里，你说这就是优秀人才。</p>
+
+    <p>那不是人才，那是智能工具。如果他做的什么事儿都是你发起的，真正的人才是你不是他。</p>
+
+    <blockquote><p>听话不是一个特别值钱的品质。</p></blockquote>
+
+    <p>我们的教育系统产出了太多听话型人才，有识之士对此早就怨声载道。</p>
+
+    <p>我听一个教授说，她面试研究生，问你来学我这个学科，你自己对科研有什么想法？你的学术兴趣是什么？结果对方啥也说不出来。不是紧张，是脑子里真没有。</p>
+
+    <p>一个外企高管说，中国员工吃苦耐劳也聪明，但就是推一下才动一下，你考核什么他就把什么做得漂亮，可是自己很少主动。</p>
+
+    <p>听话型的优秀距离一流人物很远。得有主动发挥，说这个地方不太对我要给改一改，那才是一流人物。</p>
+
+    <h3>能动性：要我做，还是我要做？</h3>
+
+    <p>要我做，和我要做，区别在于「能动性（agency）」。能动性高的人能主动发起行动、做决定、对自身行为和环境施加控制：他不只是让生活发生在自己身上，更要塑造生活。</p>
+
+    <p>当代很多制度都是按照 19 世纪工厂的需求设计的，核心是行为主义的胡萝卜加大棒，讲究奖惩、KPI、排名、打卡，让人像驴子一样按照既定路线跑。但动起来不等于活起来，一味地被动会让人越来越倾向于「最低成本合规」——这个活儿你挑不出大毛病来，但是没有灵魂。现在很多人上班像上坟、上学像坐牢，都是没有能动性。</p>
+
+    <p>怎么才能有能动性？这个工具叫「自我决定理论（Self-Determination Theory，简称 SDT）」[1]，是心理学家爱德华·德西（Edward Deci）和理查德·瑞安（Richard Ryan）最早在 1980 年代提出的框架，也是过去几十年间心理学关于动机研究的最高成就。</p>
+
+    <div class="divider"><span>✵</span></div>
+
+    <p>SDT 既不教人励志打鸡血，也不劝人自律，因为它知道那些不是真正的能动性。SDT 认为动机质量（quality）比动机强度（quantity）更重要，高质量动机不但能让人愿意长期动下去，而且动得更健康。</p>
+
+    <p>还有的心理学家说，你的动机质量取决于你的「控制点（Locus of Control）」在哪里：在外面，你就是被动顺从；在里面，你才是主人。</p>
+
+    <h3>动机的六个层次：从外控到内控</h3>
+
+    <p>一流人物一定是自我驱动，是内驱。从外边控制能买来服从，可买不到投入。要想变被动为主动，人就必须把控制点内化。SDT 认为 [2] 人的动机从完全没有动机到完全自主之间，有六种类型，构成一个从外控到内控的连续体。你也可以认为这是一个内化的过程，咱们一个一个细说。</p>
+
+    <div class="divider"><span>✵</span></div>
+
+    <p><strong>第一层 · 无动机（Amotivation）</strong>：我不动，因为我觉得动也没用。这不是懒，是断电了，是认定了我做不到、这样做没用、这对我没意义。</p>
+
+    <p>比如一个中学生本来不是不努力，可是怎么学都学不会，屡战屡败看不到任何进步，那他就可能进入冷漠的瘫痪状态，你怎么说他都不动。这也叫「习得性无助」[3]。</p>
+
+    <p><strong>第二层 · 外部调节（External Regulation）</strong>：我动，是因为你让我动。这就是我们最熟悉的胡萝卜加大棒，是行为主义大师斯金纳（B.F. Skinner）的世界 [4]，你有刺激我有回应。</p>
+
+    <p>为什么工作？为了钱。为什么不闯红灯？怕罚款。这一层的行为完全由外部奖励、惩罚或强制驱动；只要监控一撤，行为就会停止。你不得不弄一大堆考核指标，但人们还是会偷懒。</p>
+
+    <p><strong>第三层 · 内摄调节（Introjected Regulation）</strong>：我动，是为了不内疚。到达这一层，就算没人监督没有奖励，你也会去好好做一些事情，因为如果不干你就会感到内疚、羞耻或者焦虑。</p>
+
+    <p>有的人并不爱父母但也会尽孝，因为他怕愧疚；有的人并不爱运动但是要求自己每天必须健身，因为她有身材焦虑。没有人拿鞭子抽你，是你把那个鞭子长在了心里。但心里的鞭子也是鞭子，所以你会活得非常累，惊人毅力的代价是巨大的内耗。</p>
+
+    <p><strong>第四层 · 认同调节（Identified Regulation）</strong>：我动，是因为我认同它有价值。这是进入能动性的转折点，你开始有自主和选择感（volition）了。</p>
+
+    <p>一个人并不喜欢背单词，但他想用外语交流，所以没有考试没有奖励他也愿意背单词。一个医学生很讨厌背药理学，但他有治病救人的职业理想，于是刻苦背。因为是你自选的价值，你没有多少内耗。但因为你并不喜欢这个行为本身，有时候你还是会感到冲突：此刻我真的很想看个中文电视剧，但为了学英语我选择看美剧。</p>
+
+    <p><strong>第五层 · 整合调节（Integrated Regulation）</strong>：我动，因为它就是我的一部分。这是把价值跟身份认同整合在了一起。</p>
+
+    <p>我健身不是为了减肥，而是因为我这么酷的人本来就是天天健身的；我走向战场不是因为我不怕死，而是因为我是一个战士。这是詹姆斯·克利尔（James Clear）在《掌控习惯》（Atomic Habits, 2018）一书中最推崇的励志方法 [5]。到了这一层你的行为已经高度自主，你会感到非常协调，没有任何内心冲突，甚至充满自豪。</p>
+
+    <p>但那还不是最高境界。</p>
+
+    <p><strong>最高境界 · 第六层「内在动机（Intrinsic Motivation）」</strong>：我动，因为我爱动。内在动机的动力完全源自活动本身，不需要外部后果。</p>
+
+    <p>孩子在沙滩上堆城堡，程序员业余写开源项目，数学家解题，音乐家演奏，对他们来说这些活动本身就是目的，这是纯粹的生命力！你在这一层不但做事毫无阻力充满自发的动力，而且还可能有创造性的、超水平的发挥。你通宵达旦却不知疲倦，你沉浸在创造与探索之中，你忘了时间也忘了自己。我们精英日课专栏常说的「心流」状态，就出现在这一层。</p>
+
+    <blockquote><p>人最强的不是自律，而是自愿。一流人物不可能是痛苦的卷王。</p></blockquote>
+
+    <div class="divider"><span>✵</span></div>
+
+    <p>现在想起孔子那句话，「知之者不如好之者，好之者不如乐之者」，简直就是很现代的动机理论：</p>
+    <ul>
+      <li>「知之者」对应外部和内摄：你知道它重要，但不一定会好好做。</li>
+      <li>「好之者」对应认同和整合：你认可它，你愿意投入。</li>
+      <li>「乐之者」才是内在动机：你干这个事儿是因为你就爱干这个。</li>
+    </ul>
+
+    <h3>三大心理需求：动机的营养</h3>
+
+    <p>当然现实中大量的任务是有意义但不有趣的，不可能全靠内在动机。SDT 并不是让你把所有外在动机都开除，而是让你尽可能把外部任务内化，把控制点往内移。</p>
+
+    <p>怎么内移呢？</p>
+
+    <div class="divider"><span>✵</span></div>
+
+    <p>这是 SDT 的关键洞见：人类有三种与生俱来的基本心理需求。如果你所处的环境能满足这三种需求，你的能动性就会自动发芽；而如果这三种需求被压制，你的动机就会枯萎。</p>
+
+    <blockquote><p>动机不是被点燃的火，而是被喂饱的植物。</p></blockquote>
+
+    <p>这三种心理需求，也可以叫心理营养，是自主感、胜任感和关系感。</p>
+
+    <ul>
+      <li><strong>「自主感（Autonomy）」</strong>：就是你拥有选择权，你的行为是出自你自己的意愿。我上这个班不是因为我必须上班，而是因为我选择来你们公司上班。</li>
+      <li><strong>「胜任感（Competence）」</strong>：就是这个事儿对你来说不是那么简单，是个挑战，但是你跳一跳又能够得着，所以你能从中获得正向反馈，你看到了进步，你就觉得有意思。这也是产生心流的必要条件。</li>
+      <li><strong>「关系感（Relatedness）」</strong>：则是被关心、被理解、归属于某个群体的感觉。我们更愿意内化我们有归属感的团体的目标。</li>
+    </ul>
+
+    <h3>证据：实验、脑科学与真实世界</h3>
+
+    <p>SDT 已经积累了四十多年的实验证据，可谓是千锤百炼。最经典的一个研究是创始人德西做的：让两组人玩拼图，一组有奖励，拼完给钱，另一组纯玩。结果发现，对于那些本来就觉得拼图有趣的人，如果你给他发钱作为奖励，他玩拼图的兴趣反而下降了——一旦停止发钱，这些人就不玩了。而那些一开始没拿钱的人，却是继续玩，而且连休息时间都还在玩。</p>
+
+    <p>这就是著名的「过度理由效应（Overjustification Effect）」：外部的控制（钱），会挤掉（crowd out）内在的动机 [6]。金钱奖励降低了自主感。</p>
+
+    <p>现代脑科学也发现，当人处于自主动机的时候，大脑的多巴胺系统和那些负责深度学习、创造性解决问题的脑区更加活跃；而处于受控动机的时候，大脑更多调用的是负责压力反应和机械执行的区域。简单说，在复杂认知任务中，心情好、感觉自由会让你的脑子转得快。</p>
+
+    <p>这就解释了为什么谷歌早年允许工程师用 20% 的时间干自己想干的项目而诞生了 Gmail 和 AdSense [7]。这也解释了为什么微软日本在 2019 年尝试「做四休三」，缩短工时，给员工更多的自主安排空间，结果生产率反而提升了 40%。</p>
+
+    <p>自主感、胜任感和关系感不是文化奢侈品，而是人类基础需求的一部分。</p>
+
+    <p>很遗憾这三种需求并没有被写进基本人权。但我们可以想见，缺乏其中任何一项营养，人都不会真的幸福。在你要求别人或者自己「自律！努力！」之前，应该先问问——</p>
+
+    <div class="ask-block">他有选择权吗？他得到了正向反馈吗？他感到安全和被支持吗？</div>
+
+    <div class="divider"><span>✵</span></div>
+
+    <h3>核心操作：三件事儿</h3>
+
+    <p>既然能动性来自自主感、胜任感和关系感的滋养，SDT 的核心操作就是三件事儿——</p>
+    <ol>
+      <li><strong>给选择给理由</strong>：把任务从「别人要我」翻译成「我为什么认同」；</li>
+      <li><strong>给挑战给反馈</strong>：把任务从「太大」拆分成「我能先赢一小局」；</li>
+      <li><strong>给连接给支持</strong>：把任务从「孤军奋战」变成「有人看见我」。</li>
+    </ol>
+
+    <p>咱们看两个应用场景。</p>
+
+    <div class="divider"><span>✵</span></div>
+
+    <h3>场景一：你是管理者、老师或家长</h3>
+
+    <p>千万别当控制狂，你必须想办法给人营养，哺育别人的能动性。</p>
+
+    <p><strong>首先，解释清楚意义。</strong>当你布置一个无聊的任务时，一定要给人解释清楚其中的意义。不要说把这 100 页文件复印了别问为什么。要说我们下午的客户会议非常关键，这些资料能帮助我们拿下合同，大家都指望你的协助。这就帮助对方从外部调节转化到认同调节。</p>
+
+    <p><strong>其次，给选择权。</strong>不要说你必须先做数学，再做英语。要说今天的任务是数学和英语，你想先做哪个？你想用什么方式完成？哪怕是微小的选择，也能极大地提升自主感。</p>
+
+    <p><strong>然后，给非控制性的反馈。</strong>反馈必须是对事不对人。不要说你「真聪明／你真笨！」，评价人就是控制人，因为人会在你的评价体系下患得患失。要说你刚才那个解题思路很有创意，特别是第二步……哪怕他别的思路都不对，他也获得了一点点胜任感。</p>
+
+    <p><strong>最后，给关系认可。</strong>我理解你觉得这个很无聊，但我相信你能做好，你对我很重要。</p>
+
+    <h3>场景二：你是打工人，而老板是个控制狂</h3>
+
+    <p>你不想辞职，那么你就要重构这场叙事。</p>
+
+    <p><strong>首先是主动挖掘意义。</strong>你做这个事儿不是因为老板让你做，而是你自己的选择。搬砖是为了盖大楼，填 Excel 表格是为团队决策清洗数据确立真相。尽量把被迫的任务和你的个人长远价值观挂钩。如果这个活儿实在没意义，那就是为了锻炼我的耐心——总比「为了不被老板骂」高级得多。</p>
+
+    <p><strong>关键是你总可以搞「微决策」。</strong>在老板看不见的地方，建立自己的秩序。你决定干活儿的节奏和交接的风格。你总可以随口开几句玩笑。你摆的砖有你的美学印记。再不济，你也可以把办公桌布置成你喜欢的样子。</p>
+
+    <p><strong>你还可以把任务游戏化。</strong>这件事儿真的很无聊，那你就给自己计时，看能不能比昨天快 10 分钟？强行植入挑战和反馈可以收获一点胜任感……</p>
+
+    <div class="divider"><span>✵</span></div>
+
+    <p>快乐的人都是这样的。那个把历史课讲成单口相声的中学老师；那个在代码注释里写俳句、把错误日志写成微型侦探小说的程序员；那个在菜市场里，把两块钱一块的豆腐切出了米其林摆盘感的豆腐西施。哪怕最平凡的工作，他们也一定要给你制造点不平凡。</p>
+
+    <p>好消息是，第一流人物也都是这样的。听话型优秀只能让人走那么远。到了一定距离，你前面将是一片无人区，没有人告诉你下一步该做什么，没有攻略，没有考核标准。</p>
+
+    <p>那里的问题是你自己定义的，路径是你自己选择的，代价是你自己承担的。你得能在模糊边界里扛事，而不是只在明确流程里跑。</p>
+
+    <p>其实自我决定理论只是把人当「人」而已。它只不过发现，当你把控制点内移，活得像个人的时候，你的发挥恰恰也是最好的。</p>
+
+    <p>我敢说这是我们这个世界最好的一个性质。真是谢天谢地！不然要像有些人想的那样吃得苦中苦方为人上人，先插自己两刀才能练神功，一流人物都卷得不成人形，那可就太可怕了。</p>
+
+    <p class="poem-title">Gemini 贡献尾声小诗</p>
+    <div class="poem">
+      莫将听话作良图，忍辱从来非正途。<br>
+      诱饵悬空驴转磨，心流涌处凤栖梧。<br>
+      无形鞭影休相逼，自有真元不可沽。<br>
+      踏破千山因我爱，逍遥极顶笑凡夫。
+    </div>
+
+    <!-- ============ 注释 ============ -->
+    <section class="notes">
+      <h3>注释</h3>
+      <ol>
+        <li>Deci, E. L., &amp; Ryan, R. M. (1985). Intrinsic Motivation and Self-Determination in Human Behavior. Plenum.</li>
+        <li>Ryan, Richard M., and Edward L. Deci. "Self-Determination Theory and the Facilitation of Intrinsic Motivation, Social Development, and Well-Being." American Psychologist 55, no. 1 (2000): 68–78.</li>
+        <li>精英日课第五季，隐藏的博弈 8：既然热爱，为何无助（完）</li>
+        <li>精英日课第五季，怎样塑造他人的行为</li>
+        <li>精英日课第五季，有一个身份的人和有多个身份的人</li>
+        <li>Deci, Edward L., Richard Koestner, and Richard M. Ryan. "A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation." Psychological Bulletin 125, no. 6 (1999): 627–668.</li>
+        <li>这个政策后来被谷歌取消了……我听说是因为有些员工自动卷，把 20% 从选项变成了必须，等于工作量增加了 20%，反而失了本意。</li>
+      </ol>
+    </section>
+
+    <!-- ============ 用户留言 ============ -->
+    <section class="comments">
+      <h3>用户留言</h3>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="avatar">至</span>
+          <div>
+            <div class="name">至尊女宝</div>
+            <div class="meta">昨天 · 四川</div>
+          </div>
+        </div>
+        <p>功利性学习和自主学习效果其实是不一样的，以前为了评职称考证书，其实那些几个月恶补的书本知识现在也都忘记了。现在平心静气地看看专业课反而能记忆犹新。可惜我们从小到大受的奖励、评价、管理方式，全是在把人往机器方向训练——听话、照做、别问为什么。结果就是培养出一大批高精度执行器，看着挺好用，但一到需要自己想问题、自己定目标的时候就蒙圈了。</p>
+        <p>听完课总结一下就是想让一个人长出闭环能力，不能靠外部强拧，得靠满足三个条件——给他自由度（自主感）、给他刚好够得着的难度（胜任感）、让他感觉到被连接（关系感）。这三个条件满足了，他的「控制器」就会自己迭代，不需要你一直发指令。有内在动机的人，做事不内耗，不痛苦，反而状态最好。这打破了一个常见的迷信——好像不吃苦就成不了事。从工程角度看，低损耗、高自洽的运行状态才是最优的。</p>
+        <p>一流人物不是痛苦的卷王。你不用先自残再成神。活得像个正常人、有自己主见的人，反而发挥得最好。所以我现在做事的判断标准很简单：这件事我是不得不做，还是我想做？如果是前者，我就想办法给它找个我认可的理由；如果是后者，不用催，我自己就跑得飞快。谁能想到曾经自行车都不会骑的欧巴桑现在会单手倒车入库，还能有 A 照呢「低调低调」。</p>
+      </div>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="avatar">左</span>
+          <div>
+            <div class="name">左星星</div>
+            <div class="meta">昨天 · 上海</div>
+          </div>
+        </div>
+        <p>之前在读夏鹏老师的《主场》，这是一本写给年轻人的职场成长手册。夏鹏老师说，那些成事的人，无非都在以主角的心态，充分发挥主场优势，走出一条绝不内耗的打工之路。他说，打工人觉得工作没有意义，老板不给机会，公司没前途，其实都很正常。但关键在于你如何重写这段经历的「叙事」——我不是在为老板打工，我是在为自己的「简历」打工。</p>
+        <p>这其实就是「自我决定理论」的一种应用。比如，你可以把理想公司的岗位要求当作你现在的 OKR 或者 KPI 来执行，对方说你要有数据分析能力，那你就想想你现在的工作里哪个部分与数据分析有关，挖地三尺也要找出来，实在没有，创造任务也要干。或者如果公司其他岗位有数据分析的活，你就去找那个同事，去无偿帮忙。再比如，目标岗位要求有 AI 使用能力，即使你现在的公司没人用 AI，你也可以用自己的电脑弄个「龙虾」去优化工作流程。</p>
+        <p>这样做，表面上还是在打工，但内在逻辑已经改变：你不再被动完成任务，而是在主动塑造自己。人最有力量的状态，不是硬撑着努力，而是清楚自己为什么做，并愿意为这个选择负责。真正能减少内耗的，不是环境突然变好，而是你开始把工作的解释权拿回来。</p>
+      </div>
+
+      <div class="comment-card">
+        <div class="comment-head">
+          <span class="avatar">常</span>
+          <div>
+            <div class="name">常觉不住</div>
+            <div class="meta">20小时前 · 美国</div>
+          </div>
+        </div>
+        <p>这讲让我想起一件旧事。以前因为太太介绍，我参加过一个义工团体。有一次活动，我只是帮忙拿工具、打打杂。结束后我随口说，这些事我在家里平常都不做，通常宁可花钱请人。结果中午吃饭时，主办人当着大家的面说，我以后应该常来做服务，就算只是扶楼梯、打杂也很好。我当时没有发作，但那股劲一下就没了。后来他再找人做杂务，我都不去了。</p>
+        <p>后来还有一次，团体里的 WiFi 坏了三天，他叫我去看看。我过去不到一分钟就弄好了。中午他又当众说，团体应该多多利用每位义工的专长，让有专长的人多贡献一点。这两件事我后来放在一起想，才发现自己不舒服的地方，其实不是做杂务，也不是出专长。前一次像是把人往低处摆，后一次像是把人往高处摆，可本质上是一样的：都是别人替你决定，你应该怎么贡献。</p>
+        <p>人不是不能付出，也不是不能做小事。可一旦一个团体总是在替人定义位置、分配价值，热心做着做着，就容易变味了。</p>
+      </div>
+    </section>
+
+    <!-- ============ AI 阅读总结 ============ -->
+    <section id="ai-summary">
+      <h2>📖 AI 阅读总结</h2>
+
+      <p class="summary-one">一句话概括：真正的一流人物不是靠听话和吃苦熬出来的，而是被「自主感、胜任感、关系感」三种心理营养喂大的——把控制点从外移到内、把「要我做」变成「我要做」，人才能既不内耗，又发挥出最好的自己。</p>
+
+      <h3>一、核心内容总结</h3>
+      <ul>
+        <li><strong>听话 ≠ 优秀。</strong>能把交代的任务保质保量完成，只是「智能工具」；一流人物与普通人的分野在于能动性（agency）——主动发现问题、发起行动、塑造生活，而不是让生活发生在自己身上。</li>
+        <li><strong>当代制度是 19 世纪工厂的产物。</strong>奖惩、KPI、排名、打卡这套「胡萝卜加大棒」只能买来服从、买不到投入，把人逼向「最低成本合规」，于是上班像上坟、上学像坐牢。</li>
+        <li><strong>SDT 的核心主张是「动机质量比动机强度更重要」。</strong>德西与瑞安在 1980 年代提出这一框架，把动机画成从外到内的六层连续体：无动机、外部调节、内摄调节、认同调节、整合调节、内在动机。</li>
+        <li><strong>「内摄调节」最值得警惕。</strong>没人抽你，但你把鞭子长在了心里——为了不内疚、不焦虑而做，惊人毅力的代价是巨大的内耗；只有到了「认同调节」才进入能动性的转折点，自选的价值让内耗大减。</li>
+        <li><strong>最高境界是内在动机。</strong>活动本身就是目的，心流、创造性、超水平发挥都出现在这一层；孔子「知之者不如好之者，好之者不如乐之者」正好对应这套层级，古今相通。</li>
+        <li><strong>三样心理营养决定动机死活。</strong>自主感（有选择权）、胜任感（挑战够得着、有正向反馈）、关系感（被关心、被理解、有归属）被满足，能动性自动发芽；被压制，动机就枯萎——「动机不是被点燃的火，而是被喂饱的植物」。</li>
+        <li><strong>证据链很硬。</strong>德西拼图实验证明「过度理由效应」——金钱奖励会挤掉内在动机；自主动机下大脑多巴胺与深度学习脑区更活跃；谷歌 20% 时间孕育出 Gmail 和 AdSense；微软日本「做四休三」生产率反升 40%。</li>
+        <li><strong>SDT 只是把人当「人」。</strong>它发现当你活得像个人、把控制点内移时，发挥恰恰最好；一流人物不是痛苦的卷王，不用先自残再成神。</li>
+      </ul>
+
+      <h3>二、给个人的行动建议</h3>
+      <ol>
+        <li><strong>把「不得不做」翻译成「我选择做」。</strong>每天开工前，给最不想干的那件事写一句「我为什么认同它」的理由——哪怕只是「为了锻炼我的耐心」，也比「为了不被老板骂」高级得多。</li>
+        <li><strong>每天做一次微决策。</strong>在没人管的地方建立自己的秩序：自己定干活顺序和节奏、把办公桌摆成喜欢的样子、在交接里留下自己的风格，把被动的任务变成自己的作品。</li>
+        <li><strong>把无聊任务游戏化。</strong>给自己计时「能不能比昨天快 10 分钟」，或在重复劳动里设一个小挑战、记录一次进步，强行植入挑战与反馈，换回一点胜任感。</li>
+        <li><strong>如果你管人、教人或带娃：先给选择，再给理由。</strong>把「必须先做数学再做英语」换成「数学和英语你想先做哪个？」；反馈永远对事不对人，具体指出「你第二步的思路很有创意」，并补一句「我理解这很无聊，但我相信你能做好，你对我很重要」。</li>
+        <li><strong>每周做一次「心理营养自检」。</strong>问自己三问——我有选择权吗？我得到正向反馈了吗？我感到被支持和被看见吗？哪一项长期缺失，就从哪一项开始补。</li>
+        <li><strong>用身份整合代替苦行自律。</strong>想坚持什么，就把它和「我是谁」绑定（「我本来就是天天健身的人」），而不是靠咬牙硬扛；先分清自己是「不想做」还是「断了电」——如果是后者，先解决无意义感，再谈努力。</li>
+        <li><strong>别用奖励挤掉别人本来的兴趣。</strong>布置任务、鼓励孩子前先想清楚：你的钱和惩罚，会不会把对方本来有的内在动机「crowd out」掉？</li>
+      </ol>
+
+      <h3>三、金句摘录</h3>
+      <ul class="quote-mini">
+        <li>「人最强的不是自律，而是自愿。一流人物不可能是痛苦的卷王。」</li>
+        <li>「动机不是被点燃的火，而是被喂饱的植物。」</li>
+        <li>「从外边控制能买来服从，可买不到投入。」</li>
+        <li>「听话不是一个特别值钱的品质。」</li>
+      </ul>
+
+      <p class="ai-footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+    </section>
+
+  </article>
+</div>
+
+<button id="to-top" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('progress-bar');
+  var btn = document.getElementById('to-top');
+  function onScroll() {
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = (h.scrollHeight - h.clientHeight) || 1;
+    bar.style.width = (sc / max * 100) + '%';
+    btn.style.display = sc > 400 ? 'flex' : 'none';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  onScroll();
+})();
+</script>
+</body>
+</html>

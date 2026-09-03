@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢 · 现代思维工具100讲 第28讲｜颗粒度和因果中介：用模型思考</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --card-soft:#f3eee4;
+    --text:#2d2a26;
+    --text-soft:#6b645a;
+    --accent:#8a5a2b;
+    --accent-soft:#e8d9c3;
+    --border:#e2d9c8;
+    --quote-border:#b98a52;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d19;
+      --card-soft:#26221c;
+      --text:#e8e2d8;
+      --text-soft:#a49b8d;
+      --accent:#c89a6a;
+      --accent-soft:#3a2f22;
+      --border:#3a352c;
+      --quote-border:#c89a6a;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 60px;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#8a5a2b,#c89a6a);
+    z-index:99;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 20px 20px;
+  }
+  .doc-head{
+    text-align:left;
+    padding:8px 2px 22px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:26px;
+  }
+  .tag{
+    display:inline-block;
+    font-size:13px;
+    letter-spacing:1px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:6px;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:24px;
+    line-height:1.45;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--text-soft);
+    letter-spacing:.5px;
+  }
+  h2{
+    font-size:19px;
+    font-weight:700;
+    color:var(--accent);
+    margin:34px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--quote-border);
+    line-height:1.5;
+  }
+  h3{
+    font-size:17px;
+    font-weight:700;
+    margin:26px 0 10px;
+    color:var(--text);
+  }
+  p{margin:0 0 14px;}
+  em{font-style:normal;color:var(--accent);font-weight:600;}
+  ul{margin:0 0 16px;padding-left:24px;}
+  li{margin-bottom:8px;}
+  blockquote{
+    margin:18px 0;
+    padding:14px 18px;
+    border-left:4px solid var(--quote-border);
+    background:var(--card-soft);
+    border-radius:0 12px 12px 0;
+    color:var(--text);
+    font-size:17px;
+    font-weight:600;
+  }
+  blockquote .src{
+    display:block;
+    margin-top:8px;
+    font-size:13px;
+    font-weight:400;
+    color:var(--text-soft);
+  }
+  .chain{
+    text-align:center;
+    font-family:"SF Mono",Consolas,"Courier New",monospace;
+    font-size:15.5px;
+    letter-spacing:.5px;
+    background:var(--card-soft);
+    border:1px dashed var(--border);
+    border-radius:12px;
+    padding:12px 10px;
+    margin:16px 0;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .sep{
+    text-align:center;
+    color:var(--accent);
+    font-size:16px;
+    letter-spacing:6px;
+    margin:30px 0;
+    position:relative;
+  }
+  .sep::before,.sep::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    width:36%;
+    height:1px;
+    background:var(--border);
+  }
+  .sep::before{left:0;}
+  .sep::after{right:0;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:16px 0;
+  }
+  .card .who{
+    font-size:13px;
+    color:var(--text-soft);
+    margin-bottom:8px;
+    letter-spacing:.5px;
+  }
+  .card .who b{color:var(--accent);font-weight:600;}
+  .notes{
+    margin-top:40px;
+    background:var(--card-soft);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    font-size:13px;
+    color:var(--text-soft);
+    line-height:1.7;
+  }
+  .notes h2{font-size:16px;margin:0 0 10px;padding-left:0;border-left:none;}
+  .notes ol{padding-left:22px;}
+  .notes li{margin-bottom:8px;word-break:break-all;}
+  .notes .url{color:var(--text-soft);word-break:break-all;}
+  .comments{
+    margin-top:34px;
+  }
+  .comments h2{margin-bottom:8px;}
+  .comments .card p{margin-bottom:10px;}
+  #ai-summary{
+    margin-top:44px;
+    background:linear-gradient(180deg,var(--accent-soft),var(--card));
+    border:2px solid var(--quote-border);
+    border-radius:14px;
+    padding:24px 22px;
+  }
+  #ai-summary .ai-title{
+    font-size:20px;
+    font-weight:700;
+    color:var(--accent);
+    text-align:center;
+    margin-bottom:18px;
+    letter-spacing:2px;
+  }
+  #ai-summary .one-line{
+    font-weight:700;
+    font-size:17px;
+    line-height:1.7;
+    padding:12px 14px;
+    background:var(--card);
+    border-radius:10px;
+    margin-bottom:20px;
+  }
+  #ai-summary h3{
+    font-size:16.5px;
+    color:var(--accent);
+    margin:20px 0 10px;
+    border-bottom:1px solid var(--border);
+    padding-bottom:6px;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:22px;margin-bottom:6px;}
+  #ai-summary li{margin-bottom:9px;}
+  .quote-list{margin:0;padding:0;list-style:none;}
+  .quote-list li{
+    padding:10px 14px;
+    margin-bottom:10px;
+    border-left:4px solid var(--quote-border);
+    background:var(--card);
+    border-radius:0 10px 10px 0;
+    font-weight:600;
+    font-size:15.5px;
+    line-height:1.7;
+  }
+  .ai-foot{
+    margin-top:18px;
+    font-size:12px;
+    color:var(--text-soft);
+    text-align:center;
+    letter-spacing:.5px;
+  }
+  #backTop{
+    position:fixed;
+    right:18px;bottom:30px;
+    width:46px;height:46px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent);
+    color:var(--bg);
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease, transform .2s ease;
+    z-index:98;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #backTop:hover{transform:scale(1.08);}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<article class="container">
+
+  <header class="doc-head">
+    <div class="tag">万维钢 · 现代思维工具100讲 · 第28讲</div>
+    <h1>颗粒度和因果中介：用模型思考</h1>
+    <div class="meta">主讲：万维钢 ｜ 系列：《现代思维工具100讲》 · 第28讲</div>
+  </header>
+
+  <h2>从「癌症是气出来的」这个错误认识说起</h2>
+  <p>正确的决策要求你对事物有正确的认识。咱们先从一个错误的认识说起。</p>
+  <p>网上流传一种市侩哲学：「如果想不得癌，……就一定要放开，内心要强大到混蛋……你别憋着……不要自己心里太拧巴，这是减少癌症发生的方法！」很多人相信癌症是「气出来的」，但我不得不说，那是伪科学。</p>
+  <p>美国癌症协会（American Cancer Society, ACS）专门有个科普页面 <sup>[1]</sup>，直接说研究显示人的个性、想法和情绪既不会导致癌症，也不会影响癌症是否复发。美国国家癌症研究所（NCI）说得更保守一点 <sup>[2]</sup>，说压力和癌症之间「没有清晰链条」。</p>
+  <p>其实这里早就有一系列大规模跟踪研究。比如一项对超过 10 万英国女性的研究 <sup>[3]</sup> 发现压力频度和不良生活事件与乳腺癌风险无关。一项针对超过 11 万人的大规模荟萃分析 <sup>[4]</sup> 显示，在排除了吸烟、饮酒等因素后，所谓「工作压力」与任何主要癌症的风险都没有关联。更有研究 <sup>[5]</sup> 发现，愤怒控制、负面情绪与癌症风险总体无显著关联。</p>
+  <p>那你说不对啊，《精英日课》专栏不是经常讲压力对健康的各种坏处吗？怎么压力偏偏不会导致癌症呢？</p>
+  <p>科学家对此说得很明白。那些研究说的是压力不会<em>直接</em>导致癌症——但压力可能与癌症有<em>间接</em>的关系。比如说，压力可能会让你产生不健康的生活习惯，比如吸烟、喝酒、暴饮暴食，而这些习惯有可能增加癌症的风险。</p>
+  <p>这是两个非常不同的故事。理解这两个故事的区别，你才能学会控制复杂事物。</p>
+  <p>简单说，要想操控一个事物，你必须在头脑中建立这个事物的「模型」。</p>
+
+  <div class="sep">✵</div>
+
+  <h2>没有模型，你只能「无能狂怒」</h2>
+  <p>咱们先看看没有模型是什么状况。想象一个大学宿舍楼的管理员，他最反感每天晚上过了熄灯时间楼里还有吵闹声。如果对宿舍楼的情况一无所知，他就只能一听见吵闹声就出去大喊大叫让大家不要吵了，甚至不得不挨个屋子敲门。</p>
+  <p>可是如果宿管员脑子里有个宿舍楼的模型，他知道比如说 305 房间有个低音炮、117 房间有个学生最爱在熄灯以后打联网对战游戏、这几天二楼的水泵坏了大家洗漱慢……他就不必无能狂怒，而能够根据噪音的类型精准干预。</p>
+  <p>其实生活中很多人就像是那个宿管员，体检指标差了就喝枸杞，一看项目延期就要求员工加班，听说孩子成绩下滑就疯狂打骂……你都不知道事情是怎么回事儿，但是你必须做点大动作。</p>
+
+  <h2>模型：事物的结构镜像与「好调节器定理」</h2>
+  <p>模型，是事物在你头脑中的一个结构镜像，能帮你看清楚它运行的底层机制。没有模型，你就如同面对黑箱，只能对输入信号做冲动的反应；有了模型，你才知道按钮在哪儿。</p>
+  <p>控制论领域有个极其深刻的说法，叫「好调节器定理（Good Regulator Theorem）」，是 1970 年由罗杰·科南特（Roger C. Conant）和 W·罗斯·阿什比（W. Ross Ashby）提出来的 <sup>[6]</sup>，意思非常简单：</p>
+  <blockquote>「系统的每一个好调节器，都必须是该系统的一个模型。」<span class="src">—— 康南特与阿什比，1970</span></blockquote>
+  <p>这个定理等于是从数学上证明了，你的认知结构必须同构于你想要控制的那个事物。如果你的模型比现实世界简单太多——比如用「癌症是气出来的」解释复杂的生物学——你就一定会丢失关键信息，你的决策就一定是错的。</p>
+  <p>说白了，你能理解到什么程度，才能控制到什么程度。</p>
+
+  <div class="sep">✵</div>
+
+  <h2>好模型的第一个要求：颗粒度恰到好处</h2>
+  <p>那好的模型该是什么样呢？我们至少有两个要求。</p>
+  <p>第一个要求是模型的复杂度——也就是职场白领爱说的「颗粒度（Granularity）」——必须恰到好处。太简单粗糙固然不好，但是太复杂也不好。说我就像《三体》里的智子一样，要把世界上每个粒子都跟踪起来，那你的算力根本受不了，而且反而会让你把注意力放在没有用的地方。</p>
+  <p>模型一定是对真实世界的某种压缩，而这个压缩要恰到好处才好。你早就听说过所谓「奥卡姆剃刀（Occam's razor）」，也就是「如无必要，勿增实体」——信息论里有个理论相当于是把奥卡姆剃刀变成了可计算的准则，叫做「最小描述长度（Minimum Description Length, MDL）」<sup>[7]</sup>。</p>
+  <p>简单说，最小描述长度准则要求，最好的模型应该是使得以下两项之和最小的那个模型：</p>
+  <ul>
+    <li><strong>模型的长度：</strong>描述这个模型本身所需要的比特数，也就是你这个模型本身有多复杂；</li>
+    <li><strong>数据补丁的长度：</strong>如果别人用你这个模型解释现实，还要补充多少例外说明。</li>
+  </ul>
+  <p>说白了就是最好的模型，是那个能用最短的代码长度，解释最多数据的模型。</p>
+  <p>比如人家问你本地的天气怎么样。你要是把过去一年每天的天气都给描述一遍，那就太长了，没有压缩谈不上理解，这叫「过拟合」。你要是就回答一句「这地方总下雨」，那就太短了，是「欠拟合」……</p>
+  <p>一个恰到好处的描述是：「这里属于温带海洋性气候，受西风带控制，全年温和湿润，虽然阴雨天多，但多是毛毛雨，很少有暴雨。」才几十个字，有规律、有机制、能代表很多数据，别人一听就知道是怎么回事，这就是好模型。</p>
+  <p>用模型思考，要善于丢掉细节直达本质。有时候与事物保持一定的心理距离，你的解释水平反而更高 <sup>[8]</sup>，因为你更能把问题抽象化、原则化。</p>
+  <p>为什么最近股市在跌？你要是考察网上舆论能列举出来 100 个理由：中央银行加息、地缘政治、某公司财报、某大 V 的言论……堆一大堆噪音还是一脸困惑。高手的模型一定是高压缩的：「流动性收紧导致风险资产重估。」这一句话就能解释 80% 的波动。</p>
+  <blockquote>「理解即压缩（Understanding is Compression）。练成这个功夫，你就是那个传说中所谓『花半秒钟就看透事物本质的人』。」</blockquote>
+
+  <div class="sep">✵</div>
+
+  <h2>好模型的第二个要求：包含因果关系</h2>
+  <p>好模型的第二个要求是其中包含因果关系。有因果关系，你才能讲清楚事情的机制。</p>
+  <p>咱们这里不谈哲学——要是从纯粹哲学角度讲，这个世界上有没有真正的因果关系还两说。我们使用图灵奖得主朱迪亚·珀尔（Judea Pearl）在《为什么：关于因果关系的新科学》（The Book of Why）<sup>[9]</sup> 一书里那个洞见：我们不是想要彻底说清楚绝对的因果，我们其实想知道的是：我做什么事儿能<em>干预（intervene）</em>这件事的发生。</p>
+  <p>经常一起发生的两件事之间未必有因果关系，可能只是相关性。但是，如果我是<em>强行介入</em>（珀尔的术语叫 do-operator），在保持其他所有因素不变的情况下<em>单方面</em>让事件 X 发生，而这时候事件 Y 发生的概率增加了，那么我就可以说 X 对 Y 有因果效应，或者说 X 至少是导致 Y 的一个原因，标记为 X → Y。</p>
+  <p>比如说，公鸡每天早上一打鸣，太阳就出来，这是一个相关性。要知道这里有没有因果，你必须做一个干预：有一天你强行介入，把公鸡的嘴堵上，看看太阳还会不会出来。如果太阳照样升起，那就说明公鸡打鸣和太阳出来之间没有因果关系。</p>
+  <p>反过来，你走进一个黑暗的房间，完全出于自由意志单方面突然行动，按一个开关，灯就亮了，那我们就可以说这里有因果关系：开关 → 灯亮。</p>
+  <p>你的模型中应该包含若干个因果关系，最好把各个变量用因果关系箭头串联起来画成图，清晰展示整个事情的机制。</p>
+
+  <div class="sep">✵</div>
+
+  <h2>关键洞见：找到「中介变量」</h2>
+  <p>现在关键的洞见来了：任何模型都不可能穷尽一个事物中所有的因果关系，多了也不好少了也不好，达到最小描述长度才好。</p>
+  <p>比如我们前面说了，大量的研究都指出生气和癌症之间的相关性是很小的：很多人经常生气也不得癌症，很多人不生气却得了癌症……但你要是强行找相关性，的确也有一些研究显示，生气的人比不生气的人，患癌概率要稍微高那么一点点。可如果你据此就说「生气 → 癌症」，那就太不负责任了。</p>
+  <p>这个链条过于粗糙而且效应太脆弱。负责任的做法是看看这里面还有没有间接效应，也就是所谓「中介变量（Mediator）」：生气导致了什么，然后那个什么又导致了癌症？</p>
+  <p>美国国家癌症研究所直接点名 <sup>[2]</sup>，长期心理压力可能让人更容易有不良生活习惯，包括暴饮暴食、不运动、吸烟、酗酒，而这些，才是更明确的癌症风险因素。所以更精确的因果链条是：</p>
+  <div class="chain">生气 → 不良生活习惯 → 癌症</div>
+  <p>那些研究说，如果排除这些不良生活习惯的影响，生气和癌症之间就没有什么关系。</p>
+  <p>找到「不良生活习惯」这个中介，事情就好操作了：如果你虽然情绪不佳，但依然能坚持锻炼并控制饮食，那么你就不会因为「生气」而得癌症。</p>
+  <p>有个好模型，你才能抓住控制点。</p>
+
+  <div class="sep">✵</div>
+
+  <h2>案例一：《点球成金》里的「上垒」</h2>
+  <p>咱们看一个经典案例，出自迈克尔·刘易斯（Michael Lewis）的《点球成金》（Moneyball）一书 <sup>[10]</sup>。</p>
+  <p>棒球这个运动在美国已经流行了很多很多年，但是长期以来，棒球人的「模型」是非常粗糙的。球探认为球星 → 赢球：得买那些能打出全垒打、长得帅、姿势优美的球员……而这就使得符合那个形象的球员极其昂贵。</p>
+  <p>大约是 2002 年，奥克兰运动家队总经理比利·比恩（Billy Beane）因为没钱，被迫领悟到了一个新的棒球模型：赢球需要得分，而得分需要上垒！</p>
+  <div class="chain">（击球 + 选球眼光） → 上垒 → 得分 → 赢球</div>
+  <p>上垒是被人忽视的关键中介变量：不管你是打出去的、跑出去的，还是被球砸中身体保送的，只要你能上垒，你就能制造得分机会——而市场上，那些「长得丑、姿势怪、不会打全垒打但特别能蹭上垒」的球员，价格像白菜一样便宜。</p>
+  <p>于是比恩买了这样一群被传统球探鄙视的球员……结果是以极低的薪资总额创下了 20 连胜的纪录。</p>
+  <p>很多人说这是「大数据」的胜利——可什么叫大数据？没有模型哪知道怎么分析数据？这是因果模型对直觉的降维打击。</p>
+
+  <h2>案例二：足球里的「上垒」是什么？</h2>
+  <p>好，现在我们把《点球成金》这个思维用在足球上，你猜一猜，足球比赛中的「上垒」是什么？你可能想到「助攻」，也就是进球之前的最后一脚传球。但这个模型太简单了，解说员和球迷早就知道助攻的价值，助攻都有自己的排行榜……那里没有溢价。</p>
+  <p>现代足球专家使用的模型是，真正的杀招往往不是射门也不是最后一脚传球——而是倒数第二脚、第三脚传球或者带球突破：是那个撕开防线，改变了场上的<em>概率结构</em>的动作 <sup>[11]</sup>。</p>
+  <p>本来攻守双方是平衡的，人群之中有个球员看似随意地传了一脚球，把球从低威胁区域送到了高威胁区域，进球概率一下子就从 2% 提升到了 30%。模型说，这一脚提高了「期望威胁（Expected Threat）」。</p>
+  <blockquote>别盯终点，盯中介。</blockquote>
+
+  <div class="sep">✵</div>
+
+  <h2>小应用案例：找手感</h2>
+  <h3>买手机</h3>
+  <p>有的人说「我就要苹果新出的最贵的那款」，或者「我买个便宜的就行」，这都是过短的模型。也有人花好几天研究各种手机参数，又是比价又是看评测，最后还没买成，那你用的模型就太长了。</p>
+  <p>最小描述长度准则要求信息刚好够用。你先想好买手机干什么：你是只需随便拍个娃，还是经常要拍夜景？你是要打游戏，还是只看看短视频？只考虑几个关键变量，把模型压缩到最简，才能准确决策。</p>
+  <h3>学习</h3>
+  <p>孩子成绩不好家长就大喊大叫，说你怎么不努力。可是学习有很多环节，到底哪个环节出了问题？你得有模型才能分析。我们搞个最简单的模型：</p>
+  <div class="chain">（时间 + 注意力） → 记忆编码 → 提取 → 成绩</div>
+  <p>如果是时间和注意力投入不足，那的确是孩子不努力；如果是记忆编码有问题，那就是老师没教好或者学习材料不对；如果是提取问题，那就是练习不充分。有些家长只知道盯着孩子学习时间，那是因为他们只能看懂时间。</p>
+  <h3>公司管理</h3>
+  <p>有些老板喜欢搞长模型，各种场景事无巨细都有详细规定，员工根本执行不了。有些老板喜欢短模型，甚至说我只要结果，你们看着办……好的管理，应该首先设定几条核心价值观，尽量覆盖复杂场景；然后要对公司的核心业务建立因果关系：如果终点是收入，那么中介可能是留存、转化率、渠道质量、产品体验、交付速度；再往前还有团队协作、决策效率、信息流等等。</p>
+  <p>只盯收入，你就会专门做短期促销，属于欠拟合；要是对以上所有中介变量全都盯住每天做日报，你就无所适从，陷入过拟合。</p>
+  <p>最小描述长度准则要求你找到一两个最关键中介进行干预，那些才是上垒和威胁传球。</p>
+
+  <div class="sep">✵</div>
+
+  <h2>结语：地图不是疆域</h2>
+  <p>高水平决策者知道自己该看什么。他会以最小描述长度，把事情压缩成一个模型。他会洞察其中的机制，描绘因果关系图，确保自己发现关键中介。</p>
+  <p>其实没有绝对标准的颗粒度。到底模型要细致到什么程度才好，是由你的主观需求决定。而且你到现场总会遭遇意外。</p>
+  <blockquote>「地图不是疆域。」（The map is not the territory.）<span class="src">把世界变成模型总是有危险的，但如果你连地图都没有，你连路都上不了。</span></blockquote>
+
+  <section class="notes">
+    <h2>注释</h2>
+    <ol>
+      <li>American Cancer Society. "Do Feelings and Attitudes Have an Effect on Cancer?" Updated November 21, 2025. <span class="url">https://www.cancer.org/cancer/coping/attitudes-feelings-and-cancer.htm</span></li>
+      <li>National Cancer Institute. "Stress and Cancer." <span class="url">https://www.cancer.gov/about-cancer/coping/feelings/stress-fact-sheet</span></li>
+      <li>Schoemaker, Minouk J., et al. "Psychological stress, adverse life events and breast cancer incidence: a cohort investigation in 106,000 women in the United Kingdom." Breast Cancer Research 18, no. 1 (2016): 72.</li>
+      <li>Heikkilä, Katriina, Solja T. Nyberg, Tores Theorell, Eleonor I. Fransson, Lars Alfredsson, Jakob B. Bjorner, Marianne Borritz, et al. "Job Strain and the Incidence of Cancer: An Individual-Participant Meta-Analysis of 116,000 European Men and Women." BMJ (British Medical Journal) 346 (2013): f165.</li>
+      <li>White, V. M., et al. "Is Cancer Risk Associated with Anger Control and Negative Affect? Findings from a Prospective Cohort Study." Psychosomatic Medicine 69, no. 7 (2007): 667–674.</li>
+      <li>Conant, Roger C., and W. Ross Ashby. "Every Good Regulator of a System Must Be a Model of That System." International Journal of Systems Science 1, no. 2 (1970): 89–97.</li>
+      <li>Grünwald, Peter D. The Minimum Description Length Principle. Cambridge, MA: MIT Press, 2007.</li>
+      <li>Trope, Yaacov, and Nira Liberman. "Construal-Level Theory of Psychological Distance." Psychological Review 117, no. 2 (2010): 440–463.</li>
+      <li>Pearl, Judea, and Dana Mackenzie. The Book of Why: The New Science of Cause and Effect. New York: Basic Books, 2018. 另外，《精英日课》专栏专门解读过《为什么》这本书：洞见因果的三种思维。</li>
+      <li>Lewis, Michael. Moneyball: The Art of Winning an Unfair Game. New York: W. W. Norton, 2003.</li>
+      <li>Singh K., Introducing Expected Threat (xT): Modelling team behaviour in possession to gain a deeper understanding of buildup play [Blog post]. 2018-12-24. <span class="url">https://karun.in/blog/expected-threat.html</span></li>
+    </ol>
+  </section>
+
+  <section class="comments">
+    <h2>用户留言</h2>
+
+    <div class="card">
+      <div class="who"><b>至尊女宝</b> · 4月16日 · 四川</div>
+      <p>我的经验是，当面对一个复杂系统，如果感到什么都重要、什么都要管，那恰恰说明模型颗粒度不对。不是系统太复杂，是我还没找到那个能解释 80% 现象的 20% 变量。而那个变量，往往藏在自己最想忽略的地方——因为太普通了，太不起眼了，不符合自己对「深刻」的想象。这就像生产线上的瓶颈，从来不是那些光鲜的自动化设备，而是某个没人注意的传送带或者气路接头。去年黄河特大桥垮塌 16 人死亡的重大事故居然是因为几颗劣质螺栓，国家级重点工程采购的螺栓承载力居然比国标低 41%。（这能说吧？公开的事故报告上的数据）最后调查发现材料合格证是美图秀秀做出来的，就离谱。</p>
+      <p>因果不是一条直线，而是一张网。但学这个课程的目的就是你先把网简化成几条关键链，否则连从哪里下手都不知道。比如设备振动过大，你直接说「振动导致损坏」，然后拼命加阻尼，可能根本没用。真正的原因可能是某颗螺栓松动，振动只是中介。你该做的是拧螺栓，不是加阻尼。</p>
+      <p>模型不是现实，但模型是你唯一能操作的东西。你不可能把整座山搬进实验室，但你可以做一个小比率的物理模型，在风洞里吹它，看它怎么垮掉。现实决策也是这样，我们永远带着简化的地图走路，但只要知道地图在哪里简化了，哪里省略了，我们就比那些没有地图的人强得多。</p>
+    </div>
+
+    <div class="card">
+      <div class="who"><b>左星星</b> · 4月16日 · 上海</div>
+      <p>很多人找对象时用的短模型是：对我好 + 有感觉 = 适合结婚。这个判断太短，因为热情和体贴并不等于长期稳定；但如果模型拉得太长，把学历、收入、长相、家庭、爱好、星座、MBTI 都塞进去，又容易失去重点。</p>
+      <p>一个复杂度刚好的模型可以是：价值观接近 + 冲突处理能力 + 基本责任感 → 关系稳定性 → 长期幸福感。真正值得观察的中介变量，不是「甜不甜」，而是「发生分歧时怎么处理」。再亲密的关系，也一定会经历压力和摩擦，能否沟通、会不会冷暴力、是否愿意承担责任，才决定一段关系能走多远。因此，与其沉浸在高光时刻，不如留意低谷中的反应，那才更接近真实。</p>
+      <p>在职业选择上也是类似。很多人的短模型是：工资更高 = 更好的工作，这同样过于粗糙。一个更合理的模型是：岗位内容 + 上升空间 + 可迁移能力 + 组织稳定性 → 三年后的职业位置。这里关键的中介变量，不是「当下多拿多少钱」，而是「这份工作能不能让你长出未来还能用的能力」。有些工作薪水高，但把人锁在单一流程里；有些起点普通，却能让你接触核心业务、积累判断力。前者可能赢一年，后者更可能赢在更长的周期。</p>
+      <p>模型思维的价值，不在于让人显得更聪明，而是提醒我们别急着盯结果，而是先找到那个真正可以被干预的中间变量。</p>
+    </div>
+
+    <div class="card">
+      <div class="who"><b>Christy</b> · 4月16日 · 广东</div>
+      <p>决策的核心在于简化模型，聚焦关键变量，避免被冗余信息干扰。查理·芒格有句话大概意思是：复杂的事情要用极简的方法解决。核心就是找到那 20% 能决定 80% 结果的关键因素，并专注于此。</p>
+      <p>大脑处理信息的能力是有限的，面对海量信息和无数变量，试图建立一个「完美」的模型很可能会导致分析瘫痪。在做任何决策前，先问自己：我真正要解决的核心问题是什么？我的最终目标是什么？目标越清晰，筛选关键变量的标准就越明确。比如选课程，如果目标是「提升某项具体技能」，那么「课程是否教这项技能」就成了关键变量，而「是否热门」则被剔除。在日常选择中，设定明确的标准如成本收益比作为决策锚点，可以快速排除非核心选项，实现「化繁为简」。对于重大的人生决策，一旦选定路径，就要减少反复比较「未选之路」，转而专注于当前路径的执行与优化。</p>
+      <p>在复杂的世界里，最优的决策往往不取决于信息的广度，而在于抓住本质的深度。把模型压缩到最简，就是为了排除干扰，直击要害。关键不是掌握所有信息，而是识别哪些信息才是真正重要。</p>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <div class="ai-title">AI 阅读总结</div>
+    <div class="one-line">一句话概括：高手决策不是靠直觉或堆砌信息，而是在头脑里建立「颗粒度恰到好处、包含因果链」的模型，并找到那个真正可干预的中介变量——别盯终点，盯中介。</div>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>「癌症是气出来的」是伪科学：</strong>ACS、NCI 及多项大规模研究（10 万英国女性队列、11.6 万人荟萃分析等）都表明，个性、情绪、工作压力与癌症之间没有直接因果；压力只是通过「不良生活习惯」这类中介间接起作用。区分「直接因果」和「间接因果」是两个非常不同的故事，理解这个区别才能控制复杂事物。</li>
+      <li><strong>好调节器定理：</strong>1970 年康南特与阿什比从数学上证明「系统的每一个好调节器，都必须是该系统的一个模型」——你的认知结构必须同构于你要控制的事物，模型太简陋必然丢失关键信息、决策出错；你能理解到什么程度，才能控制到什么程度。</li>
+      <li><strong>颗粒度要恰到好处：</strong>以「最小描述长度（MDL）」为可计算的准则，最好的模型使「模型本身的长度 + 例外补丁的长度」之和最小；过拟合（事无巨细描述一年天气）和欠拟合（一句「总下雨」）都不行，好模型用最短代码解释最多数据——「理解即压缩」。</li>
+      <li><strong>因果是模型的第二要求：</strong>借用珀尔 do-operator 的思想，判断因果的关键在于「干预」：在保持其他条件不变时强行让 X 发生、Y 的概率随之改变，才能说 X → Y。公鸡打鸣与日出只是相关性，按开关与灯亮才是因果。</li>
+      <li><strong>关键洞见是中介变量：</strong>任何模型都无需穷尽所有因果。薄弱的直接相关（生气 → 癌症）不可靠，应追问中间环节，建立更精确的链条「生气 → 不良生活习惯 → 癌症」；找到中介，干预点才出现——情绪不佳但坚持锻炼控食，就不会因生气得癌症。</li>
+      <li><strong>《点球成金》案例：</strong>比恩因缺钱被迫把模型从「球星 → 赢球」升级为「（击球+选球眼光）→ 上垒 → 得分 → 赢球」，发现被市场忽视的中介变量「上垒」，用白菜价的球员创下 20 连胜——这是因果模型对直觉的降维打击，而非单纯「大数据」的胜利。</li>
+      <li><strong>足球版的「上垒」是期望威胁：</strong>真正的杀招不是射门或最后一脚传球，而是撕开防线、把球从低威胁区送到高威胁区、把进球概率从 2% 提到 30% 的倒数第二脚、第三脚传球或带球——那里才是没有溢价的干预点。</li>
+      <li><strong>应用迁移：</strong>买手机先想用途再定两三个关键变量；孩子学习用「（时间+注意力）→ 记忆编码 → 提取 → 成绩」定位问题环节；公司管理用核心价值观覆盖场景、只盯一两个最关键中介（如留存、转化）——只盯终点是欠拟合，全盯住是过拟合。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>本周选一个你正在焦虑的具体问题</strong>（业绩、孩子成绩、健康、关系），写下一句话「我以为的原因 → 结果」，再追问中间还发生了什么，找出一个你真正能强行改变（干预）的中介环节。</li>
+      <li><strong>把「情绪与健康」换成正确链条：</strong>压力 → 生活习惯 → 健康。给自己设一条「无论多烦都坚持」的运动和饮食底线，把干预点从「不许生气」转移到「行为不变形」。</li>
+      <li><strong>做一次压缩练习：</strong>拿最近一个想不明白的事（比如「为什么这段时间这么累」），逼自己用不超过 30 字的一句话讲出机制，写完删掉一半细节，检验它能否解释大部分现象——练「理解即压缩」。</li>
+      <li><strong>画一张 7 个节点以内的因果图：</strong>为工作或家庭的核心目标，用箭头连出关键变量，标出唯一一个你能直接动手的节点（do 节点），接下来一周只干预它，不碰其他。</li>
+      <li><strong>找你的「上垒」：</strong>盘点工作中哪个被低估的动作其实决定了结果（如关键客户转介绍、交付前的澄清沟通、素材复用），评估投入产出，把资源从光鲜但溢价的环节挪过来。</li>
+      <li><strong>戒掉「无能狂怒」式大动作：</strong>下次指标一差就想喝枸杞、加班、打骂之前，先问自己「我的模型在哪？」，列出可能的中间环节再动手，避免冲动干预。</li>
+      <li><strong>用最小描述长度做一次小决策：</strong>下次买手机、选课、换工作时，先写清楚用途和 2–3 个关键变量，其余参数一律不看，限时 30 分钟做决定，体会「信息刚好够用」。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <ul class="quote-list">
+      <li>「系统的每一个好调节器，都必须是该系统的一个模型。」</li>
+      <li>「理解即压缩（Understanding is Compression）。练成这个功夫，你就是那个传说中所谓『花半秒钟就看透事物本质的人』。」</li>
+      <li>「别盯终点，盯中介。」</li>
+      <li>「地图不是疆域。把世界变成模型总是有危险的，但如果你连地图都没有，你连路都上不了。」</li>
+    </ul>
+
+    <div class="ai-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</article>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('backTop');
+  function onScroll(){
+    var top=document.documentElement.scrollTop||document.body.scrollTop;
+    var total=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    bar.style.width=(total>0?(top/total*100):0)+'%';
+    var show=top>300;
+    btn.style.opacity=show?'1':'0';
+    btn.style.pointerEvents=show?'auto':'none';
+  }
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+})();
+</script>
+</body>
+</html>

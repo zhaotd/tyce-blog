@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第68讲 托付：世界奖励把不确定性变成确定性的人</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2a26;
+    --muted:#8a857a;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --card:#ffffff;
+    --card-border:#e6ddcc;
+    --quote-border:#c9a876;
+    --summary-bg:#f4ead9;
+    --summary-border:#c9a876;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e2d6;
+      --muted:#a29a8b;
+      --accent:#c98d52;
+      --accent-soft:rgba(201,141,82,.14);
+      --card:#201d19;
+      --card-border:#3a352c;
+      --quote-border:#8a6a44;
+      --summary-bg:#241e15;
+      --summary-border:#8a6a44;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding:0 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  /* 顶部阅读进度条 */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);
+    z-index:999;
+    transition:width .08s linear;
+  }
+  /* 回到顶部按钮 */
+  #toTop{
+    position:fixed;right:18px;bottom:calc(28px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-size:20px;line-height:1;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+    border:none;cursor:pointer;z-index:998;
+  }
+  #toTop:active{transform:scale(.94)}
+
+  .container{max-width:700px;margin:0 auto;padding-top:36px}
+
+  /* 文档头 */
+  .tag{
+    display:inline-block;
+    font-size:12.5px;letter-spacing:.5px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--quote-border);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:26px;line-height:1.4;font-weight:700;
+    letter-spacing:.5px;margin-bottom:12px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    border-bottom:1px solid var(--card-border);
+    padding-bottom:18px;margin-bottom:26px;
+  }
+
+  /* 正文 */
+  .content p{margin-bottom:1.1em;text-align:justify}
+  .content h3{
+    font-size:18.5px;font-weight:700;color:var(--accent);
+    margin:2em 0 .8em;line-height:1.5;
+  }
+  .content strong{font-weight:700}
+  .divider{
+    text-align:center;color:var(--accent);font-size:15px;
+    margin:2.2em 0;letter-spacing:8px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--card-border);
+  }
+  /* 金句引用块 */
+  blockquote{
+    margin:1.6em 0;padding:14px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--accent-soft);
+    border-radius:0 12px 12px 0;
+    color:var(--fg);
+    font-size:16.5px;
+  }
+  blockquote p{margin-bottom:.5em}
+  blockquote p:last-child{margin-bottom:0}
+  /* 列表 */
+  ul,ol{margin:0 0 1.2em;padding-left:1.4em}
+  li{margin-bottom:.55em;text-align:justify}
+  ul.plain{list-style:none;padding-left:0}
+  ul.plain li{
+    padding:12px 14px;background:var(--card);
+    border:1px solid var(--card-border);border-radius:12px;
+    margin-bottom:10px;
+  }
+  /* 卡片 */
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    padding:16px 18px;margin:16px 0;
+  }
+  .card .card-title{
+    font-weight:700;color:var(--accent);font-size:16px;margin-bottom:.6em;
+  }
+  .card p{font-size:15.5px;margin-bottom:.8em}
+  .card p:last-child{margin-bottom:0}
+  /* 诗 */
+  .poem{
+    text-align:center;padding:22px 16px;
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;margin:1.8em 0;
+  }
+  .poem .poem-title{
+    font-weight:700;color:var(--accent);margin-bottom:14px;font-size:15px;
+  }
+  .poem p{font-size:17px;line-height:2;text-align:center;margin-bottom:.4em}
+  /* 注释 */
+  .notes{
+    font-size:13.5px;color:var(--muted);line-height:1.75;
+    background:var(--card);border:1px dashed var(--card-border);
+    border-radius:12px;padding:14px 16px;margin:28px 0;
+  }
+  .notes h3{font-size:15px;color:var(--fg);margin-bottom:.6em}
+  .notes p{margin-bottom:.5em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  /* 用户留言 */
+  .comments{margin:28px 0}
+  .comments h2{
+    font-size:19px;margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .comment{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:12px;padding:16px 18px;margin-bottom:12px;
+  }
+  .comment .who{
+    display:flex;align-items:center;gap:10px;margin-bottom:10px;
+  }
+  .comment .avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:700;flex-shrink:0;
+  }
+  .comment .name{font-weight:700;font-size:15px}
+  .comment .where{font-size:12.5px;color:var(--muted)}
+  .comment p{font-size:15px;text-align:justify;margin-bottom:.8em}
+  .comment p:last-child{margin-bottom:0}
+  /* AI 阅读总结 */
+  #ai-summary{
+    margin-top:40px;
+    background:var(--summary-bg);
+    border:1.5px solid var(--summary-border);
+    border-radius:14px;
+    padding:22px 20px;
+  }
+  #ai-summary .ai-head{
+    display:flex;align-items:center;gap:8px;
+    font-size:16px;font-weight:700;color:var(--accent);
+    margin-bottom:16px;
+  }
+  #ai-summary h4{
+    font-size:15.5px;color:var(--accent);margin:1.2em 0 .5em;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;font-size:16px;line-height:1.7;
+    padding:12px 14px;background:var(--card);
+    border-left:4px solid var(--accent);
+    border-radius:0 10px 10px 0;margin-bottom:6px;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:1.3em}
+  #ai-summary li{font-size:15.5px;margin-bottom:.6em}
+  #ai-summary .quote-item{
+    font-size:15px;color:var(--fg);
+    border-left:3px solid var(--quote-border);
+    padding:8px 12px;margin-bottom:10px;
+    background:var(--card);border-radius:0 10px 10px 0;
+  }
+  #ai-summary .disclaimer{
+    margin-top:18px;font-size:12px;color:var(--muted);text-align:center;
+    border-top:1px solid var(--card-border);padding-top:12px;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="container">
+
+  <!-- 文档头 -->
+  <span class="tag">万维钢 · 现代思维工具100讲 · 第68讲</span>
+  <h1>托付：世界奖励把不确定性变成确定性的人</h1>
+  <div class="meta">作者：万维钢　|　「现代思维工具」之赚钱模块　|　内容整理自课程讲稿（文中资料截至 2025 年）</div>
+
+  <div class="content">
+
+    <!-- 一、开场 -->
+    <h3>一、打工人也能挣大钱：先放下「科举思维」</h3>
+    <p>我们这个"赚钱"模块说了这么多思维工具，都是默认说给企业家、创业者和自由职业者的：你直接面对市场，面对客户，面对现金流，赚钱也好亏损也好，现实直接落在你身上。</p>
+    <p>大多数人不必如此。可能你不想天天处理融资、招聘、合同、税务、媒体的批评和网上的舆论，你就想躲在一个组织内部做个员工，俗称"打工人"——但你说也想发挥大作用，以至于拿个高薪，行不行呢？当然行。其实很多高级打工人挣的钱比小老板赚的钱都多，而且更有成就感。如果能在职场指挥千军万马，谁还愿意去开个小餐馆呢？这一讲咱们就说说怎么在一家公司里挣大钱。</p>
+    <p>外行看一个拿高薪的人，比如说用丈母娘挑女婿的眼光看，说为啥我家女婿年薪百万？那肯定是因为他优秀啊！这孩子从小就学习好、毕业于名校，所以那个大公司那么难进他都能进去；他平时工作特别努力，每天都加班，这么忙肯定是掌握了核心技术；老板主动给他升职加薪，说明他情商也高……</p>
+    <p>这么说也不能说完全不对，但这是错误的思维方式——我们不妨称之为「科举思维」。科举思维认为世界是一个大考场，对人有一系列评价指标，应该奖励那些在这些指标上表现优秀的人：只要你做到了，你就是素质高，世界就应该给你提供相应的待遇，否则就是不公平。</p>
+
+    <!-- 二、可托付性 -->
+    <h3>二、高薪买的是什么：可托付性</h3>
+    <p>但市场不是考场，公司不是给人颁奖的机构，财富是创造出来不是分配下来的。你优秀不优秀辛苦不辛苦，都不是公司给你高薪的理由。公司愿意给你高薪，一定是因为你能在财富创造的过程中，起到一个关键作用。</p>
+    <blockquote><p>简单说，公司用低薪购买员工的时间，用中薪购买技能，用高薪购买……「可托付性（Entrustability）」。&nbsp;</p></blockquote>
+    <p>我们公司面临一个模糊、昂贵而且有严重后果的问题，现在上上下下很焦虑。那你来了，你能不能把这一团混沌的信息、互相冲突的目标、没人愿意碰的责任，压缩成一个可以判断、可以执行、可以负责的局面？我们能不能把这个事儿托付给你？</p>
+    <p>这才是你拿高薪的理由。</p>
+
+    <div class="divider">✵</div>
+
+    <!-- 三、奈特不确定性 -->
+    <h3>三、老板的利润来自「不确定性」</h3>
+    <p>对公司最值钱的能力是把焦虑变成秩序。要理解这一点，我们必须先从另一个视角想想老板是怎么赚钱的。</p>
+    <p>以前连很多学者都想不通：为什么老板的利润，可以比普通员工的收入高那么多？如果公司就是一个办事机构，生产产品也好提供服务也罢，所有成果都是大家一起努力完成的，你这个老板也没有超能力，你一天也是 24 个小时，你凭什么赚那么多钱呢？</p>
+    <p>一直到 1921 年，美国经济学家弗兰克·奈特（Frank Knight）出了本书叫《风险、不确定性与利润（Risk, Uncertainty, and Profit）》[1]，大家才想明白。奈特的答案是：老板的利润来自他承担的不确定性。</p>
+    <p>要生产这个产品，我们前期必须投入很多钱，我们得购买机器、招聘工人、囤积原材料，花时间设计。等我们生产出来可能已经是半年之后了——那时候的市场还需不需要这个产品，是不确定的。没有人能准确预测明年的流行时装将会是什么款式，但是你必须今年就开始备货。</p>
+    <p>这种「不确定性（uncertainty）」跟一般的「风险（risk）」还不一样：风险（risk）是你知道概率分布，最起码可以用购买保险的方式加以管理；不确定性（uncertainty）是你连概率分布都不知道，甚至将来这个事儿还有没有意义、会不会被另外一个你完全没想到的事儿取代，你都不知道——这就是我们前面说过的「奈特不确定性（Knightian uncertainty）」。</p>
+    <p>如果世间没有不确定性，公司就只是一个执行机构，那老板就根本不应该有利润，所有人都拿个标准工资就算了。但现实是市场需求、技术路线、监管政策、客户预算、供应链、竞争对手和内部团队都充满不确定性，所以做生意必须用到老板本人的眼光、见识和创造力，在很大程度上是做不讲理的主观选择，甚至就是赌。人家有很大的可能会赌输，所以当人家赌赢的时候，你必须给人一个高利润，不然这个游戏就没人玩了。</p>
+    <p>市场经济中任何人都可以当老板，但大多数人选择安稳地当个员工。凡是不是董事长的小舅子还敢出来当老板的，都是有冒险精神的英雄豪杰。</p>
+    <p>公司是一台在不确定世界中求生的机器。所以老板关心的不是"谁最优秀"，而是"哪块局面最不稳"。谁能让那块局面稳下来，谁就值钱。</p>
+    <blockquote><p>并不是努力和优秀没用，高素质总会有些用处——但世界奖励的终归不是努力和优秀，而是那些把不确定性变成确定性的人。</p><p>别忘了不确定性是意义的燃料。高薪不是优秀奖，而是不确定性溢价。</p></blockquote>
+
+    <div class="divider">✵</div>
+
+    <!-- 四、三个层级 -->
+    <h3>四、打工人的三个层级：你在哪一层？</h3>
+    <p>其实人只要出来做事，就多多少少会把一些不确定变成确定。毕竟再小的活儿完成之后，也总会比完成之前多一点秩序。大家的区别只是在于大小和主动性不同。</p>
+    <p><strong>初级打工人</strong>的心态是你让我干什么，我就干什么。你给我一个工单，我处理；你给我一份表格，我填；你给我一个标准流程，我照着做。外卖、客服、基础运营、简单行政、流水线岗位，包括很多号称是"知识工作"的岗位，都是这个逻辑。</p>
+    <p>我用时间和体力换取工资。至于说干出来的活儿有多大作用、能帮公司赚多少钱，那是你的事，不是我的事。工作不能没有这样的人，但是他们的可替代性非常高。所以工资不可能太高。</p>
+    <p><strong>中级打工人</strong>则会超越流程，发挥自己的判断力和创造性。产品经理说个需求，程序员能自己设计路径，写好代码，设计师能出图；老板下个指令，律师能写合同，财务分析师能建模型，销售能签单；病人来了，医生知道该怎么处理；教练派球星上场，球星是真能给你进球。</p>
+    <p>他们卖的不是时间和体力，而是技能，正所谓"学成文武艺，货与帝王家"。很多人认为这就是打工人的天花板，其实不然。</p>
+    <p>他们仍然是在等待别人定义任务。这是很多技术高手的痛苦来源：他老觉得产品经理朝令夕改，老板战略摇摆，跨部门协作像大型行为艺术，他认为这一切都是在给自己制造麻烦。他说：你们能不能把需求说清楚？你说清楚我才能干好！</p>
+    <p>殊不知这句话一出口，你工资的上限就出来了。市场本来就说不清楚，产品本来就说不清楚，对手和客户都不清楚——你凭什么想要清楚？</p>
+    <p>你要「清楚」，本质上是你要求别人给你创造一个温室一样与世隔绝的、界面特别友好的工作环境。你在这个环境里上班发挥自我，下班拿工资走人。你既不打算问这个环境是怎么创造出来的，更不打算为这个环境负责。只要他们能给你个班上就好。</p>
+    <p>我最近看了个短视频。一家公司倒闭了，老板很体面，给全体员工发了 N+1 的补偿。结果员工们一个个情绪都挺正面，甚至还有点喜笑颜开，面对采访说有点遗憾，但也挺期待去找下一份工作。我对这个场景的评论是：他们只会继续搞垮下一家公司。</p>
+    <p>如果是一支足球队降级，哪有球员一个个喜形于色的？你们在这里工作这么多年，就算没有持股，现在公司给干黄了，就没有一点愧疚之心吗？你们的才能发挥在了哪里？你们的时间和体力创造了什么价值？</p>
+    <p>这些人把自己视为"带接口的模块"。我能装在这里，也能装在那里。项目成了，我拿奖金；项目黄了，我换公司。你当然有这个自由，但你既然不是 skin in the game，就别指望拿高薪。</p>
+
+    <div class="divider">✵</div>
+
+    <!-- 五、高端打工人 -->
+    <h3>五、高端打工人：把一团焦虑变成秩序</h3>
+    <p>高端打工人不要求你先把任务说清楚。老板给他的往往不是任务，而是一团焦虑：</p>
+    <ul class="plain">
+      <li>"我们这个新产品老推不动，你看看问题在哪儿。"</li>
+      <li>"这个大客户快丢了，你去稳住。"</li>
+      <li>"现在 AI 起来了，我们到底该怎么调整组织？"</li>
+      <li>"这个部门成本太高，但不能简单裁人，你给我一个方案。"</li>
+    </ul>
+    <p>老板可能自己都不知道自己焦虑的到底是什么。他只知道这事很贵、很麻烦、后果严重，而且没人愿意接。</p>
+    <p>高端打工人站出来，不可能第一句话先问"需求文档在哪儿"或者"我看一看操作流程"。他会帮你把问题想清楚。</p>
+    <ul>
+      <li><strong>第一是重新定义问题：</strong>你以为问题是 A，其实瓶颈在 B。你以为是技术不行，其实是我们没跟上客户的脚步；你以为是销售不努力，其实是产品定位错了；你以为是人手不够，其实是决策节奏太慢。</li>
+      <li><strong>第二是给出行动建议：</strong>咱们先做这个；验证一个小假设，再投入大资源；一定要稳住关键客户，然后再谈长期改造；先按照版本 B 推进一下，三周后根据指标决定是否加码。</li>
+      <li><strong>第三是提供逻辑支撑：</strong>为什么我们应该这么做？因为这样能降低下行风险，争取时间，保留选择权，并且让下一步决策有证据。</li>
+    </ul>
+    <p>在老板完全没有头绪、束手无策的情况下，你像定海神针一样把这一摊事儿挺起来，这就叫「托付」。都想清楚了才交给你，那叫派活。</p>
+    <p>但光是你说你能应对不确定性还不行，你还得被人信任。信任是别人敢不敢授权给你，是你的判断力此前积累出来的信用。然后你还需要有杠杆，也就是你的判断能不能影响更多人、更多钱、更多客户、更多流程。</p>
+    <p>能应对不确定性，拥有信任，能调动杠杆，你的决策和行动本质上是企业这个有机体在进行「主动推断」，这样的人才应该拿高薪。</p>
+
+    <div class="divider">✵</div>
+
+    <!-- 六、趋势印证 -->
+    <h3>六、趋势印证：软实力与商业判断越来越值钱</h3>
+    <p>世界经济论坛（WEF）发布过一份《2025 年未来就业报告》[2]，说雇主最看重的核心技能中，排在前三位的是：<strong>分析性思维、韧性与灵活性、以及领导力与社会影响</strong>——发现没有？这些都不是专业的"硬技能"，而是"处理复杂局面"的软实力。</p>
+    <p>经济合作与发展组织（OECD）2024 年发表的一个研究 [3] 也发现，在 AI 暴露度最高的岗位中，真正能涨薪的不是"会用某个 AI 工具"，而是三类更上游的能力——</p>
+    <ul>
+      <li><strong>第一是管理能力</strong>，也就是设目标、分任务、做取舍、管进度；</li>
+      <li><strong>第二是业务运转能力</strong>，也就是你得懂公司的这门生意到底怎么跑起来——客户从哪里来，订单怎么交付，钱从哪里进，成本卡在哪里，风险在哪个环节最大；</li>
+      <li><strong>第三是社会协作能力</strong>，也就是沟通、说服、谈判、跨部门协调和建立信任。</li>
+    </ul>
+    <p>简单说，AI 会让产出一个答案变便宜，但它不会自动告诉你，这个答案应该嵌入哪条业务链、由谁执行、出了问题谁负责。OECD 的数据说明 AI 不是替代了商业判断，而是把商业判断推到了更值钱的位置。</p>
+    <p>其实就算没有 AI，各行各业的高薪岗位也都在处理某种不确定性：</p>
+    <ul>
+      <li>高端项目经理卖的不是画甘特图和开会催进度，而是"这件事终于有人管了"。他把模糊需求转成规格，把跨部门依赖转成里程碑，把互相扯皮转成可追责接口。</li>
+      <li>高端软件开发者不是"会写代码"的人，而是能保证系统不崩溃的人。</li>
+      <li>高端财务经理处理的不是日常账目，而是现金流、预算偏差、资本成本和尾部风险。很多时候公司不是死于没利润，而是死于现金流断裂。</li>
+      <li>高端律师不是背法条的机器，他们干的是把法律模糊地带转成合同边界、交易路径和合规红线。合规负责人不直接创造一分钱收入，但他能避免一场罚款、诉讼、牌照丢失和上市失败。</li>
+      <li>蒂姆·库克（Tim Cook）在 2011 年成为苹果 CEO 之前是 COO，负责全球销售与运营，他起家靠的是供应链管理。你以为供应链只是后台吗？库克把全球工厂、库存、渠道、交付、现金周期拧成一台机器，确保灵活响应市场，那可是最高级的不确定性压缩。</li>
+    </ul>
+    <p>据统计 [4]，2024 年 A 股上市公司里，有 12 位董事长年薪超过 1000 万元，85 位总经理年薪超过 500 万元，1070 位董秘年薪超过 100 万元。你以为董秘只是"高级秘书"吗？他直面资本市场，职责包括信息披露、投资者关系、再融资和监管问询——一个公告写错，一次沟通失控，市值和信用都可能出问题。高薪不是因为他"会写材料"，而是奖励他"稳住了资本市场的不确定性"。</p>
+
+    <div class="divider">✵</div>
+
+    <!-- 七、成长路线图 -->
+    <h3>七、成长路线图：公司的财富复利</h3>
+    <p>年轻人怎样才能成长成这样的人才呢？</p>
+    <p>科举思维是学技能 → 考证书 → 找工作 → 升职 → 加薪，是想通过变优秀而得到待遇。可是商业思维、市场思维的路线图却是：</p>
+    <ul class="plain">
+      <li>处理小不确定性 → 赢得小信任 → 获得小杠杆 → 处理更大不确定性 → 赢得更大信任 → 获得更大杠杆……</li>
+    </ul>
+    <p>这才是公司里的财富复利。你当然要学一大堆技能，如果是从名校毕业就更好，但那些都只是工具和敲门砖而已。公司没有义务为你的"优秀"买单。公司给你多高的高薪，是看你能处理的不确定性，你拥有的信任和杠杆。</p>
+    <p>你必须向组织释放一个信号：我不是反馈黑洞，我不是"我以为"，我不是等别人喂确定性的学徒，我是一个能处理混乱的可信节点。</p>
+
+    <div class="divider">✵</div>
+
+    <!-- 八、赵培培与极端所有权 -->
+    <h3>八、员工要有创业心态，创业要有员工心态</h3>
+    <p>我有个朋友叫赵培培，在美国一家制造业企业担任高管。他跟我分享了一个思考，叫做「员工要有创业心态，创业要有员工心态。」什么意思呢？</p>
+    <p>如果你创业，公司是你的，但你不能说就可以随便怎么搞，你必须把公司做正规。很多创业失败是因为公司不正规，各方面制度都不健全，导致员工整天跟打仗似的，身心俱疲，没有工作—生活平衡。投资者一看这么混乱，也不愿意投你。</p>
+    <p>而如果你打工，你反而要有主人翁意识，把公司扛在肩上。你不能只想着干分内的活、拿分内的工资，你得主动干一些分外的事情才行。赵培培总爱自发代表公司去谈合作，而且跟客户吃饭从来不让公司报销，他不跟公司算这点小账，他甚至不计较自己的底薪，他靠持有公司的股票挣钱，他把公司当成自己的去运营。</p>
+    <p>你说这样的人，现在是不是太少了？</p>
+    <p>看看你周围的同事们，你会发现大量员工的心态就好像是个学生。等着别人把规则说清楚，等着领导派任务，等产品经理提需求，等组织给确定性："我做对了，你们就得奖励我，否则就是你们不公平。"</p>
+    <p>可是凭什么？凭什么人家要给你搭建这么一个奖励环境？要知道你能坐在这里，是因为有人在替你负责。</p>
+    <p>一个美军军官有个说法叫「极端的所有权（Extreme Ownership）」[5]：I own this——这块归我管；相关责任我来承担；相关变量我来协调；出问题我不甩锅。中国也有句话，叫「可以托六尺之孤，可以寄百里之命，临大节而不可夺也。君子人与？君子人也。」</p>
+    <p>成年人得让人放心把这一块儿交给你，你守土有责才行。</p>
+    <blockquote><p>要拿高薪，你输出的不是时间，不是体力，也不是技能，而是秩序。</p></blockquote>
+
+    <!-- 收束小诗 -->
+    <div class="poem">
+      <div class="poem-title">【收束小诗】</div>
+      <p>休把寒窗认赏旌，满身才气误虚名。</p>
+      <p>风雷到眼无人起，鼓角临门尚问程。</p>
+      <p>惯向案头求定策，未曾局里解迷城。</p>
+      <p>可怜满座称英俊，临阵犹然等题生。</p>
+    </div>
+
+    <!-- 注释 -->
+    <div class="notes">
+      <h3>注释</h3>
+      <p>[1] Knight, Frank H. <em>Risk, Uncertainty and Profit</em>. Boston: Houghton Mifflin, 1921. 另见《精英日课》第四季，"利润"究竟是什么</p>
+      <p>[2] World Economic Forum. <em>The Future of Jobs Report 2025</em>. Geneva: WEF, 2025.</p>
+      <p>[3] Green, Andrew. "Artificial Intelligence and the Changing Demand for Skills in the Labour Market." <em>OECD Artificial Intelligence Papers</em>, no. 14. Paris: OECD Publishing, 2024.</p>
+      <p>[4] 新浪财经 / 时代商业研究院：《2024 年 A 股上市公司高管薪酬排行榜》，2025。</p>
+      <p>[5] Willink, Jocko, and Leif Babin. <em>Extreme Ownership: How U.S. Navy SEALs Lead and Win</em>. New York: St. Martin's Press, 2015. 另见《精英日课》第一季，高手修炼手册 2：指挥官的派头</p>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- 用户留言 -->
+  <div class="comments">
+    <h2>💬 用户留言</h2>
+
+    <div class="comment">
+      <div class="who">
+        <div class="avatar">至</div>
+        <div><div class="name">至尊女宝</div><div class="where">河北</div></div>
+      </div>
+      <p>找一个高阶打工人的原型，我想到的是唐朝的娄师德。武则天时代，边疆战事频繁，吐蕃、突厥轮着闹。娄哥的官位是「检校丰州都督」相当于军区司令员。但他最牛的地方不是打仗多厉害，而是他干了一件谁也看不见、但谁都离不开的事儿：屯田。当时边疆驻军最大的问题不是打不赢，是粮食运不过去。从长安到前线，千里转运，十石粮食运到剩一石。娄师德去了之后，亲自带兵开荒种地，几年下来，军粮自给自足，朝廷不用再耗费民力运粮。史书记载兵士屯田，谷稼殷积，前线稳了，朝堂上的焦虑也就散了。</p>
+      <p>你看他做的事：没有决战疆场的赫赫战功，没有运筹帷幄的神机妙算，他就是把边疆驻军可能饿死这个巨大不确定性，变成了每年秋天有几仓粮食入账这个确定性。武则天信任他，不是因为他是天才，而是因为这事儿交给他，就不用再操心了。这就是可托付性。不是你能干多大的事，是你能让别人不用再想这件事。</p>
+      <p>回到我们这些现代牛马，以前我也觉得高薪是优秀的奖赏，学历好、技术强、加班多，公司就应该给我高薪。但公司不是评奖机构，它愿意给你多少钱，取决于你能替它承担多大的不确定性。优化了一个系统，让装置节能降耗这是技能，值中薪。但如果你能在产品方向没定、客户需求没清、技术方案没谱的时候，主动站出来说这块我先顶着，出了问题我负责，然后把这一摊烂事理出个头绪来，让老板觉得丢给你他放心。这个，值高薪。</p>
+      <p>就像万老师说的，高级打工人，本质上是一台信号处理机。输入是混沌、噪音、矛盾和焦虑，输出是秩序、路径、边界和责任。终极 KPI，不是方案个数，不是 PPT 页数，而是老板的睡眠质量。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">
+        <div class="avatar">左</div>
+        <div><div class="name">左星星</div><div class="where">上海</div></div>
+      </div>
+      <p>去年我经历过一次很有冲击的面试。一家民营卫星发射公司的 CEO 通过招聘 APP 主动联系我。我当时很意外，不明白这样一家高科技公司为什么会看上我的简历。聊下来才知道，他看中的是我毕业于财经院校，有注册会计师资格，也参与过融资和 IPO 项目。从简历关键词看，似乎很匹配。但当他继续追问具体做过什么时，我才意识到，"参与"和"负责"之间，其实隔着很远。</p>
+      <p>过去我所谓参与融资，更多是领导已经找好了银行或私募机构，我负责准备资料、对接尽调；所谓参与 IPO，也主要是配合会计师事务所和券商完成相关工作。说到底，我是在执行一个已经被定义好的任务，而不是独立解决一个充满不确定性的难题。</p>
+      <p>而那位 CEO 真正想找的，是一名能够独当一面的 CFO。他需要这个人能主动找到银行、风投和私募，为一家还没有稳定盈利的卫星公司打开融资通道；能拿着复杂的财务数据和商业计划，向投资人讲清楚未来价值；还能理解卫星制造背后几百上千个零部件的供应链压力，帮助公司守住现金流和交付风险。简单说，他要的不是一个会做财务工作的人，而是一个能在不确定性里给公司"输血"和"定心"的人。</p>
+      <p>以前我总觉得学历、证书和项目经历是竞争力，但真正决定收入上限的，往往不是你参与过什么，而是别人敢不敢把关键局面交给你。你能不能把老板的焦虑变成方案，把混乱的信息变成判断，把复杂的问题变成可执行的路径。高薪从来不是优秀奖，而是可托付性的价格。普通员工完成任务，专业人士解决问题，而顶级人才承担不确定性。一个优秀 CFO 最值钱的地方，不是精通会计准则，而是在关键时刻让公司活下去，并让投资人相信它值得继续活下去。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">
+        <div class="avatar">常</div>
+        <div><div class="name">常觉不住</div><div class="where">保加利亚</div></div>
+      </div>
+      <p>我想到自己这些年做企业软件的经验。很多外人以为，客户买的是软件，是功能，是一套工具。可是做久了才知道，客户真正买的常常不是工具，而是放心。有些问题一开始并不清楚。客户自己也说不完整，只知道这件事很重要，不能出错，旧系统还要继续跑，流程里牵涉很多人，任何一个环节出问题，后面都会很麻烦。</p>
+      <p>这时候，单纯"会写程序"是不够的。程序只是入口，真正值钱的是能不能把一团混乱接住，帮客户拆清楚，找到路，做成方案，最后让事情稳稳地跑起来。所以我很认同这一讲说的，高薪不是优秀奖，而是不确定性溢价。公司也好，客户也好，最后愿意付钱的，不是一个人多辛苦、多聪明，而是他能不能让别人放心地说一句：这件事交给他，可以。</p>
+      <p>这也提醒我，AI 时代更不能只守着技能本身。技能会越来越便宜，答案会越来越容易生成。真正稀缺的，可能是判断边界、承担责任、协调复杂局面，以及在模糊处把事情托住的能力。说到底，一个人越能把焦虑变成秩序，他在组织里、在市场里，就越有位置。</p>
+    </div>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <div id="ai-summary">
+    <div class="ai-head">🤖 AI 阅读总结</div>
+
+    <div class="one-liner">一句话概括：高薪不是对"优秀"的奖赏，而是对"可托付性"的定价——公司真正愿意花大价钱购买的，是你把一团模糊、昂贵、后果严重的不确定性，变成可判断、可执行、可负责的秩序的能力。</div>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li><strong>公司付薪的三层逻辑：</strong>低薪买时间，中薪买技能，高薪买「可托付性（Entrustability）」。高薪的唯一理由是你能接手一团混沌的信息与互相冲突的目标，把它压缩成可以判断、执行和负责的局面。</li>
+      <li><strong>老板利润的来源（奈特，1921）：</strong>老板的利润不是辛苦劳动的报酬，而是承担「不确定性」的溢价。风险可知概率、可投保管理；不确定性连概率分布都不知道，甚至这事还有没有意义都不确定——所以赌赢者必须拿高利润，否则没人玩这个游戏。</li>
+      <li><strong>「科举思维」与市场思维的分野：</strong>科举思维把世界当考场，以为评优就该发待遇；但市场不是颁奖机构，财富是创造出来而不是分配下来的。老板关心的不是"谁最优秀"，而是"哪块局面最不稳"。</li>
+      <li><strong>打工人的三个层级：</strong>初级用时间体力换工资，可替代性高；中级卖技能，但仍"等待别人定义任务"，一句"你说清楚我才能干好"就封死了工资上限；高端直面老板的一团焦虑，把混乱变成秩序。</li>
+      <li><strong>高端打工人的三步法：</strong>重新定义问题（你以为的 A 其实瓶颈在 B）、给出行动建议（先验证小假设再投大资源）、提供逻辑支撑（降低下行风险、保留选择权）。在老板束手无策时把事挺起来才叫「托付」，都想清楚了才交给你那叫「派活」。</li>
+      <li><strong>托付的两大支柱：</strong>信任（别人敢不敢授权给你，是你判断力积累出来的信用）与杠杆（你的判断能影响多少人、钱、客户和流程）。三者齐备，你的行动本质上就是企业有机体的「主动推断」。</li>
+      <li><strong>趋势印证（WEF 2025 / OECD 2024）：</strong>雇主最看重的不是硬技能，而是分析性思维、韧性与灵活性、领导力与社会影响；AI 让"答案"变便宜，却把管理能力、业务运转能力、社会协作能力这些商业判断推到了更值钱的位置。</li>
+      <li><strong>成长是复利循环：</strong>处理小不确定性 → 赢得小信任 → 获得小杠杆 → 处理更大不确定性……要像赵培培那样以创业心态打工，像美军军官那样拥有「极端的所有权」（I own this，出问题不甩锅），向组织释放"我是能处理混乱的可信节点"的信号。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li>本周挑一件工作中"没人愿意接、说不清楚、后果又不小"的事主动接下来，用三步法拆解：问题到底是什么 → 先验证哪个小假设 → 需要谁配合。</li>
+      <li>把"你说清楚我才能干好"从你的字典里删掉。遇到模糊任务时，先自己产出一个版本的假设和方案，再请对方确认，训练在模糊中下判断。</li>
+      <li>每周做一次"焦虑清单"：记下老板、客户最近含糊的抱怨或要求，练习把它们转译成一个可判断、可执行的问题，而不是等需求文档。</li>
+      <li>在关键任务上主动说出"这块我来负责，出了问题我承担"，并在事后复盘责任闭环，让"交给你放心"成为你的个人标签。</li>
+      <li>识别你所在组织"哪块局面最不稳"，把技能用在稳定它上，并把成果量化成"减少了多少不确定性"，而不是只把分内活干漂亮。</li>
+      <li>主动争取一次"独立负责完整闭环"的机会（哪怕很小），让履历里多一个"我把它托住了"的实例，而不是停留在"参与过"。</li>
+      <li>有意识扩大你的杠杆：主动代表部门对接客户、协作方，多做跨部门协调，让更多人验证过你的判断可靠，信任会随每一次兑现累积。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <div class="quote-item">"公司用低薪购买员工的时间，用中薪购买技能，用高薪购买……「可托付性（Entrustability）」。&nbsp;"</div>
+    <div class="quote-item">"世界奖励的终归不是努力和优秀，而是那些把不确定性变成确定性的人。"</div>
+    <div class="quote-item">"都想清楚了才交给你，那叫派活。"</div>
+    <div class="quote-item">"要拿高薪，你输出的不是时间，不是体力，也不是技能，而是秩序。"</div>
+
+    <div class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  var bar=document.getElementById('progress'),btn=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){
+    var d=document.documentElement;
+    var p=d.scrollTop/(d.scrollHeight-d.clientHeight||1);
+    bar.style.width=(p*100)+'%';
+    btn.style.display=d.scrollTop>600?'flex':'none';
+  },{passive:true});
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

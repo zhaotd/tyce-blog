@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第32讲 · 凯利公式：乘法世界里的认知变现</title>
+<style>
+  :root{
+    --bg:#faf7f1; --card:#fffdf7; --text:#33291f; --sub:#8a7a66;
+    --accent:#8a5a2b; --accent-soft:rgba(138,90,43,.10);
+    --border:#e5dac8; --quote-bg:#f6efdd;
+    --sum-bg:#f4ead6; --sum-border:#b98a4e; --line:#e2d5bf;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512; --card:#211d17; --text:#e8e0d3; --sub:#a2937f;
+      --accent:#c89a63; --accent-soft:rgba(200,154,99,.13);
+      --border:#3a3226; --quote-bg:#262019;
+      --sum-bg:#241c10; --sum-border:#c89a63; --line:#3f3527;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",sans-serif;
+    font-size:16.5px; line-height:1.82; text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#b07a3e,#d9a05f);z-index:99;transition:width .1s linear}
+  #toTop{position:fixed;right:18px;bottom:28px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;line-height:1;cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s;
+    z-index:99;display:flex;align-items:center;justify-content:center}
+  .wrap{max-width:700px;margin:0 auto;padding:30px 18px 80px}
+  header.doc-head{padding:10px 0 6px}
+  .course-tag{display:inline-block;padding:4px 12px;border-radius:999px;
+    background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.5px}
+  h1{font-size:26px;line-height:1.45;margin:14px 0 8px;text-align:left;font-weight:800}
+  .meta{font-size:13.5px;color:var(--sub);margin-bottom:6px;text-align:left}
+  h3{margin:34px 0 14px;font-size:19px;font-weight:700;color:var(--accent);text-align:left;
+    padding-left:12px;border-left:4px solid var(--accent);line-height:1.5}
+  h4{margin:22px 0 10px;font-size:17px;font-weight:700;color:var(--text);text-align:left}
+  p{margin:0 0 14px}
+  p.lead{font-size:16.5px}
+  ul,ol{margin:0 0 16px;padding-left:1.45em}
+  li{margin-bottom:8px}
+  blockquote{margin:18px 0;padding:13px 18px;border-left:4px solid var(--accent);
+    background:var(--quote-bg);border-radius:0 12px 12px 0;font-size:16.5px;
+    font-weight:600;color:var(--text);text-align:left}
+  blockquote .q-attr{display:block;font-size:12.5px;color:var(--sub);font-weight:400;margin-top:8px;text-align:right}
+  .divider{display:flex;align-items:center;gap:14px;margin:30px auto;color:var(--accent);max-width:62%}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+  .divider span{font-size:14px;letter-spacing:4px}
+  sup{color:var(--accent);font-size:11px;font-weight:700}
+  strong.k{color:var(--accent)}
+  .notes{font-size:13.5px;color:var(--sub);background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px 20px;margin:34px 0 6px;text-align:left}
+  .notes h3{color:var(--sub);font-size:15px;margin:0 0 10px;padding:0;border:none}
+  .notes ol{padding-left:1.3em;margin:0}
+  .notes li{margin-bottom:6px;line-height:1.7;word-break:break-all}
+  .comments{margin-top:28px}
+  .comments>h3{border:none;padding-left:0}
+  .comment{background:var(--card);border:1px solid var(--border);border-radius:12px;
+    padding:15px 18px;margin-bottom:14px;text-align:left}
+  .comment .name{font-weight:700;font-size:15.5px;color:var(--text)}
+  .comment .meta{font-size:12.5px;color:var(--sub);margin:2px 0 10px}
+  .comment p{font-size:15px;line-height:1.78;margin-bottom:6px}
+  .comment .reply{margin-top:10px;padding:8px 12px;background:var(--accent-soft);
+    border-radius:8px;font-size:13.5px;color:var(--accent);font-weight:600}
+  #ai-summary{margin-top:42px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px;text-align:left}
+  #ai-summary .sum-badge{display:inline-block;background:var(--accent);color:#fff;
+    border-radius:8px;padding:5px 14px;font-size:14px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+  #ai-summary h2{font-size:18px;margin:12px 0 6px;color:var(--accent);text-align:left}
+  #ai-summary .sum-one{font-weight:700;font-size:16px;line-height:1.7;margin:8px 0 4px}
+  #ai-summary h4{font-size:16px;color:var(--accent);margin:18px 0 8px;text-align:left}
+  #ai-summary ul,#ai-summary ol{margin-bottom:6px}
+  #ai-summary li{margin-bottom:9px;line-height:1.75}
+  #ai-summary .sum-quote{margin:0 0 8px;padding:10px 14px;background:var(--card);
+    border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:15px}
+  #ai-summary .sum-note{font-size:12px;color:var(--sub);margin-top:16px;border-top:1px dashed var(--line);padding-top:12px}
+  footer.site-foot{text-align:center;color:var(--sub);font-size:12px;margin-top:34px}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第32讲</span>
+    <h1>凯利公式：乘法世界里的认知变现</h1>
+    <p class="meta">作者：万维钢 ｜ 现代思维工具100讲 · 第32讲</p>
+  </header>
+
+  <p>这一讲的思维工具是「凯利公式（Kelly criterion）」。很多人把它当作一个投资保本的法则，其实它的作用要激进得多，而且可以指导生活决策——<strong class="k">凯利公式本质上是一台把认知变现的机器</strong>。</p>
+
+  <p>前面我们说了，人们把很多时间花在没有价值的信息上。而凯利公式解决的问题，则是面对有价值的信息时，你的行动与之不匹配。</p>
+
+  <p>比如有人在股市里，为了几毛钱的波动，每天盯着盘面杀进杀出，甚至加上高杠杆；可是赶上一个潜力巨大、而且极其确定的新职场赛道或者创业机会时，他们反而反复计算沉没成本，犹豫不决，最后只敢投入一点点业余时间。而那只不过是因为股价的波动感觉更亲切而已。</p>
+
+  <blockquote>用曹操评价袁绍的话说，这就是「色厉胆薄，好谋无断；干大事而惜身，见小利而忘命，非英雄也。」</blockquote>
+
+  <p><strong>押太大和不敢押都是错的。这不是信息问题，这是仓位问题。</strong></p>
+
+  <p>那怎么把握好出手的度呢？这就是凯利公式的基本用法。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>一、凯利公式的由来：一条有噪声的电话线</h3>
+
+  <p>约翰·凯利（John L. Kelly Jr., 1923–1965）是贝尔实验室的科学家，他 1956 年那篇著名的论文 <sup>[1]</sup>，原本研究的是通信问题。</p>
+
+  <p>你要知道，因为噪声的存在，信息在长途传递中总会发生一些错误。此前信息论之父香农已经证明，你可以用扩大信道的方式减少错误率，但是你不能绝对消除错误。那么凯利就想，有错误率的信息也是有用的，我能不能算一算，它到底有多大用呢？</p>
+
+  <p>凯利设想了一个场景：假设赛马场外有一个赌徒，通过一条有噪声的私人电话线接收内幕消息，电话那头的人能 100% 预知哪匹马会赢。但是因为电话线有噪声，赌徒听到的结果，有 p 的概率是准确的，有 q = 1−p 的概率听错了。那么赌徒如何拿这个有噪声的内幕消息下注呢？</p>
+
+  <p>如果他每次都 all-in，当然可以让单次赢钱最大化，但是只要听错一次，就破产清零了。可是如果下注太少，又浪费了这条宝贵的内幕电话线。</p>
+
+  <p>凯利经过一番数学推导，证明了一个极其优美的结论：<strong>赌徒要想永远不破产并且让资金的长期复合增长率达到最大化，他每次下注有个最佳比例 f*</strong>，而在这种下注方式之下，资金的最大长期对数增长率在数学上竟然完全等同于这条电话线的「信息传输率」！</p>
+
+  <blockquote>你的增长上限，受限于你的认知带宽。</blockquote>
+
+  <p>人们立即就发现这个公式应该用在投资上，而且是最基本的原理。它解决的核心问题是：在一个不确定的、乘法式结算的、可重复的世界里——也就是你每一回合要么赢一点要么输一点，输赢累积成复利——你到底该怎么下注，才能让长期增长率最大。</p>
+
+  <blockquote>凯利解决的不是「怎么赢」，而是「怎么一直赢」。</blockquote>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>二、凯利公式：押多大，取决于胜率和赔率</h3>
+
+  <p>咱们来看一眼这个公式——假设你每次拿出自己当前总资产的一部分来下注，赢了就赚到赔率，输了就输掉这一把的下注。公式中：</p>
+
+  <ul>
+    <li><strong>p</strong> 是这一把下注赢的概率；</li>
+    <li><strong>q = 1−p</strong> 是失败的概率；</li>
+    <li><strong>b</strong> 是赔率，也就是一旦赢了，你下注 1 元净赚多少钱；</li>
+    <li><strong>f*</strong> 就是凯利算出来的你这把的最佳下注比例。</li>
+  </ul>
+
+  <p>比如你判断胜率 p=0.6，赢了赚一倍（b=1），那么凯利公式说，你应该押 20%。</p>
+
+  <p><strong>你该押多大，既不是看你有多想赢也不是看你有多大的冒险精神，而是看你胜率有多高、赔率是多少。</strong></p>
+
+  <p>在赌场黑话里，凯利公式经常被简化成一句口诀：分母 odds = b 是赔率，它是市场给的。你直观上可能觉得赔率越高越应该多投，但市场给的收益和风险会匹配：收益已经体现在了分子上 <sup>[2]</sup>，分母这里看的是风险。Odds 体现了市场对风险的共识：odds 高表示市场认为它风险大。</p>
+
+  <p>如果一个人下注只看赔率，他就只能赚到市场的平均收益——而有效市场的平均收益无限接近于零。甚至如果是去赌场赌博的话，平均收益是负的。</p>
+
+  <p>真正应该让你动心的是分子，<strong class="k">edge</strong>——我建议你记住这个英文单词，因为很酷——它等于 bp − q，是每下注 1 元的期望净利润。<strong>Edge 是你的认知优势！</strong></p>
+
+  <h3>三、Edge：你比大众高明多少</h3>
+
+  <p>更直观的理解是，你凭什么赢？就凭你有「内部消息」，你认为胜率应该是 p——只要那个 p 值使得 edge &gt; 0，你就认为这件事比市场估计的更值得赌。<strong>Edge，其实是你自己对局面的估计与市场一般判断之间的认知偏差</strong> <sup>[3]</sup>。</p>
+
+  <blockquote>凯利公式让你赚的，是你超出大众认知的钱。你比大众高明多少，凯利就能帮你赚到多少，但不能更多。</blockquote>
+
+  <p>而如果你不掌握大于零的 edge，凯利就要求你不要下注。说白了就是你要是不比别人高明就别玩。</p>
+
+  <p>这一切跟你的性格、胆量什么的都没有关系。要不要出手，应该只看你的机会比世界给的平常价高多少。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>四、袁绍的教训：如果 edge 好，出手是一种义务</h3>
+
+  <p>可是咱们回头再想想袁绍。建安五年，曹操去讨伐刘备，大本营许都空虚，袁绍面临一个绝佳的战略窗口。谋士田丰立即建议出兵打许都，一战就能平定天下。用我们这一讲的话说，袁绍眼前有一个巨大的 edge！</p>
+
+  <p>结果袁绍说他最小的儿子得了重病，自己心里烦乱，没心思打仗！……正应了那句「干大事而惜身」。</p>
+
+  <p>天予不取，田丰和凯利还能说啥呢？袁绍接下来就只能面对人家曹操迅速回兵，然后官渡之战，自己全军覆没。</p>
+
+  <blockquote>如果 edge 好，出手是一种义务。</blockquote>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>五、生物学的启示：表型赌注对冲</h3>
+
+  <p>凯利公式并不只是用在通信和投资上，在很多领域都有用。我看到一个最有意思的例子来自生物学。</p>
+
+  <p>生物的繁衍，通常是一种很危险的行为。一旦赶上环境剧烈波动，你所有个体集中在一起出来繁殖，结果繁殖失败了，那就有可能导致整个族群就此灭绝。所以有些单细胞生物发明了一个应对策略，叫「表型赌注对冲（Phenotypic Bet-Hedging）」。</p>
+
+  <p>简单来说，就是让一部分个体处于休眠状态，只让其余的个体出来赌一把参加繁殖。像沙门氏菌（Salmonella）和枯草芽孢杆菌（Bacillus subtilis）都有这个能力。就算这一个族群的基因完全相同，是克隆出来的，它们也会自动分散下注。这样就算环境历经几次变坏，哪怕遭遇抗生素攻击也好，这个族群都还能继续存活。</p>
+
+  <p>神奇的是，研究者发现 <sup>[4]</sup>，进入休眠状态的细胞比例，在数学上等价于凯利公式中的未下注比例。</p>
+
+  <blockquote>这是进化的奇迹，也是数学的威力。也许生物多样性就是系统为了应对不确定性而支付的凯利仓位。</blockquote>
+
+  <p>如果你把人生想象成一系列的投资冒险，那么凯利公式给你三个最底层的指引。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>六、三个最底层的指引</h3>
+
+  <h4>第一，别把自己清零。</h4>
+  <p>只要 p 不是严格等于 1，凯利公式就要求你不要 all-in。而我们前面就说了，贝叶斯主义者永远都不会假设概率等于 0 或者 1。而且别忘了你的估计可能有误差，所以还得再多留一点余地才好。诱惑再大也得保本，确保自己始终留在牌桌上。</p>
+
+  <h4>第二，认知先行，先问自己有多大的 edge，再想下多大的注。</h4>
+  <p>很多人恰恰相反，是先有了强烈想押大注的冲动，再去四处找理由证明自己有优势。<strong>我们是把认知变现，不是用认知去解释变现。</strong>这把不合适，就等别的机会。巴菲特从来不买自己看不懂的股票，你的行动力度必须符合你的认知深度。</p>
+
+  <h4>第三，追求复利，而不是赢一把。</h4>
+  <p>凯利公式整个的推导设定，是你要在这个连续的乘法游戏里玩很多把：有时候你赢，有时候输，它追求从长期看，让你的积累最大化。这是一个系统，而不是只赌一局。只要你相信数学，单次成败就都不重要，你终归结果是好的。</p>
+
+  <p>你并不需要每次都拿这个公式进行精确计算，有时候只要有一个大概的估计，一个模糊的力度就已经很好了。咱们看几个生活中的应用场景。</p>
+
+  <h3>七、生活中的应用：职业、精力与信任</h3>
+
+  <h4>职业规划：换不换，先算三笔账</h4>
+  <p>首先是职业规划。我们前面已经讲过「赛道选择」、讲过「探索与利用」的权衡，而凯利公式能让你的抉择更精细一点。比如你对自己的本职工作不太满意，现在有个机会，你可以换个工作甚至换个职业，你换不换呢？</p>
+  <p>很多人把赛道当成一次性的选择，干一行就是一辈子，选错也不敢换；有的人反过来，把换赛道当成情绪释放，一怒就辞职，直接 all-in。但职业是一种典型的乘法资产：你的技能和声誉都是可积累的，适合多轮下注。那么凯利的建议将是这样的：</p>
+  <ul>
+    <li><strong>先问 edge</strong>：你在那个方向上真的比别人强吗？你能更快学会、能更好交付、更愿意熬吗？</li>
+    <li><strong>再看 odds</strong>：那个方向的回报结构如何？上限大不大？</li>
+    <li><strong>最后谈仓位</strong>：如果 edge 有但是你拿不到精确的 p，就别下注太多——可以用所谓「半凯利」「分数凯利」试试水，也就是先作为副业，弄几个小项目跑一轮，看看反馈。</li>
+  </ul>
+  <p>在凯利公式的视角下，无所谓求稳还是求拼，其实只是一个度的选择而已。</p>
+
+  <h4>精力与健康：价值只是赔率，不等于 edge</h4>
+  <p>再比如说，你可以把自己的有效精力和健康，也当做一种资产，尽管不容易升值。每天做不同的事情，比如学习、工作、运动、社交和娱乐，就相当于是下注。这些下注可能会让你赢，比如让你更健康或者是其他正向的回报；但也可能让你输，比如做完这件事感觉更不好，身体变差。</p>
+  <p>可能刷短视频没啥价值，学习和工作有价值——但那些价值只是赔率，可不等于 edge。如果你现在已经很累了，可是手里有个很重要的活儿，你有必要熬夜完成它吗？也许家人说不要做，老板说应该做，但凯利会说：你算一算 edge。</p>
+  <p>而时间管理的最重要的凯利策略则是<strong>「少出手」</strong>：你应该把仓位集中到能产生复利的少数变量上。</p>
+
+  <h4>信任资产：先小下注，永远留止损</h4>
+  <p>还有一种乘法资产是信任。你在社会上的信用也好，你给别人的信任也好，都是在一次次交往中慢慢积累复利，而且都有快速清零的风险。一个人哪怕做 15 件好事，你也不见得敢把自己的银行账号密码告诉他；但他只要做一件坏事，你可能就再也不信任他了。</p>
+  <p>所以人际关系的凯利策略是：</p>
+  <ol>
+    <li>刚认识的时候先小下注，交给他一些小事，做好了提高 p 值；</li>
+    <li>如果表现好可以逐步加仓，但始终确保赔率和回报对称，也就是一个项目的潜在收益，必须配得上你的潜在损失——为什么不应该把银行密码告诉别人？因为潜在收益非常小，潜在损失非常大；</li>
+    <li>永远保留止损机制，防止清零：关系再好也不要把能让你瞬间破产的权限交出去。</li>
+  </ol>
+  <p>这听起来很腹黑，我也不主张跟所有人交往都用公式……但是如果你经常行走江湖，你需要好好管理你的信任资产。</p>
+
+  <div class="divider"><span>✵</span></div>
+
+  <h3>八、总结：乘法世界的行动哲学</h3>
+
+  <p>总结来说，凯利公式并不只是计算仓位，它实际上给了一个乘法世界的行动哲学：<strong>它把你的认知优势翻译成下注规模。</strong></p>
+
+  <blockquote>你有多大 edge 谈多大变现。</blockquote>
+
+  <p>凯利公式要求我们把人生看作一场乘法的长跑：不计一城一池之得失，相信逐渐但可以有起伏的积累，只要你坚持正确的策略。然后不管怎么说，<strong>别清零</strong>。</p>
+
+  <p>凯利公式让我们思考什么是勇敢。这几年人们常说勇敢是一种最稀缺的美德，但什么是勇敢呢？如果凯利公式说你应该押 20%，你却押了 25%，算是勇敢吗？那可能是出于你的德行，也许你想为了慈善事业自我牺牲，但也可能那只是酒精冲动，更可能是来自无知。</p>
+
+  <p>考虑到大多数人是以结果为导向，输一把就胆怯，赢一把就狂妄，也许不被暂时的输赢所左右，能够清醒地按照凯利公式出手，才是真正的勇敢。<strong>勇敢是对本能的克服。</strong></p>
+
+  <blockquote>勇敢会带给你自由。而在凯利公式看来，人生的根本自由是你始终有下一次下注的能力。</blockquote>
+
+  <blockquote>世界既不会奖励你的努力，也不会惩罚你的动机。它只结算你的概率质量。</blockquote>
+
+  <div class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>[1] Kelly, J. L. Jr. "A New Interpretation of Information Rate." Bell System Technical Journal 35, no. 4 (1956): 917–926.</li>
+      <li>[2] 这里我们采用了流行的解读，但其实我把公式改写成 f* = p − q/b，赔率的作用就很直观了。</li>
+      <li>[3] 这一点有精确数学含义：edge = (p − P_m)/P_m，其中 P_m = 1/(b+1) 是市场对赢的概率判断。</li>
+      <li>[4] Kussell, Edo, and Stanislas Leibler. "Phenotypic Diversity, Population Growth, and Information in Fluctuating Environments." Science 309, no. 5743 (2005): 2075-2078.</li>
+    </ol>
+  </div>
+
+  <div class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <div class="name">至尊女宝</div>
+      <div class="meta">昨天 · 河北</div>
+      <p>我现在改邪归正已经不炒股了，说这句话的时候，我尽量让自己显得云淡风轻，好像是一个功成名就的人宣布归隐。但真相是：我多年前亏光了所有能亏的零花钱，然后像一条被打捞上岸的咸鱼，终于承认水里不适合我。回顾我的炒股史，简直是一部「如何用小聪明亏大钱」的教科书。</p>
+      <p>所以我亏钱不是运气问题。是我一直在用押老虎机的方式下围棋，用押轮盘的方式买基金。规则没搞懂，仓位全乱套，亏了才是符合数学期望的，赚了才是见鬼。可笑的是，我每天打开账户十几回，盯着那红红绿绿的数字，内心上演大戏：涨两毛，我是股神；跌五分，天要亡我。一整天的心情被几块钱的波动左右，可我花这精力给别人做做方案其实好像性价比更高，羞愧的低下头，阴跌我会死扛，暴跌我会割肉，这就是我。</p>
+      <p>现在回想起来，我那时候不是在投资，我是在给自己找一种廉价的情绪过山车。股票账户像一个老虎机，时不时吐出一点小甜头，让我觉得我自己智商在线，然后连本带利吞回去。不炒股之后，我每天都在告诉自己要就是个普通人。我的认知优势约等于零，我的情绪控制能力还不如一只训练有素的狗。课程告诉我的是如果 edge 是零，最佳下注比例就是零。</p>
+      <p>凯利公式像一面镜子，照出了我的色厉胆薄。好谋无断，干小事而惜身，见小利而忘命——袁绍的毛病，我全有。但镜子本身也是路。至少现在我知道了，那个让我犹豫不决的，不是风险太大，而是我对自己判断的信心，从来就没真正算清楚过。</p>
+      <div class="reply"># 小小的改变也很厉害</div>
+    </div>
+
+    <div class="comment">
+      <div class="name">左星星</div>
+      <div class="meta">16小时前 · 上海</div>
+      <p>一个男生遇到一个女生，外在优秀、社交能力强、很有魅力。但每次接触后，他都很不安：消息回得忽冷忽热；关系边界总是模糊；一旦他表达需求，对方就说「你太敏感了」。很多人会想：是不是我再努力一点就好了。凯利公式会提醒你：不要只看「赢了会多爽」，还要看「输的代价有多大」。</p>
+      <p>如果一个人持续让你进入高波动状态，说明这段关系的真实赔率未必高。因为真正长期有价值的关系，通常不是让你上瘾，而是让你稳定。所以更理性的做法不是补仓，而是降仓：减少过度主动；停止反复证明自己；观察对方是否愿意向你靠近；把情绪从单一对象撤回。这不是欲擒故纵，而是避免在高风险、低确定性的关系里持续加码。</p>
+      <p>什么是「感情里的 edge」？很多人会误以为，「我很喜欢」就是 edge。其实不是。真正的 edge，是你比大多数人更清楚，这段关系长期可能走向哪里。它来自对自我需求的理解，对对方品格的观察，也来自过往经验沉淀出的判断力。你知道什么样的关系会让你变好，什么样的关系会慢慢消耗你。</p>
+      <p>所以感情里的 edge，不是「我上头了」，而是：我真的比旁观者，更看得清这个人和这段关系。如果没有这个 edge，就别重仓。凯利思维放在求偶中，提醒的不是算计，而是节奏：先判断，再投入；先确保不被消耗殆尽，再谈长期的可能性。</p>
+    </div>
+
+    <div class="comment">
+      <div class="name">常觉不住</div>
+      <div class="meta">昨天 · 美国</div>
+      <p>凯利公式很厉害，但它有个前提：你得先知道 p。问题是，人生里最要命的决定，往往根本没有 p。要不要离开一家公司，要不要结束一段关系，要不要把一件真正重要的事写出来——不是你算不准，而是很多事你不去做，就永远不会知道。</p>
+      <p>所以很多人不是输在判断错，而是输在把「未知」直接判成「不值得」。看上去很理性，其实只是退缩。凯利能教你怎么下注，却不能替你承担：当你手里根本没有公式的时候，那一步到底还走不走。</p>
+    </div>
+  </div>
+
+  <section id="ai-summary">
+    <span class="sum-badge">AI 阅读总结</span>
+    <h2>凯利公式：乘法世界里的认知变现</h2>
+    <p class="sum-one">一句话概括：凯利公式把「你比世界高明多少」（认知优势 edge）翻译成「你应该押多大」（下注比例），教你在乘法结算的世界里把认知变现、长期复利、永远不清零。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li><strong>公式的出身是信息论。</strong>贝尔实验室科学家约翰·凯利 1956 年那篇论文本来研究通信：赌徒通过有噪声的电话线接收内幕消息，为了「永远不破产＋长期复合增长率最大」，每次下注存在最佳比例 f*；而资金的最大长期对数增长率，在数学上竟完全等同于电话线的信息传输率——凯利由此把信息论和资本复利焊在了一起，得出「你的增长上限，受限于你的认知带宽」。</li>
+      <li><strong>它回答的不是「怎么赢」，而是「怎么一直赢」。</strong>在一个不确定、乘法式结算、可重复的世界里（输赢累积成复利），凯利给出的是让长期增长率最大的下注比例；押太大（all-in，听错一次就清零）和不敢押（浪费认知优势）都是错的——这是仓位问题，不是信息问题。</li>
+      <li><strong>公式拆解：胜率 p、败率 q=1−p、赔率 b，最佳比例 f* = (bp−q)/b。</strong>分子 edge = bp−q 是每下注 1 元的期望净利润，是「你的认知优势」；分母 odds = b 是市场给的赔率，体现的是市场对风险的共识。只看赔率下注只能赚到市场的平均收益——有效市场的平均收益无限接近于零，赌场里甚至是负的。</li>
+      <li><strong>Edge 的本质是认知偏差：你对自己局面的估计与市场一般判断之差。</strong>凯利公式让你赚的是「超出大众认知的钱」——你比大众高明多少，它就帮你兑现多少，但不能更多；没有大于零的 edge 就不要下注，说白了「你要是不比别人高明就别玩」。</li>
+      <li><strong>错失巨大 edge 的代价：袁绍的官渡。</strong>曹操远征刘备、许都空虚，田丰力劝袁绍出兵一战定天下，袁绍却因幼子病重「干大事而惜身」，天予不取，最终官渡之战全军覆没——「如果 edge 好，出手是一种义务」。</li>
+      <li><strong>进化早已在用凯利公式：表型赌注对冲。</strong>沙门氏菌、枯草芽孢杆菌让一部分个体休眠、一部分参与繁殖，克隆族群也自动分散下注；研究者发现休眠细胞的比例在数学上等价于凯利公式中的未下注比例——生物多样性也许就是系统为应对不确定性支付的凯利仓位。</li>
+      <li><strong>三条最底层指引：</strong>第一别清零（p 不等于 1 就别 all-in，贝叶斯主义者永不假设概率为 0 或 1，估计有误差还要多留余地）；第二认知先行（先问自己有多大的 edge 再想下多大的注，不是先有冲动再找理由——「把认知变现，不是用认知去解释变现」）；第三追求复利而不是赢一把（这是连续多把的乘法系统，单次成败不重要）。</li>
+      <li><strong>落地应用：</strong>职业规划按「先问 edge、再看 odds、最后谈仓位」三步走，拿不准就用半凯利/分数凯利试水（先做副业跑小项目）；精力和健康也是资产，刷短视频的价值只是赔率不等于 edge，时间管理最重要的凯利策略是「少出手」、把仓位集中在能产生复利的少数变量上；信任是乘法资产，策略是刚认识先小下注、表现好逐步加仓、永远保留止损机制防止瞬间清零。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li><strong>本周做一次「三问」机会盘点：</strong>把你正在犹豫的 1–3 个机会（换工作、副业、新技能、重要关系）写下来，逐条回答「我的 edge 是什么（我是否真比别人强/更看得清）」「odds 如何（回报上限大不大）」「我打算押多少仓位」，把犹豫变成计算。</li>
+      <li><strong>给每个机会粗算一个 edge：</strong>估计胜率 p 和赔率 b，算一下 edge = bp − q 是否大于零；不大于零就明确告诉自己「这把我没有认知优势，不下注」，把省下的时间和钱留给真正有 edge 的事。</li>
+      <li><strong>对新方向只用「分数凯利」试水：</strong>看好一个赛道但拿不到精确的 p 时，不要辞职 or 全不投入二选一，而是先拿出业余时间的 10%–20% 做一个小项目、跑一轮真实反馈，再决定是否加仓。</li>
+      <li><strong>为自己设定「绝不清零」底线：</strong>列出哪些资源永远不动用（比如应急金、保本账户）、哪些权限永远不交给任何人（账号密码、全部积蓄、全部底牌），写下来贴在桌前，诱惑再大也不破线。</li>
+      <li><strong>做一次「少出手」时间审计：</strong>翻出上周的时间去向，标出哪些是「赔率感很高但 edge 为零」的活动（刷短视频、频繁看行情、无意义社交、熬夜赶工），下周把腾出的时间集中到能复利积累的少数变量上——技能、健康、作品。</li>
+      <li><strong>练习「先判断、再投入」的决策节奏：</strong>下注前先冷静写完 edge 判断再决定力度，防止「赢了狂妄加仓、输了胆怯割肉」的结果导向；同时也提醒自己——很多重要决定根本没有现成的 p，不要用「未知」冒充「不值得」，必要时先小步走一步看反馈。</li>
+      <li><strong>审查一段重要关系或合作：</strong>问自己是否把「能瞬间清零的权限」交给了对方、是否在持续为高波动低确定性的事补仓；按「先小下注、逐步加仓、保留止损」重新调整投入节奏，而不是靠反复证明自己来换取安全感。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <p class="sum-quote">「你的增长上限，受限于你的认知带宽。」</p>
+    <p class="sum-quote">「凯利公式让你赚的，是你超出大众认知的钱。你比大众高明多少，凯利就能帮你赚到多少，但不能更多。」</p>
+    <p class="sum-quote">「如果 edge 好，出手是一种义务。」</p>
+    <p class="sum-quote">「世界既不会奖励你的努力，也不会惩罚你的动机。它只结算你的概率质量。」</p>
+
+    <p class="sum-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习。</p>
+  </section>
+
+  <footer class="site-foot">万维钢 · 现代思维工具100讲 · 第32讲 ｜ 手机阅读版</footer>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('toTop');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = (isNaN(p) ? 0 : p) + '%';
+    var show = h.scrollTop > 400;
+    btn.style.opacity = show ? '1' : '0';
+    btn.style.pointerEvents = show ? 'auto' : 'none';
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>

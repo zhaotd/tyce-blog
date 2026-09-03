@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第9讲 供给侧心态：怎样在正和的世界合作（以及竞争）｜万维钢·现代思维工具100讲</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#faf7f1;--text:#2b2620;--muted:#8b8275;--accent:#8a5a2b;
+  --accent-soft:rgba(138,90,43,.09);--card:#fffdf8;--border:#e6dccb;
+  --quote-bg:#f3ecdf;--line:#d8cdb9;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#171512;--text:#e9e3d8;--muted:#a39a8b;--accent:#cf9a66;
+    --accent-soft:rgba(207,154,102,.12);--card:#201d18;--border:#3b352c;
+    --quote-bg:#272219;--line:#4c4436;
+  }
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16.5px;line-height:1.82;text-align:justify;-webkit-font-smoothing:antialiased}
+#progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:999}
+.container{max-width:700px;margin:0 auto;padding:28px 20px 64px}
+header{padding:18px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px}
+.tag{display:inline-block;font-size:.82rem;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:3px 12px;margin-bottom:14px;letter-spacing:.5px}
+h1{font-size:1.72rem;line-height:1.45;margin-bottom:12px;text-align:left;font-family:"Songti SC","STSong","SimSun",serif;letter-spacing:.5px}
+.meta{font-size:.85rem;color:var(--muted);text-align:left}
+main p{margin:0 0 16px}
+h2{font-size:1.22rem;margin:34px 0 14px;line-height:1.5;color:var(--accent);text-align:left;padding-left:12px;border-left:4px solid var(--accent)}
+h3{font-size:1.05rem;margin:26px 0 10px;text-align:left}
+em{font-style:normal;color:var(--accent);font-weight:600}
+blockquote{margin:18px 0;padding:14px 18px;background:var(--quote-bg);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;font-size:1.02em;line-height:1.8}
+.divider{text-align:center;margin:26px 0;color:var(--line);font-size:1rem;letter-spacing:10px;user-select:none}
+ul{margin:8px 0 16px;padding-left:22px}
+li{margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card h3{margin-top:0}
+.situation{color:var(--muted);font-size:.92rem;margin-bottom:12px}
+.approach{border-radius:10px;padding:12px 14px;margin:10px 0}
+.approach h4{font-size:.95rem;margin-bottom:8px;text-align:left}
+.zs{background:rgba(150,80,60,.07);border:1px solid rgba(150,80,60,.22)}
+.zs h4{color:#9c4a2f}
+.su{background:var(--accent-soft);border:1px solid rgba(138,90,43,.3)}
+.su h4{color:var(--accent)}
+@media (prefers-color-scheme:dark){.zs{background:rgba(190,100,80,.09)}.zs h4{color:#d98a6a}}
+.notes{margin:26px 0;padding:18px 20px;background:var(--card);border:1px dashed var(--border);border-radius:12px;font-size:.85rem;color:var(--muted);line-height:1.7}
+.notes h2{border:none;padding-left:0;color:var(--muted);font-size:1rem;margin:0 0 10px}
+.notes ol{padding-left:20px}
+.notes li{margin-bottom:6px;word-break:break-all}
+sup a{color:var(--accent);text-decoration:none}
+.c-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;margin-bottom:8px;text-align:left}
+.c-name{font-weight:600;font-size:.95rem}
+.c-meta{color:var(--muted);font-size:.8rem}
+#ai-summary{margin:40px 0 10px;background:#eef2e6;border:2px solid #b7c9a2;border-radius:12px;padding:24px 22px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){
+  #ai-summary{background:#1d2618;border-color:#4d6038;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+}
+#ai-summary .ai-badge{display:inline-block;background:#55723a;color:#f6f8f1;font-size:.82rem;font-weight:700;padding:4px 14px;border-radius:999px;margin-bottom:14px;letter-spacing:2px}
+@media (prefers-color-scheme:dark){#ai-summary .ai-badge{background:#a9c47e;color:#1d2618}}
+#ai-summary h2{color:#55723a;border-left-color:#55723a;border:none;padding-left:0;margin:22px 0 10px;font-size:1.1rem}
+@media (prefers-color-scheme:dark){#ai-summary h2{color:#a9c47e}}
+#ai-summary .one-liner{font-weight:700;font-size:1.02em;line-height:1.8;margin-bottom:4px}
+#ai-summary .ai-note{font-size:.76rem;color:var(--muted);margin-top:14px;text-align:center;border-top:1px solid var(--border);padding-top:10px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin:30px 0 10px}
+#backTop{position:fixed;right:18px;bottom:26px;width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;border:none;font-size:20px;line-height:1;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.22);z-index:998;opacity:.92}
+#backTop:active{transform:scale(.95)}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+<div class="container">
+
+<header>
+  <div class="tag">万维钢 · 现代思维工具100讲 · 第9讲</div>
+  <h1>供给侧心态：怎样在正和的世界合作（以及竞争）</h1>
+  <div class="meta">作者：万维钢</div>
+</header>
+
+<main>
+  <p>我有个朋友叫刘大为，是硅谷很好的并购律师，他给我讲了个有意思的观察。</p>
+  <p>在一家公司处于即将被并购的变动时刻，老板和员工的本能反应很不同。老板往往有造福一方的心态，真心为员工着想，希望员工也能拿到并购的红利，为此会专门在合同中设置一些条款。可员工却是充满防备心理，总怀疑老板找律师整什么动作是不是要 <em>screw me over</em>（搞我）。</p>
+  <p>我们都很感慨，这真是社会地位越高的人越倾向于用正和思维跟世界打交道，社会地位越低的人却是越倾向于零和……连硅谷高科技公司的人都是如此。</p>
+  <p>所谓「正和（Positive-Sum）」，就是这个事儿对咱俩都有好处，是双赢；而「零和（Zero-Sum）」，则是咱俩的收益之和等于 0：你赢了多少就是我输了多少，你赢的都是原本应该属于我的。</p>
+  <blockquote>现代人最大的精神内耗，就是把零和当常识，把正和当理想。</blockquote>
+  <p>在公司、在各种组织里，人们往往不是把最多的精力用来创造价值，而是用来防备别人从自己身上拿走什么，担心自己会不会吃亏。</p>
+  <p>本来弱者更需要合作，可弱者最先把关系想成你死我活。这不是见没见过世面的问题，这是大脑默认安装了过时的博弈模型。</p>
+
+  <h2>一个正和远大于零和的世界</h2>
+  <p>这一讲的工具叫「供给侧心态（Supply-Side Mindset）」，我希望它能带给你一个强大的阿尔法优势。而你首先需要理解，我们生活在一个正和远大于零和的世界。</p>
+  <div class="divider">✵</div>
+
+  <h2>合作，才是底层结构的主干</h2>
+  <p>零和很符合人的直觉。</p>
+  <p>很多读过一点进化论但没读通的人认为，这个世界的底层逻辑是竞争，甚至是杀戮。你看动物要生存就得吃别的生物，你要活别的生物就得死，弱肉强食这不就是零和吗？什么合作、什么真善美，不过是建立在残酷底层之上的二阶效应，是文明人给自己画的妆……</p>
+  <p>但你要是深入了解一点生物进化 <sup><a href="#note1">[1]</a></sup>，你会发现合作其实远比杀戮普遍得多。单细胞生物变成多细胞生物，多细胞生物的共生和社会分工，这些都是一次次的合作升级。杀戮只是地球生物获取能量很窄的一种手段，大头其实是光合作用和碎屑分解。人类之所以成为最强物种，不是因为我们最擅长杀戮，而是因为我们最擅长合作。</p>
+  <blockquote>合作不是二阶的，合作是底层结构的主干。</blockquote>
+  <p>我们特别注意杀戮，是因为大脑的安全模块很原始，对威胁特别敏感，对机会特别迟钝。它让你更容易记住抢夺、背叛和被坑的故事，而不是那些枯燥但持续发生的正和合作。</p>
+  <blockquote>你本可以玩更大的游戏，却把自己关在一个假想的斗兽场里。</blockquote>
+  <div class="divider">✵</div>
+
+  <h2>现代世界的两大正和 buff</h2>
+  <p>古人狩猎采集种地都需要合作，现代世界则因为有自由市场，而有了两个巨大的正和 buff。</p>
+  <h3>一是信息的可复制性</h3>
+  <p>你分给我一个苹果，我多了一个你的确就得少一个，这是零和。但如果你有一个好故事、一个好主意，讲给我听，我得到了，你可并没有失去它。复制一份信息并不会让你损失那个信息。</p>
+  <p>这就是为什么商品交换从根本上来说就是正和的。假设你掌握一个种植苹果的秘诀，能以比较低的成本大规模生产高质量苹果。我花 10 块钱买了你一斤苹果，这个故事跟分苹果可就不一样了。</p>
+  <p>我买的不是组成苹果的那一堆原子——我把苹果吃掉，原子无非是在我体内循环一番，一个都不会少——我买的其实是 <em>原子的排列组合方式</em>，也就是信息。我买的是你种出来的那个苹果的"好"。我乐意出这 10 块钱，一定是因为我认为苹果的价值高于 10 元：我自己拿 10 块钱可种不出一斤苹果来。</p>
+  <p>而你则一定认为 10 元的价值高于苹果，才愿意费力卖给我。这是对的，因为苹果是你种的！你用一个秘诀种出了很多个苹果，每个苹果身上那个"好"都是对你那个秘诀的一次免费复制。</p>
+  <p>咱俩都得到了比原来更好的处境，标准的正和。</p>
+  <blockquote>这是经济学最底层的原理：只要交易是自愿的，它就一定是双赢，一定增加了整个社会的总财富。</blockquote>
+  <h3>二是分工和网络效应</h3>
+  <p>你善于玩木头，我善于打铁，咱俩单干的价值都有限，但是合作就能创造像锤子这样的高级东西。这是乘法关系，价值立即提升。专业带来精通，精通才有效率，劳动分工和比较优势就是这么来的。</p>
+  <p>再进一步，如果有人弄个大市场，最好这个市场还是开在网上，乘法关系就会有更大的发挥。这个网络每多一个卖家、每多一个买家，它自身的价值都会变得更高。</p>
+  <p>正和游戏是你只要能参加就一定是好事儿。为了能参加，我们应该研究自己能创造什么价值而不是该领取什么价值，反正只要你进去自然就有回报。将欲取之，必先予之。</p>
+  <blockquote>我不问我能得到什么，我问我能提供什么，这就是供给侧心态。</blockquote>
+  <div class="divider">✵</div>
+
+  <h2>供给侧心态：我能提供什么</h2>
+  <p>一旦有了供给侧的眼光，你就会发现大量的人都把自己错误地锁在了需求侧。问他为啥来我们公司应聘，他说因为我喜欢你们的待遇和工作环境。问她对婚姻有什么看法，她说我要求另一半身高一米八年收入至少二十个 W 还要给 18 万彩礼并且提供情绪价值。您那叫许愿好吗？</p>
+  <blockquote>想要被邀请加入游戏，你必须能提供一点什么东西才好。</blockquote>
+  <p>我让 GPT 给供给侧心态下了一个硬核定义——</p>
+  <blockquote>「把自己当成一个提供可验证价值的模块，主动降低协作摩擦，嵌入到长期重复博弈且有网络效应的结构里。」</blockquote>
+  <p>翻成大白话就是你得真有本事、好合作、能接入好局。总共三件事儿：</p>
+  <ul>
+    <li><strong>价值生产</strong>——你得真能解决问题，而不是光会说。</li>
+    <li><strong>摩擦消除</strong>——让别人跟你合作的时候，成本更低、更顺手。</li>
+    <li><strong>网络触达</strong>——你能达到什么级别的合作圈层。</li>
+  </ul>
+  <p>注意供给侧心态可不是无条件的付出更不是讨好型人格，健康的合作是互惠的，必须有边界有规则……但一切的出发点是你要加入合作。</p>
+
+  <h2>摩擦消除，也是一门学问</h2>
+  <p>价值生产和网络触达都容易理解，我感觉这里需要特别注意的是摩擦消除：让合作容易发生、让自己容易合作，也有学问。咱们说两个有意思的研究。</p>
+  <div class="divider">✵</div>
+  <h3>研究一：胶水员工</h3>
+  <p>行为科学家乔恩·利维（Jon Levy）2025 年出了本新书叫《团队智能》<sup><a href="#note2">[2]</a></sup>，其中提出一个概念叫「胶水员工（glue employees）」。</p>
+  <p>所谓胶水员工，就是那些虽然权力不见得有多大，但总能通过情商、协调能力和信任网络，让团队信息更流畅、冲突更可控、合作更顺手，从而放大利他人产出的那类人。</p>
+  <p>你想想身边有没有这样的人：新人来了，业务没人教，是她给发个文档、带着把流程跑一遍；部门扯皮升级，是她出来翻译双方语言，把问题捋清楚；项目快要炸锅，大家心态崩了，是她组织复盘，帮所有人重新对齐目标。</p>
+  <p>从零和视角看，这些工作很难写进 KPI。可是研究发现，恰恰是这些人决定了信息的流动速度和团队的心理安全感。胶水员工未必有耀眼的个人绩效，却是团队绩效的关键。</p>
+  <p>那你说我还是需要绩效啊，我不愿意做被人默默消耗的胶水——是的，所以你需要确保价值 <em>可验证</em>。你要把自己承担的协作成本显性化，比如写成流程和清单；要争取正式授权，让这些工作变成明确的角色和考核项；你最好还能把经验分享出去，这样组织才能知道"你是那个让系统不崩的人"。</p>
+  <blockquote>供给侧心态，得把好人行为给工程化。</blockquote>
+  <div class="divider">✵</div>
+  <h3>研究二：改个名字，年收入上涨 30%</h3>
+  <p>第二个研究来自 2025 年的挪威 <sup><a href="#note3">[3]</a></sup>。两个社会学家用大数据分析发现，那些住在挪威的移民或者移民家庭出生的孩子，只要把自己带有外国色彩的名字改成挪威本地的主流名字，就能让年收入平均上涨 30%。</p>
+  <p>其他什么都不用变，仅仅是改个名字。想象一个挪威女孩出生于穆斯林家庭，原名叫 Fatima。她语言很好，学历不错，实习经历也不差，但投简历总是石沉大海。有一天她把名字正式改为 Kari，这是一个典型的挪威名字，就很快收到各种面试邀请，得到一个大公司岗位，工资比之前打零工高出一大截。</p>
+  <p>事实证明人家并不会面试一看你是个穆斯林就大失所望，把你拒绝——只要到了具体情境面前，标签其实没那么重要，标签的作用是之前默默的筛选。</p>
+  <p>之前美国的研究 <sup><a href="#note4">[4]</a></sup> 也发现，移民只要改个白人名字，就能多拿 50% 的面试机会。改个名，你就变得稍微容易合作了一点。名字不是你的自我，名字只是你的"API 接口"。改名不是否定出身，而是兼容系统。</p>
+  <p>改善形象、注重着装、说标准普通话、掌握一门外语都有同样的效果。你需要更好的合作接口。</p>
+  <p>让自己的出现可期待，让响应速度快一点，确保交付的东西容易验收、有文档、可复盘，让自己输出的内容尽量少消耗对方的脑力成本。让人更省心而不是更费心，就是好合作接口的标准。</p>
+  <blockquote>低摩擦代表靠谱。靠谱不是性格，是一种工程能力。</blockquote>
+  <div class="divider">✵</div>
+
+  <h2>那竞争怎么办？——抢夺「合作资格」</h2>
+  <p>可能有人会问：如果我只讲供给，那竞争怎么办？世间很多事情明明就是零和博弈啊！这里有个关键认知。</p>
+  <blockquote>现代竞争的本质，不是抢夺资源，而是抢夺「合作资格」。</blockquote>
+  <p>你想上北大清华，你想进麦肯锡高盛，你想加入最顶尖的创业团队。这听起来像是在抢一个名额（零和），但实际上，你是在争取进入一个更高级的合作网络。</p>
+  <p>你读书拿绩效攒履历不是为了把别人踩下去，而是为了向那个更高级的系统证明自己有资格成为他们的队友。</p>
+  <p>竞争不是排队，是配对。输赢只是告诉你该配对到哪个层级的合作。你要优化的不是"我怎么把别人踩下去"，而是"我如何在下次评估让别人看到离不开我给的供给"。</p>
+  <p>中美贸易战打的不是领土也不是任何实物资源，市场准入也好供应链安全也好，其实都是把自家产品卖给消费者的机会。</p>
+  <p>现代社会对一个人最大的惩罚，是把你从合作名单里划掉，以后不找你玩了。</p>
+  <p>这就是为什么想进高端局就一定要重视积累声誉。声誉就是在重复博弈中，别人对你未来合作价值的贴现。一旦被贴上"不可靠"、"爱占便宜"、"情绪不稳定"的标签，你就会遭到社会性降级……你就只能去那些低信任度、高摩擦、全是零和博弈的低端局里竞争。</p>
+  <blockquote>这场比赛的观众可能是下一场的队友。所以供给侧心态者哪怕这次没赢，也要表现得像个体面的专业人士。</blockquote>
+  <div class="divider">✵</div>
+
+  <h2>从「抢」到「补」：给零和博弈装上供给视角</h2>
+  <p>我让 GPT 编排了 10 个应用场景，把供给侧心态和零和思维对比，放在文末，你可以做一番练习。我理解这里不但要有供给侧心态，而且要培养对零和博弈的反感——</p>
+  <p>每当你看到零和博弈，看到一群人在抢一个什么东西，都应该问问这东西是死的，还是可以被重新设计的？如果我跳出"抢"的叙事，我能供给什么？我能不能让盘子变大一点？</p>
+  <blockquote>零和选手永远活在"别人是不是欠我"的怨念里，供给侧选手永远活在"我能不能补上这个缺口"的行动里。</blockquote>
+  <p>这不是道德选择，而是生存策略。在这个高度互联、信息可复制、充满互补性的现代社会，「被需要」是比「拥有」更安全的状态。</p>
+  <blockquote>我们精英日课专栏一再说，被依赖，是当今世界给你最好的待遇。</blockquote>
+</main>
+
+<div class="notes">
+  <h2>注释</h2>
+  <ol>
+    <li id="note1">[1] 这里的详细讨论可以参考精英日课第五季，理解进化论的新视角</li>
+    <li id="note2">[2] Levy, Jon. <em>Team Intelligence: How Brilliant Leaders Unlock Collective Genius</em>. New York: Harper Business, 2025；另见华尔街日报报道：Mitchell, Heidi. "The Underrated Power of 'Glue Employees' Who Hold Everything Together." <em>The Wall Street Journal</em>, October 12, 2025.</li>
+    <li id="note3">[3] Umblijs, Janis, and Are Skeie Hermansen. "Can A New Name Open Closed Doors? Foreign-Sounding Names and Immigrant Earnings." <em>SocArXiv Preprint</em>, October 27, 2025. https://osf.io/preprints/socarxiv/rd3gv_v1.</li>
+    <li id="note4">[4] Bertrand, Marianne, and Sendhil Mullainathan. "Are Emily and Greg More Employable than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination." <em>American Economic Review</em> 94, no. 4 (2004): 991–1013. https://doi.org/10.1257/0002828042002561.</li>
+  </ol>
+</div>
+
+<h2>★ 练习：GPT 给的十个供给侧心态应用场景</h2>
+<p style="color:var(--muted);font-size:.92rem">以下是 GPT 编排的十个应用场景，零和思维与供给侧心态两相对照，你可以逐一做一番练习。</p>
+
+<div class="card">
+  <h3>★ 场景 1：朋友聚会买单——"我吃亏没？"</h3>
+  <p class="situation">情境：六个人聚餐，最后买单、点菜、选餐厅。</p>
+  <div class="approach zs">
+    <h4>零和思维的做法</h4>
+    <ul>
+      <li>点菜时想："既然 AA，我当然要点贵菜，把本吃回来。"</li>
+      <li>结账时死抠每个人的那几块钱：谁多喝了一瓶饮料、谁没吃甜点。</li>
+      <li>内心关注的是：这次我是不是吃亏了？是不是别人占便宜了？</li>
+      <li>结果：大家下次不太想叫你，因为你"计较"，气氛被你拉低。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的做法</h4>
+    <ul>
+      <li>聚餐前想："我能让大家更轻松一点？"——提前帮大家找交通方便、价格适中、环境舒服的餐厅。</li>
+      <li>吃饭过程中，主动照顾冷场的人、帮大家拍照、记录话题、顺便帮忙订个下次活动。</li>
+      <li>结账时，要么干脆请咖啡/甜点，要么轻松地协助算账、避免尴尬。</li>
+      <li>结果：你不是"吃得最回本的人"，而是<strong>"让这次活动变得很好的人"</strong>，以后各种局自然都会想起你。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 2：职场抢项目——"机会就一个名额"</h3>
+  <p class="situation">情境：公司有一个高曝光度的战略项目，只能选一名主负责人。</p>
+  <div class="approach zs">
+    <h4>零和思维的做法</h4>
+    <ul>
+      <li>觉得："他上我就下，这是一个名额抢夺战。"</li>
+      <li>刻意藏信息，不帮别人补漏洞，暗中拿同事的失误去给领导"敲边鼓"。</li>
+      <li>把所有关注点放在：如何"赢过"另一个候选人。</li>
+      <li>短期可能拿到项目，但后果是：团队以后不太愿意跟你真心合作。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的做法</h4>
+    <ul>
+      <li>先问："公司做这个项目，真正需要的能力和成果是什么？"</li>
+      <li>不只展示"我比他强"，而是设计一套"我如何带着团队完成目标"的方案：怎么拆解任务、怎么分工、怎么协作。</li>
+      <li>如果最后别人当 PM，你主动提出："那我来补这个关键模块，让整个事情成功。"</li>
+      <li>你在竞争的是"整个项目成功需要的关键供给"，而不只是名义上的 title。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 3：找工作与面试——"我要不要包装一下自己？"</h3>
+  <p class="situation">情境：你在面试一个很吃香的职位，竞争对手很多。</p>
+  <div class="approach zs">
+    <h4>零和思维的做法</h4>
+    <ul>
+      <li>认为岗位是抢来的："HR 只会选一个人，我必须证明自己'比别人强'。"</li>
+      <li>简历和面试里疯狂"堆 buzzword"，凡是都往自己身上揽，稍微夸大或不实。</li>
+      <li>面试时高度关注"我值得多少薪水""别人是不是拿得比我多"。</li>
+      <li>结果：即便进去了，你也没给人建立起"可靠供给者"的预期，只是"会讲故事的人"。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的做法</h4>
+    <ul>
+      <li>在投递前就认真研究这家公司、这个团队现在具体卡在哪——是增长停滞？数据混乱？流程不顺？</li>
+      <li>面试时尽量用具体案例，说："我以前在类似场景里，是如何把一个问题从 A 推到 B，最后以 C 的指标验证的。"</li>
+      <li>甚至可以当场给一个 mini 方案："如果我进来，前 30 天会先做这三件具体事。"</li>
+      <li>你在传递一个信号：我不是来拿一个位置，而是来解决一个问题。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 4：亲密关系与家务分工——"谁亏谁赚？"</h3>
+  <p class="situation">情境：伴侣之间对家务、经济、孩子教育在争执。</p>
+  <div class="approach zs">
+    <h4>零和思维的做法</h4>
+    <ul>
+      <li>核心逻辑："我已经付出了 X，你却只付出 Y，不公平。"</li>
+      <li>经常算"谁做得多""谁做得少"，用账单、家务时间来控诉。</li>
+      <li>把家庭看成一个资源池：钱、时间、情绪都是在争夺。</li>
+      <li>最终两人越来越像合伙人撕股份，而不是一起建设系统的人。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的做法</h4>
+    <ul>
+      <li>把家庭当成一个"运营系统（operating system）"：</li>
+      <li>谁更擅长什么？</li>
+      <li>哪些流程可以自动化/外包？</li>
+      <li>哪些环节会给对方高压力？</li>
+      <li>你问的不是"我做了多少"，而是："我能以最低的成本，把对方最痛的那个点缓解掉？"</li>
+      <li>比如：你更擅长规划和信息处理，那你负责账单、学校沟通；对方擅长照顾情绪，那就让对方更多时间在孩子陪伴上。</li>
+      <li>家里整体运转顺畅，你们俩共同的"可用幸福度"被放大了。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 5：团队分奖金与绩效——"每一分都是抢来的？"</h3>
+  <p class="situation">情境：领导要给团队分一笔项目奖金。</p>
+  <div class="approach zs">
+    <h4>零和思维的领导</h4>
+    <ul>
+      <li>心里想的是："预算就这么多，我多拿一点，他们就少一点。"</li>
+      <li>分配时模糊、暗箱，让大家猜度、内斗。</li>
+      <li>整个过程强化"内部竞争"，绩效评语写得含糊其辞，吊着人。</li>
+      <li>结果：下一次大家只会为自己打算，不再愿意无条件协作。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的领导</h4>
+    <ul>
+      <li>先把问题翻译成："这笔钱如何激励出未来更大的价值供给？"</li>
+      <li>明确规则：什么行为会被奖金认定，什么产出会被强化。</li>
+      <li>设计一部分"团队奖金池"，鼓励协作成果，而不是只看个人分数。</li>
+      <li>在沟通时强调的是："我们希望通过这套机制，让大家能更合理地投入，并放大你们最擅长的那部分供给。"</li>
+      <li>结果：奖金成为协作设计工具，而不是抢奶酪的战场。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 6：社交媒体上观点冲突——"我要赢你一嘴"</h3>
+  <p class="situation">情境：你在网上看到一个让你很不爽的观点，准备开骂。</p>
+  <div class="approach zs">
+    <h4>零和思维的做法</h4>
+    <ul>
+      <li>立刻把对方当成敌对阵营："你错了，我对了。"</li>
+      <li>目标是赢辩论、赢面子、赢赞同数。</li>
+      <li>语言只会越来越极端，因为极端更能收获点赞。</li>
+      <li>最后你收获的是：一个更窄、更极化的同温层，以及更多"对立部落"。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的做法</h4>
+    <ul>
+      <li>先问："这个话题上，我能供给的是什么？是信息、是框架、还是一个更好的问题？"</li>
+      <li>你可以写一条：</li>
+      <li>把双方真正争议的"核心变量"抽出来；</li>
+      <li>给出一两个数据点或研究链接；</li>
+      <li>抛出一个更好的思考路径。</li>
+      <li>你不是在争输赢，而是在为公共对话供给结构和素材。</li>
+      <li>长期来看，你会被视为"有建设性的人"，而不是"谁都敢喷的人"。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 7：城市停车难 vs 出行体验——"抢车位还是重写系统？"</h3>
+  <p class="situation">情境：大城市停车难、拥堵严重。</p>
+  <div class="approach zs">
+    <h4>零和思维的市民 / 政策</h4>
+    <ul>
+      <li>市民角度：拼命抢车位、占道、各种骚操作，只要我能停进来就行。</li>
+      <li>政策角度：更多地想着"怎么罚""怎么限"，本质还是围绕稀缺车位做零和博弈。</li>
+      <li>结果：大家越来越累，停车大战愈演愈烈。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的城市治理</h4>
+    <ul>
+      <li>把问题定义为："我们如何供给更高效的出行方案，而不是如何分车位？"</li>
+      <li>可能的供给侧动作：</li>
+      <li>提升公共交通质量、准点率和舒适度；</li>
+      <li>鼓励共享出行、P+R（Park and Ride）、自行车网络；</li>
+      <li>用算法定价、错峰引导，把高需求时段价格信号传递清楚。</li>
+      <li>用户不再非得抢车位，而是有更多替代选项。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 8：教育资源（名校/名师）——"名额 vs 方案"</h3>
+  <p class="situation">情境：家长为了孩子的名校、名师资源形成激烈竞争。</p>
+  <div class="approach zs">
+    <h4>零和思维的家长</h4>
+    <ul>
+      <li>把教育看成稀缺名额："上不了某某学校，这一生就完了。"</li>
+      <li>于是疯狂卷简历、卷竞赛、卷推荐信，只要能挤进那个洞就行。</li>
+      <li>所有注意力都在抢"现有体系里的稀缺坑位"。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的家长 / 教育创业者</h4>
+    <ul>
+      <li>家长问的是："我的孩子真实的优势是什么？怎样设计一条发展路线，让他能向社会提供独特价值？"</li>
+      <li>教育创业者问的是："现有学校体系供给不到的能力是什么？我能补哪一块？"</li>
+      <li>比如：更重视项目制、研究型学习、真实世界的实作机会，而不只是"名额筛选赛"。</li>
+      <li>孩子从小被引导去想："将来我能提供什么样的能力，而不仅是'我考过多少关'。"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 9：国际贸易——"顺差是赢，逆差是输？"</h3>
+  <p class="situation">情境：两国有贸易失衡，一国长期顺差，一国长期逆差，舆论开始喊"被剥削"。</p>
+  <div class="approach zs">
+    <h4>零和思维的国家叙事</h4>
+    <ul>
+      <li>用家庭类比国家："我买你那么多东西，你却不买我的，你在占我便宜。"</li>
+      <li>政策上倾向于关税战、配额战、封锁、抵制，视对方发展为威胁。</li>
+      <li>结果是：全球供应链成本上升，双方企业和消费者共同受损。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的国家叙事</h4>
+    <ul>
+      <li>问的是："我们在全球分工里的供给是什么？是技术、品牌、资本、市场、金融服务，还是制度环境？"</li>
+      <li>顺差一方：思考如何让国内消费和服务业升级，提高居民福利，而不是只追求出口。</li>
+      <li>逆差一方：思考如何通过开放、创新，提升本国在某些环节的独特供给，而不是只是限制进口。</li>
+      <li>同时，各国在多边框架下合作：降低贸易摩擦，强化知识产权保护、标准互认等制度供给。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <h3>★ 场景 10：气候变化与全球减排——"发展 vs 环保是对立的吗？"</h3>
+  <p class="situation">情境：发展中国家说："你们发达国家历史上排那么多碳，现在还要限制我们发展？"</p>
+  <div class="approach zs">
+    <h4>零和思维的全球政治</h4>
+    <ul>
+      <li>发达国家：强调减排义务、碳税碳关税，主要是"控制对方排多少"。</li>
+      <li>发展中国家：强调"排放额度是资源，你多我就少"，所以展开额度之争。</li>
+      <li>结果：谈判永远卡在"谁应该多出一点、谁应该少一点"的泥潭里。</li>
+    </ul>
+  </div>
+  <div class="approach su">
+    <h4>供给侧心态的全球政治</h4>
+    <ul>
+      <li>把视角从"分配排放额度"转向："谁能供给更便宜、更安全、更易推广的低碳技术和制度方案？"</li>
+      <li>发达国家：大力投资可再生能源、储能、电网、核能的技术和标准；降低这些技术在全球扩散的成本，让发展中国家愿意采纳。</li>
+      <li>发展中国家：把"跳过高排放阶段"变成新的发展模式，通过直接引入新技术获得产业升级。比拼的不是"谁排得多"，而是"谁能为世界提供更好的绿色发展方案"。</li>
+    </ul>
+  </div>
+</div>
+
+<h2>用户留言</h2>
+
+<div class="card comment">
+  <div class="c-head"><span class="c-name">至尊女宝</span><span class="c-meta">昨天 · 四川</span></div>
+  <p>竞争的本质不是抢夺资源，而是抢夺合作资格。最近我在学跳舞，被很多团队的人嫌弃，毕竟年纪大了灵活性不够，这要是古代进宫献舞一眼就能看出来我就是个刺客。一个娱乐活动如此，你想进好公司、好团队，表面上是跟别人竞争一个名额，实际上是在向那个系统证明你是一个值得合作的人。你的简历、你的作品、你的口碑，都是证明你好合作的证据。那些把竞争理解为干掉别人的人，永远理解不了为什么有些人看起来不争不抢，却总能进入更好的局。</p>
+  <p>这让我重新理解了"靠谱"这两个字。靠谱不是道德要求，是生存策略。在一个高度互联、信息可复制的世界里，被需要比拥有更安全。你拥有的东西可能贬值，但如果你是一个别人离不开的供给者，你就永远有位置。我现在的做法是，把自己当成一个模块——明确自己能提供什么价值，确保交付的东西质量稳定，让别人调用我的时候不需要反复确认、不需要擦屁股。这听起来像是把自己工具化，但反过来想，工具才不会被淘汰。而且当你足够靠谱的时候，你反而有了筛选权，可以选择跟谁合作、不跟谁合作。</p>
+  <p>说到底，零和思维的人活在存量世界里，天天算别人欠自己什么；供给侧心态的人活在增量世界里，天天想自己能补上什么缺口。前者越算越委屈，后者越做越开阔。正和游戏里，只要你能持续供给价值，复利会帮你跑赢绝大多数人。</p>
+</div>
+
+<div class="card comment">
+  <div class="c-head"><span class="c-name">Christy</span><span class="c-meta">昨天 · 广东</span></div>
+  <p>供给侧心态应用场景 4，让我特别开悟。在亲密关系供给者心态更能实现真正的相互支持与互惠。长久舒服的关系应建立在"双向选择"与"供需平衡"之上。爱与被爱、需要与被需要是相互滋养的过程。只有当一个人清楚自己能提供什么（供给），并适度地接受对方的需求，关系才能形成良性的动态平衡，而非低效的付出和消耗。经营家庭也像经营公司团队一样，根据双方真实的擅长领域、性格特质及资源来动态分配家庭任务，来实现家庭整体效能的最大化和彼此关系的舒适度。</p>
+  <p>打破零和博弈，启动正向反馈。亲密关系本质是一场深度的社会协作与能量交换。当一方率先持有"供给者心态"，主动关注并满足对方需求时，就会触发心理学中的"互惠原则"。这能激活大脑的奖赏系统，促使对方也产生回报意愿，会将关系从"互相索取"的消耗模式转化为"双向奔赴"的滋养模式。健康的互惠不是即时的等价交换，而是双方都愿意把自身优势拿出来回馈这段关系中，形成不断增强的正向循环。</p>
+  <p>"供给侧心态"在生活中主动从"我能提供什么价值"出发，共同面对生活难题、彼此成就的战友与队友的关系。</p>
+</div>
+
+<div class="card comment">
+  <div class="c-head"><span class="c-name">常觉不住</span><span class="c-meta">18小时前 · 美国</span></div>
+  <p>我认识两个人，走了两条很不一样的路。一个人，年轻时进了一家还不算大的公司。那时候公司不过二十来个人，远谈不上什么大平台。他不算那种人人看一眼就知道"很厉害"的人。没有继续读硕士，也没有隔几年就换一次工作。放在今天很多年轻人的眼里，这样的路甚至有点太老实了：不够会经营自己，也不够会为下一步铺路。可他就一直做下去。</p>
+  <p>做事勤快，待人诚实，交代给他的事情，别人放心。有几年，他的状态并不好，表现也谈不上出色。可老板没有动他，奖金也没有亏待他。十几年过去，那家公司从二十来个人，长成了上千人的大公司。几个最核心的老板都认识他。他未必已经坐到最顶层的位置，但在那个系统里，他早就不是一个可以随便替换掉的人。</p>
+  <p>他这些年真正积累下来的，不只是薪水，不只是职位，甚至不只是经验。是长期合作之后，别人对他的放心。这种东西平时不显山不露水。可一个人一旦遇到低谷，遇到一两年表现不那么好的时候，它就会显出价钱。因为老板心里算的，不只是你这个季度做得好不好，而是：这个人过去这么多年，到底值不值得继续留。</p>
+  <p>有些人靠短期表现拿奖金。有些人靠长期信用买时间。后者，往往更贵。</p>
+  <p>另一个人，年轻时同样很优秀，也进过很好的行业。一路跳槽，一路往更有名气的平台走，每一步看起来都很合理。这种路，顺风的时候很耀眼。平台越来越响，名片越来越好看，别人也更容易觉得你一直在往上走。可问题是，很多时候你往上走，未必全是在长自己。你也可能是在借平台的势，借行业景气的势，借时代红利的势。顺风时，这些都分不出来。一旦环境变了，才慢慢看见：那些写在名片上的东西，不一定真的属于你。</p>
+  <p>后来，他碰到一次职业转折，不得不重新找机会。其中有一个机会其实很好，可以回到一家当年离开的老东家。那家公司后来一路做大，成了业内极有分量的名字。可他没有回去。原因说出来并不复杂。面谈他的人，正好是他当年的下属。他过不去那一关。再后来，到了六十多岁，经济压力反而成了他最重的负担。</p>
+  <p>我后来一直记得这件事。因为他没有输给市场，也没有输给能力。他输给了自己心里那口气。</p>
+  <p>万老师这一讲说，现代社会对一个人最大的惩罚，是把你从合作名单里划掉。这话当然对。但我后来慢慢觉得，很多时候，先把你划掉的人，不是别人，是你自己。不是因为你不够聪明，不是因为你不够努力，而是因为你太在意自己应该坐在哪个位置，太在意谁高谁低，太在意那一口咽不下去的气。于是一个原本还能继续接上的局，你自己先断掉了。</p>
+  <p>一个人职业上最贵的损失，往往不是争输了一次，而是在某个转弯处，自己先下了桌。</p>
+</div>
+
+<section id="ai-summary">
+  <span class="ai-badge">AI 阅读总结</span>
+  <p class="one-liner">一句话概括：世界本质上是正和的，现代竞争抢的不是资源而是「合作资格」——把「我能提供什么」当成一切行动的出发点，供给侧心态者赢在增量世界里，而零和思维只是大脑默认装错的旧博弈模型。</p>
+
+  <h2>一、核心内容总结</h2>
+  <ul>
+    <li>正和 vs 零和：正和是双方都受益的双赢，零和是你赢多少我就输多少。现代人最大的精神内耗，就是把零和当常识、把正和当理想——在公司里人们宁可互相防备、怕吃亏，也不把精力用来创造价值。</li>
+    <li>地位与心态的关联：并购律师的观察显示，社会地位越高越倾向用正和思维打交道，越弱势反而越先把关系想成你死我活；这不是见没见过世面，而是大脑默认安装了过时的博弈模型，弱者本应更需要合作。</li>
+    <li>进化论的真相：合作不是残酷竞争之上的"二阶效应"，而是底层结构的主干——单细胞到多细胞、共生与社会分工都是一次次合作升级；人类成为最强物种靠的是最擅长合作，而非杀戮。大脑安全模块对威胁敏感、对机会迟钝，才让人记住背叛而忽略正和。</li>
+    <li>现代世界的两大正和 buff：一是信息的可复制性——买苹果买的其实是"原子的排列组合方式"（信息），自愿交易必然双赢；二是分工与网络效应——合作是乘法关系，网络每多一个成员，自身价值就更高。</li>
+    <li>供给侧心态的硬核定义：把自己当成一个提供可验证价值的模块，主动降低协作摩擦，嵌入长期重复博弈且有网络效应的结构。三件事：价值生产、摩擦消除、网络触达。它不是无条件的付出或讨好，而是有边界、有规则的互惠。</li>
+    <li>研究一（胶水员工）：决定团队信息流速和心理安全感的，往往是没有耀眼绩效却擅长协调、补位、翻译冲突的人；但好人行为必须"工程化"——让价值可验证、协作成本显性化、争取正式授权、分享经验。</li>
+    <li>研究二（改名）：挪威（收入上涨 30%）与美国（面试机会多 50%）的实证都表明，名字只是"API 接口"；改善形象、着装、普通话、外语等都是在降低协作摩擦——低摩擦代表靠谱，靠谱不是性格，而是工程能力。</li>
+    <li>竞争的本质是配对不是排队：竞争的目的是进入更高级的合作网络，输赢只告诉你该配对到哪个层级；声誉是别人对你未来合作价值的贴现，现代社会最大的惩罚是把你从合作名单里划掉，而最贵的损失往往是自己先下了桌。</li>
+  </ul>
+
+  <h2>二、给个人的行动建议</h2>
+  <ul>
+    <li>本周做一次"供给盘点"：写下你能稳定提供、且别人验证得了的三项价值（技能、信息、资源），并注明它们分别解决了谁的什么问题——这是供给侧心态的起点。</li>
+    <li>把一件你常做的好人好事工程化：把你带新人、救火、协调的经验写成流程文档、清单或模板，让别人调用你时不用反复确认，也让组织看见"你是让系统不崩的人"。</li>
+    <li>主动降低一次协作摩擦：这周内让一项交付"更容易验收"——附上如何检查、如何复盘的说明；回应消息快一点；把口头交代变成可查的文字。</li>
+    <li>审视并优化你的"合作接口"：简历、头像、着装、沟通方式、普通话或外语水平——挑一个对你目标场景影响最大的接口做一次可观察的改进（哪怕只是把资料整理清楚）。</li>
+    <li>下次遇到竞争（面试、抢项目、争名额）时，把问题从"我怎么赢过他"改成"这个局需要什么供给，我能补哪一块"，并准备一个具体的 mini 方案。</li>
+    <li>经营可预期的声誉：即使这次没赢，也表现得像个专业、体面、可靠的合作者——这场比赛的观众可能是下一场的队友；遇到低谷时，长期信用会替你还价。</li>
+    <li>遇到任何"抢"的场景，先问三句：这东西是死的还是可重新设计的？跳出"抢"的叙事我能供给什么？我能不能让盘子变大一点？</li>
+  </ul>
+
+  <h2>三、金句摘录</h2>
+  <blockquote>我不问我能得到什么，我问我能提供什么，这就是供给侧心态。</blockquote>
+  <blockquote>低摩擦代表靠谱。靠谱不是性格，是一种工程能力。</blockquote>
+  <blockquote>现代竞争的本质，不是抢夺资源，而是抢夺「合作资格」。</blockquote>
+  <blockquote>零和选手永远活在"别人是不是欠我"的怨念里，供给侧选手永远活在"我能不能补上这个缺口"的行动里。</blockquote>
+
+  <p class="ai-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+</section>
+
+<footer>万维钢 · 现代思维工具100讲 · 第9讲　｜　手机阅读版</footer>
+</div>
+
+<button id="backTop" title="回到顶部">↑</button>
+<script>
+(function(){
+  var bar=document.getElementById('progressBar');
+  var btn=document.getElementById('backTop');
+  function onScroll(){
+    var d=document.documentElement;
+    var max=d.scrollHeight-d.clientHeight;
+    bar.style.width=(max>0?(d.scrollTop/max)*100:0)+'%';
+    btn.style.display=d.scrollTop>400?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>内核：你的三个「自我」｜万维钢·现代思维工具100讲 第7讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#2c2a26;
+    --muted:#8a8578;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.09);
+    --border:#e7dfd0;
+    --quote:#c9a063;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201d18;
+      --text:#e8e2d6;
+      --muted:#9a9183;
+      --accent:#d8a45f;
+      --accent-soft:rgba(216,164,95,.12);
+      --border:#3a342b;
+      --quote:#b98a4e;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#c9a063,var(--accent));
+    z-index:1000;transition:width .08s linear;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:36px;width:46px;height:46px;
+    border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:20px;line-height:1;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.22);z-index:1000;
+  }
+  #toTop:active{transform:scale(.94)}
+  .wrap{
+    max-width:700px;margin:0 auto;
+    padding:28px 20px 60px;
+  }
+  header{padding:18px 4px 26px}
+  .course-tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--quote);border-radius:999px;
+    padding:4px 14px;margin-bottom:16px;letter-spacing:.5px;
+    background:var(--accent-soft);
+  }
+  h1{
+    font-size:27px;line-height:1.4;font-weight:700;
+    margin-bottom:12px;letter-spacing:.3px;
+  }
+  .meta{
+    font-size:13.5px;color:var(--muted);
+    padding-bottom:18px;border-bottom:1px solid var(--border);
+  }
+  p{margin:14px 0}
+  h3{
+    font-size:19px;font-weight:700;color:var(--accent);
+    margin:34px 0 12px;padding-left:12px;position:relative;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.22em;bottom:.22em;
+    width:4px;border-radius:2px;background:var(--quote);
+  }
+  ul{margin:14px 0 14px 6px;padding-left:20px}
+  li{margin:9px 0}
+  ul li::marker{color:var(--accent)}
+  .ornament{
+    text-align:center;color:var(--quote);
+    font-size:20px;letter-spacing:14px;
+    margin:34px 0 6px;user-select:none;
+  }
+  blockquote{
+    margin:18px 0;padding:14px 18px;
+    border-left:4px solid var(--quote);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    color:var(--text);
+  }
+  blockquote p{margin:6px 0}
+  .poem{
+    text-align:left;white-space:pre-line;
+  }
+  .strong-line{
+    font-weight:600;
+  }
+  .notes{
+    margin:18px 0;padding:16px 18px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;font-size:13.5px;color:var(--muted);
+    line-height:1.7;text-align:left;
+  }
+  .notes p{margin:8px 0}
+  .notes .notes-title{color:var(--accent);font-weight:700;font-size:15px;margin-bottom:6px}
+  .comments{margin-top:6px}
+  .comment-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin:14px 0;
+  }
+  .comment-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    flex-wrap:wrap;gap:4px;margin-bottom:8px;
+  }
+  .comment-author{font-weight:700;font-size:15px;color:var(--text)}
+  .comment-meta{font-size:12.5px;color:var(--muted)}
+  .comment-card p{font-size:15.5px;margin:0;color:var(--text)}
+  .reply-card{
+    background:var(--accent-soft);
+    border:1px solid var(--quote);
+    border-radius:12px;padding:16px 18px;margin:14px 0;
+  }
+  .reply-card .reply-label{
+    font-size:12.5px;font-weight:700;color:var(--accent);
+    letter-spacing:1px;margin-bottom:6px;
+  }
+  .reply-card p{font-size:15.5px;margin:0}
+  /* AI 总结 */
+  #ai-summary{
+    margin:46px 0 20px;
+    padding:24px 22px;
+    background:linear-gradient(160deg,var(--accent-soft),rgba(0,0,0,0) 60%),var(--card);
+    border:2px solid var(--quote);
+    border-radius:14px;
+  }
+  .summary-badge{
+    display:inline-block;font-size:13px;font-weight:700;color:#fff;
+    background:var(--accent);border-radius:999px;
+    padding:4px 14px;margin-bottom:14px;letter-spacing:1px;
+  }
+  #ai-summary h4{
+    font-size:16.5px;color:var(--accent);margin:20px 0 8px;
+  }
+  #ai-summary .one-liner{
+    font-size:16.5px;line-height:1.75;
+  }
+  #ai-summary ol{margin:10px 0 10px 6px;padding-left:20px}
+  #ai-summary ol li{margin:9px 0}
+  #ai-summary ol li::marker{color:var(--accent);font-weight:700}
+  #ai-summary blockquote{margin:12px 0}
+  .disclaimer{
+    font-size:12px;color:var(--muted);
+    text-align:center;margin:22px 0 0;
+    border-top:1px dashed var(--border);padding-top:14px;
+  }
+  footer{
+    text-align:center;color:var(--muted);
+    font-size:12.5px;margin-top:40px;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+
+  <header>
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第7讲</div>
+    <h1>内核：你的三个「自我」</h1>
+    <div class="meta">作者：万维钢　｜　选自《精英日课》专栏 · 手机阅读版</div>
+  </header>
+
+  <p>现代人应该了解的世界基本设定也许不可尽数，但最终都会归结到人。</p>
+  <p>我们想了解人是因为我们渴望成为更好的人。当你因为一时冲动而后悔的时候，当你感到能力不足的时候，当你羡慕别人那种更高境界的时候，你都在思考同一个问题 —— 我怎么才能变得更好？</p>
+  <p>你肯定可以变。无数的书都告诉你人脑哪怕到了中老年都还有可塑性，你总可以学习新技能新知识，为此你需要有「成长思维模式」等等……但我这里想说一点更深的洞见。</p>
+  <p>好消息是我们生活在 AI 高速进步的时代。研究 AI 能让我们更加深刻地认识自己，因为人脑本质上也是一个神经网络：如果 AI 的神经网络有这么个性质，人脑很可能也有。</p>
+  <p>当代神经科学家和哲学家最关心的问题是“意识到底是什么？”“自我是怎么事儿？”“AI 可以有人的意识吗？”他们把人脑和 AI 类比，有很多收获，我们在《精英日课》专栏里也讲过很多。我自己跟 GPT 不断讨论这些问题，也有所得。</p>
+  <p>我们把现代学者的理论和古代先贤的看法摊在一起，聊出一个相对简单但特别好用的工作模型 ——</p>
+  <blockquote>
+    <p class="strong-line">人有三个自我：进程自我、界面自我和内核自我。</p>
+  </blockquote>
+
+  <div class="ornament">✵</div>
+
+  <h3>进程自我：你每时每刻的那个“我”，只是新闻发言人</h3>
+  <p>「进程自我（Process Self）」，就是你时时刻刻直观感觉到的那个“我”。</p>
+  <p>此刻是“我”在阅读。前方有个障碍物，走过去要小心一点，别碰到“我”。“我”在这里，“手机”在我手里。“我”在思考，“别人”在喧哗。</p>
+  <p>进程自我区分了“我”和“非我”。它是你在这个世界上连续存在的那个主观感觉。</p>
+  <p>你可能觉得这就是最真实的“我”，但在哲学家看来，这个“我”只不过是个人为创造的方便概念罢了。我是一堆原子，桌子也是一堆原子，为了把这些原子分开叙述，我们才创造了“我”和“桌子”这两个概念。</p>
+  <p>进程自我是大脑维持“这里有个主体”的那套在线计算。它不只是你的语言和行为，还包括从输入到输出之间的整条运算链。我们说这个宇宙的第一性原理是叙事，人的意识来自于叙事，那么进程自我就是你每次叙事时临时出现的角色。</p>
+  <p>这个角色的存在感很不稳定，当你全神贯注打游戏的时候，你会忘记“我”的存在。但它的确时刻都在运行。比如面对一个什么刺激，你心率上升、呼吸变浅、语气变硬，那么不管你愿不愿意承认，你的进程自我正在呈现“生气”。</p>
+  <p>佛学中的「五蕴」—— 色、受、想、行、识 —— 大约可以看成是进程自我的细分模块：感觉输入、情绪评估、概念加工、意向和行动、觉知。这些念头让你生机勃勃，但是你注意到没有？进程自我其实是个被动的存在。科学家用多个实验证明在人<em>意识到</em>自己的一个决定之前，大脑其实已经做出决定了，中间有几百毫秒的延迟。</p>
+  <blockquote>
+    <p>换句话说，进程自我只是个新闻发言人而不是实际决策者。它就像是系统运行时的日志（Log），只记录不控制。这就是所谓「五蕴皆空」。</p>
+  </blockquote>
+  <p>有时候你想到自己：“刚才那句话是不是说重了？”、“我为什么又拖延了？”、“我今天有点焦虑”，以为这就算反思，其实不过是查看运行日志而已，还远没碰到决定长期命运的东西。</p>
+
+  <div class="ornament">✵</div>
+
+  <h3>界面自我：你在不同人面前的那张“皮肤”</h3>
+  <p>「界面自我（Interface Self）」，则是你叙事中更稳定、更可控并且能被别人观察和认可的角色。简单说就是你的性格标签、人设、自传和心情叙事。</p>
+  <p>界面自我很接近哲学家丹尼尔·丹内特（Daniel Dennett）说的「叙事重心（Center of Narrative Gravity）」[1]。他说大脑里并没有一个小人儿坐在控制室里指挥你的手脚 —— 你想象中那个野心勃勃的自我，只是大脑为了讲通一个故事而虚构出来的主角，是你人生叙事的重心。界面自我跟进程自我的区别在于它是个连续的故事：“我”今天早上起床，“我”去上班，“我”取得重要成果，“我”将会升职加薪。</p>
+  <p>界面自我让你和别人迅速知道你是谁：</p>
+  <ul>
+    <li>我社恐，所以今晚聚会就不去了。</li>
+    <li>我是个好家长，我很关心孩子的学业。</li>
+    <li>我从小就在努力为这一天做准备。</li>
+    <li>最近的我有点迷茫，但我必须坚强。</li>
+  </ul>
+  <p>你在朋友圈发的小作文、你在面试时的自我介绍、你跟朋友吐槽“我就这样的人”，这些都是界面自我。</p>
+  <p>界面自我具有一定的因果力，它可以约束进程自我。可能你平时内向，但如果你要求自己“我今天就要扮演一个社牛角色”，你就可以表现得很外向。</p>
+  <p>但界面自我仍然是变量，而不是常量。</p>
+  <p>比如你在老板面前是个唯唯诺诺的下属，转头面对餐厅服务员就变成了一个不耐烦的顾客，回到家看见孩子，你又变成了一个慈爱但啰嗦的父亲。请问哪个才是真正的你？</p>
+  <p>似乎都是，其实都不是。现代心理学认为人的性格并不是固定的，会受到具体情境（context）的强烈影响 [2]。你扮演的那些角色，只是你在不同社交情境下调用的不同“皮肤”或者说“接口”。</p>
+  <p>界面自我只是你放在前端的用户界面而已。换个应用场景，你的界面马上可以改。但你还是那个你。有时候你跟人吵了一架，事后连你自己都有点惊讶：“我平时挺温和的啊，怎么会说出那么难听的话？刚才那个人是我吗？”</p>
+  <blockquote>
+    <p>界面自我不是真正的我。</p>
+  </blockquote>
+
+  <div class="ornament">✵</div>
+
+  <h3>内核自我：在背后生成一切的“默认代码”</h3>
+  <p>如果进程自我和界面自我都是生成的，那到底是谁在背后负责生成呢？也许那才是真正的你。我们把它称为「内核自我（Core Self）」。</p>
+  <p>我大胆猜想，人能感觉到的只有进程自我和界面自我，内核自我是不可被“自我”感知的 —— 因为它就是那个在背后生成感知的东西。</p>
+  <p>我们前面提到神经科学家卡尔·弗里斯顿（Karl Friston）的「自由能原理」，说大脑是一台预测机器。认知科学家安迪·克拉克（Andy Clark）有个相似的理论叫「预测加工（predictive processing）」[3]，说大脑根据过去的经验，对世界构建了一个预测模型。你在环境中跟各种事物互动，都是先根据自己的预测去观察和行动，然后看看行动的结果代表预测正确还是错误；如果预测错误，就可以修改模型。</p>
+  <p>比如你推开家门，预测灯的开关在右手边，一摸摸空了，于是去左边找 —— 这就是在更新模型。</p>
+  <p>到底是谁在预测呢？就是你的内核自我。</p>
+  <p>面前出了这么个状况，你为什么预测局面将会往这个方向而不是那个方向转变？内核自我是一套庞大的、复杂的、甚至是无意识的概率分布和「先验假设（Priors）」——</p>
+  <ul>
+    <li>为什么别人听说那个消息觉得是机会，你却觉得是骗局？因为你的先验假设不同。</li>
+    <li>为什么有人遇到挫折是战斗或逃跑反应，有人却是习得性无助？因为底层的反应模式不同。</li>
+  </ul>
+  <p>这些东西不随你今天的心情而变，也不随你是在老板还是在家人面前而变。内核自我是你的出厂设置加上历史数据的总和，虽然不是绝对的常量，但也是慢变量。它藏得最深，平时不说话，但它决定了你所有的直觉、冲动和潜意识判断。</p>
+  <p>《金刚经》和现代哲学都认为并没有一个单一的、恒定的实体叫“我”。但如果非要找一个最接近“真我”的，那就是内核自我这套算法和参数。</p>
+  <blockquote>
+    <p>你是谁，从根本上，是“你这台机器一般会如何预测世界、如何更新自己”的那套默认代码。内核自我是不容易改、却持续影响你行为倾向的模型参数和更新规则。</p>
+  </blockquote>
+  <p>也许内核自我就是佛学说的「阿赖耶识」，它的成分是「习气」和「业力」。</p>
+
+  <div class="ornament">✵</div>
+
+  <h3>用 AI 理解三个自我：推理流、提示词与权重</h3>
+  <p>咱们跟 AI 做一番类比你就更容易理解了 ——</p>
+  <p><strong>进程自我</strong>，也就是你当下的念头流，就相当于大语言模型（LLM）在当前这次运行中的输入、思考和输出。你给 ChatGPT 输一句话，它在内部层层传播、算注意力、采样 token，最后回复你，这一整条流就是进程自我。</p>
+  <p><strong>界面自我</strong>，也就是你应对情境的面具，则相当于是模型的系统提示词和角色设定。你让 ChatGPT 扮演一个比如说毒舌投资人，它会照办，但你这个指令不会改变它自身。</p>
+  <p><strong>内核自我</strong>，则是模型的结构和参数，或者叫「权重（Weights）」。当前主流大模型一旦训练好、发布了，权重就冻结了，所以这才是模型的真我。</p>
+  <p>如果你是一个 AI，那么当你在外界刺激之下做出反应的时候，你改变的只是进程自我；当你说“等会儿我要去见领导，得稳重点”的时候，你是在给界面自我临时写提示词。有时候提示词写得好，平庸的模型也能表现得像个专家。但那只是激活，不是能力提升：一旦遇到高压环境，人设就会崩塌，把局面终究交给内核自我。</p>
+  <p>绝大多数人在一生的绝大多数时间都只不过是对刺激做出反应和改改提示词而已。有时候为了维护人设，你反而会压抑真实过程，让内核自我变得更僵硬 —— 明明可以承认自己不懂，可你非得假装懂，那怎么能更新模型呢？</p>
+  <blockquote>
+    <p class="strong-line">真正的成长必须改写模型参数。</p>
+  </blockquote>
+
+  <div class="ornament">✵</div>
+
+  <h3>如何升级内核自我：语料与奖励函数</h3>
+  <p>如何升级内核自我？我们可以从 AI 模型训练中获得启示。模型的结构是先天设定，就如同人不能长两个脑袋一样，所以咱们单论参数。人明显比现在的 AI 强的一个地方就是我们的参数是活的，可以在生活中持续训练改变。但我们的训练方法跟 AI 差不多，因为毕竟都是神经网络。</p>
+  <p>你不太可能听完一篇文章就瞬间变成一个新人。参数都是肉长的，得慢慢调。微调参数的杠杆有两个：一个是预训练的语料，一个是强化学习的奖励函数。</p>
+  <p><strong>语料是你训练的样本</strong>，说白了就是你从小到大看听的故事、模仿的行为、加入的群体。短视频训练你对什么上瘾；公众号和书训练你对什么敏感；你身边的正常人是什么样，训练你的价值观。</p>
+  <p>所谓「近朱者赤，近墨者黑」，翻译成现代语言就是信息输入训练神经网络参数。如果你每天摄入的信息都是情绪化的、碎片的、极端的，你就会变得急躁、浅薄、二极管思维。你的大脑参数被调整成适应那种信息的模式。工程师会说：你的神经网络过度拟合（overfitting）了垃圾数据。</p>
+  <p><strong>奖励函数，就是给你的行为提供反馈的那个奖惩机制</strong>，说白了就是什么东西在给你做的事情打分。如果你的奖励函数是“老板看了要夸我”，你就会本能地往报告里塞漂亮话，你会淡化问题；而如果你的奖励函数是“帮团队少踩一个坑”，你就会愿意把难看的数字摊开，把失误写清楚。假以时日，这两个奖励函数会把你训练成完全不同的两种人。</p>
+  <blockquote>
+    <p>你的伴侣、你的朋友圈、你所在公司的文化都在书写你的奖励函数，要小心选择他们。</p>
+  </blockquote>
+  <p>一个洞见是奖励函数得明确具体才好用。什么叫“写得好”？什么叫“领导力”？什么叫“健康生活”？泛泛而谈没意义。目标必须具体才可执行：是语文老师说的那种好叫写得好，还是放在网上引发读者热议转发才叫写得好？</p>
+  <blockquote>
+    <p class="strong-line">强化什么，你就会成为什么。</p>
+  </blockquote>
+
+  <h3>被现实“打脸”：内核更新的黄金时机</h3>
+  <p>而在所有那些之前，你要让自己的神经网络处于可更新状态才好。在现实中受挫了，你是直接来一句“这个世界不公平”了事，还是修改自己的模型呢？自由能原理认为当一个人面对预测误差，所谓被现实“打脸”的时候，他有三个选择来最小化惊讶 ——</p>
+  <ul>
+    <li>最偷懒的做法，是改注意力：干脆别看打脸的证据；</li>
+    <li>稍好一点，是改行为：以后绕过类似场景；</li>
+    <li>最难但最值钱的，是改模型：承认“原来我是错的”，重写参数。</li>
+  </ul>
+  <blockquote>
+    <p class="strong-line">被现实打脸，本应该是内核自我更新的黄金时机。</p>
+  </blockquote>
+
+  <div class="ornament">✵</div>
+
+  <h3>选择成为什么人，是人的终极自由</h3>
+  <p>说到这里，人毕竟比现有的 AI 高了一层：人可以自行选择自己的训练样本和奖励函数，而 AI 不可以。我估计就算有一天 AI 想要自己选，我们也不会允许它选，那太危险了。</p>
+  <blockquote>
+    <p class="strong-line">所以能选择成为一个什么人，可以说是人的终极自由。</p>
+  </blockquote>
+  <p>这是最根本的「元认知」：你永远都可以抬头看一眼 —— 是谁在训练我？我为什么要往那个方向变？凭什么这个就是好的、那个就是不好的？</p>
+  <p>中国人说「吾日三省吾身」，还说「苟日新，日日新，又日新」，现在听起来都很有极客精神：这不就是要随时接受反馈、持续交付人生的新版本吗？</p>
+  <p>西方也有段谚语值得反复回味 ——</p>
+  <blockquote class="poem">当心你的思想，它们会成为语言；
+当心你的语言，它们会成为行动；
+当心你的行动，它们会成为习惯；
+当心你的习惯，它们会成为性格；
+当心你的性格，它会成为你的命运。</blockquote>
+  <p>以我们这一讲的框架来说，思想、语言和行动就是进程自我的在线流动；习惯和性格是你展示出来的界面自我 —— 它们都在默默改写内核自我的参数，凝聚业力。</p>
+  <p>有了这些基本认识，我们就可以学习各种思维工具了。</p>
+
+  <div class="ornament">✵</div>
+
+  <h3>注释</h3>
+  <div class="notes">
+    <div class="notes-title">注释</div>
+    <p>[1] Dennett, Daniel C. “The Self as a Center of Narrative Gravity.” In Self and Consciousness: Multiple Perspectives, edited by Frank Kessel, P. Cole, and D. Johnson. Hillsdale, NJ: Erlbaum, 1992.</p>
+    <p>[2] 性格……到底是什么意思？</p>
+    <p>[3] Clark, Andy. Surfing Uncertainty: Prediction, Action, and the Embodied Mind. Oxford: Oxford University Press, 2016.</p>
+  </div>
+
+  <h3>用户留言</h3>
+  <div class="comments">
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-author">至尊女宝</span>
+        <span class="comment-meta">昨天 · 四川</span>
+      </div>
+      <p>这几天一直在重温周星驰的电影。小时候看「大话西游」觉得至尊宝被唐僧烦死那段最搞笑。现在再看，他戴上金箍说“如果上天再给我一次机会”，我居然看哭了。同一部电影，感受天差地别。不是电影变了，是我变了。文章把“自我”拆成三层，一下子说清楚了这个事。最表面那层，是你此时此刻的感受，觉得“我”在这里、正在做什么。这层最直观，但其实很被动，就像电脑运行的日志，只记录不控制。中间那层，是你的人设、你在不同人面前扮演的角色。在老板面前一个样，在朋友面前另一个样，哪个是真的你？好像都是，又好像都不是。最深那层，是你底层的默认设置 —— 你遇到事情的第一反应、你的直觉、你看待世界的方式。这层平时不说话，但它才是真正的你。少年时候看周星驰，我的底层参数还没被怎么训练过。现在经历了职场摔打、人情冷暖，参数早就重写过了。所以再看那些小人物咬牙坚持的镜头，我能感同身受 —— 不是电影变了，是我的参数变了。所谓成长，不过是把你遭遇的每一次失望、每一次被现实按在地上摩擦，都转化成下一次判断的初始值。参数微调得多了，人生曲线自然会朝着你想要的方向偏移。</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-author">常觉不住</span>
+        <span class="comment-meta">昨天 · 美国</span>
+      </div>
+      <p>这讲我最有感的地方，是它把“成长”跟“会说成长的话”分开了。现代人很容易把优化界面，当成升级内核：更懂概念，更会叙事，更能解释自己，甚至更会谈修行，但这些都不等于底层真的松动了。真正值钱的，反而是那些不太好看的时刻 —— 被现实顶回来、发现自己还是会怕、会硬、会装、会逃的时候，愿不愿意不急着圆回来，而是真的承认：原来旧模型还在。对我来说，这比“三个自我”的分类本身更重要。</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <span class="comment-author">黃泊淳 Only</span>
+        <span class="comment-meta">昨天 · 福建</span>
+      </div>
+      <p>万老师您好，自我这个话题，反覆被不少人讨论，“哲学家”曾用时间诡辩，过去的我不是现在的我，所以找过去的我讨债吧！不过这些都停留于爽感，且对人的自省没有太大的指导意义。今天听完内核自我与 AI 大语言模型的比喻，理解的内核自我，是我至今听过，好理解与指导意义的自我定义！我们要提升内核自我的，不是靠提示词，不是靠当下的输入与输出，是调整参数权重，透过语料与奖励，你长期会被什么感动，接触什么样的人事物，读过的书，走过的路，都是一次升级，我们可以主动选择进化内核自我。</p>
+    </div>
+
+    <div class="reply-card">
+      <div class="reply-label">作者回复</div>
+      <p>允许别人讨债，建立人设，在微观层面来说，这确实是一种执念；但在社会层面，正是因为有这个执念，你允许别人追责，你才能够取得信任，或换取下一次合作的机会。这就和讲故事需要一个叙事重心一样，它是为了方便，但它真的很方便。</p>
+    </div>
+  </div>
+
+  <section id="ai-summary">
+    <div class="summary-badge">AI 阅读总结</div>
+    <p class="one-liner"><strong>一句话概括：</strong>本讲用 AI 类比提出一个好用的人生模型——人由「进程自我」（当下的念头与行为流）、「界面自我」（面对不同情境的人设与角色）、「内核自我」（决定直觉与判断的默认参数）三层构成；真正的成长不是换提示词、维护人设，而是通过选择信息语料和奖励函数，持续改写内核自我这套“模型参数”。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ul>
+      <li>全讲总框架：人有三个自我——进程自我、界面自我、内核自我。这是理解“我是谁”与“如何变好”的统一工作模型，兼顾现代神经科学与佛学、哲学的看法。</li>
+      <li>进程自我是每时每刻的“我”，来自大脑的在线计算与叙事，本质被动：实验证明人在意识到决定之前大脑已先做出决定，它只是“新闻发言人”式的运行日志，只记录不控制，对应佛学「五蕴皆空」；日常“反思”往往只是在查看日志。</li>
+      <li>界面自我是性格标签、人设、自传与心情叙事，类似丹内特的「叙事重心」；它会随情境切换（对老板、服务员、孩子的面孔各不相同），能约束进程自我，但只是前端的“皮肤”，是变量而非常量。</li>
+      <li>内核自我是背后生成一切的“默认代码”：大脑是预测机器，内核自我就是那套庞大、复杂、常无意识的概率分布与先验假设（Priors），不随心情和场合改变，决定直觉、冲动与潜意识判断，最接近“真我”，可比作佛学「阿赖耶识」中的习气与业力。</li>
+      <li>AI 类比严丝合缝：进程自我 ≈ LLM 一次运行中的输入—思考—输出流；界面自我 ≈ 系统提示词与角色设定；内核自我 ≈ 冻结的模型权重。给提示词只是“激活”而非“能力提升”，高压下人设崩塌，终究交回内核。</li>
+      <li>升级内核的两个杠杆：①语料——你从小到大看听的故事、模仿的行为、加入的群体，垃圾信息会让大脑“过度拟合垃圾数据”；②奖励函数——什么在给你的行为打分（老板的夸奖 vs 帮团队少踩坑），会把你训练成完全不同的人；奖励函数必须具体才可执行。</li>
+      <li>面对现实“打脸”（预测误差）有三条路：改注意力（不看证据）、改行为（绕过场景）、改模型（承认错误、重写参数）——第三种最难也最值钱，被现实打脸是内核更新的黄金时机。</li>
+      <li>人优于 AI 之处在于能主动选择自己的训练样本与奖励函数，“选择成为一个什么人”是人的终极自由，也是最根本的元认知：随时抬头问“是谁在训练我？我为什么在往这个方向变？”——三省吾身、日日新，就是持续交付人生的新版本。</li>
+    </ul>
+
+    <h4>二、给个人的行动建议</h4>
+    <ol>
+      <li>做一次“信息菜单”审计：本周记录每天刷的短视频、公众号与社交内容，标注哪些让你更急躁浅薄、哪些让你沉静清醒；下周把前者至少砍掉一半，把省下的时间换成一本有体系的纸质书——你每天摄入什么语料，就是在给大脑调参。</li>
+      <li>把你的核心目标改写成“可打分”的奖励函数：把“把文章写好”换成“本周写一篇 800 字复盘并请同事挑出一个漏洞”，把“健康生活”换成“今晚 11 点放下手机、明早快走 20 分钟”。泛泛的目标无法强化行为，具体的才有训练效果。</li>
+      <li>检视身边谁在给你“打分”：观察伴侣、领导、同事最常表扬你什么。如果当前奖励函数是“让老板高兴”，就在下一个任务里主动把“帮团队少踩一个坑”设为第一标准，并当众讲出一个真实失误——这等于亲手重写自己的奖励函数。</li>
+      <li>这周主动制造一次“被打脸”：选一个你坚信但可能过时的观点（例如“我肯定做不好当众发言”），故意去做一次并收集反例，练习第三种反应——承认“原来我是错的”，把这次不适当作参数更新的素材。</li>
+      <li>设立每周 15 分钟的“元认知抬头看”时间：固定问自己三问——最近是谁在训练我？我在往哪个方向变？这个方向是我选的，还是环境默认给的？把答案写进备忘录，当作人生新版本的“更新日志”。</li>
+      <li>练习区分“优化界面”与“升级内核”：这周留意那些为了维护人设而假装懂的时刻，至少一次允许自己说“这个我不懂，我需要查一下”——停止用提示词粉饰，内核才不会越变越僵硬。</li>
+      <li>做一次小的人设实验：在某一场合主动扮演一个你平时不常有的角色（如“认真倾听者”或“敢于提问的人”），观察它如何约束你的行为，再记录切换回来时的感受——理解界面自我只是皮肤，你才是那个换皮肤的人。</li>
+    </ol>
+
+    <h4>三、金句摘录</h4>
+    <blockquote>
+      <p>“真正的成长必须改写模型参数。”</p>
+      <p>“被现实打脸，本应该是内核自我更新的黄金时机。”</p>
+      <p>“强化什么，你就会成为什么。”</p>
+      <p>“所以能选择成为一个什么人，可以说是人的终极自由。”</p>
+    </blockquote>
+
+    <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer>万维钢 · 现代思维工具100讲 · 第7讲　《内核：你的三个「自我」》</footer>
+</div>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+<script>
+(function(){
+  var bar = document.getElementById('progress');
+  var btn = document.getElementById('toTop');
+  function onScroll(){
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = p + '%';
+    btn.style.display = h.scrollTop > 300 ? 'flex' : 'none';
+  }
+  btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

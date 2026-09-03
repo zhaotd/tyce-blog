@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢·现代思维工具100讲｜第45讲 认知负荷理论：因为文具多，所以是差生</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --text:#2b2620;
+    --muted:#8a8378;
+    --card:#fffdf8;
+    --card2:#f5efe4;
+    --border:#e6ddcc;
+    --accent:#8a5a2b;
+    --accent-soft:#e9dcc9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --text:#e8e2d8;
+      --muted:#9b948a;
+      --card:#201d19;
+      --card2:#262219;
+      --border:#3a342b;
+      --accent:#d4a05f;
+      --accent-soft:#3a2f22;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:999;}
+  .wrap{max-width:700px;margin:0 auto;}
+
+  /* 文档头 */
+  header.article-head{padding:36px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+  .tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.08em;color:var(--accent);
+    border:1px solid var(--accent);border-radius:999px;padding:3px 12px;margin-bottom:16px;
+    background:var(--card);
+  }
+  h1{font-size:26px;line-height:1.45;font-weight:700;margin-bottom:14px;text-align:left;}
+  .meta{font-size:13.5px;color:var(--muted);text-align:left;}
+  .meta b{color:var(--accent);font-weight:600;}
+
+  /* 正文 */
+  p{margin:0 0 18px;}
+  .divider{
+    text-align:center;color:var(--accent);font-size:15px;letter-spacing:1em;
+    margin:34px auto;position:relative;
+  }
+  .divider::before,.divider::after{
+    content:"";display:inline-block;width:46px;height:1px;background:var(--border);
+    vertical-align:middle;margin:0 14px;
+  }
+  h2{
+    font-size:21px;font-weight:700;margin:40px 0 16px;text-align:left;
+    padding-left:12px;border-left:4px solid var(--accent);line-height:1.5;
+  }
+  h3{
+    font-size:18px;font-weight:700;margin:30px 0 12px;text-align:left;color:var(--accent);
+  }
+  strong{color:var(--accent);font-weight:700;}
+  em{font-style:normal;color:var(--accent);font-weight:700;}
+  ul{margin:0 0 18px;padding-left:0;list-style:none;}
+  ul li{
+    position:relative;padding-left:26px;margin-bottom:10px;
+  }
+  ul li::before{
+    content:"";position:absolute;left:6px;top:.72em;width:9px;height:9px;
+    background:var(--accent);border-radius:50%;opacity:.75;
+  }
+  ol{margin:0 0 18px;padding-left:24px;}
+  ol li{margin-bottom:12px;}
+
+  .quote{
+    border-left:4px solid var(--accent);background:var(--card);
+    border-radius:0 12px 12px 0;padding:16px 20px;margin:0 0 18px;
+    font-size:16.5px;color:var(--text);
+  }
+  .quote .src{display:block;margin-top:8px;font-size:13px;color:var(--muted);}
+  code{
+    font-family:Consolas,Menlo,monospace;background:var(--card2);
+    padding:2px 7px;border-radius:6px;font-size:.92em;
+  }
+  .formula{
+    text-align:center;font-size:20px;letter-spacing:.15em;margin:4px 0 14px;
+  }
+  .formula code{font-size:1.05em;padding:6px 16px;background:var(--card2);border:1px solid var(--border);}
+
+  /* 注释 */
+  .notes{
+    margin-top:44px;padding:18px 20px;background:var(--card);
+    border:1px solid var(--border);border-radius:12px;font-size:12.5px;color:var(--muted);line-height:1.7;
+  }
+  .notes h3{font-size:14px;color:var(--muted);margin:0 0 10px;font-weight:700;letter-spacing:.1em;}
+  .notes ol{padding-left:20px;margin:0;}
+  .notes li{margin-bottom:6px;text-align:left;word-break:break-all;}
+
+  /* 用户留言 */
+  .comments{margin-top:44px;}
+  .comments>h2{margin-top:0;}
+  .comment{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;
+    padding:18px 20px;margin-bottom:16px;
+  }
+  .comment .who{font-size:14px;font-weight:700;margin-bottom:10px;text-align:left;}
+  .comment .who .time{font-weight:400;color:var(--muted);font-size:12.5px;margin-left:8px;}
+  .comment p:last-child{margin-bottom:0;}
+  .reply{
+    margin-top:14px;padding:12px 16px;background:var(--card2);
+    border-left:3px solid var(--accent);border-radius:0 10px 10px 0;font-size:15px;
+  }
+  .reply .label{display:block;font-size:12.5px;color:var(--accent);font-weight:700;margin-bottom:6px;letter-spacing:.05em;}
+
+  /* AI 总结 */
+  #ai-summary{
+    margin-top:52px;padding:26px 24px;border-radius:12px;
+    background:var(--card2);border:2px solid var(--accent);
+  }
+  #ai-summary .badge{
+    display:inline-block;background:var(--accent);color:var(--bg);
+    font-size:13px;font-weight:700;letter-spacing:.12em;border-radius:6px;
+    padding:4px 12px;margin-bottom:16px;
+  }
+  #ai-summary .one{
+    font-weight:700;font-size:16.5px;margin-bottom:20px;text-align:left;
+    border-bottom:1px dashed var(--border);padding-bottom:16px;
+  }
+  #ai-summary h3{font-size:17px;margin:22px 0 10px;color:var(--text);}
+  #ai-summary h3 .no{color:var(--accent);margin-right:6px;}
+  #ai-summary ul li::before{opacity:1;}
+  #ai-summary .footer{
+    margin-top:22px;padding-top:14px;border-top:1px solid var(--border);
+    font-size:12px;color:var(--muted);text-align:center;
+  }
+
+  /* 回到顶部 */
+  #topBtn{
+    position:fixed;right:20px;bottom:calc(28px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;border:1px solid var(--border);
+    background:var(--card);color:var(--accent);font-size:20px;cursor:pointer;
+    display:none;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.12);z-index:998;line-height:1;
+  }
+  #topBtn:active{transform:scale(.94);}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+
+  <header class="article-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第45讲</span>
+    <h1>认知负荷理论：因为文具多，所以是差生</h1>
+    <div class="meta">作者：<b>万维钢</b>　｜　系列：《现代思维工具100讲》· 教育与学习板块 · 第一讲</div>
+  </header>
+
+  <p>想象你是一个发展中国家的教育部长，手里突然多了一大笔预算。你决心用这笔钱提升边远地区孩子的学习水平。你应该怎么做呢？</p>
+
+  <p>秘鲁政府的做法是给孩子买电脑。他们在农村推行了“每个孩子一台笔记本电脑”（One Laptop per Child）项目。电脑是现代世界的生产力标配，穷人家孩子用不起，现在政府免费送你，这多好呢？</p>
+
+  <p>但是有的学者不这么看。电脑好是好，但它对学习真有帮助吗？</p>
+
+  <p>其实秘鲁这个项目是一个大规模教育实验的一部分。2006—2012 年间，拉丁美洲和加勒比地区的 20 个国家总共发放了将近一千万台笔记本电脑。经济学家和教育学家就此进行了超过十年的大规模随机对照跟踪研究。</p>
+
+  <p>2025 年，答案揭晓：不论是短期还是长期，发电脑对孩子们的学业成绩都没有任何显著的正面影响，收到电脑的学生的数学和阅读成绩都没有改善——他们按时升年级的比例不但没有上升，反而平均<strong>下降</strong>了一个百分点。这个研究中电脑让孩子唯一提高的技能，就是操作电脑的技能。</p>
+
+  <p>我觉得这简直是个现代寓言。买电脑这个动作特别像我们的学校和家长对教育的理解：你认为学习是一个宏观问题，甚至是一个硬件问题。孩子学习不好怎么办？我花钱啊！上补习班，送去更好的学校，升级学习环境，提供更好的设备，再多买点文具啥的……花钱了，我就安心了。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>学习是个微观问题</h2>
+
+  <p>学习是个神经重塑过程。你必须深入到神经处理层面去考虑问题：当一个孩子坐在书桌前，那个叫“知识”的东西，到底是怎么钻进他大脑里的？</p>
+
+  <p>作为「教育与学习」板块的第一讲，咱们说说现代教育心理学中最硬核、也最具有工程学美感的一个心智模型，叫「认知负荷理论（Cognitive Load Theory，简称 CLT）」。认知负荷理论最早是澳大利亚教育心理学家约翰·斯韦勒（John Sweller）在 1980 年代提出来的，现在经过他本人和众多学者不断完善，被用到很多地方。</p>
+
+  <p>我敢打赌，绝大多数老师，包括一些号称教育专家的人都没听说过认知负荷理论。但这可是教师和家长需要了解的唯一最重要的理论。</p>
+
+  <p>理解了这个理论，你就知道为什么大多数教育操作都是瞎胡搞了。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>硬盘没问题，瓶颈在内存</h2>
+
+  <p>斯韦勒的问题是：如果一个人学习总学不进去，所谓“脑子不够用”，你说这是因为他的大脑硬盘不行，还是内存不行？</p>
+
+  <p>首先硬盘是不可能有问题的。人脑「长期记忆（long-term memory）」的容量几乎是无限大的。你读多少本书、记多少个单词、掌握多少个技能、经历过多少事、看过多少电影，都不用担心硬盘装不下。</p>
+
+  <p>学习新东西的瓶颈，主要是在内存上。所谓内存就是大脑的「工作记忆（working memory）」，它的带宽极其有限，一般认为普通人最多只能同时处理 4 到 7 个信息元素。就这点信息，你要是不及时写入硬盘，它们就会被你忘记。</p>
+
+  <p>学习的本质，就是把外部的零散信息，在狭窄的工作记忆里进行加工，然后打包存入长期记忆。</p>
+
+  <div class="quote">认知负荷理论的核心洞见是：学习失败并不是因为大脑的硬盘存不下，而是因为新信息通过工作记忆这道窄门的时候，堵车了。</div>
+
+  <p>当信息涌入大脑时，工作记忆所承受的总压力，就叫「认知负荷（Cognitive Load）」。它一般被分为三种：</p>
+
+  <ul>
+    <li><strong>「内在负荷（intrinsic load）」</strong>，是学习材料自带的复杂度，也就是当前任务中有多少元素必须同时联动处理。</li>
+    <li><strong>「外在负荷（extraneous load）」</strong>，是那些跟当前任务无关的信息在强行抢戏，给大脑制造的负荷。这里可能有环境噪声、有无关的内容，还包括老师糟糕的讲法带来的困扰。</li>
+    <li><strong>「增益负荷（germane load）」</strong>，有时候翻译成“生发负荷”，是指大脑把知识转化为长期记忆的那部分有效努力，也就是你的大脑一边压制外在负荷，一边操作内在负荷，真正干活儿的那股劲儿。</li>
+  </ul>
+
+  <p>现在更新的认识，包括斯韦勒本人 2023 年的论文，认为没有必要把「增益负荷」单独算作一类。我们简单说，要想学习有效，就得尽可能减少外在负荷，把带宽留给内在负荷。</p>
+
+  <p>这你就理解了为什么给孩子买电脑不能提高学习成绩：电脑是个分散注意力的东西，它增加了「外在负荷」。</p>
+
+  <p>那到底为什么有的孩子学东西特别快，有的孩子就学不进去呢？难道是他们的工作记忆大小不同吗？也不是。人的工作记忆差距并不大。认知负荷理论还有一个特别关键的概念，叫「图式」。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>图式：大脑里的“压缩包”</h2>
+
+  <p>这个重要的洞见是：大脑的长期记忆里存的那些“知识”，并不是零散的信息碎片，而是一种叫做「图式（schema）」的东西。图式是把多个相关元素打包成一个整体的认知结构，你可以把它理解成“知识组块”或者“思维宏（macro）”，或者说是个“压缩包”。</p>
+
+  <p>比如说，在刚学认字的小孩眼中，“中”、“华”、“人”、“民”、“共”、“和”、“国”是 7 个独立的元素，这么多字一起出现在他面前，瞬间就能占满他的工作记忆带宽；但对于你来说，这 7 个字早就被打包成了一个叫“中华人民共和国”的单一图式。它在你眼中只占用 1 个内存槽位。</p>
+
+  <p>为什么差生学不进去，优等生一看就明白？因为差生头脑里没有足够多的图式，他看到的是一大批碎片化的信息，导致他的认知负荷太高了；而优等生因为早就拥有相关的图式，同样的信息在他眼中是一大块一大块的，他处理的元素就比较少，就不会出现认知过载。</p>
+
+  <p>比如老师在黑板上写一道方程：</p>
+  <div class="formula"><code>3(x+2)=15</code></div>
+
+  <p>优等生脑子里已经有“分配律”、“移项”等等的图式，他看见题就会自动调用那些图式求解，甚至还觉得挺无聊。可是差生没有那些图式，他看到的是一个个单独的元素。这些元素瞬间塞满了他的工作记忆：括号是什么意思来着？要把 3 乘进去吗？还是先把 2 减掉？他的内在负荷已经过载。</p>
+
+  <p>所以在认知负荷理论看来，一份材料到底有多难，不取决于它客观上有多少信息，而取决于它<strong>在你脑子里</strong>算是多少信息：你有相关的图式，它的信息量就很少；而如果你图式不够，它的信息量就会很多，导致你认知过载。</p>
+
+  <div class="quote">换句话说，优等生学得快不是因为脑子更快或者更大，而是因为脑子里的压缩包更多。</div>
+
+  <p>这也可以说是学习的复利效应：你会的图式越多，学习新东西就越快；正如你读过的书越多，你读书的速度就越快。</p>
+
+  <p>由此说来，学习不是把知识一条条搬进脑子，而是脑子压缩和调用图式的过程。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>为什么“差生文具多”？</h2>
+
+  <p>为什么民间有个说法叫“差生文具多”呢？</p>
+
+  <p>这位同学本来会的图式就少，所以内在负荷过载 → 老师又讲得不清楚，甚至还胡乱加戏，在黑板上用五颜六色的粉笔画可爱的人物提供外在负荷，说这回你懂了吗？→ 爸爸一看怎么还学不明白，一通大吵大闹，继续追加外在负荷 → 妈妈说孩子需要帮助，于是给买了一大堆花里胡哨的荧光笔、错题本和便利贴 → 这些文具提供了虚假的控制感，孩子于是用三种颜色在课本上画出重点，仿佛这样就能让知识进入脑子……</p>
+
+  <p>你说这还怎么学习。</p>
+
+  <div class="quote">可以说正是因为干扰因素太多，差生才是“差生”。</div>
+
+  <p>真正的学习需要清爽的信息环境——有效的教学最好把外在负荷全部取消，应该用最简单的讲解尽可能降低内在负荷，应该是给工作记忆减负、给长期记忆铺路。</p>
+
+  <p>在这个视角下，我看很多课堂根本就不是在教学，是在搞行为艺术，在给家长提供情绪价值。</p>
+
+  <p>我做了一番调研，从认知负荷理论中提炼出四个有效教学的心法。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>心法一：管理内在负荷</h2>
+
+  <p>面对差生，老师本能的想法是降低难度——但这里不是难度的问题，而是带宽的问题。有效教学不能是把山峰给孩子削平，而是要给孩子建立攀登高峰的梯子，也就是精心安排图式进入大脑的进度。</p>
+
+  <p>如果学生脑子里还没有足够的相关图式，你就别一上来就让他做综合大题。你必须先把复杂知识拆解成一个个小图式让他先练会了再说。内容要分段，前置知识要预热，部件要先自动化，先给局部结构，再整合。让学生站稳一个台阶，再给他看下一层。</p>
+
+  <p>人们常说差生的问题在于基本功，其实就是之前的图式没有打牢。图式才是根本。</p>
+
+  <div class="quote">有效教学不是降难度，而是排兵布阵。</div>
+
+  <div class="divider">✵</div>
+
+  <h2>心法二：给「直接教学（Direct Instruction）」</h2>
+
+  <p>过去几十年间，教育界流行一种可以说非常浪漫的“探索式学习”，主张老师不要直接给答案，要让孩子在真实情境中自己摸索、自主发现规律。可是有大量研究一再证明，这种把孩子当科学家的教法，效率极低。</p>
+
+  <p>因为认知负荷太高了。</p>
+
+  <p>你给新手一道题让他自己探索，他的大脑要同时干很多事：盯住题目、猜目标、搜索步骤、试错、比较当前状态和目标状态、还得揣摩老师到底想让他学什么。他的内存都消耗在搜索路径上了，哪还有剩余算力去总结规律呢？</p>
+
+  <p>其实对于学校里那些知识来说，最有效的教学方法就是直接教、给明确的（explicit）指导。</p>
+
+  <p>研究证明最高效的教法是「范例学习」（worked-example）：黑板上左边是一道老师给出完整解题步骤的例题，右边是一道结构完全一致、只是数字不同的练习题。让学生照着例题做练习题，就这么简单粗暴。这就是把图式写入大脑最快的方式。</p>
+
+  <p>等到学生把这个图式掌握熟练了，你再给他灵活度，逐步走向独立。这个过程叫「指导淡出（guidance fading）」。</p>
+
+  <div class="quote">不是不让孩子探索，但教学就是教学。先把搜索成本降下来，才能把理解难度提上去。</div>
+
+  <div class="divider">✵</div>
+
+  <h2>心法三：消除外在负荷</h2>
+
+  <p>人们常说学习不好是因为注意力不集中，可你也得创造条件，让人能集中注意力才行。聊天、玩电脑当然是分散注意力的行为，可是家长给买一大堆文具，一会儿送吃的一会儿过来监督一下，不也是在制造外在负荷吗？</p>
+
+  <p>在认知负荷理论看来，连老师在课堂上搞的那些戏剧性的多媒体教学手法，常常也是无效且有害的。幻灯片上搞一堆装饰、动画飞来飞去、图在左边解释在右边、老师嘴里讲一句屏幕上再打一遍同样的话、视频不给暂停、作业平台按钮比题目还多——这些都不是教学创新，是认知污染。</p>
+
+  <p>难道学习内容本身还不够学生看的吗？不要逼着学生的眼睛一会儿看向屏幕左边，一会儿看向屏幕右边。给配图加口头讲解，比图像配上满屏文字效果更好。</p>
+
+  <div class="quote">老师玩点花活有时候能激发学生的学习兴趣，但花活不是教学。</div>
+
+  <div class="divider">✵</div>
+
+  <h2>心法四：优等生和差生要区别对待</h2>
+
+  <p>这不是给人贴标签，更不是说差生脑子差——差生将来也可以成为优等生，但是你现在拥有的图式不够。2025 年的一篇荟萃分析论文结论非常清楚：低先验知识学习者更受益于高支持教学，高先验知识学习者更受益于低支持教学。</p>
+
+  <p>对差生，老师必须多给显性的提示、多讲例题、多做同样题型的练习、控制好节奏，少跳步、少开放，少自行搜索。</p>
+
+  <p>而优等生已经拥有相当多的图式，你就得设法让他们的内在负荷吃饱才行，不然他们会感到无聊。所以对优等生要少重复、快淡出，多给变化题型，多做迁移；给他一定的探索空间。</p>
+
+  <p>这样说来，一个班好几十人坐在一起听老师讲是一种效率极低的教育方式。教育应该个人化才好。那我们有什么办法呢？——你可以使用 AI。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>AI：坏消息与好消息</h2>
+
+  <p>坏消息是，有好几项研究都发现，AI 在<strong>伤害</strong>学生的学习能力。现在很多学生把 ChatGPT 当写作业神器（Doer），结果他们在突击测试中的成绩显著下降。</p>
+
+  <p>这是因为学生把原本属于「增益负荷」的建构图式的过程直接外包给了 AI。大脑没有经历过负荷，神经元就没有连接，图式就没有形成。</p>
+
+  <p>好消息是，如果你把 AI 的角色严格限制为导师（Tutor）——也就是它只负责把复杂知识拆解成小图式、剔除无关的外在负荷、一步步引导你，而不是直接给你答案——使用 AI 的学习效果会高于传统的课堂学习。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>结语：学习是个工程问题</h2>
+
+  <p>很多人认为学习是一种苦行。但学习其实是个工程问题。教学，就是给大脑编程。</p>
+
+  <p>认知负荷理论告诉我们，人的大脑是一个极其受限的生物装置。你不能强行给它灌输什么东西，你必须尊重它的输入带宽，一点一点按照一定的节奏，帮它把知识变成一个个图式。</p>
+
+  <p>就算脑机接口将来再发达，我也不太相信人可以直接下载一个什么技能，因为神经元是肉长的。这是有关学习和教育最重要的硬约束。</p>
+
+  <!-- 注释 -->
+  <div class="notes">
+    <h3>注 释</h3>
+    <ol>
+      <li>[1] Cueto, Santiago, Diether W. Beuermann, Julian P. Cristia, Ofer Malamud, and Francisco Pardo. 2025. "Laptops in the Long Run: Evidence from the One Laptop per Child Program in Rural Peru." NBER Working Paper 34495. doi:10.3386/w34495.</li>
+      <li>[2] Sweller, John. 1988. "Cognitive Load During Problem Solving: Effects on Learning." Cognitive Science 12 (2): 257–285.</li>
+      <li>[3] Sweller, John. 2023. "The Development of Cognitive Load Theory: Replication Crises and Incorporation of Other Theories Can Lead to Theory Expansion." Educational Psychology Review 35 (4): 95.</li>
+      <li>[4] Sweller, John. 2024. "Cognitive Load Theory and Individual Differences." Learning and Individual Differences 110: 102423.</li>
+      <li>[5] Sweller, John. 1994. "Cognitive Load Theory, Learning Difficulty, and Instructional Design." Learning and Instruction 4 (4): 295–312.</li>
+      <li>[6] Kirschner, Paul A., John Sweller, and Richard E. Clark. 2006. "Why Minimal Guidance During Instruction Does Not Work." Educational Psychologist 41 (2): 75–86.</li>
+      <li>[7] Barbieri, C. A., et al. 2023. "A Meta-analysis of the Worked Examples Effect on Mathematics Performance." Educational Psychology Review 35: Article 11.</li>
+      <li>[8] Schroeder, N. L., and A. T. Cenkci. 2018. "Spatial Contiguity and Spatial Split-Attention Effects in Multimedia Learning Environments: A Meta-Analysis." Educational Psychology Review 30: 679–701; Ginns, Paul. 2005. "Meta-analysis of the Modality Effect." Learning and Instruction 15 (4): 313–331.</li>
+      <li>[9] Tetzlaff, Leonard, et al. 2025. "A Cornerstone of Adaptivity: A Meta-analysis of the Expertise Reversal Effect." Learning and Instruction 98: 102142.</li>
+      <li>[10] Barcaui, A. 2025. "ChatGPT as a Cognitive Crutch: Evidence from a Randomized Controlled Trial on Knowledge Retention." Social Sciences &amp; Humanities Open 12: 102287.</li>
+      <li>[11] Kestin, Greg, Kelly Miller, Anna Klales, Timothy Milbourne, and Gregorio Ponti. 2025. "AI Tutoring Outperforms In-Class Active Learning." Scientific Reports 15: 17458.</li>
+    </ol>
+  </div>
+
+  <!-- 用户留言 -->
+  <div class="comments">
+    <h2>用户留言</h2>
+
+    <div class="comment">
+      <div class="who">至尊女宝<span class="time">昨天 · 四川</span></div>
+      <p>我最近重刷老三国，发现一个扎心的真相：诸葛亮开除马谡，不是因为他不努力，而是因为他脑子里的压缩包太少了。马谡守街亭，满脑子只有一个图式叫“居高临下，势如破竹”。他不知道什么叫水源，什么叫粮道，什么叫侧翼掩护，什么叫预备队。就像一个新手工程师，只知道“流量大了开阀门”，不知道泵的汽蚀余量、管道的摩擦系数、换热器的污垢热阻。诸葛亮又没给他配个老将贴身指导，直接放他探索式打仗。结果街亭丢了，北伐崩了。</p>
+      <p>而诸葛亮教姜维呢？先带他看阵图，这叫直接教学；手把手教八卦阵的变式，这叫范例题；然后才逐步放权，这叫指导淡出。姜维后来能扛起蜀汉大旗，不是因为他比马谡聪明，而是他的图式是诸葛亮一块砖一块砖垒起来的。马谡的图式是自学的野路子，看着有模有样，一上压力就碎。</p>
+      <p>老工程师扫一眼 DCS 画面，不是把每一个数据都算一遍，他脑子里存着几十个压缩包：精馏塔正常压差范围、泵气蚀的声音特征、压缩机异响的频谱。新手看数据是 1.2、2.4、35.7、0.08……老手看是：进料流量偏高、塔釜温度轻微漂移。高手不是算得快，是打包打得好。</p>
+      <p>学习是神经重塑，不是购物。你不能给饥饿的人发一套纯金打造的餐具来解决营养不良，这行不通。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who">一叶而知秋<span class="time">9小时前 · 内蒙古</span></div>
+      <p>【思维工具－认知负荷】本讲认知科学中的“带宽理论”——它很反常识，但确实抓住了内核。顺着这个思路，我瞬间被拉回 80 年代河套平原的农村小学。我们那时候，差生连文具都没有——可差生一点没少，几乎整班都差。用带宽理论来形容，我当年的教室就是一条被堵死的窄巷子。</p>
+      <p><strong>第一堵：老师不会“解压缩”。</strong>数学刘老师是民办教师，知识来源就是扫盲班一知半解的记忆。他讲分数只机械灌输“分子除以分母”，我们问“什么是分子”，他答“分数线上面的”；再问“什么是分数线”，他便不耐烦地吼：“中间那道杠！”我们这些农村孩子没有任何知识铺垫，他的每一句解释，都在我们空白的大脑里新增一个问号——内在认知负荷直接拉满。这就是带宽理论中“内在负荷过载”的真实写照：老师的讲解没有适配我们的认知基础，反而不断占用有限的脑带宽。</p>
+      <p><strong>第二堵：麻雀、猪食和农忙假——外在负荷是活的。</strong>教室窗户糊的是化肥牛皮纸，麻雀成群飞进来，在房梁上打架、拉屎。老师正讲“两列火车相向而行”，我们抬头望着炸毛的麻雀——这些长着翅膀的干扰项，带来的外在负荷，比那堆花里胡哨的荧光笔诱惑力强多了。更大的干扰是：学习只是副业。放学第一件事，拔草喂猪。我们挨大人打从不是因为作业没写完，而是草没打够，或者猪啃了邻居家庄稼。我们的工作内存里，永远跑着“猪喂了没”这个线程，有限的认知带宽被生计琐事提前占住。最狠的是农忙假：夏收半月，秋收半月。等回来，分数乘法已经被掰玉米彻底清出内存——这不是单纯的遗忘，而是农忙的疲惫彻底占用了认知带宽，导致之前所学的知识无法留存，相当于强制清空了学习缓存。村里有个叫二蛋的，那天上学脖子上挂着书包，后背还背着弟弟。老师问：“你咋把娃娃背来了？”他说：“奶奶病了，爹陪奶奶去了医院，娘要照看母猪下崽。”二蛋要兼顾上学、看弟弟，脑子里同时跑着“听课”“照看好弟弟”“担心奶奶病情”“惦记家里母猪”多个线程，有限的认知带宽被生存琐事占满，根本没有多余的空间去消化内容。</p>
+      <p><strong>第三堵：增益负荷为零——没人教我们怎么“打包”。</strong>有效学习需要把散装信息打包成图式。可我们没人搭梯子。背“三七二十一”，我只是死记；而城里的表哥被姑姑带去小卖部——三包七分钱的泡泡糖，总共两毛一。那一刻她长出的图式，我直到初中才补上。</p>
+      <p>五年级期末，全旗统考，数学卷最后一道大题：一个水池，进水管 3 小时注满，出水管 5 小时放完，同时打开几小时满？全班没一个人做出来。刘老师对答案时也跳过了这道，只说“超纲了，不用管”。我也不管。但我管不了自己脑子里那根刺——进水和出水同时跑，水到底是在涨还是在降？我想不出来，因为我的脑子里没有“同时跑”这个容器。我见过渠里放水，见过缸里舀水，但从没见过一边灌一边漏——没有这个经验图式，这道题就是一串悬空的数字，进不去脑子。</p>
+      <p>初二那年，我在舅舅家第一次见到暖气片。锅炉房烧水往管道里压热水，每间屋子都有阀门，有的开着，有的关着。舅舅说：“开多了屋里热，关多了就凉。”我站在走廊里，脑子嗡了一下——暖气片就是那个水池。进水是锅炉房在烧，出水是没关严的阀门在漏，屋子里最终热不热，取决于两边谁快。三年的那根刺，就这么拔了。</p>
+      <p>不是我变聪明了。是暖气片给了我一个容器——一个能把“进水管出水管”装进去的图式。城里孩子做水池题，脑子里跑的是浴缸放水、洗衣机排水，他们早就有这个容器，只需要往里填数字。而我没有，我连“同时灌同时漏”都没见过，数字填不进任何东西，只能飘着。增益负荷说的就是搭容器。泡泡糖是一个，暖气片是另一个。我的容器不是在课堂上长的，全是在生活的夹缝里撞上的。</p>
+      <p>你肯定会问：那你后来怎么考上大学了？不是刘老师教好了。是我有一个有文化的城里姑姑，假期能教我十几天，把窄巷子稍微疏通一下。加上我家孩子少，父亲负担轻，后来才有余力把我转到旗里的舅舅家。城里的教室有玻璃，没有麻雀，老师讲分数先切苹果。最不可思议的是：城里的孩子写作业时，脑子里不用跑“猪喂了没”这个线程——他们把全部带宽留给知识。</p>
+      <p>所以，学习从来不是拼谁更能忍，而是拼谁的脑带宽更通畅——当生存的琐事占据了全部缓存，再简单的知识也难以被吸收。如果认知负荷有一种“亚型”，我贡献它：生存型认知负荷——它不来自题目难度，而来自生活本身是否提前占用了你的缓存。</p>
+      <div class="reply">
+        <span class="label">作者回复</span>
+        非常感慨，谢谢分享。其实学习并不需要那么高级的环境，有一个最基本的环境、有一个愿意教的老师，就已经很好很好了。
+      </div>
+    </div>
+
+    <div class="comment">
+      <div class="who">常觉不住<span class="time">5小时前 · 美国</span></div>
+      <p>听完这一讲，我又去翻了一些 Sweller 后来关于认知负荷理论的文章，发现 CLT 其实还有一个很有意思的推论：它不只回答“怎么教”，还在回答“学校到底应该教什么”。Sweller 后来借用了 Geary 的区分，把知识分成两类。一类是人类演化上有专门机制去获得的能力，比如模仿、试错、日常交流、一般性的问题解决；另一类是演化上没有专门机制、必须靠文化传递的知识，比如读写、数学、科学概念、代数、正式逻辑、学术写作。学校真正不可替代的地方，主要就在第二类知识上。因为这些东西不会靠“自然浸泡”自动长出来，必须通过明确教学进入长期记忆，变成图式。</p>
+      <p>这也让我想到一个常被误解的问题：创造力能不能教？如果说的是一种脱离具体领域的“通用创造力”，恐怕很难直接教。上一门“创造力课”，不会让学生在数学、写作、音乐、科学里都长出创造力来。因为创造力不是从空脑袋里冒出来的。</p>
+      <p>但这不等于教育对创造力无能为力。学校不能直接灌输一种万能创造力，却可以教出创造力所依赖的东西：领域知识、基本技法、优秀范例、判断标准和大量图式。一个人要在数学里有创造力，得先有数学图式；要在写作里有创造力，得先有词汇、句法、文体、结构和阅读经验；要在音乐里有创造力，得先熟悉节奏、和声、风格和经典作品。</p>
+      <p>所以比较准确的说法是：创造力不能脱离知识被教，但创造力所依赖的那些东西——图式、范例、技法、判断标准——可以教，也必须教。这也解释了为什么“让孩子自由探索”不一定能培养创造力。对新手来说，如果长期记忆里还没有足够图式，探索往往只是低效试错，大量工作记忆都花在猜测和搜索路径上。相反，先通过明确教学、worked examples、模仿优秀作品和基本技法训练，把知识压缩成图式，后面才有可能出现真正自由的组合和变形。</p>
+      <p>换句话说，模仿不是创造力的敌人。对新手来说，模仿常常是创造力的前提。</p>
+    </div>
+  </div>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <span class="badge">AI 阅读总结</span>
+
+    <p class="one">认知负荷理论（CLT）告诉我们：学习不是“硬件问题”而是“内存问题”——长期记忆近乎无限，真正卡住学习的是狭窄的工作记忆；差生学不进去不是因为笨，而是因为脑中的图式（“压缩包”）太少、外在干扰太多，所以有效教学的本质就是减少外在负荷、管理内在负荷，用直接教学帮大脑把知识打包成图式。</p>
+
+    <h3><span class="no">一、</span>核心内容总结</h3>
+    <ul>
+      <li>秘鲁“每个孩子一台笔记本电脑”大型实验（2006—2012，拉美 20 国发放近千万台电脑）2025 年公布结论：发电脑对学业成绩无显著正面影响，按时升年级比例反而平均下降 1 个百分点，唯一提高的技能是操作电脑——这是“把学习当宏观问题、硬件问题”的典型思维误区。</li>
+      <li>学习是微观的神经重塑过程。人脑长期记忆容量近乎无限（硬盘没问题），瓶颈是工作记忆（内存），普通人同时只能处理约 4—7 个信息元素；学习失败的本质是信息通过工作记忆这道“窄门”时堵车了。</li>
+      <li>认知负荷分三类：内在负荷（材料自带的复杂度）、外在负荷（无关信息抢戏，含噪音、烂讲法、花哨装饰）、增益负荷（把知识转化为长期记忆的有效努力）；按最新认识增益负荷不必单列，有效学习＝尽量削减外在负荷，把带宽留给内在负荷。</li>
+      <li>图式（schema）是长期记忆里把多个元素打包成整体的“压缩包”：同一串字，孩子看是 7 个独立元素，成人看是“中华人民共和国”这 1 个槽位。材料难度取决于它“在你脑子里”算多少信息；优等生学得快不是脑子更快，而是压缩包更多，这是学习的复利效应。</li>
+      <li>“差生文具多”的完整链条：图式少→内在负荷过载→老师加戏、家长吵闹、买花哨文具层层叠加外在负荷，文具只提供虚假控制感——干扰因素太多，差生才是“差生”。</li>
+      <li>四个有效教学心法：①管理内在负荷——不削平山峰而是搭梯子，拆小图式、预热前置知识、先局部后整合；②直接教学——探索式学习对新手效率极低，最高效的是“范例学习”（例题＋同构练习题），熟练后再“指导淡出”；③消除外在负荷——花哨多媒体、图文分离、屏幕复读都是“认知污染”；④区别对待——低先验知识者受益于高支持教学、高先验知识者受益于低支持教学。</li>
+      <li>AI 的双面性：把 AI 当“代写神器”（Doer）会把建构图式的过程外包出去，突击测试成绩显著下降；把 AI 严格限定为“导师”（Tutor，拆解知识、剔除干扰、一步步引导而不给答案），学习效果反而高于传统课堂。</li>
+      <li>学习不是苦行而是工程问题：教学就是给大脑编程，必须尊重输入带宽、按节奏把知识变成图式；即使脑机接口发达，技能也无法直接下载，因为“神经元是肉长的”——这是关于学习与教育最重要的硬约束。</li>
+    </ul>
+
+    <h3><span class="no">二、</span>给个人的行动建议</h3>
+    <ul>
+      <li>本周就给自己安排一次“清爽环境学习”：把手机放到另一个房间、关掉通知、清空书桌，连续 45 分钟只做一件事，先尝到削减外在负荷的甜头。</li>
+      <li>学新领域时先搭“图式脚手架”：不急着啃综合内容，先把前置概念和基础部件一个个练到自动化，用“拆小图式→整合”的顺序重新规划自己的学习路径。</li>
+      <li>用“范例学习”替代盲目刷题：先完整看懂一道带步骤的例题并用自己的话复述出来，再合上答案做一道结构相同、数字不同的题，熟练后才脱离例题独立做。</li>
+      <li>教别人或辅导孩子时主动“减戏”：讲题就清清爽爽讲题，不堆花哨工具、不频繁打断、不把图文同时铺开；配图就口头讲图，别让对方眼睛在左右两边来回跳。</li>
+      <li>把给孩子买文具、报班的“花钱安心感”，换成“学习设计”：把预算和精力投到拆解任务、即时反馈、控制干扰这些真正影响带宽的事情上。</li>
+      <li>把 AI 当导师而不是代写神器：让 AI 只负责拆解知识、出同构例题、指出你卡在哪一步，答案永远自己想——让大脑真正经历负荷，神经元才会连接、图式才会形成。</li>
+      <li>按“新手/老手”切换学习方式：新领域先用高支持（直接教学、范例、提示），熟悉后再转低支持（探索、迁移、自创），别一上来就“自由探索”浪费带宽。</li>
+    </ul>
+
+    <h3><span class="no">三、</span>金句摘录</h3>
+    <ul>
+      <li>“认知负荷理论的核心洞见是：学习失败并不是因为大脑的硬盘存不下，而是因为新信息通过工作记忆这道窄门的时候，堵车了。”</li>
+      <li>“优等生学得快不是因为脑子更快或者更大，而是因为脑子里的压缩包更多。”</li>
+      <li>“有效教学不是降难度，而是排兵布阵。”</li>
+      <li>“学习不是把知识一条条搬进脑子，而是脑子压缩和调用图式的过程。”</li>
+    </ul>
+
+    <div class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = p + '%';
+    topBtn.style.display = h.scrollTop > 600 ? 'flex' : 'none';
+  });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

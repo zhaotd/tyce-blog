@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第50讲 综合调研：在没有教科书的地方挖掘真知｜万维钢·现代思维工具100讲</title>
+<style>
+  :root {
+    --bg: #faf7f1;
+    --card-bg: #fffdf8;
+    --fg: #2f2a24;
+    --fg-soft: #6b6257;
+    --accent: #8a5a2b;
+    --accent-soft: rgba(138, 90, 43, 0.10);
+    --border: #e5dccb;
+    --quote-border: #8a5a2b;
+    --summary-bg: #f4ebda;
+    --summary-border: #b98d5a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171512;
+      --card-bg: #201d18;
+      --fg: #e8e2d6;
+      --fg-soft: #a89f8f;
+      --accent: #c08a4e;
+      --accent-soft: rgba(192, 138, 78, 0.14);
+      --border: #3a352c;
+      --quote-border: #c08a4e;
+      --summary-bg: #241f17;
+      --summary-border: #8a5a2b;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    font-size: 17px;
+    line-height: 1.82;
+    text-align: justify;
+  }
+  #progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 99;
+    background: linear-gradient(90deg, #8a5a2b, #c08a4e);
+    transition: width 0.1s linear;
+  }
+  .container { max-width: 700px; margin: 0 auto; padding: 28px 20px 72px; }
+
+  /* 文档头 */
+  .doc-header { margin-bottom: 26px; }
+  .course-tag {
+    display: inline-block; font-size: 13px; color: var(--accent);
+    background: var(--accent-soft); border: 1px solid var(--quote-border);
+    border-radius: 999px; padding: 4px 12px; margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  h1 { font-size: 24px; line-height: 1.45; margin: 0 0 10px; text-align: left; }
+  .meta { font-size: 13.5px; color: var(--fg-soft); text-align: left; }
+
+  /* 正文 */
+  p { margin: 0 0 16px; }
+  h2 {
+    font-size: 20px; margin: 34px 0 14px; color: var(--accent);
+    text-align: left; line-height: 1.5;
+  }
+  h2::before { content: ""; display: inline-block; width: 4px; height: 0.95em; background: var(--accent); border-radius: 2px; margin-right: 10px; vertical-align: -0.12em; }
+  h3 {
+    font-size: 17.5px; margin: 26px 0 10px; color: var(--fg);
+    text-align: left; line-height: 1.5;
+  }
+  .lead { color: var(--fg); }
+  .em { color: var(--accent); font-weight: 600; }
+
+  ul { margin: 6px 0 16px; padding-left: 22px; }
+  ul li { margin: 8px 0; }
+
+  /* 金句引用块 */
+  blockquote {
+    margin: 20px 0; padding: 13px 18px;
+    border-left: 4px solid var(--quote-border);
+    background: var(--accent-soft);
+    border-radius: 0 10px 10px 0;
+    color: var(--fg);
+  }
+  blockquote p { margin: 0; }
+  blockquote .golden { font-weight: 600; }
+
+  /* 分隔线 */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 30px 0; color: var(--accent); font-size: 15px;
+  }
+  .divider::before, .divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* 卡片通用 */
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; margin: 16px 0;
+  }
+
+  /* 注释 */
+  .notes { font-size: 13px; color: var(--fg-soft); margin-top: 34px; }
+  .notes h2 { font-size: 16px; margin: 0 0 10px; color: var(--fg-soft); }
+  .notes p { margin: 6px 0; line-height: 1.65; text-align: left; }
+  .notes a { color: var(--accent); word-break: break-all; }
+
+  /* 用户留言 */
+  .comments { margin-top: 34px; }
+  .comments h2 { margin-top: 0; }
+  .comment-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; margin: 0 0 16px;
+  }
+  .comment-meta { font-size: 12.5px; color: var(--fg-soft); margin-bottom: 8px; }
+  .comment-author { font-weight: 600; color: var(--accent); margin-right: 8px; }
+  .comment-card p { margin: 8px 0; font-size: 15.5px; }
+
+  /* AI 阅读总结 */
+  #ai-summary {
+    margin-top: 40px; padding: 24px 20px;
+    background: var(--summary-bg);
+    border: 2px solid var(--summary-border);
+    border-radius: 14px;
+  }
+  #ai-summary h2 { margin: 0 0 12px; color: var(--accent); font-size: 19px; }
+  #ai-summary h3 { font-size: 16.5px; margin: 18px 0 8px; color: var(--fg); }
+  #ai-summary p { margin: 8px 0; }
+  #ai-summary .one-liner { font-weight: 700; font-size: 16.5px; line-height: 1.7; }
+  #ai-summary ol, #ai-summary ul { margin: 6px 0 10px; padding-left: 22px; }
+  #ai-summary li { margin: 7px 0; }
+  #ai-summary .summary-foot {
+    margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--summary-border);
+    font-size: 12px; color: var(--fg-soft); text-align: center;
+  }
+
+  /* 回到顶部 */
+  #topBtn {
+    position: fixed; right: 18px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    width: 44px; height: 44px; border-radius: 50%; border: none;
+    background: var(--accent); color: #fff; font-size: 19px; line-height: 1;
+    cursor: pointer; opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28); z-index: 98;
+  }
+  #topBtn.show { opacity: 1; pointer-events: auto; }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<main class="container">
+
+  <header class="doc-header">
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第50讲</div>
+    <h1>综合调研：在没有教科书的地方挖掘真知</h1>
+    <div class="meta">作者：万维钢 ｜ 本讲主题：比听课和读书更高水平的学习方式</div>
+  </header>
+
+  <!-- 正文 -->
+  <p>比听课和读书更高水平的学习，是学习教科书里没有的知识。你自己给自己立题，自己去找材料，自己判断什么值得信、什么不值得信，最后再把它写成一个能指导行动的东西。</p>
+  <p>这门功夫叫做「综合调研（Synthesis）」，它很像是搞研究。这可是知识工作者的核心竞争力。</p>
+  <p>你要知道，各行各业真正有用的知识，都不在教科书上。如果这个东西你也会、他也会，那你相对于别人的优势在哪里呢？你必须会一些别人不会的、知道一些别人不知道的才好。</p>
+  <p>这样的知识其实也不难找，而且大多是公开的。我们可以称之为「边缘知识」或者「半熟知识（semi-settled knowledge）」：有人已经研究出来发表了论文，足够可靠，可以拿来下注——但又没有熟到行内尽人皆知。</p>
+  <p>只要想想你们领导的认知有多不靠谱，想想有那么多人花钱买你确信没用的东西，想想有些知名大学的计算机系还在讲二十年前的机器学习理论，你就知道当今世界到处都是半熟知识。</p>
+  <p>治疗某种病刚刚获批的新药，本行业今年最新的竞争格局，几款相关产品的市场调查结果，这些都是对你很有用的半熟知识。你做一番综合调研，从中提炼出一个判断：作为投资者，你就能找到一个市场还没有定价的认知差；作为产品经理，你就能找到用户自己都没说清楚的真实痛点。</p>
+  <p>高手使用综合调研，能从那一大堆零散事实中，挖掘到一个别人还没说出来的判断。</p>
+  <blockquote><p class="golden">标准答案只能允许你入场，综合调研才能帮你超车。</p></blockquote>
+  <p>现在很多行业都有专职人员负责综合调研，比如咨询公司的咨询顾问、金融公司的策略分析师、智库的政策研究员、负责深度报道的调查记者等等。就算你不是专职，你也会在日常工作中用到综合调研：比如产品经理不抄竞品皮毛，而是去重构它的底层逻辑；HR 制定新规不照搬外企，而是结合人性做本土适配；又或者你为了写一份关键汇报，从一大堆行业研报中提炼一两个“非共识”的切入点。</p>
+  <p>所以综合调研是知识工作者的基本功。如果你只会等着别人投喂现成的知识，你要么是大老板，要么是个操作员。</p>
+
+  <div class="divider">✵</div>
+
+  <p>综合调研既不是搜索，也不是总结，也不是分析。搜索能告诉你“都有些什么”；总结只是把东西说短；分析是把东西拆开看看“这些究竟是什么”；而综合调研，则是把拆开的东西重新组织起来，形成一个新的整体——它解决的是“所以呢”：我知道这些事实，所以呢？我从中得出一个什么结论、什么判断、什么启发？我应该采取什么立场？我下一步应该如何决策？</p>
+  <p>综合调研还要求你把结果写下来，形成一份报告。</p>
+  <p>如果不写下来，你分不清自己那个模模糊糊的感觉是真懂还是假懂，发现不了其中的漏洞。你必须定义概念，筛掉废话，安排层级，说明边界，最后给出判断。</p>
+  <blockquote><p class="golden">写作不是思考之后的包装，写作即思考。</p></blockquote>
+  <p>我建议把综合调研这门功夫分成三个级别，对应于不同的认知任务，对人有不同的智能要求：初级谋求定位，中级谋求结构化，高级谋求生成。咱们一个一个细说。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>初级调研：「定位式调研」</h2>
+  <p>初级调研是「定位式调研」，通常可以在一天甚至一小时之内完成。它的目的是让你对一个事物的认识快速达到「当前科学理解」。</p>
+  <p>你不可能一夜之间变成专家，但是如果让你在明天的会议上讲五分钟，你至少可以做到把事情说对、不露怯。</p>
+  <p>现实情况是：如果有一群人坐在一起聊天，只要话题稍微超出日常认知范围，就一定有人信口开河，看着自信满满、实则驴唇不对马嘴……而你只要事先稍微做过一点调研，你就能当场碾压他。如果参加讨论之前你没有做好准备性的调研，你就会被有准备的人欺负。有的人跟任何人会面都会先把那个人研究个底儿掉；可有的人去参加工作面试，都没调研过人家公司，这不荒唐吗？</p>
+  <blockquote><p class="golden">没有调查研究就没有发言权，别不带武器就出门。</p></blockquote>
+  <p>以前做最基本的调研也得去图书馆查好几天，后来有了网络搜索引擎，事情就简单得多。现在有了 AI，我们应该升级对调研的要求，你至少应该做到四点——</p>
+  <ul>
+    <li>第一，把问题压成一句真问题。别泛泛地问“我想了解 X”，你想要的是概念定义、因果机制，还是现实应用？</li>
+    <li>第二，寻求可靠的资料支持，最好是高质量的论文、主流媒体的报道或者权威机构的报告。</li>
+    <li>第三，要分清共识、争议和常见误区。</li>
+    <li>第四，把结论压缩成一段一两分钟能讲清楚的话。</li>
+  </ul>
+  <p>你直接对 AI 提出上述要求就可以，做了就比不做强得多。你还可以借助主流 AI 公司提供的「深度研究（Deep Research）」之类的工具。我自己在 ChatGPT 写了一个叫做“调研助手”的 GPT，针对性更强，开放使用——</p>
+  <p>你输入任何想要调研的话题，它会先给你来一段「电梯致辞」：用几句话告诉你这个东西到底有啥用、解决什么问题，给个直指要害的暴论。然后才是详细讲解对这个东西的当前科学理解，覆盖业内主流看法和应用。如果 AI 觉得问题有难度，还会现编一个小寓言，再给你讲几个例子来说明。它还会清晰指出当前学术界的争议点和人们常有的误解，并且充分发挥自身智能，说说这里有没有什么更深的洞见。最后是几个日常生活中的应用案例。</p>
+  <p>你可以直接用我这个调研助手，也可以把这个意思写成一份 SKILL.md，交给你自己的 AI 助理。</p>
+  <blockquote><p class="golden">高效能人士发言之前都应该先问问助手。</p></blockquote>
+
+  <div class="divider">✵</div>
+
+  <h2>中级调研：「议题式调研」·「结构化调研」</h2>
+  <p>中级调研是真正拉开差距的地方，可以叫「议题式调研」或者「结构化调研」，需要花费几个月甚至一年。它的目的是让你对某个领域的理解达到内行水平。</p>
+  <p>为此你不能只读一两本书，你得读这个领域所有活跃的主流作者的书和论文。每个博士生都曾经下过这样的功夫。我至今记得，一开始读博士的时候看论文根本看不懂，但也不知道是怎么搞的，在某一时刻，突然间就全都能看懂了。</p>
+  <p>学界对文献调研的指引，一般都是你应该以「议题」为中心，看看同一个议题下各个作者都是怎么说的，而不是把文献按照作者分类 <sup>[1]</sup>。但以我的经验来说，入门的标志恰恰是“认识人”：这个领域都有哪些高人，哪些门派？他们的思想和主张都是什么？他们各自此刻都在研究什么？他们共同最关心的问题意识是什么？他们正在争论什么？谁跟谁是朋友，谁跟谁是冤家？谁掌握话语权，谁又正在争夺话语权？</p>
+  <p>真正的球迷对联赛每一支球队的当家球星的特点都如数家珍，你起码做到这个水平才行。</p>
+  <p>这是一门硬功夫，但唯有如此，你才能形成自己稳定的观点。你知道人们在吵哪几件事；你知道每一派的理由、证据、方法和盲点；你知道争论目前卡在哪里。</p>
+  <p>下过硬功夫你才有资格说自己支持谁、反对谁。你最好能把你反对的那个学派的意见总结得让他们自己也认可。</p>
+  <p>AI 可以帮你加速这个过程，但是慢也有慢的好处，你体会更深。</p>
+  <p>从 2021 年开始，我花了一年多的时间，从头到尾精读了总共 66 本关于中国经济的新书。我想搞懂中国经济到底是怎么回事。我把每一本书都写了详尽的读书笔记。我建了 9 个超大文档，每个文档里有若干个议题。我把每本书的笔记拆成不同的议题，横向链接到议题目录之下。这样你问我任何议题，我都能告诉你哪个作者在哪本书里是怎么说的。</p>
+  <p>结果我发现，这些专家之间的分歧并不像我之前想象的那么大。比如说关于政府对经济的刺激作用，以前我会认为经济学家分为两派：哈耶克这一派强烈反对，凯恩斯这一派坚决支持——但并不是这样。我读到的作者大多承认政府刺激有时候有效，但是大家也都指出了政府刺激有效的条件……而且也都认为，很多时候政府是过度干预。</p>
+  <p>现实是主流学者的共识远远大于分歧。但是，他们的观点和老百姓、包括和某些官员的认识之间的差距，可就太大了。</p>
+  <blockquote><p class="golden">分歧都是微妙的，但那个微妙之处，才是最值得说话的地方。</p></blockquote>
+  <p>不是所有人都有时间下这个功夫。但如果你想搞懂一个行业，比如做基金研究、战略咨询、深度报道、公共政策、行业分析之类，又或者你想认真理解 AI、新能源、半导体之类的新兴领域，这就是你的必修课。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>高级调研：「生成式调研」</h2>
+  <p>高级调研可以叫「生成式调研」，你的目的已经不是理解，而是从材料中得出原创的新思想，甚至做出新发现。</p>
+  <p>这可不是灵机一动，更不是空中楼阁的突发奇想。在学术界，整合式综述和荟萃分析（meta-analysis）都不是简单的文献挖掘、不是科研的辅助，它们本身就是研究方法 <sup>[2][3]</sup>。</p>
+  <p>我打个比方你就明白了。急诊室收治了一个病人：医生甲看到化验单，说这像是感染；医生乙看到了影像，说像是自身免疫出的问题；医生丙询问了病史，发现他刚从高海拔地区回来；护士丁注意到病人最近一直在吃一种新型保健品。</p>
+  <p>每个人说的都是事实，但都只是局部的事实。只有当你把这些事实放在一起，梳理一遍，你才能拼出这个病到底是怎么回事。</p>
+  <blockquote><p class="golden">有时候真相不在任何一个材料里，真相是在材料之间。</p></blockquote>
+  <p>现代科研体系分工越来越细，而且是高度去中心化的，大家各自为政。一般的研究团队找个小问题，做一个小实验，得出一个细节式的小结论，就已经能发篇论文了。那么就必须有人把所有这些实验结果——包括定性的、定量的、各种不同条件的——综合在一起，勾画出事情的全貌。做这种调研的一般都是资深高手。</p>
+  <p>这里不需要玄学，其实就好像做拼图游戏一样。当你把各方的证据都摆在桌子上往一起拼的时候，你一定能看出来更大的故事，而且你一定会发现少了几块拼图：那个更大的故事，就可能是你的新思想；少的那几块拼图，就可能是你的新发现，至少是新发现的起点。</p>
+
+  <h3>约翰·斯诺：历史上最伟大的一次综合调研</h3>
+  <p>我说个真实故事 <sup>[4]</sup>，有可能是历史上最伟大的一次综合调研。1854 年，伦敦发生霍乱。医学权威都认为霍乱是一种在空气中传播的“瘴气”，在实验室里做各种化验，争论不休。而一个叫约翰·斯诺（John Snow）的医生，却在做纯文本分析。</p>
+  <p>斯诺把市政局的死者名单、伦敦的街道地图和公用抽水泵的分布位置这三组材料放在了一起，在地图上把死亡病例画成一个个点……结果真相浮出水面——数据点密集地围绕着 Broad Street 街上的那口水泵。</p>
+  <p>原来霍乱不是通过空气，而是通过水源传播的！斯诺写写画画就做出了颠覆学界的发现。</p>
+  <p>当然，现在你不太有机会捡这么大的漏，但你仍然可以稍微填补一下空白。比如我写咱们这个《现代思维工具》课，绝大部分内容都是对现有理论的总结和提炼，但是有时候我发现拼图缺了一点，我就不得不提出几个概念作为“微原创”。比如前面说过的“稳态生存”“三个自我”“主动高认知负荷”“赛道选择”“状态杠杆”“解释框架”……这些说法，你在别处绝对搜不到，但这些概念也不是我凭空构建的，它们背后都有研究结果的支持，我只是在拼图的空隙处稍微描了一笔。</p>
+  <p>你调研多了就会知道，世界的知识之网并不是严丝合缝的，它到处漏风。很多叙事还没有被提炼出来，很多概念还没有被命名，很多关系还只是半明半暗地躺在材料里。它们在等着你去补全。</p>
+
+  <div class="divider">✵</div>
+
+  <h2>总结</h2>
+  <p>总结来说，初级调研是读懂对象，中级调研是读懂争论，高级调研是读出新问题。不管哪一级，你都最好通过写作交付调研结果。</p>
+  <p>我认为所有知识工作者本质上都是研究者，你总归会弄出来一点新东西。哪怕只是一篇读书笔记，那也是书里的思想跟你的大脑这个特定神经网络发生化学反应的结果，此前没人看过你这个版本。</p>
+  <p>综合调研是成本最低的研究方式。你不需要做实验，甚至都不需要上街发问卷调查。你从一大堆现成的材料之中挖掘出自己的东西，甚至是个新东西……就如同用旧语料训练的大语言模型能生产新内容。</p>
+  <blockquote><p class="golden">温故可以知新——只要你运用智能。</p></blockquote>
+  <p>知识工作者的荣誉感就在于我们要在调研结果中留下自己的印记。也许是几个不曾被注意的图式，也许是一个好用的心智模型，也许是一个独特的洞察，也许是切中时弊的一刀，也许是更有意思的叙事。我们比的不是谁读过多少页，而是谁能在这个纷乱的世界里画出一张更清晰的地图。</p>
+  <blockquote>
+    <p class="golden">读书不是囤积句子，而是升级压缩算法。</p>
+    <p class="golden">调研不是搜罗材料，而是安装判断模型。</p>
+    <p class="golden">写作不是展示想法，而是让思想成形。</p>
+  </blockquote>
+
+  <!-- 注释 -->
+  <section class="notes">
+    <h2>注释</h2>
+    <p>[1] Webster, Jane, and Richard T. Watson. “Analyzing the Past to Prepare for the Future: Writing a Literature Review.” <em>MIS Quarterly</em> 26, no. 2 (2002): xiii–xxiii.</p>
+    <p>[2] Snyder, Hannah. “Literature Review as a Research Methodology: An Overview and Guidelines.” <em>Journal of Business Research</em> 104 (2019): 333–339.</p>
+    <p>[3] Cochrane. “Evidence Synthesis - What Is It and Why Do We Need It?” September 13, 2019. <a href="https://www.cochrane.org/about-us/news/evidence-synthesis-what-is-it-and-why-do-we-need-it">https://www.cochrane.org/about-us/news/evidence-synthesis-what-is-it-and-why-do-we-need-it</a></p>
+    <p>[4] Johnson, Steven. <em>The Ghost Map: The Story of London's Most Terrifying Epidemic—and How It Changed Science, Cities, and the Modern World.</em> New York: Riverhead Books, 2006.</p>
+  </section>
+
+  <!-- 用户留言 -->
+  <section class="comments">
+    <h2>用户留言</h2>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="comment-author">至尊女宝</span>昨天 · 重庆</div>
+      <p>先说一个最实在的感受：笔记写到一定量，会产生一种手感。不是玄学，是真的能感觉到，这个信息该放在哪个位置，那句话是废话，这个判断还缺一块东西。我翻了翻自己的记录，从注册得到到现在七年，五千多条笔记，算下来将近一百五十万字。最早那些，跟大多数人一样：今天看了什么，谁说了什么，基本上是时间的分泌物，不是思考的产物。</p>
+      <p>变化是渐进的，但回头看很清晰。第二年的笔记开始有追问，会在某句话后面画个问号，或者写一句“但这是真的吗”。疫情那年困在湖北酒店，朋友李盈同学推荐我用得到，那四个月因为实在没别的事干，开始认真对待记笔记这件事——不是记别人的话，是记自己的问题和我找到的答案。但真正让我意识到质变的，是某天翻出三年前的一条笔记，发现自己当时花五百字论证的一个结论，现在一句话就能说清楚，而且能说出它的边界条件和反例。</p>
+      <p>我身边有不少人也听很多课、看很多书，但聊起来发现，他们记住的是片段，不是结构。你跟他说一个观点，他说“对对对，某某也说过”。但你问他某某的原话是什么、他是在什么条件下说的、他反对谁的说法，就答不上来了。我自己的体感是：光输入不输出，就像只吃不消化。</p>
+      <p>这跟搞工程一样。你不会一开始就设计出完美的系统。你先搭一个能跑的，然后重构，然后优化。笔记也是这样。先写，写得烂没关系，写着写着就知道怎么写不烂了。一本书，一堂课，如果你不能把它写成一段逻辑自洽的话，你就没有真正理解它。</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="comment-author">Christy</span>昨天 · 广东</div>
+      <p>真正高阶的学习，不是被动接受知识，而是主动构建认知体系。从自我设问、自主探究，然后再通过筛选信息、批判思考、综合判断，最终形成可指导实践的行动指南。用输出倒逼输入，以简化驱动理解，让思考真正发生。</p>
+      <p>学习是获取素材不是终点，阅读是提供构建思维框架的原材料，但若只停留在“找答案”或摘抄金句，知识仍是零散的。关键在于通过主动提问、关联拓展，把知识点嵌入个人的认知结构中。要学习 AI 就不要从“学习 AI”这类宽泛目标开始，而应设定具体任务（如“用 AI 写一篇行业分析”），在做事中遇到问题再针对性地查资料、调用知识，实现做中学、学以致用。有目的地学习，以输出为目标，要构建“输入—思考—输出”的良性循环，实现知识的真正内化。</p>
+      <p>高手的厉害之处不是掌握多少模型，而是能把一个领域的结构迁移到另一个场景。例如用博弈论看待职场利益分配，或用金字塔原理优化日常沟通等等。</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-meta"><span class="comment-author">左星星</span>昨天 · 福建</div>
+      <p>我理解综合调研，就像做一桌菜：搜索只是买菜，总结是把菜洗好切好，分析是知道每种食材的味道和营养，综合调研则是根据客人的口味、场合和目的，把这些食材搭配成一道真正合适的菜。它最后要回答的不是“我买了哪些菜”，而是“这桌菜该怎么配，先上什么、后上什么，才能真正解决这一桌人吃饭的问题”。</p>
+      <p>综合调研也像侦探破案。单个线索可能都是真的：一个脚印、一段监控、一条通话记录、一笔转账。但真正重要的，不是把线索背下来，而是看出它们之间的关系：谁和谁有关，哪个时间点不合理，哪条线索能解释其他线索。很多洞察不是藏在某一份材料里，而是藏在材料和材料之间。</p>
+      <p>一个家长想给孩子选专业。如果只看热门榜单，今天是 AI，明天是新能源，很容易被风口牵着走。综合调研则要把孩子的性格、动手能力、表达能力、学习基础、行业周期和就业路径放在一起看。最后可能发现，孩子未必适合纯技术路线，也许更适合“护理、康复、养老服务+AI”，或者“历史+游戏世界观搭建”。这不是找标准答案，而是做适配判断。</p>
+      <p>综合调研最重要的能力，是把碎片变成结构，把资料变成判断。它要求一个人既能低头找证据，也能抬头看全局。</p>
+    </div>
+  </section>
+
+  <!-- AI 阅读总结 -->
+  <section id="ai-summary">
+    <h2>AI 阅读总结</h2>
+    <p class="one-liner">综合调研，是在没有教科书的地方主动挖掘「半熟知识」、以写作交付判断的核心功夫；它分定位、议题、生成三个级别，是知识工作者成本最低的研究方式。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ol>
+      <li><strong>综合调研的定位：</strong>比听课、读书更高水平的学习，是自己立题、自己找材料、自己判断可信度，最后写成能指导行动的东西，是知识工作者的核心竞争力；不会综合调研、只等别人投喂知识的人，要么是大老板，要么是操作员。</li>
+      <li><strong>「半熟知识」是关键弹药：</strong>真正有用的知识大多不在教科书上；半熟知识（semi-settled knowledge）已发表、足够可靠、可以拿来下注，却又没熟到行内尽人皆知——新药获批、行业最新竞争格局、市场调查结果都属于此类，调研它就能拿到“市场还没有定价的认知差”或用户没说出口的真实痛点。</li>
+      <li><strong>综合调研 ≠ 搜索/总结/分析：</strong>搜索回答“都有什么”，总结是把东西说短，分析是拆开看“究竟是什么”，综合则是把拆开的东西重新组织成新整体，回答“所以呢”——得出结论、判断、立场与下一步决策，并强制写成报告。</li>
+      <li><strong>写作即思考：</strong>不写下来就分不清真懂还是假懂，发现不了漏洞；写作要定义概念、筛掉废话、安排层级、说明边界、最后给出判断，写作不是思考之后的包装。</li>
+      <li><strong>初级「定位式调研」：</strong>一天甚至一小时完成，目标是把认识快速推到「当前科学理解」、会上讲五分钟不露怯；借助 AI 要做到四件事——把问题压成一句真问题、找高质量资料、分清共识争议误区、把结论压缩成一两分钟能讲清的话。</li>
+      <li><strong>中级「议题式调研」：</strong>花费数月到一年，以议题为中心读遍该领域所有活跃主流作者，入门的标志是“认识人”（谁在争什么、谁与谁对立、话语权在谁手）；万维钢用 66 本中国经济新书、9 个大文档的实践说明：主流学者共识远大于分歧，微妙的分歧处才最值得说话。</li>
+      <li><strong>高级「生成式调研」：</strong>目的从理解升为产出原创思想与新发现；整合式综述、荟萃分析本身就是研究方法；真相常在材料之间而非任何单一材料里（急诊室拼病案与拼图比喻）；1854 年约翰·斯诺用死者名单、街道地图与水泵分布三组材料破解伦敦霍乱水源传播，是历史上最伟大的一次综合调研。</li>
+      <li><strong>收尾洞见：</strong>初级读懂对象、中级读懂争论、高级读出新问题；知识之网到处漏风，概念、叙事、关系都在等你补全；综合调研无需实验与问卷，是成本最低的研究——温故可以知新，只要你运用智能。</li>
+    </ol>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li>本周挑一个你明天就要发言或开会的话题，做一次「定位式调研」：把问题压成一句真问题，找两三篇论文或权威报告，标出共识、争议与误区，最后压缩成一段一两分钟能讲完的话——先做到“不露怯”，再谈超车。</li>
+      <li>把你常用的 AI 调研要求写成固定指令模板（或一份 SKILL.md）：先要「电梯致辞」加直指要害的暴论，再要当前科学理解、争议点、常见误区、更深洞见和日常应用案例，从此每次调研都复用同一套标准。</li>
+      <li>建立「半熟知识」雷达：每周花半小时，收集本行业本月的新药/新产品获批、最新竞争格局与市场调查，记下一两个“别人还没说出来的判断”，形成自己的认知差清单。</li>
+      <li>升级笔记习惯：从今天起，每条笔记都追加追问（“这是真的吗”“边界条件是什么”“反例是什么”），并定期把一年前或三年前的旧笔记压缩重写一遍，直到一句话能说清且能讲出反例。</li>
+      <li>选一个真正想搞懂的领域启动「议题式调研」：列出该领域 5–10 位活跃作者，以议题为中心建一个目录文档，把读到的内容按议题横向链接，目标从“攒书目”升级为“认识人”。</li>
+      <li>养成「写作交付」习惯：任何一次调研结论都写成一页纸（定义概念 → 安排层级 → 说明边界 → 给出判断），先写烂、再重构、再优化，用输出倒逼输入。</li>
+      <li>尝试一次「微原创」：在你已有的材料里找一块“缺失的拼图”，为一个还没被命名的现象起名字、下定义并写明依据——这是生成式调研最低门槛的入门练习。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <blockquote>
+      <p>“标准答案只能允许你入场，综合调研才能帮你超车。”</p>
+      <p>“有时候真相不在任何一个材料里，真相是在材料之间。”</p>
+      <p>“读书不是囤积句子，而是升级压缩算法。调研不是搜罗材料，而是安装判断模型。写作不是展示想法，而是让思想成形。”</p>
+      <p>“温故可以知新——只要你运用智能。”</p>
+    </blockquote>
+
+    <div class="summary-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+
+</main>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>万维钢 · 现代思维工具100讲 · 第78讲｜可读性：编户齐民中的米提斯</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card:#ffffff;
+    --text:#3b332a;
+    --text-soft:#7a6f62;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --line:#e6dccb;
+    --quote-line:#c9a063;
+    --sum-bg:#f3ecdd;
+    --sum-border:#c9a063;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#201c17;
+      --text:#e8e0d3;
+      --text-soft:#a29584;
+      --accent:#d3a467;
+      --accent-soft:rgba(211,164,103,.14);
+      --line:#3a332a;
+      --quote-line:#8a6a3a;
+      --sum-bg:#262017;
+      --sum-border:#8a6a3a;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-text-size-adjust:100%;
+    padding:0 18px 90px;
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,#c9a063,#8a5a2b);
+    z-index:999;
+  }
+  .wrap{max-width:700px;margin:0 auto;}
+  header.doc-head{padding:44px 4px 8px;}
+  .tag{
+    display:inline-block;
+    font-size:12.5px;
+    letter-spacing:.5px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border:1px solid var(--quote-line);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:16px;
+  }
+  h1{
+    font-size:25px;
+    line-height:1.45;
+    font-weight:700;
+    letter-spacing:.5px;
+    margin-bottom:14px;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--text-soft);
+    border-top:1px dashed var(--line);
+    border-bottom:1px dashed var(--line);
+    padding:10px 0;
+    margin-top:18px;
+    text-align:left;
+  }
+  .divider{
+    text-align:center;
+    color:var(--quote-line);
+    font-size:18px;
+    letter-spacing:10px;
+    margin:34px 0;
+    user-select:none;
+  }
+  .divider::before,.divider::after{
+    content:"";
+    display:inline-block;
+    vertical-align:middle;
+    width:44px;
+    height:1px;
+    background:var(--line);
+    margin:0 12px;
+  }
+  article.body{padding:8px 0;}
+  article.body p{margin:14px 0;}
+  article.body h3{
+    font-size:18.5px;
+    margin:30px 0 12px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+    line-height:1.5;
+  }
+  article.body ul{margin:12px 0 14px 6px;padding-left:22px;}
+  article.body li{margin:9px 0;text-align:justify;}
+  blockquote.golden{
+    margin:20px 0;
+    padding:14px 18px;
+    border-left:4px solid var(--quote-line);
+    background:var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    font-size:16.5px;
+    color:var(--text);
+  }
+  blockquote.golden p{margin:6px 0;}
+  .qa{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    padding:16px 18px;
+    margin:18px 0;
+  }
+  .qa .q{
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .qa .q::before{content:"问　";font-weight:700;}
+  .qa .a::before{content:"答　";font-weight:700;color:var(--accent);display:block;margin-bottom:6px;}
+  .steps{
+    counter-reset:step;
+    list-style:none;
+    padding:0;
+    margin:14px 0;
+  }
+  .steps li{
+    position:relative;
+    padding:12px 14px 12px 52px;
+    margin:12px 0;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    text-align:justify;
+  }
+  .steps li::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;left:14px;top:13px;
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .notes{
+    margin:36px 0 10px;
+    padding:16px 18px;
+    background:var(--card);
+    border:1px dashed var(--line);
+    border-radius:12px;
+    font-size:13px;
+    line-height:1.75;
+    color:var(--text-soft);
+    text-align:left;
+  }
+  .notes h3{
+    font-size:15px;
+    color:var(--text);
+    border-left:none;
+    padding-left:0;
+    margin:0 0 10px;
+  }
+  .notes p{margin:7px 0;}
+  .comments{margin:34px 0 10px;}
+  .comments h3{
+    font-size:18.5px;
+    margin:0 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+  }
+  .comment{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:14px 0;
+  }
+  .comment .who{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:10px;
+    text-align:left;
+  }
+  .comment .name{font-weight:700;font-size:15px;}
+  .comment .when{font-size:12px;color:var(--text-soft);}
+  .comment p{margin:8px 0;font-size:15.5px;}
+  #ai-summary{
+    margin:46px 0 8px;
+    padding:22px 20px;
+    background:var(--sum-bg);
+    border:1.5px solid var(--sum-border);
+    border-radius:12px;
+  }
+  #ai-summary .sum-title{
+    font-size:17px;
+    font-weight:700;
+    text-align:center;
+    letter-spacing:1px;
+    margin-bottom:16px;
+    color:var(--accent);
+  }
+  #ai-summary h4{
+    font-size:16px;
+    margin:18px 0 8px;
+    color:var(--accent);
+  }
+  #ai-summary .one-liner{
+    font-weight:700;
+    font-size:16px;
+    padding:12px 14px;
+    background:var(--card);
+    border-radius:10px;
+    border-left:4px solid var(--accent);
+    margin-bottom:6px;
+  }
+  #ai-summary ol,#ai-summary ul{margin:6px 0 4px;padding-left:22px;}
+  #ai-summary li{margin:8px 0;text-align:justify;font-size:15.5px;}
+  #ai-summary .quote-list li{
+    font-style:normal;
+    color:var(--text);
+    padding:6px 0;
+  }
+  #ai-summary .quote-list li::before{content:"❝ ";color:var(--accent);}
+  #ai-summary .quote-list li::after{content:" ❞";color:var(--accent);}
+  #ai-summary .sum-foot{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:1px dashed var(--sum-border);
+    font-size:12px;
+    color:var(--text-soft);
+    text-align:center;
+  }
+  #backTop{
+    position:fixed;
+    right:22px;
+    bottom:34px;
+    width:46px;height:46px;
+    border-radius:50%;
+    border:1px solid var(--quote-line);
+    background:var(--card);
+    color:var(--accent);
+    font-size:20px;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.15);
+    z-index:998;
+    line-height:1;
+  }
+  #backTop.show{display:flex;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<div class="wrap">
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第78讲</span>
+    <h1>可读性：编户齐民中的米提斯</h1>
+    <div class="meta">作者：万维钢　｜　思维工具 · 可读性（legibility）与米提斯（mētis）　｜　手机阅读整理版</div>
+  </header>
+
+  <article class="body">
+
+    <p>中国近年来经常会有一类很奇怪的新闻：某个城市的商业街上，各家店铺不管卖什么，都被要求换成规格统一的招牌，大小、颜色、字体完全一致。老百姓都很不理解：做生意不是应该百花齐放吗？搞这种一致性图啥呢？</p>
+    <p>这个现象背后，正是大系统最原始的一种冲动。</p>
+    <p>其实都不用很大的系统。连有的出版机构也是如此：他们每一本书封面的样式都高度统一，摆在书架上像穿着制服排队一样，甚至还有编号。</p>
+    <p>如果你可以控制，你会本能地要求世界长得整整齐齐。</p>
+    <p>这不是为了美观整洁。大系统追求的是一个更深刻的东西，叫做「可读性（legibility）」。这个概念是美国政治学家和人类学家詹姆斯·斯科特（James C. Scott）提出来的，出自他的《国家的视角》（<em>Seeing Like a State</em>）一书。斯科特特别善于分析政府如何统治和老百姓如何被统治。</p>
+
+    <div class="divider">✵</div>
+
+    <p>很多人以为做统治者可以为所欲为，其实不然。哪怕你掌握绝对武力，可以任意决定他人的生死，你也做不到想怎样就怎样。你需要征兵，你需要维持一个官僚集团的运转，你必须有税收。你必须既能把税收上来，又不至于杀鸡取卵，破坏老百姓纳税的能力。</p>
+    <p>谷物国家是最容易征税的——但你也得具体去征才行。想象你是皇帝，统治几千万子民，他们讲几百种方言，种着形状各异的地……你想收税征兵，可是你怎么知道哪家种了多少地，有多少人呢？</p>
+    <p>斯科特说，你首先要让社会可读。</p>
+    <p>事实上，人类最早的文字，记录得最多的，不是诗歌也不是情书，而是粮食、税收和劳役。</p>
+    <p>你以为秦始皇统一文字、统一度量衡是为了方便全国百姓互通有无、搞活市场经济吗？那是国家加强社会可读性的技术。全世界的国家都经历过类似的统治技术升级：给每个人安上固定的姓氏，丈量登记每一块土地，定期清点人口，绘制地图，编订税册，还要发给你一张身份证。</p>
+    <p>而且"可读"可不只是"只读"。不是说你们该怎样生活就怎样生活，我派人挨家挨户找你们慢慢统计——而是为了我统计方便，你们必须排好队，以让我更可读的方式生活。</p>
+    <p>"可读性"在古代中国有个更硬的表达方式，叫「编户齐民」。</p>
+    <p>这是秦制的拿手好戏：中央政府管郡县，郡县管户籍，地方上对老百姓搞什伍连坐，把人一户一户钉死在土地上。这套技术在朱元璋时代登峰造极：用「黄册」登记每一个人，用「鱼鳞图册」丈量每一寸地，各家各户被设定为军户、匠户、灶户、民户、站户、铺户、船户、乐户……世世代代不许改行。</p>
+    <p>可读性到了这个水平，就等于说为了让国家的账本好读，老百姓必须放弃自己人生的可变性。</p>
+    <p>你说这是奴役，但是朱元璋也有话说：没有可读性国家就是瞎子。如果收不上税或者不能公平地收税，我怎么提供安全保护、基建、教育这些基本公共服务？</p>
+    <blockquote class="golden">
+      <p>问题不是国家读社会。<br>问题是国家为了读社会，反而把社会读薄。</p>
+    </blockquote>
+
+    <div class="divider">✵</div>
+
+    <p>历史反复证明，朱元璋想要的那种可读性，并不能让老百姓从此安居乐业。斯科特讲的一个经典案例是十八、十九世纪德国的森林。</p>
+    <p>在林业官眼中，野生的森林太乱了：树种混杂，高矮不齐，下面覆盖着数不清的灌木、藤蔓、枯枝和苔藓，很难估算能出多少木材。于是他们干脆推倒重来，种下一片"科学林"：单一树种，行距相等，横平竖直，像军队方阵一样。你站那一看，多少棵树、多少立方米、值多少钱清清楚楚。而且施肥、除虫、管理也方便，这叫规模化！</p>
+    <p>一开始的确迎来了林业大丰收，全欧洲都来取经。可是一个世纪后，灾难来了。</p>
+    <p>那些被理性清走的东西——真菌、昆虫、鸟雀、枯枝、腐殖质——原来正是森林的免疫系统和营养循环。它们一走，地力枯竭，虫害肆虐，一代弱过一代，最后整片林子死了。德国人最终不得不把当初清走的野性请回森林。</p>
+    <blockquote class="golden">
+      <p>回头想想，国家看见的其实不是森林，而是木材。<br>木犹如此，人何以堪。</p>
+    </blockquote>
+
+    <div class="divider">✵</div>
+
+    <p>德国人对森林做的事儿，就是秦制对古代中国人做的事儿。同样以谷物为生，以前的中国人是什么样，后来的中国人又是什么样？</p>
+    <p>张宏杰有个很有力的比喻：中国人的精神气质像一条河。春秋是上游，水质清，水势急，所以人也清澈刚健；汉唐是中游，已经泥沙俱下，但仍有雄大气象；到了明清，河流接近下游，水势衰败，精神也随之低伏。于是我们看到的，不再是先秦那种贵族气、唐宋那种雍容文雅和雄健气质，而是越来越多的麻木、顺从、油滑，乃至奴性和流氓气。</p>
+    <p>咱们就看古代中国人给孩子的开蒙读物。你看南朝梁武帝时期成书、流行于隋唐的《千字文》，开篇说的是「天地玄黄，宇宙洪荒。日月盈昃，辰宿列张……」一上来就是天地宇宙，那是何等的格局？生而为人就得思考大问题、办大事。</p>
+    <p>到了成书于南宋的《三字经》，开篇就变成了：「人之初，性本善……」，要从伦理秩序学起了。</p>
+    <p>等到大清康熙年间出来的《弟子规》，对人的要求就成了：「父母呼，应勿缓；父母命，行勿懒……」</p>
+    <p>这是文明气质的收缩。</p>
+    <p>不是中国人天生如此，也不是谷物文明必定如此，而是户籍、伦理、科举，一层比一层细密的统治技术把人逐渐变得如此。</p>
+    <p>在这个视角下，所谓「李约瑟难题（Needham Question）」的答案不是明摆着的吗？为什么近代科学没有诞生在中国？因为明清的中国聪明人都在考科举。一个把科举、官僚、考核推到极致的帝国，会亲手铲平社会中"不可读的野生地"——可恰恰是那些野地，才长得出意外，长得出创新突破。</p>
+
+    <div class="divider">✵</div>
+
+    <p>过度的可读性和编户齐民不但坑害老百姓，而且会让治理机器自身变蠢、变脆。</p>
+    <p>秦制王朝统治力最强盛的时候都是前期。土地重新丈量，户口重新登记，赋役重新分派，军户、匠户、灶户各归其位，那真是秩序井然……可是账本誊清的那一天，也正是它开始失真的那一天。</p>
+    <p>人口会流动，土地会易主，职业会变化，地方胥吏会造假，豪强会隐匿田产，普通人会想办法让自己稍微自由一点。没过多少代，连朱元璋的后人都不再相信他那套制度。晚明和晚清的中国都相当自由，一边是商业更发达，一边是政府无力应对新商业局面，汲取能力反而下降，只会欺负农民。</p>
+    <p>编户齐民的麻烦就在于，它把那些"不好登记"的东西——地方知识、非正式合作、试错空间、异端思想、手艺人的判断——一并抹杀了。</p>
+
+    <div class="divider">✵</div>
+
+    <p>我讲这些不是为了控诉古代帝国，而是为了说一个有关个人的道理：人不能把自己给编户齐民。</p>
+    <p>很多人热衷于体制化，其实体制化的人都是可替代的人，是最可悲的人。</p>
+    <p>斯科特写《国家的视角》，真正想说的不是"国家很可怕"，而是有一种极为宝贵的东西，是国家读不到的。</p>
+    <p>这个东西甚至没有现成的英文表述，斯科特不得不从古希腊借来一个词，叫「米提斯（mētis）」。</p>
+    <p>米提斯是在不断变化、从不重复的现场里临机应变、把事情做成的那种活智慧，那种"狡智"、"机智"、"权变智慧（cunning intelligence）"。</p>
+    <p>米提斯跟我们前面讲过的波兰尼说的「默会知识」有点像，但意思不完全一样。"默会知识"是强调你知道，但你说不出来；"米提斯"则是说只有在本地现场才知道——也许你能说出来，也许你说不出来，要点是不在现场就学不会。</p>
+    <p>米提斯是老钳工一摸机床就断定它今晚要出事，可日志里一条报警都没有；老编辑读一篇稿子，数据全对、逻辑无误，他却说"这口气不对"；老业务员跟人吃顿饭，合同明明没毛病，他却咬定"这人不靠谱"。</p>
+    <blockquote class="golden">
+      <p>米提斯不是能填进表格的能力，而是知道表格什么时候不够用的能力。</p>
+    </blockquote>
+    <p>面对编户齐民，你要做的不是逃进山里让自己不可读，而是在城市、公司、平台、学校里，保留一块不被低分辨率读完的自己。你要追求和守住米提斯。</p>
+
+    <div class="divider">✵</div>
+
+    <p>米提斯不是钻系统的空子，而是对系统的补充。历史证明，越是想把人读齐、读薄的体制，反而越离不开那些读不清的人。</p>
+    <p>比如说，大明和大清都是「流官制」，地方主官三年一换，而且还有回避制度，不许在本省任职。这是一种很刻意的可读性设计，把官员变成可以随时替换的标准零件，防止他成为坐大的地方势力。</p>
+    <p>但这是一个相当荒唐的设计。你想想，一个科举做题家，受到的所有训练就是写八股文，连一件实事都没干过，直接空降，就能主政一方吗？他知道怎么办钱粮刑名吗？他连当地方言都听不懂！</p>
+    <p>真正办事的人，是本地的胥吏，是官员自掏腰包聘请的幕友和师爷。尤其师爷，多出自绍兴，靠师徒口传、同乡结网，把律例的精确操作攥在手里。朝廷不会直接看见这些人，朝廷只跟官员说话；但是帝国其实是靠这些人撑着的。</p>
+    <p>想让人可替换的制度，最后让最不可替换的师爷掌了实权。</p>
+    <p>再看山西票号。在一个连合伙、契约条款都写不全的弱法律环境里，晋商居然做成了主导全国近一个世纪的汇兑生意。他们当然不是靠国家政策，而是靠同乡和宗族的信用网络筹资，靠担保人招募伙计。</p>
+    <p>正是多亏了山西票号，中国才能在没有现代银行体系的时代，把北京、平遥、汉口、上海、广州乃至更遥远的商路上的银钱连成一张网。晋商把银子从"必须搬运的金属"，变成了"可以汇兑的信用"。结果是连朝廷和地方政府都得靠这些票号完成跨省调款。</p>
+    <blockquote class="golden">
+      <p>你读不到，但是你不得不用。</p>
+    </blockquote>
+    <p>如果编户齐民真的像朱元璋设计的那样运转，国家早就不行了。上面胡乱搞，下面还能勉强维持，靠的是他们看不见的那些拥有米提斯的人。</p>
+    <p>有人研究苏联计划经济，发现了一个有意思的现象：苏联的工厂其实是靠两种人活着——</p>
+    <ul>
+      <li>一种是机器出什么毛病都能给你拼凑修好的<strong>万能修理工</strong>。他不按手册操作，不听领导安排，也不指望上级的帮助。他就靠自己的耳朵和手感，拿一堆旧零件，找到替代方案，把事儿给你对付过去。</li>
+      <li>另一种叫「tolkach」，可以译成<strong>"推手"</strong>。他们会动用私人关系，把计划里根本配不齐的原料给你"搞"来。没错，苏联也有关系网，叫做「blat」。</li>
+    </ul>
+    <p>你想想中国计划经济时代那些工厂，不也是这两种人在维持吗？最近热播的电视剧《主角》里，易青娥的舅舅、县剧团司鼓胡三元，就是他们的典型。他不说套话，不尊重组织程序，不服管，甚至还有点江湖气，但是领导拿他没办法。因为真能解决问题的，恰恰是这种「白专」能人。</p>
+    <p>编户齐民喜欢培养可替换的人，但真正维持系统运转的，是这些不可替换的人。</p>
+    <p>他们不是体制的成就，甚至不是体制的恩赐。他们是体制的幸存者。</p>
+    <p>米提斯是不会死的。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>怎么温养自己的米提斯</h3>
+    <p>那你说，我怎么温养自己的米提斯呢？六步，一步都不能少。</p>
+    <ul class="steps">
+      <li><strong>到场。</strong>米提斯只能从现场长出来，而且必须是有后果的现场。坐在办公室里可长不出来对教育的判断；你得去看学生到底怎么学，去看那些好老师为什么反而被系统惩罚。</li>
+      <li><strong>变式。</strong>米提斯很难刻意练习，因为你做的不是同一类型的题。你必须见过一千个"相似却从不相同"的局面，才能练出"差一点就完全不同"的辨别力。</li>
+      <li><strong>复盘。</strong>经验本身并不产生米提斯，没有复盘的经验只会制造疲惫、油滑和偏见。感悟来自事后诚实的追问：我当时以为会发生什么？实际发生了什么？我漏掉了哪个信号？下次怎么更早闻到味道？</li>
+      <li><strong>结网。</strong>米提斯从来不是孤胆英雄的专利，它常常长在一群人的共同记忆里。米提斯的学习是一种「情境学习（situated learning）」，新人要通过「合法边缘参与（legitimate peripheral participation）」进入实践共同体——说白了就是得有师傅领你进圈子。诀窍不是在 PPT 里，而是在"我跟你说，上次有个案子……"这种私下聊天中传承的。</li>
+      <li><strong>留痕。</strong>你需要一个笔记系统，建一份"厚档案"：不为留分数和职级，而是要留下你处理过的关键案例、作品的迭代、当时的判断依据，以及那些几乎就要出事却被你拦下的"差一点就失败"。结果是给系统看的，过程是给自己保命的。</li>
+      <li><strong>转译。</strong>你得让系统能读到你——虽然它读不懂——你得证明自己对系统的价值。这意味着你要把手感翻译成制度能承认的东西。斯科特的说法叫「公开文本（public transcript）」和「隐藏文本（hidden transcript）」——要把公开那一层——合规、达标、报表、流程——做到无可指摘，这是你换取自由空间的通行费；同时，把你真正的判断力、对质量近乎执拗的坚持、对长期价值的下注，放在指标看不见的地方。</li>
+    </ul>
+
+    <div class="divider">✵</div>
+
+    <p>1990 年的某天晚上，斯科特在原东德一个地方的十字路口等红灯。路上明明一辆车都没有，可是几十个行人却依然规规矩矩地在那儿等。偶尔有人穿过去，还会被当众责备。斯科特忽然意识到：服从不是从大事开始训练的，服从是从这些小小的、无意义的等待里习惯成自然的。</p>
+    <p>斯科特提出一个建议，他一听就立即采纳，叫「无政府主义柔体操」：偶尔违反一条无伤大雅、明显不合情理的小规矩，不是为了破坏秩序，而是为了提醒自己——我仍然有判断规则是否合理的能力。</p>
+    <blockquote class="golden">
+      <p>不要让服从变成肌肉记忆；<br>不要让指标替你思考；<br>不要把自己活成组织里最容易被替换的那种人。</p>
+    </blockquote>
+    <p>身处编户齐民之中，你能跟系统最好的关系，是"入格"，但不"入笼"。</p>
+
+  </article>
+
+  <section class="notes">
+    <h3>注释</h3>
+    <p>[1] James C. Scott, <em>Seeing Like a State: How Certain Schemes to Improve the Human Condition Have Failed</em>, Yale University Press, 1998.</p>
+    <p>[2] James C. Scott, <em>Against the Grain: A Deep History of the Earliest States</em>, Yale University Press, 2017.</p>
+    <p>[3] 张宏杰，《中国国民性演变史》，长沙：岳麓书社，2020 年。</p>
+    <p>[4] 《精英日课》第四季，统治的技术和被统治的艺术（上）、（下）。</p>
+    <p>[5] Ch'ü T'ung-tsu, <em>Local Government in China under the Ch'ing</em>, Harvard University Press, 1962；Bradly W. Reed, <em>Talons and Teeth: County Clerks and Runners in the Qing Dynasty</em>, Stanford University Press, 2000.</p>
+    <p>[6] Randall Morck and Fan Yang, <em>The Shanxi Banks</em>, NBER Working Paper No. 15884, 2010；Meng Wu, "A Study of the Shanxi Piaohao Banks, 1820s–1930s," <em>Business History</em>, 2024.</p>
+    <p>[7] Alena V. Ledeneva, <em>Russia's Economy of Favours: Blat, Networking and Informal Exchange</em>, Cambridge University Press, 1998.</p>
+    <p>[8] Jean Lave and Etienne Wenger, <em>Situated Learning: Legitimate Peripheral Participation</em>, Cambridge University Press, 1991.</p>
+    <p>[9] James C. Scott, <em>Domination and the Arts of Resistance: Hidden Transcripts</em>, Yale University Press, 1990.</p>
+    <p>[10] James C. Scott, <em>Two Cheers for Anarchism: Six Easy Pieces on Autonomy, Dignity, and Meaningful Work and Play</em>, Princeton: Princeton University Press, 2012.</p>
+  </section>
+
+  <section class="comments">
+    <h3>用户留言</h3>
+
+    <div class="comment">
+      <div class="who"><span class="name">至尊女宝</span><span class="when">16小时前 · 湖北</span></div>
+      <p>当官的想把世界整成 Excel 表格，老百姓偏要活成一篇散文。可读性这个词挺损的，不是说你的生活值得一读，而是说你的生活要能被系统轻轻松松地读进去，读成户籍册上一行字，读成纳税单上一个数，读成 KPI 表上一个格子。</p>
+      <p>米提斯这个希腊词，可能通俗的说是现场长出来的脑子。比如老工程师用耳朵就能听出来设备故障原因，而系统最怕这种脑子，因为没法登记，没法考核，没法复制。所以系统总想把它干掉，换成标准操作程序。结果呢？苏联的工厂离了万能修理工就趴窝，大清的衙门离了绍兴师爷就转不动。你以为你在管一个机器，其实你管的是那些读不清的人，他们才是真正的轴承。</p>
+      <p>我们都需要学会两种语言，一种语言是给系统听的。规范、流程、报表、KPI，你得会说，而且得说到及格线以上。这是你在这个体系里生存的通行证。另一种语言是给自己人和现场听的。这叫手感，眼力见，默契……这种语言不能写进制度，但能救命。</p>
+      <p>这个世界永远需要整齐的那一面，账本要平，报表要好看，招牌要统一。但你心里得清楚，真正让这个世界转起来的，往往是那些不按规矩来的东西：老师傅的耳朵、老钳工的手感、老库管的记性。系统想把我们读成一行字，可我们得活成一本书。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><span class="name">Christy</span><span class="when">昨天 · 广东</span></div>
+      <p>"温养自己的米提斯"就是培育自由拥有那种难以言传、却决定能否真正解决问题的能力。这种能力能让自己在组织和系统中具备不可替代性，而不是可被流程或算法轻易取代的"标准零件"。</p>
+      <p>在职场中要让自己成长为无论身处何地都能创造价值的人，入局而不困于局，守格而不囿于笼。"入格"我的理解是需要理解并掌握系统的规则与节奏，让自己具备专业素养和执行力。但"不入笼"，则是保持主体性与清醒认知，不被组织惯性吞噬自我价值与个人的长板。</p>
+      <p>需要在工作中从做事到谋事，不要只把自己当成一个执行任务的"士兵"，要尝试站在领导或公司的角度去思考问题。理解自己手头工作背后的战略意图和业务目标，这会让自己在处理问题时更有格局。一定要警惕"浮浅工作"的陷阱，每天被各种会议、邮件和即时消息打断，看似忙碌，实则可能只是在重复低价值的劳动。这种"浮浅工作"最容易被人替代，需要刻意留出时间进行深度工作，专注于那些能创造真正价值、需要高度专注和思考的事情，这才是建立护城河的根本。</p>
+      <p>在复杂的环境里找到自己的位置，既融入规则，又不被规则吞噬。要做到"入格"而不"入笼"，关键是要建立自己的核心价值和边界感。</p>
+    </div>
+
+    <div class="comment">
+      <div class="who"><span class="name">一叶而知秋</span><span class="when">15小时前 · 内蒙古</span></div>
+      <p><strong>【思维工具－可读性】</strong>这个故事是我爹讲给我的——关于我们老家在大集体时的"编户齐民"与"米提斯"苏书记。</p>
+      <p>我老家在河套平原的后套，年降水量仅 150 毫米。种地全靠引黄灌溉，干渠就一个口子进水。这个故事发生时，我还没出生，我爹刚从民兵队长调到公社机耕队。</p>
+      <p>我们村的书记是现在苏书记的爷爷。他们家三代书记，为什么能世袭？不是靠背景，而是靠声望。我觉得如何管理我们这片土地，他们家有遗传，智商在线——全村人都服。</p>
+      <p>我们那儿种地，全靠"黄河一口制"——七级渠系：总干渠、干渠、分干渠、支渠、斗渠、农渠、毛渠。一个口子进水，水下来是一条线，分到各条渠里，再到每块地里头。水控制了地，地控制人，人决定了农作物，农作物决定了交多少公粮。所以这里最适合"编户齐民"。大集体时候，人民公社制我们做得最彻底，年年被评为全自治区标杆。</p>
+      <p>据我爹说，那时候的公社书记特别有话语权。而因为评上"红旗公社"是提干的硬条件，各公社书记都铆足了劲竞争种地的效率。地是连片的，渠是固定的。种什么、什么时候种、种多少，不是生产队说了算，完全是公社一言堂。春种计划一下来，统一品种、统一行距、统一播种时间——因为灌溉是统一安排的。你一个队不按时播，到放水时苗还没出来，水一漫就泡死了；你提前播了，轮到你家浇水时，苗可能已经旱上了。</p>
+      <p>这就是大集体的逻辑：地不是你的地，地是渠系网格里的一块坐标。你这个人，就钉在这个坐标上。想跑？跑不了。你跑到别处，别说没有地，就算有地，也没有你的渠水。</p>
+      <p>人钉在地上了，就好管了。生产队有多少户、多少人、多少整劳力、多少半劳力，造册。每口人分多少口粮、每年出多少个工、每个工记多少分，造册。秋收以后，先交公粮，再留种子，最后分口粮。交多少公粮，是上面按地亩和产量估算的，跟你家今年够不够吃没关系。账本上是这么写的：某某某，某年某月某日，出工一次，记 8 分。年底结算，工分折成钱，扣掉粮食钱，盈余多少或倒挂多少。</p>
+      <p>这套系统，从上往下看，清清楚楚：水在渠里走，人在账上走，粮食在路上走。这就是万老师说的"可读性"。</p>
+      <p>但问题是，后套的地不是一张标准的白纸。有的吃水快，叫"漏水地"；有的吃水慢，叫"澄浆地"。有的盐碱重，有的沙性大。同一个大队，渠东渠西，地力能差出一大截。再加上河套的天，从来不是照着历书变的——早霜、晚霜、倒春寒、伏旱、凌汛，哪年都有幺蛾子。这些东西，账本上不写。公社干部手里的那张表，是上个月印的。地头的事情，是今天刚变的。</p>
+      <p>我爹说，面对那些年公社的僵化调度，全凭老苏书记，他就是我们村的"米提斯"。</p>
+      <p>有一年春天，公社下了死命令：全公社必须在 3 月 18 号到 3 月 22 号之间完成小麦播种，统一品种、统一行距，不准提前，不准拖后。文件发到大队，苏书记看了，没吭声。</p>
+      <p>晚上他把我爹叫到队部——我爹是负责我们大队的农机手。我爹回忆，苏书记就问了几句："墒情看了没？地化通了吗？后半夜起不起风？"我爹说："墒情倒是够了，但地温还没上来。渠背阴面还有冻呢。"苏书记想了想："再等五天。"我爹说："公社那边……"苏书记说："公社又不下地。"</p>
+      <p>有人跑到队部找他："人家都种了，咱还不种？"苏书记指着渠背上那棵老柳树说："你去看那棵树，芽子还没放开呢。树没醒，地底下凉着呢。麦子种下去也是干等着，还不如等地彻底缓过来。"拖到第五天，他让我爹下了地。拖拉机轰鸣，牛马驴具全上，三天播完，稳稳当当。</p>
+      <p>然后倒春寒来了。那年 4 月 10 号夜里，一场寒流下来，霜打得地皮发白。提前播完的那些队，麦苗刚露头，嫩尖儿冻得发蔫，后来大片大片缺苗断垄。我们队的种子还在土里没拱出来，正好躲过去了。等寒流过去，地温慢慢上来，苗才齐刷刷地往外冒，一天一个样，后来反而比那些早播的长得壮。</p>
+      <p>公社书记下来检查，把苏书记叫过去，当着众人问："我让你 3 月 22 号前播完，你为啥不执行？"苏书记蹲在地上，慢悠悠卷了一根烟，点上，吸了一口，说："你那个指令，是上个月写的。今早的风，是变了向的。渠背阴面的冻，前两天才化开。你说我信哪个？"公社书记脸都绿了，一句话没接上来。然后恶狠狠地说："你信不信我撤了你？"苏书记说："那你就撤吧。回头传到旗委书记耳朵里，说是你因为苗没冻死把我撤了，那也行。"公社书记咬了咬牙，没敢下这个决心。</p>
+      <p>那年秋天，就因为我们大队一枝独秀，夏粮产量全旗第一。公社书记凭着这个成绩，顺顺当当评上了"红旗公社"，后来也提了干。他早把撤苏书记这茬儿忘了，在全旗大会小会做报告，露足了脸。但这个茬口他记心里了——不是记着整苏书记，而是每年春播，他都偷偷跑来找苏书记问："苏书记，今年咱们啥时候种？"</p>
+      <p>后来包产到户，原来那些最"听话"的生产队反而乱了套：为了一米宽的渠埂，亲兄弟能拿铁锹把子对打。我们队三天分完地，五天安顿好渠系。苏书记开了个会，就讲了两句话："分的是地，不分的是水。水怎么走，人心要齐。"说完就走了，去渠背上看水了。</p>
+      <p>其他大队争地争得不可开交，公社书记又跑来取经。苏书记说："你大喇叭里念的是文件，我听的却是小岗村的闯劲。分地这件事，我比你们多琢磨了两年。"那时的公社书记，已不是当年提干的那位了。新书记被苏书记玩了梗，也像上一任那样悻悻然。不过他心里清楚：苏书记的睿智，不是他能撼动的。连"撤你"这个玩笑，他都没敢开。</p>
+      <p>故事是我爹告诉我的。用万老师的话说：苏书记活在"可读性"里，但他没被读薄。</p>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <div class="sum-title">AI 阅读总结</div>
+    <p class="one-liner">一句话概括：大系统本能地想把世界"读薄"以便统治，这种编户齐民式的可读性恰恰会抹杀真正让系统运转的活智慧——米提斯；而个人最要紧的功课，是在体制里保留一块不被低分辨率读完的自己。</p>
+
+    <h4>一、核心内容总结</h4>
+    <ol>
+      <li>"可读性（legibility）"是斯科特在《国家的视角》里提出的概念：一旦你能控制，你就会本能地要求世界长得整整齐齐——统一招牌、统一书封背后，是系统为方便统计、征税、管理而让社会变得"可读"的原始冲动。</li>
+      <li>统治者其实不能为所欲为：要征兵、养官僚、收税，就必须先把社会变成可读的对象。姓氏、户籍、土地丈量、清点人口、绘地图、编税册、发身份证，乃至秦始皇统一文字度量衡，都是加强社会可读性的统治技术；中国古代的极致形态就是"编户齐民"（黄册、鱼鳞图册、军匠灶户世袭不动）。</li>
+      <li>德国"科学林"的教训：单一树种、横平竖直的森林短期大丰收，一个世纪后却因清走了真菌、昆虫、腐殖质等"免疫系统"而整片死亡——国家看见的不是森林而是木材；秦制对古代中国人的改造与之同构，是"把社会读薄"的代价。</li>
+      <li>文明气质在收缩：从《千字文》的"天地玄黄、宇宙洪荒"，到《三字经》的"人之初、性本善"，再到《弟子规》的"父母呼、应勿缓"，开蒙读物越来越窄，不是中国人天生如此，而是户籍、伦理、科举一层层细密统治技术塑造的结果——这也是"李约瑟难题"的一种答案：聪明人都去考科举，帝国亲手铲平了长得出意外的"野生地"。</li>
+      <li>过度可读性让治理机器自身变蠢变脆：账本誊清之日即失真之日——人口流动、土地易主、胥吏造假、豪强隐匿，晚明晚清商业发达而政府汲取能力反而下降；编户齐民把地方知识、非正式合作、试错空间、异端思想、手艺人判断一并抹杀。</li>
+      <li>米提斯（mētis）：斯科特从古希腊借来的词，指在不断变化、从不重复的现场里临机应变、把事情做成的活智慧。它比"默会知识"更进一步——默会知识是"你说不出来"，米提斯是"不在现场就学不会"；老钳工、老编辑、老业务员的判断力就是它的化身。</li>
+      <li>系统离不开读不清的人：绍兴师爷撑着大清帝国的实际运转，山西票号靠同乡信用网络做通全国汇兑，苏联工厂靠万能修理工和"推手（tolkach）"存活——想让人可替换的制度，最终让最不可替换的人掌了实权；他们不是体制的恩赐，而是体制的幸存者。</li>
+      <li>温养米提斯的六步法：到场（去有后果的现场）、变式（见过一千个相似却不同的局面）、复盘（事后诚实追问"我以为/实际/漏掉/下次"）、结网（情境学习、进入实践共同体）、留痕（建厚档案记过程）、转译（公开文本做到无可指摘，换取自由空间）；终极姿态是"入格"但不"入笼"。</li>
+    </ol>
+
+    <h4>二、给个人的行动建议</h4>
+    <ul>
+      <li>本周就动手建一份"厚档案"笔记：每完成一件关键工作，记录当时的判断依据、实际结果、以及"差一点就失败"的瞬间——结果是给系统看的，过程是给自己保命的。</li>
+      <li>固定每周做一次结构化复盘，只问四个问题：我当时以为会发生什么？实际发生了什么？我漏掉了哪个信号？下次怎么更早闻到味道？坚持六周，你会明显感到对局面的"手感"在变好。</li>
+      <li>刻意"到场"：别只坐在工位上看报表，每月安排时间去一线——去看用户怎么用你的产品、学生怎么学、老师傅怎么干活，让判断长在有后果的现场里。</li>
+      <li>主动做"变式"练习：不要只重复同一类熟任务，每季度接手一件"相似却从不相同"的难题，逼自己积累"差一点就完全不同"的辨别力。</li>
+      <li>主动"结网"：找一位有经验的前辈当师傅，多创造"我跟你说，上次有个案子……"式的私下交流机会，让米提斯在共同记忆里传承，而不是只靠 PPT 学套路。</li>
+      <li>练好"转译"：把你手感的判断翻译成制度承认的语言——合规、报表、流程做到无可指摘，这是换取自由空间的通行费；同时把真正重要的判断和长期下注，放在指标看不见的地方。</li>
+      <li>警惕"浮浅工作"并练习"无政府主义柔体操"：每天留出深度工作时间，拒绝让会议和消息切碎你的注意力；偶尔质疑或绕开一条无伤大雅、明显不合情理的小规矩，提醒自己仍保有判断规则是否合理的能力。</li>
+    </ul>
+
+    <h4>三、金句摘录</h4>
+    <ul class="quote-list">
+      <li>问题不是国家读社会。问题是国家为了读社会，反而把社会读薄。</li>
+      <li>米提斯不是能填进表格的能力，而是知道表格什么时候不够用的能力。</li>
+      <li>你读不到，但是你不得不用。</li>
+      <li>不要让服从变成肌肉记忆；不要让指标替你思考；不要把自己活成组织里最容易被替换的那种人。身处编户齐民之中，你能跟系统最好的关系，是"入格"，但不"入笼"。</li>
+    </ul>
+
+    <p class="sum-foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),
+      btn=document.getElementById('backTop');
+  function update(){
+    var h=document.documentElement,
+        max=h.scrollHeight-h.clientHeight,
+        y=window.pageYOffset||h.scrollTop||0;
+    bar.style.width=(max>0?(y/max*100):0)+'%';
+    btn.classList.toggle('show',y>400);
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+  btn.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

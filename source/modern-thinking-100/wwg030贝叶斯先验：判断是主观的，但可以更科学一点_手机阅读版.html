@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>贝叶斯先验：判断是主观的，但可以更科学一点 - 万维钢·现代思维工具100讲 第30讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --bg-soft:#f2ecdf;
+    --card:#fffdf8;
+    --text:#2b2620;
+    --text-soft:#6f675a;
+    --accent:#8a5a2b;
+    --accent-soft:#a87c4a;
+    --border:#e6dcc6;
+    --quote-bg:#f5eedf;
+    --summary-bg:#f4e9d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --bg-soft:#211d17;
+      --card:#1f1b16;
+      --text:#e8e0d2;
+      --text-soft:#a99b88;
+      --accent:#c08a4e;
+      --accent-soft:#d9a86a;
+      --border:#3a332a;
+      --quote-bg:#241f18;
+      --summary-bg:#251f16;
+    }
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress-bar{
+    position:fixed; top:0; left:0; height:3px; width:0;
+    background:var(--accent);
+    z-index:1000;
+    transition:width .1s linear;
+  }
+  .container{
+    max-width:700px;
+    margin:0 auto;
+    padding:28px 22px 80px;
+  }
+  header.doc-head{
+    padding:18px 4px 26px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:28px;
+  }
+  .course-tag{
+    display:inline-block;
+    font-size:12.5px;
+    letter-spacing:1px;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:999px;
+    padding:3px 12px;
+    margin-bottom:16px;
+  }
+  h1{
+    font-size:25px;
+    line-height:1.45;
+    font-weight:700;
+    margin-bottom:12px;
+    letter-spacing:.5px;
+  }
+  .meta{
+    font-size:13.5px;
+    color:var(--text-soft);
+  }
+  article p{
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+    margin:0 0 18px;
+    word-break:break-word;
+  }
+  h3{
+    font-size:19px;
+    font-weight:700;
+    margin:36px 0 14px;
+    padding-left:12px;
+    border-left:4px solid var(--accent);
+    line-height:1.5;
+  }
+  h3 .seq{
+    color:var(--accent);
+    font-size:14px;
+    font-weight:600;
+    margin-right:8px;
+    letter-spacing:1px;
+  }
+  ul{
+    margin:0 0 18px 1.4em;
+    font-size:17px;
+    line-height:1.82;
+    text-align:justify;
+  }
+  ul li{ margin-bottom:8px; }
+  blockquote{
+    margin:22px 0;
+    padding:16px 18px;
+    border-left:4px solid var(--accent);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    font-size:17px;
+    line-height:1.82;
+    color:var(--text);
+  }
+  blockquote .q-src{
+    display:block;
+    margin-top:8px;
+    font-size:13.5px;
+    color:var(--text-soft);
+  }
+  .divider{
+    text-align:center;
+    margin:34px auto;
+    color:var(--accent);
+    font-size:18px;
+    letter-spacing:12px;
+    user-select:none;
+  }
+  .divider::before,.divider::after{
+    content:"";
+    display:inline-block;
+    width:56px;
+    height:1px;
+    background:var(--border);
+    vertical-align:middle;
+    margin:0 12px;
+  }
+  em,.em{ font-style:normal; font-weight:700; }
+  .fig-caption{
+    text-align:center;
+    font-size:13px;
+    color:var(--text-soft);
+    margin:14px 0 22px;
+    letter-spacing:1px;
+  }
+  .talk-pair{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:18px 0 22px;
+  }
+  .talk-pair .line{ margin-bottom:8px; }
+  .talk-pair .line:last-child{ margin-bottom:0; }
+  .talk-pair .who{
+    display:inline-block;
+    font-size:12.5px;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:6px;
+    padding:1px 8px;
+    margin-right:8px;
+    vertical-align:2px;
+  }
+  .formula-note{
+    background:var(--quote-bg);
+    border-radius:12px;
+    padding:16px 20px;
+    margin:18px 0;
+    font-size:16.5px;
+    line-height:1.8;
+    text-align:center;
+    color:var(--text);
+  }
+  .formula-note .f-main{
+    font-size:19px;
+    font-weight:700;
+    color:var(--accent);
+  }
+  .notes{
+    margin-top:40px;
+    padding:20px 22px;
+    background:var(--bg-soft);
+    border-radius:12px;
+    font-size:14px;
+    line-height:1.75;
+    color:var(--text-soft);
+  }
+  .notes h4{
+    font-size:15px;
+    color:var(--text);
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .notes ol{ margin-left:1.2em; }
+  .notes ol li{ margin-bottom:8px; }
+  .comments{
+    margin-top:40px;
+  }
+  .comments h4{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .comment-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .comment-head{
+    display:flex;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .avatar{
+    width:40px; height:40px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; font-weight:700;
+    margin-right:12px;
+    flex-shrink:0;
+  }
+  .comment-name{
+    font-size:15px; font-weight:700;
+    line-height:1.4;
+  }
+  .comment-meta{
+    font-size:12px;
+    color:var(--text-soft);
+  }
+  .comment-card p{
+    font-size:15.5px;
+    line-height:1.78;
+    text-align:justify;
+    margin-bottom:10px;
+  }
+  .comment-card p:last-child{ margin-bottom:0; }
+  .author-reply{
+    margin-top:14px;
+    padding:12px 16px;
+    background:var(--quote-bg);
+    border-left:3px solid var(--accent-soft);
+    border-radius:0 10px 10px 0;
+    font-size:14.5px;
+    line-height:1.7;
+    color:var(--text);
+  }
+  .truncated{
+    display:inline-block;
+    margin-top:4px;
+    font-size:12.5px;
+    color:var(--text-soft);
+  }
+  #ai-summary{
+    margin-top:48px;
+    background:var(--summary-bg);
+    border:2px solid var(--accent);
+    border-radius:14px;
+    padding:26px 24px;
+  }
+  #ai-summary .ai-badge{
+    display:inline-block;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:#fff;
+    background:var(--accent);
+    border-radius:6px;
+    padding:4px 12px;
+    margin-bottom:16px;
+  }
+  #ai-summary h2{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  #ai-summary .one-liner{
+    font-size:16.5px;
+    font-weight:700;
+    line-height:1.8;
+    margin-bottom:18px;
+  }
+  #ai-summary h5{
+    font-size:16px;
+    font-weight:700;
+    color:var(--accent);
+    margin:20px 0 10px;
+  }
+  #ai-summary p{
+    font-size:15.5px;
+    line-height:1.78;
+    text-align:justify;
+    margin-bottom:10px;
+  }
+  #ai-summary ul{
+    font-size:15.5px;
+    line-height:1.78;
+    text-align:justify;
+  }
+  #ai-summary ul li{ margin-bottom:9px; }
+  #ai-summary .quote-list{
+    margin:0 0 18px 1.4em;
+  }
+  #ai-summary .quote-list li{ margin-bottom:9px; }
+  #ai-summary .footer-note{
+    margin-top:22px;
+    padding-top:14px;
+    border-top:1px dashed var(--accent);
+    font-size:12.5px;
+    color:var(--text-soft);
+    text-align:center;
+  }
+  #back-top{
+    position:fixed;
+    right:20px;
+    bottom:32px;
+    width:46px; height:46px;
+    border-radius:50%;
+    border:1px solid var(--accent);
+    background:var(--card);
+    color:var(--accent);
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(8px);
+    transition:opacity .25s, transform .25s;
+    z-index:999;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #back-top.show{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+  @media (max-width:480px){
+    h1{ font-size:22px; }
+    article p, ul{ font-size:16.5px; }
+    #ai-summary{ padding:22px 18px; }
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<div class="container">
+  <header class="doc-head">
+    <div class="course-tag">万维钢 · 现代思维工具100讲 · 第30讲</div>
+    <h1>贝叶斯先验：判断是主观的，但可以更科学一点</h1>
+    <div class="meta">作者：万维钢 ｜ 现代思维工具100讲 · 第30讲</div>
+  </header>
+
+  <article>
+    <p>日常生活中充满了决策。跟一个新同事打交道，不知道这人可靠不可靠；刷短视频看到一个爆料，想转发又怕被证伪；身体有点不舒服，权衡值不值得去趟医院……你需要做一个决断，你迫切想要正确答案。</p>
+    <p>但是经过前面几讲，你可能也已经明白：任何决策都必须带有一定的主观成分。设定价值函数、选择概率分布、使用一定颗粒度的模型，其实都是在做主观的选择。世间没有绝对的正确，干什么都有一点冒险成分。</p>
+    <p>如果你认同这些，你可能是一个「贝叶斯主义者」。</p>
+    <p>这一讲的思维工具就是贝叶斯主义。我们重点讲一个前面提到过的概念：「先验（prior）」。</p>
+    <p>先验是你对事情的原本看法。它可以是单数也可以是复数。它可以指你对一个特定事件概率的判断、对一个领域的观念，也可以指你整个的世界观。简单说，<em>先验就是你的成见</em>。</p>
+    <p>但成见是认知的起点。而且这个起点是可以被量化、可以被更新，也可以被审计的。</p>
+
+    <div class="divider">✦</div>
+
+    <h3><span class="seq">01</span>一句话看懂贝叶斯公式</h3>
+    <div class="talk-pair">
+      <div class="line"><span class="who">老百姓</span>「你对这个事的看法是什么？」「经过这个事，我的观点发生了一点改变。」</div>
+      <div class="line"><span class="who">学　者</span>「你对这个事的先验是什么？」「这个证据更新了我的先验。」</div>
+    </div>
+    <p>学者这样说话是因为他知道著名的贝叶斯公式。你可能学过也可能没学过，但你总可以看一眼公式的样子 [1]——</p>
+    <p>公式里每一项都是概率，H 代表一个判断，E 代表证据。比如 H 代表你的一个朋友得了某种罕见的病，E 则代表他在医院检测这个病的时候，检测结果呈阳性。</p>
+    <ul>
+      <li><strong>P(H)</strong> 是检测之前，你判断他得这个病的概率，也就是你判断的「先验概率（Prior Probability）」。</li>
+      <li><strong>P(H|E)</strong> 则代表检测之后，在有了 E 这个证据的条件下，你重新判断他得这个病的概率是多少。这也叫「后验概率（Posterior Probability）」。</li>
+      <li><strong>P(E)</strong> 是检测结果这个证据在所有情况下发生的总概率。</li>
+      <li><strong>P(E|H)</strong> 一般叫「似然度（Likelihood）」，意思是在 H 这个假设之下，我们看到当前这个证据的可能性有多大——它考察的是你的世界观与现实的兼容度。</li>
+    </ul>
+    <p>如果你不感兴趣，可以忽略细节。贝叶斯公式说白了就是一句话：<em>你现在的观点（后验），等于你原来的观点（先验），乘以新证据的修正（似然度/证据）</em>。其实如果你把公式两边取个对数，乘法变加法，公式的样子就更直观了：</p>
+    <div class="formula-note"><span class="f-main">后验 = 先验 + 证据更新</span></div>
+
+    <h3><span class="seq">02</span>罕见病：强证据为什么说服不了低先验？</h3>
+    <p>回到罕见病的故事。每一个学贝叶斯公式的人都会遇到这个例子：假设这个病的发病率极低，只有 0.1%，我们可以说 P(H) 等于 0.1%。我们还假设医院的检测准确度极高：如果一个人真有病，99% 的情况下能检测出阳性，所以 P(E|H) 等于 0.99；如果没病，则是 99% 的可能性检测出阴性，也就是只有 1% 的误报率。</p>
+    <p>那 P(E) 怎么算呢？咱们用个笨办法 [2]。假设有 1000 个人去体检。根据 0.1% 的先验概率，其中真有病的只有 1 个人。他有 99% 的概率被检测出来，所以真阳性有 0.99，近似 1 个人。而因为有 1% 的误报率，假阳性近似有 10 个人——所以总的阳性人数是 11 个人。那么 P(E) = 11/1000。</p>
+    <p>继续使用直观的算法或者套用公式，你都会得到后验概率，<strong>P(H|E) = 1/11</strong>。</p>
+    <p>1/11 比 0.1% 大得多，但这仍然是一个相当小的概率！换句话说，虽然你的朋友以 99% 的准确度被检验出患有这种病，可是他实际得病的概率却只有 1/11。这是为什么呢？</p>
+    <p>因为那是一个罕见病。他得病的先验概率非常低。<em>如果先验原本很低，哪怕证据很强，把先验提高了一百倍，你的后验概率也还是不高。</em></p>
+    <p>这就是贝叶斯主义者的气度。如果我认为足球天才是一种极为罕见的事物，哪怕你跟我说得天花乱坠，说这个小学足球队里有个孩子踢得特别好，说有教练认为他就是下一个梅西，我也不会特别相信的。如果我非常不相信世界上有鬼，你给我讲 15 个鬼故事也不能让我从此怕鬼。</p>
+    <p>你的先验因为证据而发生了改变，后验就是你更新后的先验。</p>
+
+    <div class="divider">✦</div>
+
+    <p>托马斯·贝叶斯（Thomas Bayes）是 18 世纪的人物，他在 1740 年代推导出了这个公式。但是，把贝叶斯公式理解成“对先验的更新”，乃至于成为一个范式，则大约发生在 1920-1930 年代……从此就争议不断。</p>
+    <p class="fig-caption">[Thomas Bayes]</p>
+
+    <h3><span class="seq">03</span>频率主义与贝叶斯主义之争</h3>
+    <p>争议点在于，到底什么是概率。当你说「概率」的时候，你到底是在描述<em>世界</em>，还是在描述<em>自己对世界的信心</em>？</p>
+    <p>传统思想，也就是你在中学学的那个概率论，可以称之为「频率主义（Frequentism）」，认为概率是事物的客观属性：比如一个公平的硬币抛出来，你得到正面的概率就应该是 50%，这是一个绝对的数字，是一个「真值（True Value）」。只要你抛的次数足够多，你得到正面的频率，就应该等于那个客观的概率真值。</p>
+    <p>但是贝叶斯主义者说，谁会抛无限次硬币呢？我们生活中的事情根本没有那么多重复机会。你说这个候选人会不会当选？那个创业项目会不会死？你不会让人生重来一万次！如果一个事只发生一次，你谈论频率不是很荒唐吗？</p>
+    <p>「贝叶斯主义（Bayesianism）」认为<em>概率是信念的度量（degree of belief）</em>：概率只存在于你的脑子里，其实是对你无知程度的量化。</p>
+    <p>频率主义者是世界的旁观者，而贝叶斯主义者则是世界的参与者，认为你有主观能动性：所有概率都是条件概率，你通过行动刺探证据，改变先验。</p>
+    <p>不同的参与者人生经历不同，先验自然不同。贝叶斯主义等于说概率是主观的。</p>
+
+    <div class="divider">✦</div>
+
+    <h3><span class="seq">04</span>先验怎么设？从已知频率出发</h3>
+    <p>那你说这也太不靠谱了，一般人没有多少社会经验，胡乱说一个先验，哪有什么参考价值呢？没错。所以我理解，使用贝叶斯预测最好的办法是：<em>把这个事儿已知的频率、或者说世人普遍的信念或者科学知识，当成你的先验，作为出发点</em>。</p>
+    <p>比如开头那个罕见病的例子。如果我们对那个朋友一无所知，就只好假设他得病的概率就是这个病在人群中总的发病率，也就是那个 0.1%，作为先验。</p>
+    <p>但如果我们知道他更多的信息，比如说年龄、生活环境、原本的健康状况、现在有什么症状等等，那就可以把那些信息当作证据，更新那个先验：比如这个人年龄小，我们就把概率调低一点；这人原本健康状况就很差，那我们就把概率调高一点……</p>
+    <p>这样你就把普遍的概率给具体化了。</p>
+
+    <h3><span class="seq">05</span>垃圾邮件过滤器：贝叶斯的经典应用</h3>
+    <p>这非常有用。举个例子：你能不能写一个简单的算法，实现垃圾邮件过滤的功能。</p>
+    <p>已知在所有邮件之中，垃圾邮件的占比是 20%。你不能直接利用这个频率，毕竟你不可能随机选取 20% 的邮件标记为垃圾邮件。那你怎么办呢？</p>
+    <p>早期的一个经典算法 [3]，就是使用贝叶斯方法。你注意到，邮件中如果出现某些词，它就更像垃圾邮件，比如出现“free（免费）”；而出现另一些词，它就更像是一封正常的邮件，比如出现“meeting（会议）”……你可以把这些词当作证据。你通过大量的统计，知道这些证据的似然度。</p>
+    <p>那么，你只要把初始先验设定为 20%，每看到一个新词就做一次贝叶斯更新：看见“free”这个词，就把概率调高一点，看见“meeting”就调低一点……就这样把整封邮件分析完，你就得到一个关于这封信是否为垃圾邮件的总的后验。那如果这个后验高于某个标准值，你就可以标记为垃圾邮件了。</p>
+    <p>这样程序就不是在瞎猜，而是在记账。</p>
+    <p>现在的 AI 大语言模型（LLM），其实就是一个巨型的贝叶斯预测机。训练模型就是把这个世界的先验嵌入它的参数之中，那是一种很强的先验，所以模型一般不会胡乱说话。</p>
+    <p>当你给模型一段提示词（Prompt），你就是在给它输入观测证据，强迫它更新后验概率，从而坍缩出一个具体的回答。</p>
+    <p>而 AI 公司会设法给模型一个不可轻易被提示词推翻的先验，这样不管用户怎么诱导它都能坚持某些底线，这就是「对齐（Alignment）」。但那个先验再强也是个理论上可以改变的数字，所以总有人尝试让模型“越狱”……</p>
+    <p>在这个视角下，难道我们每个人，不都是行走的大语言模型吗？<em>我们过往的经历、教育、原生家庭，构成了我们的预训练数据，也就是我们的先验。</em></p>
+
+    <div class="divider">✦</div>
+
+    <h3><span class="seq">06</span>人脑就是一台贝叶斯推理机</h3>
+    <p>联系咱们前面讲过的「自由能原理」，我们可以说人的大脑就是一台主动预测的贝叶斯推理机。你对环境的预期就是你的先验，你收到的惊奇就是证据。</p>
+    <p>比如你拿杯子喝水。杯子就在眼前，你对它的位置、重量和大概的手感都有一个预先的估计，这就是你的先验。你基于先验做出伸手的动作。当你的指尖接触到杯子时，如果触觉和你预想的不一样，比如杯子特别烫，你就会产生一个惊奇，作为新的证据。现在你必须更新先验，然后发出指令改变动作，把手缩回来……</p>
+    <p>顺序非常清楚：<em>我们总是先预测，再接收反馈，再调整</em>。我们不是两眼一抹黑地出发，而是一定要先有一个先验。还是那句话，有个错误的地图也比没有地图强。</p>
+    <p>如果证据和先验不符，贝叶斯公式要求我们更新先验——但是自由能原理说，除了更新先验（也就是知觉推断），你还有另一个选项，那就是主动推断：你可以改变环境，让环境适应你的先验。如果我以为房间暖和结果房间很冷，难道我就坐视它这么冷吗？我完全可以把暖气调高一点。</p>
+    <p>但不管怎么做，当证据跟你的先验不符的时候，你必须做点什么才好。你不能无动于衷。</p>
+    <blockquote>
+      「当事实改变时，我改变我的想法。先生，你呢？」
+      <span class="q-src">——凯恩斯（John Keynes）</span>
+    </blockquote>
+
+    <div class="divider">✦</div>
+
+    <h3><span class="seq">07</span>人们最常犯的两种错误</h3>
+    <p>这一切听起来顺理成章，但有些人的认知恰恰就不是这样的。人们经常犯两种错误。</p>
+    <p><strong>第一种错误是完全没有先验。</strong>也就是不预设任何立场，纯看证据。</p>
+    <p>你要是觉得没有立场很科学，你就大错特错了。你不可能给“明天太阳升起”和“明天太阳爆炸”同样的先验概率，我也不建议你对巴黎的小偷有和北京同样的心理准备。没有先验，就意味着今天看到一个新闻你就信 A，明天看到另一个新闻你就信 B；今天朋友圈说某公司要爆雷你就清仓，明天又听说有人抄底你又冲进去……今天是左派明天是右派。</p>
+    <p><em>听风就是雨可不是谦逊，而是做人的不可预期——那谁还敢指望你呢？</em></p>
+    <p><strong>第二种错误是先验不可动摇。</strong>说白了就是你把先验概率直接设成了 0 或者 1，当做绝对真理。那么公式会说不管证据多强，你的先验都不会改变。</p>
+    <p>可不要那样。真正的贝叶斯主义者永远不会把概率设为 0 或 1。这叫「克伦威尔法则（Cromwell's Rule）」，典故出自英国政治领袖奥利弗·克伦威尔（Oliver Cromwell）1650 年给苏格兰教会写的信，他说：</p>
+    <blockquote>“我恳求你们，在基督的慈悲下，想一想你们可能错了。”</blockquote>
+    <p>给自己“可能错了”留点空间吧。<em>哪怕你特别特别相信一个事情，你总可以把它的先验概率设成 99.999%，但是不要设成 1。</em></p>
+
+    <div class="divider">✦</div>
+
+    <h3><span class="seq">08</span>基本操作心法</h3>
+    <p>贝叶斯主义的基本操作心法很简单：<em>先根据环境参数设定先验，再把具体的事情当作证据，更新先验</em>。</p>
+    <p>怎么判断那个新同事值不值得信任？你应该先考虑自己所处的环境：如果本地一向人心险恶，那你应该把先验设得很低；而如果你是在一个很好的社区，那就可以开一个高先验。但先验只是先验，你还得允许人家自己证明自己。跟此人具体办一两件事儿，当作证据去更新先验。</p>
+    <p>传统智慧有时候说“人性本善”，有时候又说“防人之心不可无”；有时候说“知人知面不知心”，有时候又说“浪子回头金不换”……这些话听起来都是互相矛盾的，其实你放在贝叶斯公式的框架下看，就一清二楚了。</p>
+    <p>先验既是我们的财富，也是我们的囚笼。证据不是绝对的真理砖块，而是信念交易的货币。</p>
+    <p>每一次经历事情，都是用证据购买更准确信念的过程。</p>
+    <p>如果我们的课程能稍微改变一点你对世界的先验，那就是我最大的荣幸。</p>
+  </article>
+
+  <section class="notes">
+    <h4>注释</h4>
+    <ol>
+      <li>[1] 只要你学过一点条件概率，这个公式很容易证明：把 P(E) 拿到左边，两边说的其实都是“H 和 E 同时发生的概率”。</li>
+      <li>[2] 严谨的算法是 P(E)=P(E|H)P(H)+P(E|¬H)P(¬H)。</li>
+      <li>[3] Sahami, Mehran, Susan Dumais, David Heckerman, and Eric Horvitz. 1998. “A Bayesian Approach to Filtering Junk E-mail.” In AAAI Workshop on Learning for Text Categorization.</li>
+    </ol>
+  </section>
+
+  <section class="comments">
+    <h4>用户留言</h4>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">玉</div>
+        <div>
+          <div class="comment-name">玉峰而行</div>
+          <div class="comment-meta">9小时前 · 北京</div>
+        </div>
+      </div>
+      <p><strong>先验、证据与谦卑</strong> 我干刑侦快十年了，办过上百起案子，踩过坑也破过不少难案。慢慢发现一件很有意思的事：我们每天在做的破案，本质上就是一遍又一遍地在用贝叶斯定理。说穿了特别简单：先有个大概的判断，再用新证据不断修正，一步一步逼近真相。</p>
+      <p>警情电话永远只有三言两语：时间、地点、大致情况。信息不全，甚至可能有误导，但我们不可能等信息全了再出发。去现场的十几分钟车程，就是我们的第一个战场。车里的几个人会快速交换看法：这个时间这个小区，熟人作案的概率大；报警人语气很稳，不像突发恶性事件；也有人会提醒，别先把路走死，流窜作案的可能性也不能完全排除。</p>
+      <p>很多人觉得这是瞎猜，其实这就是我们的“先验”。不是某个人拍脑袋的想法，是整个警队几十年、几千个案子沉淀下来的概率直觉。它不是一个标准答案，而是一张列满可能性的清单，每个可能性后面都跟着一个我们心里有数的权重。有了这张清单，到了现场才知道该先看什么、先问什么，不会两眼一抹黑。</p>
+      <p>到了现场，第一件事不是找凶手，而是验证我们在路上的那些假设。现场痕迹、死者状态、周边走访，每拿到一条新信息，我们就要在心里重新算一遍账。原来最看好的方向，证据不支持就得立刻转舵；原来觉得概率很低的线索，只要有一点苗头，就得立刻派人去追。最麻烦的是遇到矛盾的证据：一个证人说看见了张三，另一个却能拿出张三不在场的证明。这时候不能偏信任何一方，也不能干脆都扔掉，得回头去查两个证人的背景、和当事人的关系、他们陈述的每一个细节，剔除掉虚假和错误的部分，留下能互相印证的事实。</p>
+      <p>没有哪个侦查方向是一锤定音的，今天的主攻方向，明天可能就变成了次要方向；今天被暂时搁置的线索，明天可能就是破案的关键。只要一个可能性还没有被证据彻底排除，哪怕它再不合常理，再匪夷所思，都不能从清单上划掉。</p>
+      <p>干这行久了，见过不少因为思维定式走偏的案子，也自己犯过类似的错。回头看，几乎所有的错误都逃不过四个坑：最致命的永远是先入为主，一旦认定“就是他”，就等于把概率设成了 100%，从此眼里只有支持自己的证据；其次是只看可疑点，不看普遍性，案发时间路过现场的有几百人，单凭一个可疑行为说明不了任何问题；第三是高估软证据的分量，证言、神态、甚至测谎都不是铁证，人会记错、会撒谎、会紧张；最后也是最可惜的，是过早排除了低概率方向，很多悬案，就栽在当年那句轻飘飘的“这不可能”上。</p>
+      <p>人会说谎，但物证不会。在贝叶斯的逻辑里，DNA、指纹、完整的监控链条有着完全不同的权重。普通证据只能微调概率，而一个匹配的 DNA，能把一个人的嫌疑从万分之一直接拉到 99.999% 以上；反过来，只要 DNA 不匹配，再多的指认和怀疑也得归零。现代刑侦依赖技术，不是因为技术能取代人的经验，而是它能给我们的经验加一道最可靠的保险。当主观判断和客观物证冲突时，永远要相信物证。</p>
+      <p>干我们这行，手里握着的不仅是破案的权力，更是别人的自由和人生。贝叶斯思维没教我什么破案的绝招，它教给我的是<em>一种谦卑</em>：我永远不可能知道全部的真相，我所有的判断，都只是一种概率。所以我永远不敢把话说死，总得给自己留一点“我可能错了”的余地。</p>
+      <p>先验是我们用无数个不眠之夜换来的财富，但它也可能变成困住我们的囚笼。真正好的侦查员，不是从来不犯错的人，而是敢于承认错误、愿意根据新证据改变自己想法的人。破案如此，做人大概也是如此。</p>
+      <div class="author-reply"><strong>作者回复：</strong>非常精彩，深受启发，谢谢分享！</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">至</div>
+        <div>
+          <div class="comment-name">至尊女宝</div>
+          <div class="comment-meta">昨天 · 四川</div>
+        </div>
+      </div>
+      <p>我有个习惯，凡事得有个「初始值」，测一个压力，仪表要先归零；算一个受力，得先明确边界条件；做一个实验，总得有个预期曲线。没有这些，后面的数据不可能出来。贝叶斯的逻辑就是先给一个估计，再拿实测值去修正。你永远不知道真实值是多少，但你可以在每一次测量中缩小误差。这跟做实验一模一样。你搭好台子，心里有个预期曲线。跑出来的数据点偏离了，你不会立刻推翻整个理论，也不会无视那个点继续跑。你检查传感器、复核边界条件、分析误差来源，然后调整预期，再跑下一个点。<em>每一次实验都是对先验的修正。</em></p>
+      <p>克伦威尔那句话说得实在：你可能错了。这不是谦虚，是冗余设计。任何工程都要留安全系数，任何判断也都要留修正余地。哪怕你有 99.9% 的把握这根轴能扛住扭矩，你也得写清楚计算依据，留好实测验证的步骤。不是因为你软弱，是因为你严谨。</p>
+      <p>所以做任何判断之前是基于统计数据，还是基于道听途说？就像用万用表之前，先拿表笔碰一下已知电压，看看漂了没？<em>先验是你的起点，不是你的终点。</em>你可以起点很低，但不能没有起点。你也可以起点很偏，但只要在持续更新，你就在收敛。这世上没有绝对正确的决策，只有不断修正的信念。工科生不信完美，信迭代！</p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-head">
+        <div class="avatar">左</div>
+        <div>
+          <div class="comment-name">左星星</div>
+          <div class="comment-meta">昨天 · 上海</div>
+        </div>
+      </div>
+      <p>对一个新入职的人来说，先验来自过去的经历，你见过什么样的老板，经历过怎样的内耗、甩锅、画饼、权斗，这些都会变成你观察新公司的底色。你以前如果吃过亏，就会天然更谨慎，别人一句“这里很开放”，你不会马上当真；如果你以前所在的组织比较规范，你就会默认一家公司的流程、分工、汇报关系应该是清楚的。这些先验并非偏见，而是你为自己搭建的第一张地图。没有它，初来乍到时，很容易被碎片信息牵着走。</p>
+      <p>但真正决定你能不能看懂一家公司的，不是先验本身，而是你如何处理证据。职场里的证据，不是别人嘴上说什么，而是事情实际上怎样运转。领导开会时的表态不算证据，资源是否真按承诺落地才算；同事第一次对你客气不算证据，合作几次之后是不是愿意担责、是不是及时反馈，才算；公司宣称重视专业也不算证据，真正遇到长期建设和短期业绩冲突时，最后拍板的逻辑是什么，才是证据。贝叶斯式地看职场，是把注意力从“话”转向“事”，从“印象”转向“模式”。</p>
+      <p>进入一家公司，不只是公司在考察你，你也在考察公司。你不是来寻找一个完美答案的，而是来不断修正自己对这份工作、这群人、这套机制的理解。先验不是偏见，证据不是噪音，后验也不是终审判决。它们只是工具，帮助你在复杂环境中，……<span class="truncated">（原文至此截断）</span></p>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <h2>读完这一讲，你可以带走什么</h2>
+    <p class="one-liner">一句话概括：这一讲把「先验」讲透了——成见不是缺点，而是每个人认知的起点；用贝叶斯公式把先验量化、用证据持续更新它，你就能既不被偏见锁死，也不被噪音牵着走，做出更科学的主观判断。</p>
+
+    <h5>一、核心内容总结</h5>
+    <ul>
+      <li><strong>先验就是你的成见，但它是认知的起点。</strong>任何决策都带主观成分，贝叶斯主义者坦然接受这一点；先验可量化、可更新、可审计，所以成见本身并不可怕，可怕的是不更新。</li>
+      <li><strong>贝叶斯公式一句话：后验 = 先验 × 证据修正。</strong>取对数后更直观——后验 = 先验 + 证据更新。P(H) 是先验概率，P(H|E) 是后验概率，P(E|H) 是似然度（考察你的世界观与现实的兼容度）。</li>
+      <li><strong>罕见病案例的关键洞见：先验低时，强证据也翻不了盘。</strong>0.1% 的发病率、99% 的检测准确率，阳性结果对应的真实患病概率仍只有 1/11——先验低一百倍、后验也高不起来，所以对“极其罕见的事”要有天然的谨慎。</li>
+      <li><strong>频率主义 vs 贝叶斯主义之争，本质是“概率描述世界还是描述信心”。</strong>频率主义把概率当客观真值，贝叶斯主义把概率当信念的度量、对无知程度的量化；贝叶斯主义者是世界的参与者，通过行动刺探证据、改变先验。</li>
+      <li><strong>设先验的最好办法：从已知频率和科学知识出发。</strong>先取人群发病率、垃圾邮件占比（20%）这类普遍概率作起点，再拿年龄、环境、症状、关键词等具体信息当证据逐步更新，把普遍概率具体化；垃圾邮件过滤器正是这样“记账”而不是“瞎猜”。</li>
+      <li><strong>LLM 就是巨型贝叶斯预测机，人也是。</strong>训练把世界先验嵌入参数，提示词是观测证据，「对齐」是给模型一个难以推翻的先验；我们每个人的经历、教育、原生家庭就是自己的“预训练数据”。</li>
+      <li><strong>大脑是主动预测的贝叶斯推理机（呼应自由能原理）。</strong>先预测、再接收反馈、再调整；证据与先验冲突时，除了更新自己（知觉推断），还可以改变环境（主动推断）——但绝不能无动于衷。</li>
+      <li><strong>两种致命错误：完全没有先验，或先验不可动摇。</strong>没先验就听风就是雨、做人不可预期；把概率设成 0 或 1 就永远无法更新。克伦威尔法则提醒我们：永远留一点“我可能错了”的空间，最高设 99.999%，绝不设 1。</li>
+    </ul>
+
+    <h5>二、给个人的行动建议</h5>
+    <ul>
+      <li><strong>这周就选一件正在纠结的事做一次“贝叶斯练习”。</strong>比如“要不要去医院”“要不要信那条爆料”，先写下你的先验概率（0–100%），再列出每条证据并判断它该把概率调高还是调低、调多少，最后写下后验。写下来比脑内空想有效得多。</li>
+      <li><strong>给“震惊消息”设一道 24 小时冷静期。</strong>转发、清仓、站队之前，先问两句：我的先验是什么？这条消息的证据强度够不够推动它？——模仿罕见病的教训，别让一个强刺激直接改掉你的低先验。</li>
+      <li><strong>挑一个你“百分百确信”的信念做降级审计。</strong>把 100% 降到 99.9%，并主动去找能证伪它的证据（哪怕一条）。这不是动摇立场，而是按克伦威尔法则给自己留修正余地。</li>
+      <li><strong>像垃圾邮件过滤器一样建自己的“证据词表”。</strong>选一个领域（同事可不可信、某个博主靠不靠谱、某家店值不值得去），记录哪些具体信号真的预测了结果、哪些只是噪音，积累你自己的似然度。</li>
+      <li><strong>把争论变成“先验与证据的交换”。</strong>跟人意见不合时，不争对错，改为说清：“我基于什么先验、被哪些证据更新成了现在的看法”——双方都这样做，讨论立刻变高效。</li>
+      <li><strong>每月做一次“先验复盘”。</strong>回看这个月的重要判断：哪些被证据正确更新了？哪些证据来了我却没改？把“该改没改”的教训记下来，作为下个月的先验起点。</li>
+      <li><strong>证据与信念冲突时，选一个动作执行。</strong>要么更新自己，要么改变环境（沟通、换方案、调资源），像拿烫杯子一样立刻缩手——记住凯恩斯那句话，而不是无动于衷。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <ul class="quote-list">
+      <li>「当事实改变时，我改变我的想法。先生，你呢？」——凯恩斯</li>
+      <li>「先验既是我们的财富，也是我们的囚笼。证据不是绝对的真理砖块，而是信念交易的货币。」</li>
+      <li>「听风就是雨可不是谦逊，而是做人的不可预期——那谁还敢指望你呢？」</li>
+      <li>「我们总是先预测，再接收反馈，再调整。有个错误的地图也比没有地图强。」</li>
+    </ul>
+
+    <div class="footer-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </section>
+</div>
+
+<button id="back-top" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress-bar'),
+      top=document.getElementById('back-top');
+  function onScroll(){
+    var d=document.documentElement,
+        y=d.scrollTop||document.body.scrollTop,
+        max=d.scrollHeight-d.clientHeight;
+    bar.style.width=(max>0?(y/max*100):0)+'%';
+    top.classList.toggle('show',y>400);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onScroll();
+})();
+</script>
+</body>
+</html>

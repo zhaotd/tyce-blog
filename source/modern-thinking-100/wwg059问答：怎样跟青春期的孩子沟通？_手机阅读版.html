@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第59讲 问答：怎样跟青春期的孩子沟通？｜万维钢·现代思维工具100讲</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#faf7f1;
+    --card:#fffdf9;
+    --card2:#f4ede0;
+    --text:#2c2620;
+    --muted:#7c7163;
+    --accent:#8a5a2b;
+    --accent-soft:rgba(138,90,43,.10);
+    --border:#e5dbc9;
+    --line:#d8cab2;
+    --summary1:#f3ead9;
+    --summary2:#eee1c9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card:#211d18;
+      --card2:#2a241d;
+      --text:#e9e2d6;
+      --muted:#a99c89;
+      --accent:#c99a63;
+      --accent-soft:rgba(201,154,99,.14);
+      --border:#3b332a;
+      --line:#4c4336;
+      --summary1:#282118;
+      --summary2:#2e261b;
+    }
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,-apple-system,sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:999;transition:width .08s linear}
+  #topBtn{
+    position:fixed;right:18px;bottom:26px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fffdf9;border:none;font-size:20px;line-height:1;
+    cursor:pointer;display:none;align-items:center;justify-content:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.22);z-index:998;opacity:.94;
+  }
+  #topBtn:hover{opacity:1}
+  .container{max-width:700px;margin:0 auto;padding:30px 20px 70px}
+  header{padding-bottom:10px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    background:var(--accent-soft);border:1px solid var(--line);
+    border-radius:999px;padding:5px 14px;letter-spacing:.6px;text-align:left;
+  }
+  h1{
+    font-family:"Songti SC","STSong","SimSun",serif;
+    font-size:26px;line-height:1.45;margin:16px 0 10px;text-align:left;
+  }
+  .meta{font-size:14px;color:var(--muted);margin-bottom:20px;text-align:left}
+  .abstract{
+    font-size:15px;color:var(--muted);background:var(--card2);
+    border-left:3px solid var(--accent);padding:10px 16px;
+    border-radius:0 10px 10px 0;margin-bottom:8px;
+  }
+  .sec-title{
+    font-size:18px;font-weight:700;color:var(--accent);
+    margin:38px 0 16px;display:flex;align-items:center;gap:9px;text-align:left;
+  }
+  .sec-title::before{content:"";width:4px;height:18px;background:var(--accent);border-radius:2px}
+  .qa-block{margin-bottom:8px}
+  .qa-source{
+    font-size:13.5px;color:var(--accent);margin:0 0 10px;font-style:italic;text-align:left;
+  }
+  .qa-source::before{content:"来自：";font-style:normal;opacity:.85}
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:18px 20px;margin-bottom:14px;
+  }
+  .card.q{border-left:4px solid var(--accent)}
+  .card.a{background:var(--card2)}
+  .card-label{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:13px;font-weight:700;color:var(--accent);
+    margin-bottom:10px;letter-spacing:.5px;text-align:left;
+  }
+  .card-label::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .card p{margin-bottom:12px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{margin:6px 0 12px 24px}
+  .card li{margin-bottom:8px}
+  blockquote{
+    margin:14px 0;padding:11px 16px;border-left:3px solid var(--accent);
+    background:var(--accent-soft);border-radius:0 10px 10px 0;
+    font-size:16.5px;
+  }
+  .divider{
+    display:flex;align-items:center;gap:14px;margin:38px auto;max-width:260px;
+  }
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+  .divider span{color:var(--accent);font-size:15px}
+  .notes{
+    background:var(--card);border:1px dashed var(--line);border-radius:12px;
+    padding:16px 18px;font-size:13.5px;color:var(--muted);line-height:1.75;
+  }
+  .notes ol{margin-left:22px}
+  .notes li{margin-bottom:7px;text-align:left}
+  .notes li:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all;text-decoration:none}
+  .comment{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin-bottom:13px;
+  }
+  .comment .head{display:flex;align-items:center;gap:10px;margin-bottom:10px;text-align:left}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;background:var(--accent-soft);
+    color:var(--accent);display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:700;flex-shrink:0;
+  }
+  .comment .name{font-size:14.5px;font-weight:600}
+  .comment .when{margin-left:auto;font-size:12.5px;color:var(--muted);flex-shrink:0}
+  .comment p{font-size:15.5px;margin-bottom:9px}
+  .comment p:last-child{margin-bottom:0}
+  #ai-summary{
+    margin-top:46px;padding:26px 24px;
+    background:linear-gradient(180deg,var(--summary1),var(--summary2));
+    border:2px solid var(--accent);border-radius:14px;
+    box-shadow:0 4px 20px rgba(0,0,0,.07);
+  }
+  .ai-badge{
+    display:inline-block;background:var(--accent);color:#fffdf9;
+    font-size:13px;font-weight:700;padding:5px 16px;border-radius:999px;
+    letter-spacing:3px;margin-bottom:16px;text-align:left;
+  }
+  .sum-lead{font-size:16px;margin-bottom:6px}
+  .sum-lead b{color:var(--accent)}
+  .sum-h3{
+    font-size:17px;font-weight:700;color:var(--accent);
+    margin:20px 0 10px;text-align:left;
+  }
+  #ai-summary ul{margin-left:24px}
+  #ai-summary li{margin-bottom:9px;font-size:15.5px}
+  .sum-quote{
+    margin:6px 0 0;padding:9px 0 9px 14px;border-left:3px solid var(--accent);
+    font-size:15.5px;
+  }
+  .sum-quote p{margin-bottom:4px}
+  .sum-quote p:last-child{margin-bottom:0}
+  .sum-note{
+    font-size:12px;color:var(--muted);text-align:center;
+    margin-top:20px;padding-top:13px;border-top:1px dashed var(--line);
+  }
+  footer{
+    margin-top:44px;text-align:center;font-size:12.5px;color:var(--muted);
+    line-height:1.8;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<main class="container">
+
+  <header>
+    <div class="tag">万维钢 · 现代思维工具100讲 · 第59讲</div>
+    <h1>问答：怎样跟青春期的孩子沟通？</h1>
+    <div class="meta">作者：万维钢　·　2026年5月　·　读者问答合集</div>
+    <p class="abstract">本期为读者问答合集，共五问五答，话题横跨科学学习、育儿投入、青春期沟通、职场知识迁移与「经济租」。最后一节附上用户留言与 AI 阅读总结，供通读参考。</p>
+  </header>
+
+  <!-- ========== 问答一 ========== -->
+  <section class="qa-block">
+    <div class="qa-source">《可取（以及不可取）的困难：把身心调到最适合学习的状态》</div>
+    <div class="card q">
+      <div class="card-label">读者提问 · 咚咚锵</div>
+      <p>现在很多家庭明知道睡眠、运动和情绪对学习重要，但一到升学竞争面前，还是会选择牺牲这些「看不见分数」的东西。是不是因为我们的教育评价体系太偏向短期表现，导致家长不敢相信长期学习能力？如果一个孩子真正按科学方式学习，短期分数可能不如刷题苦熬的同学，家长该怎么判断这是「方法还没见效」，还是「确实练得不够」？</p>
+    </div>
+    <div class="card a">
+      <div class="card-label">万维钢回复</div>
+      <p>不是的。如果一个孩子真正按科学方法学习，他短期分数<strong>并不会</strong>不如熬夜刷题的同学。</p>
+      <p>现实是，这些家长不是太偏向短期表现，而是他们根本就没有考虑过学习的表现。我们的教育体系也好，家长也好，问题根本不是「太功利」，而是功利得不够专业。</p>
+      <p>他们崇拜分数，却不研究分数；崇拜努力，却不测量努力的产出；崇拜刷题，却不知道刷题效果好不好需要做实验判断。</p>
+      <p>如果一个人真是急功近利，他应该像量化交易员盯收益率一样盯考试：哪里丢分？为什么丢分？哪种训练边际收益最高？睡眠少一小时到底是涨分还是掉分？可是并没有。家长们只是看学生坐得越久越安心，写得越多越放心，睡得越少越感动。</p>
+      <p>不但家长不懂，老师其实也不懂。</p>
+      <p>你要知道，评价学生的学习效果，有两种方法 [1]——</p>
+      <ul>
+        <li><strong>「终结性评价（summative assessment）」</strong>：也就是我们常见的期末考试、排名、录取、分班。它的作用是给结果排序。</li>
+        <li><strong>「形成性评价（formative assessment）」</strong>：是通过平时的小测验、作业、错题和课堂反馈，判断学生现在到底卡在哪里，然后调整下一步训练。它的作用不是审判，而是诊断。</li>
+      </ul>
+      <p>我们讲了那么多跟学习和刻意练习有关的知识，你可以想见，形成性评价更适合作为有效的反馈，更应该用来调整教学和学习。你想知道哪种学习方法有效，睡眠长点好还是短点好，你需要从日常的形成性评价中判断学习效果，不是等到期末考试成绩出来了大喊大叫。对吧？</p>
+      <p>但是老师们根本没有这个意识。我找到 2024、2026 年发表的两项关于中国 K-12 教师评价素养（assessment literacy）的研究 [2][3]，发现许多教师缺乏对评价素养的基本理解，特别是过高依赖终结性评价而不是形成性评价，他们不知道如何判断学生现在在哪里、应该去哪里、下一步该怎么走。</p>
+      <p>其实我们不应该谴责这些老师。毕竟老师也是普通人，他们不是教育专家，尤其不是教练。如果每个老师带两个班，就要面对上百个学生，他们不可能精确观察每个学生的形成性评价，可能根本就没有这种工具。家长就更没有这种意识。</p>
+      <p>但是，在有这么多研究结果告诉你什么是正确学习方式的情况下，我们没有理由坚持过去那些错误的做法。我一再讲，哪怕你就是功利主义，就是分数至上，你也应该刻意练习，你也应该采取「可取的困难」，你也不能没苦硬吃。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span>✦ ✦ ✦</span></div>
+
+  <!-- ========== 问答二 ========== -->
+  <section class="qa-block">
+    <div class="qa-source">《人力资本、信号筛选和社交资本：学校教育到底是干啥的？》</div>
+    <div class="card q">
+      <div class="card-label">读者提问 · 奇·哈斯</div>
+      <p>家长怎样才能区分真正对孩子长期有帮助的投入和只是缓解自己焦虑的投入？有没有一个简单的判断标准？</p>
+    </div>
+    <div class="card a">
+      <div class="card-label">万维钢回复</div>
+      <p>你问的其实是家长到底是在给孩子「赋能」，还是在让孩子「失能」。而简单的判断标准就是一个<strong>「撤手测试」</strong>：如果三个月之后，家长不提醒、不督促、不监督、不续费、不安排，这个东西还能不能留在孩子身上？</p>
+      <p>能留下，就是给孩子赋能；不能留下，孩子始终依赖家长提供这个投入，那就是家长在缓解自己的焦虑，甚至可以说是家长在控制孩子。</p>
+      <p>其实给孩子报课外辅导班也好，包括使用 AI 帮助学习也好，都可以用这个标准。</p>
+      <p>如果孩子上了课、用了 AI 以后更会自己学习了，更会规划时间，更会判断自己哪里不会，更会复盘错误，更能提出问题，更能进入状态，那就是这个东西有用，是赋能。反过来说，如果孩子只是被老师推着走，所有任务和动作必须通过 AI，一离开就不会了，那就不叫能力，叫外包。</p>
+      <p>在这个视角下，家长如果要陪写作业，目的必须是让孩子逐渐不需要你陪。你帮他建立检查清单、复盘方法、时间节奏、错题分类，这叫赋能；你坐在旁边盯着他每一道题、每一个字、每一分钟，让他一离开你就不会动，那就是失能。</p>
+      <p>按照这个标准，很多家长对孩子的种种操作根本就不是在帮孩子，而是在让自己安心。</p>
+      <p>其实这个标准还可以推广到其他地方。一个东西到底是给人赋能，还是借赋能之名控制人，就看这个东西最后是属于那个人，还是必须通过你。</p>
+      <p>好领导培养下属，应该让下属获得判断标准、操作方法、资源权限和独立负责的能力；坏领导，则是不让你掌握全局信息，不给你决策标准，不让你形成自己的客户关系和方法论，什么事都必须来问他，所有资源都必须经过他，所有功劳都必须回到他那里。表面上他在带你，其实是在让你离不开他。</p>
+      <p>传销组织、卖假药的、传授「神功」的大师们也是如此：你跟着这些人不是越来越独立，而是越来越依赖他们，你越来越害怕离开他们——药不能停，课不能断，大师不能不信，事事请示组织，依靠组织，你这就是被人控制了。</p>
+      <blockquote>真正的赋能，必须允许、并且支持对方离开你。不能离开的教育是驯养。</blockquote>
+    </div>
+  </section>
+
+  <div class="divider"><span>✦ ✦ ✦</span></div>
+
+  <!-- ========== 问答三 ========== -->
+  <section class="qa-block">
+    <div class="qa-source">《自主支持：「献祭式养育」终结者》</div>
+    <div class="card q">
+      <div class="card-label">读者提问 · 芊阅</div>
+      <p>当孩子进入青春期，开始用「你别管我」「你不懂」来拒绝沟通时，作为家长，该如何在「建立规则框架」和「给予自主空间」之间找到一个恰好的度？既不能专制到让他对抗，也不能放任到让他觉得你不在乎。怎么操作才能让他既感受到家长的信任，又不会在失败后觉得「我妈果然不懂我」？</p>
+    </div>
+    <div class="card a">
+      <div class="card-label">万维钢回复</div>
+      <p>青春期冲突的核心是孩子开始争夺自己人生的「解释权」。他说「你别管我」「你不懂」，真正的意思往往是：你不要再用旧身份压我，我想确认自己有没有一点主权。</p>
+      <p>所以家长要守住的不是「我说了算」，而是给孩子这句话：</p>
+      <blockquote>「你的人生你负责，但我不会消失。」</blockquote>
+      <p>这个精神就是我们前面讲过的高标准、高支持 [4]。说「你负责」，是给他主权；说「我不消失」，是给他靠山。</p>
+      <p>操作原则是，家长真正该管的不是行为，而是<strong>「责任结构」</strong>。孩子几点写作业、手机放哪里、朋友怎么交……这些家长根本就不应该干预。家长只要设定好底线和共同目标就行，具体怎么做，完全可以放手给孩子。引导孩子自己出方案，但是也约定好：如果你那个方案被证明了不好使，那回来得让我跟你一起复盘，咱们再选别的方案。复盘也得先承认跟孩子的良好关系，而不是先证明家长自己对。</p>
+      <p>其实对待孩子跟对待你的同事是一样的：关系好，比对方行为正确更重要。关系好了什么都好办。</p>
+      <p>有个经典研究发现，父母知道孩子在做什么，很多时候不是因为父母侦查得多，而是因为孩子愿意主动透露 [5]——换句话说，<strong>最好的监控是让孩子愿意告诉你</strong>。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span>✦ ✦ ✦</span></div>
+
+  <!-- ========== 问答四 ========== -->
+  <section class="qa-block">
+    <div class="qa-source">《拥抱和桥接：知识迁移，学以致用》</div>
+    <div class="card q">
+      <div class="card-label">读者提问 · 崂仔</div>
+      <p>请问万老师，我是近两年换了个工作岗位，发现之前所有的训练和知识在新的岗位上很难有效的应用，原来一些有用的办法也不管用了，我感觉是基础知识的欠缺，但是感觉又有桥接不够的问题，您觉得类似的情况哪个方面更重要？</p>
+    </div>
+    <div class="card a">
+      <div class="card-label">万维钢回复</div>
+      <p>这种情况有可能是你在之前岗位里掌握的，只是那个特定场景下的动作脚本，而不是它背后根本的知识。当然我不了解你的具体情况，我只能设想一些场景。</p>
+      <p>比如说一个销售岗位，有人学到的是「如果客户这样说，我就那样回」这么一套话术，这不是一个可迁移的结构。可迁移的结构是客户的购买决策链条是什么？使用者是不是付款者？购买的决定到底是谁拍板的？我们公司跟客户之间的信任是如何建立起来的？是根据这些来决定到时候话怎么说。</p>
+      <p>再比如说管理岗位，你不能只看一个领导整天例行公事，无非就是每周开会、设定 KPI，然后一个个催进度。这里真正可迁移的结构是：公司的目标函数是什么、瓶颈在哪里、信息在哪一层失真、责任边界怎么样、激励机制能不能让每个员工的自身利益和公司的整体利益相容？</p>
+      <p>你看，如果你抓住了这种可迁移的结构，那你到任何一个工作场景中，就都能灵活运用。说白了就是不能只看表面动作，得抓住动作背后的心智模型。</p>
+      <p>没事得琢磨，不光要知道我应该怎么干，还要知道为什么这么干，这样我换个场景才知道怎么干。</p>
+    </div>
+  </section>
+
+  <div class="divider"><span>✦ ✦ ✦</span></div>
+
+  <!-- ========== 问答五 ========== -->
+  <section class="qa-block">
+    <div class="qa-source">《经济租：赚钱的秘密》</div>
+    <div class="card q">
+      <div class="card-label">读者提问 · 旅行者</div>
+      <p>请教万老师：如果我们把八种生态位叠加起来看，这些「租」往往掌握在同一批少数人手上？</p>
+    </div>
+    <div class="card a">
+      <div class="card-label">万维钢回复</div>
+      <p>你的观察非常对。其实这就是我们前面讲过的「重尾分布」：世界上的财富和影响力，是少数人拿走大头，多数人分剩下的一点。</p>
+      <p>为什么会这样？首先租本身具有正反馈效应。这八种生态位不是八个互相独立的抽屉，而是八个可以互相强化的卡位——</p>
+      <p>有土地的人更容易拿到牌照，有牌照的人更容易进入关系网络，有关系的人更容易得到独家信息，有信息的人更容易调动资金，有资金的人又能买下接口、配套和声望……你占住一个租，就更容易占住下一个租。</p>
+      <p>如果你已经很强大、很富有，那么你就不但有获取租的能力，而且有更多获取租的资源。</p>
+      <p>再者，也许更重要的是，这些人都有强烈的占有租的意识和欲望。</p>
+      <p>普通人看到一个机会，第一反应是「我能不能干」；而这些人的第一反应则是「我能不能控制」。</p>
+      <p>最近马斯克起诉 OpenAI，庭审报道披露了一个特别说明问题的细节 [6]。据山姆·奥特曼作证，当年讨论 OpenAI 的控制结构时，马斯克曾经想要对 OpenAI 拥有长期控制权。有人当场问他，如果你控制 OpenAI，将来你去世以后怎么办？马斯克的回答是控制权可以传给他的孩子。</p>
+      <p>你看啊，这可不是一个穷人终于看到一块肉之后的饥饿反应。马斯克已经有特斯拉和 SpaceX 等等一大堆超级资产，可是当他看到 OpenAI 这个新卡位的时候，他的第一冲动仍然是我要把它控制在我手里，而且还要传下去。</p>
+      <p>人的贪婪是没有止境的。越是像马斯克这样赢过好几次的人，越知道真正值钱的不是工资和奖金，甚至不是利润，而是独门技术、入口、控制权和未来的选择权——是租。</p>
+      <p>而且这些人有资金、有信用、有时间、有律师，还有影响力、有政治关系，还有搏一把失败了也无所谓的容错余地。他们当然会像猛兽一样争夺世界上的优质租。</p>
+      <p>这公平吗？当然不公平。可是这个世界的基本原理本来就不是公平，这是一个可以做乘法的世界。世界上的好东西不是出于好意分配给每个人的，是需要你去争夺的。但我们普通人也没必要绝望。</p>
+      <ul>
+        <li><strong>第一，强人的财富终究会被稀释。</strong>世界上没有长盛不衰的商业帝国。人有寿命，公司有生命周期，技术有代际更替，继承人从来都守不住。市场经济最好的一点，就是它允许「颠覆式创新」。今天的收费桥，明天旁边可能就会修出一座新桥。</li>
+        <li><strong>第二，也是更重要的一点：</strong>这些资源掌握在马斯克这样的人手里，对其他人来说未尝不是一件好事。如果不是马斯克很早就入场，OpenAI 不会有资源去探索在当时看来相当冷门的方向。奥特曼后来解释为什么要把 OpenAI 变成一个私人公司，也是这个观点：你需要强大的资金来购买算力，非营利机构负担不了这个游戏。我们不能只看见强人冒险成功，还得看到他们的冒险失败。事实上马斯克失败的项目很多，最近的 xAI 就是一个很好的例子。</li>
+        <li><strong>第三，这些租掌握在私人强者手里，仍然比掌握在权力手里要好。</strong>马斯克再强，也得允许别人跟他竞争，他必须面对各种约束；可是权力一旦设租，那就是直接给你来个专卖，禁止别人修桥。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== 注释 ========== -->
+  <section>
+    <h3 class="sec-title">注释</h3>
+    <div class="notes">
+      <ol>
+        <li>[1] Black, Paul, and Dylan Wiliam. “Assessment and Classroom Learning.” <em>Assessment in Education: Principles, Policy &amp; Practice</em> 5, no. 1 (1998): 7–74.</li>
+        <li>[2] Fu, Rong. “Exploring K–12 Teachers’ Assessment Literacy and Self-Efficacy in China.” <em>Asian-Pacific Journal of Second and Foreign Language Education</em> 9 (2024).</li>
+        <li>[3] Fu, Rong, and Kim Koh. “Developing and Validating Teacher Formative Assessment Literacy Questionnaire and Inventory in Mainland China.” <em>Frontiers in Education</em> 11 (2026).</li>
+        <li>[4] 精英日课第六季，《怎样激励 10 到 25 岁的人》3：好导师和最好的导师。</li>
+        <li>[5] Stattin, Håkan, and Margaret Kerr. “Parental Monitoring: A Reinterpretation.” <em>Child Development</em> 71, no. 4 (2000): 1072–1085.</li>
+        <li>[6] Fernholz, Tim. “Musk Mulled Handing OpenAI to His Children, Altman Testifies.” <em>TechCrunch</em>, May 12, 2026. <a href="https://techcrunch.com/2026/05/12/musk-mulled-handing-openai-to-his-children-altman-testifies/">https://techcrunch.com/2026/05/12/musk-mulled-handing-openai-to-his-children-altman-testifies/</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ========== 用户留言 ========== -->
+  <section>
+    <h3 class="sec-title">用户留言</h3>
+    <div class="comment">
+      <div class="head">
+        <span class="avatar">常</span>
+        <span class="name">常觉不住</span>
+        <span class="when">昨天 · 美国</span>
+      </div>
+      <p>这一段回答里我最有感的是那句话：「你的人生你负责，但我不会消失。」青春期孩子说「你别管我」「你不懂」，很多时候不是单纯顶嘴，而是在争夺一点自己人生的解释权。父母最难的地方，是既不能继续用小时候那套方式接管他，也不能一放手就变成冷漠旁观。</p>
+      <p>我觉得这里的关键不是管不管，而是把「管行为」慢慢换成「建责任结构」。几点写作业、手机怎么用、朋友怎么交，确实不能事事替孩子安排。但也不能假装这些选择没有后果。比较好的做法也许是：方案让孩子自己提，底线由双方说清楚，后果提前摆出来。执行之后，如果效果不好，再一起复盘。</p>
+      <p>最怕的是复盘变成父母的胜利宣言：「你看，我早就说过吧。」这句话一出来，孩子学到的不是负责，而是以后少告诉你。</p>
+      <p>多年前，我曾经听过一个演讲，说儿子到了 13 岁以后，父亲要把他当成最好的朋友来对待。这句话我一直记得。后来他们过了 13 岁，我就真的开始这样做：我怎么对我最好的朋友，就怎么对他们。朋友之间当然也有提醒，也有边界，也会说真话；但朋友不会天天端着一个「我是你爸，所以我永远比较懂」的架子。这样相处下来，结果反而很轻松。儿子可以和我勾肩搭背，我也没大没小，少了一点「爹味」。</p>
+      <p>所以我理解的「高标准、高支持」，不是一边放手一边焦虑地盯着，也不是一失败就赶紧证明父母是对的。而是让孩子知道：你可以试，你要负责；你摔了一跤，我不会替你否认后果，但我也不会站在旁边说风凉话。青春期真正要守住的，可能不是控制权，而是孩子愿意回来跟你说话的那条路。</p>
+    </div>
+    <div class="comment">
+      <div class="head">
+        <span class="avatar">左</span>
+        <span class="name">左星星</span>
+        <span class="when">昨天 · 上海</span>
+      </div>
+      <p>面对着这个世界上少数掌握「租」的人，我们容易觉得不舒服，是因为我们习惯了认真工作，就应该有回报。可很多真正赚钱的位置，并不是比谁更辛苦，而是比谁更靠近关键节点。我舅舅开一家小餐馆每天忙到深夜，利润却很薄；而掌握外卖平台流量规则的人、拥有核心商圈铺位的人，可能更轻松地拿走大头。我在公司里忙的累死累活，可我未必最有话语权，真正关键的是谁掌握客户关系、预算审批和核心系统。</p>
+      <p>所以，面对强者，我们不能只停留在「他凭什么」这种情绪里。更有价值的问题是：他到底占住了什么位置？这个位置为什么值钱？我有没有可能在自己的小范围里，也建立一点别人绕不开的价值？</p>
+      <p>这不是鼓励普通人变得贪婪，而是提醒我们别只做可替代的执行者。一个会计，如果只是做账，很容易被工具替代；但如果能看懂业务风险、现金流压力、税务合规和管理层真正关心的问题，他就是决策链条里重要的一环。一个科普作家，如果只是追热点，很快会被淹没；但如果形成稳定的判断力和表达风格，他就能成为得到平台上最著名的老师。</p>
+      <p>接受现实，不等于向现实低头。真正成熟的心态，是不把世界想得太公平，也不因此放弃行动。我们大概成不了马斯克，但可以少一点抱怨，多一点位置意识：别只问自己会做什么，更要问自己在哪个环节不可替代。</p>
+    </div>
+    <div class="comment">
+      <div class="head">
+        <span class="avatar">左</span>
+        <span class="name">左星星</span>
+        <span class="when">昨天 · 上海</span>
+      </div>
+      <p>李松蔚老师在《心理学通识》里提到一个很有意思的方法：把青春期孩子，当成单位里一个「不太靠谱的领导」。相信我们在工作中都经历过这样的领导：不成熟、没经验，也许会做出错误的判断。你当然有义务为他提供建议和参考，因为你们利益相关。可是另一方面，人家毕竟是领导，你总不能用一种吆五喝六的语气说：「你不听我的劝，将来迟早后悔！」相反，你会用一种尊重的、平和的态度，说：「领导，这个事我说说我的看法，供您参考。」你提供自己的意见，同时也把做决定的权力交给他。跟青春期的孩子打交道，就要用这种姿态。</p>
+      <p>这里的关键在于，采用一种成年人对成年人的姿态。因为孩子最介意的，就是不被父母认真对待。平心而论，这也不能完全怪父母，毕竟这个时期孩子也会表现得不稳定、不成熟。但是，很多领导平时也情绪不稳定，时而暴躁，时而消沉，咱也不敢问，但总会表达一下支持，说：「有什么需要我做的，就尽管说。」怎么换到孩子身上，就不耐烦地说：「你在那发什么神经！」这还是没把人家当一个平等的人来尊重。</p>
+      <p>这种心态还有个好处，就是能帮父母重新摆正自己的位置。孩子小时候，父母几乎是他的全部世界；可到了青春期，他开始有自己的朋友、兴趣和判断，父母只是他世界里的「N 分之一」。这时候，如果还总想证明「只有我是为你好」，往往只会把关系越推越远。先接受自己不再是孩子世界的中心，很多沟通反而更容易了。</p>
+    </div>
+  </section>
+
+  <!-- ========== AI 阅读总结 ========== -->
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <p class="sum-lead"><b>一句话概括：</b>本期五个问答其实共用同一套判断标准——评价学习要看「形成性反馈」而非期末排名，投入对孩子要看「撤手测试」能否留下能力，青春期沟通要转向「责任结构」而不是控制行为，职场迁移要抓住「心智模型」而非话术脚本，而对「经济租」的认知则提醒普通人：与其抱怨世界不公平，不如经营自己在哪个环节不可替代。</p>
+
+    <h3 class="sum-h3">一、核心内容总结</h3>
+    <ul>
+      <li><strong>科学方法不会输在短期分数上。</strong>真正按科学方式学习的孩子，短期分数并不会不如熬夜刷题的同学；家长的问题不是「太功利」，而是「功利得不够专业」——崇拜分数却不研究分数，崇拜努力却不测量产出，崇拜刷题却不用实验去检验效果。</li>
+      <li><strong>评价要区分「终结性」与「形成性」。</strong>终结性评价（期末考、排名、录取）只负责给结果排序；形成性评价（小测验、作业、错题、课堂反馈）的作用是诊断而不是审判，才是调整教学与学习的有效反馈。但 2024、2026 年两项研究显示，许多中国 K-12 教师依然过高依赖终结性评价，家长更没有这种意识；老师也是普通人，不该被苛责，可既然研究已经给出正确做法，就没理由继续「没苦硬吃」。</li>
+      <li><strong>判断育儿投入用「撤手测试」。</strong>三个月之后，家长不提醒、不督促、不监督、不续费、不安排，这个东西还能留在孩子身上，就是赋能；留不下、孩子始终依赖你，那就是家长在缓解自己的焦虑甚至控制孩子。报班、用 AI、陪写作业都适用。</li>
+      <li><strong>赋能与失能的分界线是「能否离开」。</strong>陪写作业的目的必须是让孩子逐渐不需要你陪：给检查清单、复盘方法、时间节奏、错题分类是赋能，盯住每一道题每一分钟是失能。好领导让下属获得判断标准与独立能力，坏领导让你事事离不开他；传销、假药、神功大师同理。真正的赋能必须允许并支持对方离开你，不能离开的教育是驯养。</li>
+      <li><strong>青春期冲突是孩子在争夺「解释权」。</strong>「你别管我」「你不懂」的真正意思是：不要再用旧身份压我，我想确认自己有主权。家长要守住的不是「我说了算」，而是「你的人生你负责，但我不会消失」——说「你负责」给主权，说「我不消失」给靠山，这正是高标准、高支持。</li>
+      <li><strong>管「责任结构」而不是管行为。</strong>几点写作业、手机放哪、朋友怎么交都不该干预；家长只设底线和共同目标，让孩子自己出方案，方案失灵就回来一起复盘，且复盘先承认关系、不证明自己对。对待孩子如同对待同事：关系好比对错更重要；最好的监控不是侦查，而是让孩子愿意主动告诉你。</li>
+      <li><strong>换岗失灵往往因为学的是「动作脚本」而非「可迁移结构」。</strong>销售的可迁移结构是购买决策链、使用者与付款者、拍板人、信任建立方式；管理的可迁移结构是目标函数、瓶颈、信息失真层、责任边界、激励相容。要抓住动作背后的心智模型，既知道怎么干，也知道为什么这么干。</li>
+      <li><strong>「租」呈重尾分布且有正反馈。</strong>八种生态位互相强化：土地→牌照→关系→信息→资金→接口，占住一个租就更容易占住下一个。强人（如马斯克对 OpenAI 的第一冲动是「控制」并传给后代）赢在占有意识与资源容错，世界本不公平，需要争夺；但普通人不必绝望：强人财富终被稀释、颠覆式创新永远存在，且私人强者持租仍好过权力设租专卖。</li>
+    </ul>
+
+    <h3 class="sum-h3">二、给个人的行动建议</h3>
+    <ul>
+      <li>本周就用「撤手测试」盘点你为孩子花的每一笔投入（辅导班、AI 工具、陪写作业）：如果三个月不催不陪不续费，他还能独立使用吗？不能的，要么改成教方法，要么停掉，别再用投入换自己的安心。</li>
+      <li>把陪写作业改造成「脚手架」：和孩子一起建立检查清单、错题分类和复盘流程，然后明确约定一个月后逐步撤出，目标是他不再需要你陪——并每周问一次「哪件事今天是你自己完成的」。</li>
+      <li>面对青春期孩子，把「管行为」换成「建责任结构」：只定底线和共同目标（比如安全、作息底线），具体方案让孩子自己提；方案失灵时一起复盘，复盘开场先讲关系，绝不说「我早说过吧」。</li>
+      <li>练习「成年人对成年人」的姿态：把孩子当成单位里「不太靠谱的领导」，用「这个事我说说我的看法，供您参考」的口吻给建议，把决定权交还给他，先接受自己不再是孩子世界的中心。</li>
+      <li>审视自己的工作位置：列出你所在环节的「租」——客户关系、预算审批、核心系统、判断力，追问「我在哪个环节不可替代」；主动补上决策链条里的一环（如会计看懂业务风险、现金流、税务合规），而不是只做可替代的执行。</li>
+      <li>做一次「知识迁移体检」：把你上一份工作最拿手的做法写下来，追问背后的结构——为什么这么做？依赖什么条件？换到新场景哪些条件变了？用心智模型代替话术武装自己，再决定补基础还是补桥接。</li>
+      <li>用形成性评价管理自己（或孩子的）学习：每周做一次小测验或错题复盘，明确「现在卡在哪里」，据此调整下一步，而不是等期末成绩出来再大喊大叫。</li>
+    </ul>
+
+    <h3 class="sum-h3">三、金句摘录</h3>
+    <div class="sum-quote">
+      <p>「你的人生你负责，但我不会消失。」</p>
+      <p>“真正的赋能，必须允许、并且支持对方离开你。不能离开的教育是驯养。”</p>
+      <p>“关系好，比对方行为正确更重要。关系好了什么都好办。”</p>
+      <p>“越是像马斯克这样赢过好几次的人，越知道真正值钱的不是工资和奖金，甚至不是利润，而是独门技术、入口、控制权和未来的选择权——是租。”</p>
+    </div>
+
+    <p class="sum-note">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+  <footer>
+    万维钢 · 现代思维工具100讲 · 第59讲<br>
+    手机阅读版 · 仅供个人学习使用
+  </footer>
+
+</main>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+<script>
+(function(){
+  var bar=document.getElementById('progress');
+  var btn=document.getElementById('topBtn');
+  function onScroll(){
+    var d=document.documentElement;
+    var max=d.scrollHeight-d.clientHeight;
+    bar.style.width=(max>0?(d.scrollTop/max*100):0)+'%';
+    btn.style.display=d.scrollTop>500?'flex':'none';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

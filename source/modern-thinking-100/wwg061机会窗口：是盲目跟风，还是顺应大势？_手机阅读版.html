@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第61讲 · 机会窗口：是盲目跟风，还是顺应大势？</title>
+<style>
+  :root{
+    --bg:#faf7f1; --fg:#2b2620; --fg-soft:#6b6257; --card:#ffffff;
+    --accent:#8a5a2b; --accent-soft:rgba(138,90,43,.12); --border:#e6ddcd;
+    --gold-bg:#f6efe3; --note-bg:#f3f0ea; --sum-bg:#fdf3e2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512; --fg:#e8e0d4; --fg-soft:#a89f8f; --card:#201d19;
+      --accent:#c99a64; --accent-soft:rgba(201,154,100,.16); --border:#3a342b;
+      --gold-bg:#241f17; --note-bg:#1f1d1a; --sum-bg:#2a2113;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:17px; line-height:1.82; text-align:justify;
+    -webkit-text-size-adjust:100%;
+  }
+  #progress{position:fixed; top:0; left:0; height:3px; width:0; background:var(--accent); z-index:999;}
+  .wrap{max-width:700px; margin:0 auto; padding:28px 20px 80px;}
+  /* 文档头 */
+  .doc-head{text-align:center; padding:26px 6px 30px; border-bottom:1px solid var(--border); margin-bottom:30px;}
+  .tag{display:inline-block; font-size:13px; letter-spacing:.5px; color:var(--accent); background:var(--accent-soft);
+       border:1px solid var(--accent); border-radius:999px; padding:4px 14px; margin-bottom:18px;}
+  h1{font-size:26px; line-height:1.45; margin-bottom:14px;}
+  .meta{font-size:14px; color:var(--fg-soft);}
+  /* 正文 */
+  article p{margin:0 0 1.1em;}
+  h3{font-size:19px; margin:2.1em 0 .9em; padding-left:12px; border-left:4px solid var(--accent); line-height:1.5;}
+  ul{margin:0 0 1.2em 1.3em;}
+  li{margin-bottom:.5em;}
+  /* 金句 */
+  blockquote{margin:1.6em 0; padding:14px 18px; border-left:4px solid var(--accent);
+    background:var(--gold-bg); border-radius:0 12px 12px 0; color:var(--fg);}
+  blockquote p{margin:0;}
+  /* 分隔 */
+  .divider{display:flex; align-items:center; justify-content:center; gap:14px; margin:2em 0; color:var(--accent);}
+  .divider::before,.divider::after{content:""; height:1px; width:64px; background:var(--border);}
+  /* 案例/要点卡片 */
+  .case{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin:1.4em 0;}
+  .case b:first-child{color:var(--accent);}
+  /* 诗 */
+  .poem{margin:2em auto; text-align:center; background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:22px 18px; font-family:Georgia,"Songti SC","SimSun",serif; letter-spacing:1px;}
+  .poem .p-title{display:inline-block; font-size:14px; color:var(--accent); border:1px solid var(--accent);
+    border-radius:6px; padding:3px 12px; margin-bottom:14px;}
+  .poem p{line-height:2.1; text-align:center;}
+  /* 注释 */
+  .notes{margin-top:2.6em; background:var(--note-bg); border:1px solid var(--border); border-radius:12px; padding:18px 20px; font-size:14px; color:var(--fg-soft); line-height:1.7;}
+  .notes h4{font-size:15px; color:var(--accent); margin-bottom:.8em;}
+  .notes p{margin-bottom:.5em; text-align:left;}
+  /* 用户留言 */
+  .comments{margin-top:2.6em;}
+  .comments h4{font-size:16px; color:var(--accent); margin-bottom:1em;}
+  .cmt{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:1.2em;}
+  .cmt .who{font-weight:600; font-size:15px; color:var(--accent);}
+  .cmt .when{font-size:12.5px; color:var(--fg-soft); margin:3px 0 12px;}
+  .cmt p{margin-bottom:.8em;}
+  .reply{margin-top:12px; background:var(--gold-bg); border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0; padding:12px 16px; font-size:15.5px;}
+  .reply .r-tag{display:inline-block; font-size:12px; color:var(--accent); border:1px solid var(--accent);
+    border-radius:4px; padding:1px 8px; margin-bottom:8px;}
+  /* AI 总结 */
+  #ai-summary{margin-top:3em; background:var(--sum-bg); border:2px solid var(--accent); border-radius:14px; padding:24px 22px;}
+  #ai-summary .ai-badge{display:inline-block; font-size:13px; font-weight:700; letter-spacing:1px; color:#fff;
+    background:var(--accent); border-radius:6px; padding:4px 12px; margin-bottom:14px;}
+  #ai-summary h2{font-size:20px; margin-bottom:1em;}
+  #ai-summary .one{font-weight:700; background:var(--accent-soft); border-radius:8px; padding:12px 14px; margin-bottom:1.4em;}
+  #ai-summary h5{font-size:16px; margin:1.4em 0 .7em; color:var(--accent);}
+  #ai-summary ol{margin-left:1.4em;}
+  #ai-summary li{margin-bottom:.7em;}
+  #ai-summary .quote{border-left:3px solid var(--accent); padding-left:12px; margin-bottom:.7em; color:var(--fg);}
+  #ai-summary .foot{margin-top:1.8em; font-size:12.5px; color:var(--fg-soft); text-align:center;}
+  /* 回到顶部 */
+  #topBtn{position:fixed; right:18px; bottom:calc(24px + env(safe-area-inset-bottom)); width:46px; height:46px;
+    border-radius:50%; border:1px solid var(--accent); background:var(--card); color:var(--accent);
+    font-size:20px; line-height:1; cursor:pointer; display:none; align-items:center; justify-content:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.18); z-index:998;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+
+  <header class="doc-head">
+    <span class="tag">万维钢 · 现代思维工具100讲 · 第61讲</span>
+    <h1>机会窗口：是盲目跟风，还是顺应大势？</h1>
+    <div class="meta">作者：万维钢　·　现代思维工具100讲 · 第61讲</div>
+  </header>
+
+  <article>
+
+    <h3>开场：一个灵魂拷问</h3>
+    <p>现在 AI 这么热，人家都说是大势所趋，你也很想入场干点什么。但你又总担心，自己到底是真的顺应大势，还是盲目跟风呢？从古至今任何想要大展身手的人都会面临这个灵魂拷问。</p>
+    <p>传说曾国藩有句话叫"久利之事勿为，众争之地勿往"。如果这个事儿已经如此之热，街头巷尾都在讨论，这时候参与岂不是纯属凑热闹？难道我们不应该找一片属于自己的蓝海吗？但这话得看你怎么说。</p>
+    <p>我们设想 2018 年，中国房地产还相当火热的时候，有个高中生说大学想报考建筑学专业。如果你那时候冷静判断，告诉他建筑业已经太热了，我看早晚变成夕阳产业，久利勿为！那你是帮了人家。但是咱们再想想，计算机专业早在三十年前就是热门，一直都是最难报考的专业之一。如果二十年前，你跟一个特别聪明的高中生说，计算机太热了，众争勿往！你这不坑人吗？</p>
+    <p>现在还是同样的问题。AI 编程兴起，很多刚毕业的计算机专业大学生不好找工作，那你敢说计算机专业就没有前途了吗？现在社会上有这么多人考公，你敢跟他们说一句"众争勿往"吗？</p>
+    <p>该不该进入一个领域，跟它看起来有多热，没有太大关系。曾国藩那句格言属于选择偏差。</p>
+    <p>这一讲咱们说说怎么判断入场时机。你不可能精准预测未来，但是你总可以有比"反内卷"更高级的心法。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>底层信念：趋势，是存在的</h3>
+    <p>首先我们要有一个底层信念，一个先验：<strong>趋势，是存在的</strong>。你但凡敢出来做事，就得相信趋势的存在。</p>
+    <p>我看聪明人特别容易犯的一个错误，就是过度相信市场的有效性。你可能会觉得，如果一个问题是可以解决的，它一定早已经被别人解决了；如果一个行业真能赚钱，早就有无数人才和资本涌入，互相竞争之下利润迅速就会降到零……如果你相信有价值的信息都会被瞬间吸收，任何局部优势都会被立刻抹平，每一个错配都会被很快纠正，那你就等于说相信干什么都是一样的。现实绝非如此。</p>
+    <p>金融市场大概是最接近"有效市场"的地方，毕竟交易太方便了。我们可以设想，如果一家公司有一个基本面意义上的好消息，市场得知这个消息就会提高对它的估值。有这么多交易员盯着，好消息应该会在一天之内被 priced in（定价），以至于普通股民看到的股价应该都大致反映了公司的价值。对吗？</p>
+    <p>如果股市是这样的，今天的股价上涨就只是今天的事儿；明天有别的消息出来，那就是另一个走法。如果金融市场是有效的，股价应该呈现某种随机游走的状态——对吧？</p>
+    <p>那么你需要读一读 2012 年，芝加哥大学的托比亚斯·莫斯科维茨（Tobias J. Moskowitz）等人发表的一篇经典论文，题目叫《时间序列动量》（Time Series Momentum）[1]。他们分析了股票指数、货币、商品、债券期货等等 58 种高流动性合约，发现过去 1 到 12 个月的收益，对未来收益有一定正向预测力，然后才在更长的周期上会有部分反转。</p>
+    <blockquote><p>翻译成人话就是：如果一个东西一直往一个方向走，它常常还会继续走一段。换句话说，如果股市过去半年涨得挺好，它下个月大概率还会涨。</p></blockquote>
+    <p>这不是说应该追涨杀跌，因为这里研究的是长期的统计规律……但是，这篇论文证明了市场的趋势是存在的。</p>
+    <p>行为金融学对此早就有说法 [2]：市场短期内会对消息反应不足，慢慢才反应过来，这样趋势就形成了；到了一定程度，跟风的人越来越多，市场才会反应过度。</p>
+    <p>金融市场如此，其他市场就更是如此。信息不会瞬间被世界承认，价格不是一次性反映真相——人群对事物的认识是逐渐的。</p>
+    <blockquote><p>真正的问题不是"热不热"，而是热到了哪一步。</p></blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>核心工具：机会窗口理论</h3>
+    <p>这就引出了我们重点要说的思维工具，战略管理学家费尔南多·苏亚雷斯（Fernando F. Suarez）等人在 2015 年提出的「机会窗口（window of opportunity）」理论 [3]。</p>
+    <p>这个理论说，比如你想进入一个领域，这里有别的玩家，有各种各样已经出现和可能出现的产品，那你怎么知道自己是来早了、来晚了，还是来得恰到好处呢？</p>
+    <blockquote><p>答案是一句话：你入场的机会窗口，是从「主导类别（dominant category）」出现时打开，到「主导设计（dominant design）」出现时关闭。</p></blockquote>
+    <p>所谓类别，就是大家给这个新事物取的名字。比如曾几何时，人们对那种能上网的手机有很多称呼：PDA、掌上电脑、多媒体电话……这就是没有形成主导类别。等到大家统一称之为"智能手机"的时候，才算是主导类别形成：投资人和客户都不需要再问"这是个什么玩意儿"，而开始问"这个赛道谁领先"；招聘市场出现相关岗位，媒体从猎奇报道转向行业分析。</p>
+    <p>如果主导类别还没形成，你就进场，你就必须得花费巨大的成本去教育市场。客户、资本、媒体和监管部门都不懂你在干什么，你等于是在替后人开荒，岂不是费力不讨好吗？</p>
+    <p>而所谓主导设计出现，就是行业已经基本定下来这种东西该怎么做了。人们对"好产品该长什么样"已经达成共识，架构、界面、标准、渠道、采购规则全都固定，连头部玩家的位置也固定了。</p>
+    <p>那个时候你再入场就太晚了。你错过了规则的制定，现在只能在人家的规则里寻找一点缝隙。你几乎不可能给出一个石破天惊的创新，就只能打价格战、卷加班，挣点辛苦钱。</p>
+    <blockquote><p>来早了，你是帮人家喂猪；来晚了，只能喝汤。只有在从"主导类别出现"到"主导设计出现"之间的那个机会窗口期入场，你才能赶上吃肉。那是规则的构建期，更是创造的红利期。</p></blockquote>
+
+    <div class="divider">✵</div>
+
+    <h3>三个经典案例</h3>
+
+    <div class="case">
+      <p><b>第一，智能手机和苹果。</b>苹果既不是第一个做手机的也不是第一个做移动计算设备的。在 iPhone 之前，市场上已经有 PDA 手机、商务手机、拍照手机、音乐手机、黑莓、诺基亚、微软的移动系统。诺基亚从通信出发，黑莓从商务邮件出发，微软从桌面电脑出发，各个大厂都在用自己的优势定义手机。</p>
+      <p>但当时没有人明确知道手机到底是该干什么用的。后来手机上网变得普遍，「智能手机」这个主导类别才算形成。</p>
+      <p>在这之后，而恰恰又在"智能手机到底应该是什么样"还没有定论的时候，苹果推出了 iPhone——一举确定多点触控大屏、移动操作系统、应用商店和开发者生态这一整套主导设计。主导设计一旦形成，别人就很难再进来竞争了。</p>
+      <p>安卓生态之所以存在，是因为苹果卖得太贵而且不自由，给它留下了一点空间。更后来的竞争者就只能打价格战了。</p>
+    </div>
+
+    <div class="case">
+      <p><b>第二，电动汽车和小米。</b>那你说，小米造汽车的时候，电动汽车这个主导类别早就存在，而且主导设计也定型了：特斯拉已经稳了，蔚小理都很有存在感，你这时候进来不是盲目跟风吗？</p>
+      <p>小米赌的是电动汽车的主导设计还没有完全锁死：它深化了"软件定义汽车（software-defined vehicle）"，搞了个"人车家生态"，说汽车的座舱是第三空间。而小米在智能生态和软件上有优势。</p>
+    </div>
+
+    <div class="case">
+      <p><b>第三，MP3 播放器和微软。</b>你可能都不知道，微软公司曾经在 2006 年推出过一款 MP3 播放器，叫 Zune，正面对标苹果 iPod。</p>
+      <p>其实它的硬件设计还不错，有些功能也挺有想法，比如支持无线分享和订阅模式。但它最终惨遭失败。</p>
+      <p>关键是当时早就有了 iPod，MP3 市场的主导设计已经定型了。你没有真正打响差异化，那这就不是你的机会窗口。再加上后来智能手机崛起，连 MP3 这个产品类别都不复存在，连想跟人打价格战都已经不可能。</p>
+    </div>
+
+    <p><strong>要想光荣地入场，你必须借势主导类别，定义主导设计。</strong></p>
+
+    <div class="divider">✵</div>
+
+    <h3>普通人的通用工具：D/N/S 三曲线趋势时钟</h3>
+    <p>我们用机会窗口分析，现在 AI 就处在"智能体应用"这个主导类别已经存在，但是"个人具体应该怎么用"这个主导设计还没有定型的时刻。如果有一家大厂，比如苹果或者字节跳动，搞出一款专门的 AI 电脑或者 AI 手机，让消费者一看真好用，它就有可能定义主导设计……但这不是我们的主题。</p>
+    <p>机会窗口理论似乎对大玩家特别有用——那你说我是个普通人，我就想在哈尔滨开个小店，我怎么能知道我该不该入场呢？我们需要一个更通用的工具。</p>
+    <p>咱们先综合一下前人的智慧：</p>
+    <ul>
+      <li>罗杰斯（Everett M. Rogers）的「创新扩散（diffusion of innovations）」理论 [4] 告诉我们，新事物不是均匀扩散的，而是从创新者、早期采用者，到早期大众、晚期大众，走一条 S 形曲线。</li>
+      <li>巴斯（Frank M. Bass）的扩散模型 [5] 进一步说明，消费者采用新产品，既受创新吸引，也受模仿影响。</li>
+      <li>希勒（Robert J. Shiller）的「叙事经济学（narrative economics）」[6] 又说，叙事很重要：经济叙事会像病毒一样传播，影响投资、消费和创业。</li>
+      <li>汉南（Michael T. Hannan）和卡罗尔（Glenn R. Carroll）的组织生态学 [7] 认为，一个新组织类型早期数量少，合法性低；中期同类组织增加，能帮你证明类别的合法性；后期同行密度过高，就会发生竞争吞噬资源。</li>
+      <li>厄特巴克（James M. Utterback）和阿伯纳西（William J. Abernathy）的产业生命周期理论 [8] 也说，行业早期拼产品创新，后期拼流程、规模和效率……</li>
+    </ul>
+    <p>我让 AI（GPT-5.5 Pro）把所有这些学说综合起来，加以简化，给一套直指人心的心法，它提出一个心智模型叫「D/N/S 三曲线趋势时钟」。D/N/S 就是需求、叙事和供给。我想知道入场的最佳时机，就要看看这三条曲线各自走到了什么位置。</p>
+    <ul>
+      <li><strong>D 曲线是「真实需求（Demand）」</strong>：不是有人感兴趣，而是有人真花钱。人们真的会把预算从旧方案迁移过来，把新东西嵌入工作流，哪怕这个产品很烂他们也忍着用……这是最底层的动力。</li>
+      <li><strong>N 曲线是「叙事（Narrative）」</strong>：我们这个课程反复说叙事的重要性，叙事是社会对你这个东西的认可，叙事决定这门生意的合法性。名不正则言不顺，有了叙事才有了资本，有了估值、预算和岗位。</li>
+      <li><strong>S 曲线是「供给（Supply）」</strong>：也就是有多少人跟你抢生意。这条曲线代表了竞争的拥挤程度和资源的锁定程度。早期竞争者能帮你证明需求和教育市场，晚期竞争者则会抢夺你的利润。</li>
+    </ul>
+    <p>这三条曲线合起来，一个机会大概分五个阶段：</p>
+    <ul>
+      <li><strong>第一，暗流期</strong>：需求有苗头，但没有叙事也没有供给。这里充满风险。你以为你发明了一个能解决痛点的东西，但搞不好它可能只是一个小众的癖好。</li>
+      <li><strong>第二，风起于青萍之末</strong>：需求开始上升，叙事刚刚出现，供给非常少。高手这时候可以悄悄积累能力和关系了，因为窗口就在眼前。</li>
+      <li><strong>第三，最佳入场窗口</strong>：需求已经验证，叙事已经合法化，供给尚未拥挤，主导设计还没锁定。此时不出手更待何时？</li>
+      <li><strong>第四，如日中天</strong>：需求和叙事都很强，供给快速上升。行业很热闹，人也多钱也多。这时候入场已经有点晚了，但如果你有超强能力、强渠道、强差异化，你还可以进。</li>
+      <li><strong>第五，天已过午</strong>：需求增速下降，叙事已经吹成了神话，供给过剩，主导设计锁死。这时候正面入场就是打价格战。</li>
+    </ul>
+    <p>而且别忘了，你还需要有「能力适配（Capability Fit）」——没有这个 C，D/N/S 再怎么样也跟你没关系。</p>
+
+    <div class="divider">✵</div>
+
+    <h3>用框架分析现实问题</h3>
+    <p>根据这个框架，如果你想在哈尔滨开一家剧本杀店，你就需要考虑：旅游业是否给哈尔滨带来了更多的需求？剧本杀这种玩法是否已经得到了大众的认可？哈尔滨现在已经有多少家剧本杀店？你有没有能力做出差异化来？这些没有精确的量化标准，但这个心法是有用的。</p>
+    <p><strong>今天还要不要学计算机专业？</strong>需求还在，数据、安全、自动化仍然很热，各行各业都数字化。叙事变了，以前是会写代码就行，现在你必须是一个跟 AI 协同工作的工程师。供给方面，因为 AI 参与，确实已经相当拥挤。综合判断，我认为计算机专业仍然处在第四阶段，甚至如果你考虑到叙事改变，新窗口还有可能打开，并没有到"天已过午"的地步。</p>
+    <p><strong>那要不要考公呢？</strong>需求早已趋稳，而且在收缩。随着各地政府财政能力下降，公务员岗位会减少。2026 年国考计划招录人数已经比上一年减少了 4.3%。叙事方面，考公已经不只是"寻求一份体制内工作"，而是变成了一个社会避险神话。供给更是严重过载：2026 年通过国考资格审查的人数达到 371.8 万，比上一年增加了 30.2 万，竞争比高达 98:1……综合而论，我看现在花时间备战考公就如同在 2020 年高价买房。</p>
+    <p>我们还可以用这个框架分析一个更有意思的故事：<strong>秦朝末年那么多人起义，为什么最后是刘邦胜出呢？</strong></p>
+    <div class="case">
+      <p><b>陈胜、吴广</b>开创了造反这门业务的「主导类别」，他们用一句"王侯将相宁有种乎"向天下人证明反秦是个合法的叙事。但是他们入场太早，投资人和用户还没搞明白这门业务应该怎么干，所以他们的主要作用是教育市场……最终成了悲壮的开路先锋。</p>
+      <p><b>项羽</b>组织了有效的供给，但他提供的是一套过时的设计，分封制，对渴望稳定的民众缺乏吸引力。但是反秦叙事至此已经深入人心。</p>
+      <p><b>刘邦</b>，不但入场正好踩在「机会窗口」上，而且提供了两项新设计——一是统一秩序，二是用"约法三章"化解秦制高压带来的民怨——这就组织起更强劲的供给，一举胜出。</p>
+      <p>而刘邦之后，像什么韩王信、彭越这些人又想造反，可是刘邦的设计已经是主导，机会窗口已经关闭了。</p>
+    </div>
+
+    <div class="divider">✵</div>
+
+    <h3>结语</h3>
+    <p>有了机会窗口理论和 D/N/S 这套心法，你就不用整天空谈什么"时势造英雄"，感叹风口了。</p>
+    <p>一项事业够不够热，有没有很多人在追求，这些都不是本质。<strong>本质在于需求、叙事和供给的互动，在于这里有没有主导类别和主导设计。</strong></p>
+    <blockquote><p>我们必须尊重时间窗口这个硬约束。如果你想干的那个事儿现在没有多少真实需求，连主导类别都不成立，那你最好先干别的。</p></blockquote>
+
+    <div class="poem">
+      <span class="p-title">有诗赞曰</span>
+      <p>暗潮先动众声迟，叙事初成风始开。<br>
+      类别已明门半启，定式未锁局新裁。<br>
+      早来每被荒原噬，晚到空随市井埃。<br>
+      能把潮声铸成制，方知英雄造势来。</p>
+    </div>
+
+  </article>
+
+  <section class="notes">
+    <h4>注释</h4>
+    <p>[1] Moskowitz, Tobias J., Yao Hua Ooi, and Lasse H. Pedersen. "Time Series Momentum." Journal of Financial Economics 104, no. 2 (2012): 228–250.</p>
+    <p>[2] Barberis, Nicholas, Andrei Shleifer, and Robert Vishny. "A Model of Investor Sentiment." Journal of Financial Economics 49, no. 3 (1998): 307–343.</p>
+    <p>[3] Suarez, Fernando F., Stine Grodal, and Aleksios Gotsopoulos. "Perfect Timing? Dominant Category, Dominant Design, and the Window of Opportunity for Firm Entry." Strategic Management Journal 36, no. 3 (2015): 437–448.</p>
+    <p>[4] Rogers, Everett M. Diffusion of Innovations. 5th ed. New York: Free Press, 2003.</p>
+    <p>[5] Bass, Frank M. "A New Product Growth for Model Consumer Durables." Management Science 15, no. 5 (1969): 215–227.</p>
+    <p>[6] Shiller, Robert J. Narrative Economics: How Stories Go Viral and Drive Major Economic Events. Princeton: Princeton University Press, 2019.</p>
+    <p>[7] Hannan, Michael T., and Glenn R. Carroll. Dynamics of Organizational Populations: Density, Legitimation, and Competition. New York: Oxford University Press, 1992.</p>
+    <p>[8] Utterback, James M., and William J. Abernathy. "A Dynamic Model of Process and Product Innovation." Omega 3, no. 6 (1975): 639–656.</p>
+  </section>
+
+  <section class="comments">
+    <h4>用户留言</h4>
+
+    <div class="cmt">
+      <div class="who">孟华静 Meng Huajing</div>
+      <div class="when">43分钟前 · 上海</div>
+      <p>建筑工程行业，确实有很多从业者暂时没找到合适的位置，特别是 40+ 的，常年在工地搬砖，搞技术，盯进度，新鲜的工具，商业事件是他们以前很少关注的领域，然而偏偏他们一身本事没地方用。年轻点的出海继续干，家里走不开的，真是各种尝试，三件套不说了，为了养家也不得不干。女工程师或者造价员之类的，我认识的基本躺平，在家和娃斗智斗勇。昨天帮一位老板对接了资源，结束后他问我，你现在干啥，我答，给一个非工程项目做商业策划，他感慨，你这跨度真大。然后我说，不垮只能去跳广场舞，那玩意我也不喜欢啊。昨天我朋友圈还看到了前同事回同济参加了土木工程毕业 20 周年的聚会照片，评论区的留言很热闹，像个中介，互相求推荐机会。如万老师所说，这群人也经历了很多高光时刻，没有大项目了就是没有了，能继续做点啥就做，不做想办法呗。只是，这帮大叔阿姨啊，一边抱怨一边躺平，学点新技能貌似很难，你要去给他们提个新鲜事儿，三句话给你打回来，要么难，要么 diss 人家不靠谱。得，您们半躺着靠谱，开心就好！</p>
+      <div class="reply">
+        <span class="r-tag">作者回复</span>
+        <p>人到中年，会觉得一生特别短暂，往往被时代大潮所裹挟，有时候推向这里，有时候推向那里。刚学会一身本领，还没怎么施展，剧情已经落幕，这岂不悲哀吗？我们学习这么多知识，总要设法争取一点主动性。</p>
+      </div>
+    </div>
+
+    <div class="cmt">
+      <div class="who">Eudaimonia</div>
+      <div class="when">1小时前 · 四川</div>
+      <p>【趋势与价值】之金融投资：感谢万老师从实在、实证的角度分析了趋势，没有偏见～ 从金融投资来讲，许多纯价值投资者对趋势弃如敝履，认为趋势投资就是"追涨杀跌"，贪婪愚蠢而低级。从多年观察来看，价值确实为锚，但趋势也的确存在。不谈趋势，很多原因是因为趋势难以追踪判断，人群的行为很难精确把握，加上自己也是人群中的一员。但是分分秒秒日日的趋势无法预测，大趋势还是可以略窥一二的。</p>
+    </div>
+
+    <div class="cmt">
+      <div class="who">徐晓玉</div>
+      <div class="when">1小时前 · 河北</div>
+      <p>万老师，有个问题想请教您：我一直纠结很久。我们为一家国企提供技术服务，同时还有其他单位的人员，他们都是私人公司。我们分属于不同的个人公司。我认识一个人，他去年从原单位辞职后，自己成立了公司，继续为这个国企做项目。他和部门科长关系很好，成立公司后就走非标寻比流程，一个合同能拿到四五十万。他前年成立了公司，去年又成立了一个新公司，业务基本都是他来办。我想到我们作为打工人，每月拿着微薄的薪水，做的工作其实很类似，只是服务的部门不同，各自的专业技术有一些差别，但基本上那些工作我都能做。我也在犹豫要不要辞职创业。我属于财务咨询行业，金融行业，所以也在考虑现在是不是窗口期。很多老师说现在不适合创业，但我看我那个同事挣了很多钱，还给孩子在天津买了学区房。我们其他同事还是拿着微薄的薪水。我比较熟悉这个国企的运作模式，给他们提供技术服务已经很多年。只是我们单位作为私人企业，给个人发的工资是非常低的。我一方面是担心辞职之后保险怎么办？没人给交了，怕这个工作干不长。同时也是不甘心，为什么别人能够注册公司？而且现在注册公司，5 年内不用实缴，成本很低，也可以自己先干。所以现在也有一个很大的矛盾，不知道怎么办。我也在想，如果我从这边辞职之后，就不能回到原单位了。原单位是一个会计师事务所，会有一些出差的业务，做审计之类的。我前年的时候一直在出差，但是工资是很低的。作为小小的审计员，工资很低的。经常出差也不能照顾孩子，这也是我为什么要常驻在这个项目上，这样能够离家近，照顾孩子。同时也在想，现在家里有贷款，也为孩子考虑是不是要办一个天津户口。办天津户口的话也需要买房子。所以就在想，要不要自己辞职之后创业，注册一个公司，也继续在这边提供技术服务。恳请听到您的解答，谢谢。</p>
+      <div class="reply">
+        <span class="r-tag">作者回复</span>
+        <p>你需要慎重考虑。你说的这个人能做得这么好，根本原因是因为他跟国企的关键人物有关键的关系，他们之间有利益关系。他就是我们上一讲前面所说的董事长的小舅子。你要问问你自己有没有这个关系？你的技术好，你的管理才能也好，你什么都比他好。但是如果你没有这个关系，你是做不好的。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai-summary">
+    <span class="ai-badge">AI 阅读总结</span>
+    <h2>通读全文后的总结与行动建议</h2>
+
+    <p class="one">一句话概括：判断该不该入场，看的不是这件事"热不热"，而是需求、叙事、供给三条曲线各自走到哪一步，以及主导类别与主导设计之间的机会窗口到底开没开。</p>
+
+    <h5>一、核心内容总结</h5>
+    <ol>
+      <li>曾国藩"久利之事勿为，众争之地勿往"是典型的选择偏差：领域热度与是否值得进入没有必然关系，计算机专业热了三十年仍是好选择，而 2018 年劝人别报建筑学才是帮了人家。</li>
+      <li>底层信念是"趋势存在"：市场并非完全有效，信息不会被瞬间吸收。莫斯科维茨 2012 年《时间序列动量》论文用 58 种高流动性合约证明，过去 1—12 个月的收益对未来有正向预测力——一个东西一直往一个方向走，常常还会继续走一段。</li>
+      <li>核心工具是苏亚雷斯 2015 年的「机会窗口」理论：窗口从「主导类别」出现时打开，到「主导设计」出现时关闭。来早了要花巨大成本教育市场、替后人开荒；来晚了只能在大佬的规则缝隙里打价格战、卷加班；只有窗口期内入场才能吃到规则构建期的红利。</li>
+      <li>三个案例印证：苹果在"智能手机"类别已定而设计未定之时推出 iPhone，一举定义整套主导设计；小米赌"软件定义汽车"设计未锁死，靠人车家生态打出差异化；微软 Zune 在 MP3 主导设计定型后才入场，既无差异化又被智能手机革了命，惨败收场。</li>
+      <li>更通用的心法是 AI 综合前人学说（创新扩散、巴斯模型、叙事经济学、组织生态学、产业生命周期）提出的「D/N/S 三曲线趋势时钟」：D 是有人真花钱的需求，N 是社会认可的叙事，S 是跟你抢生意的供给，三者位置共同决定时机。</li>
+      <li>机会分五阶段：暗流期（有需求苗头、无叙事无供给）→ 风起于青萍之末（高手悄悄积累）→ 最佳入场窗口（需求验证、叙事合法、供给未挤、设计未锁）→ 如日中天（热闹但已偏晚，需超强能力才可进）→ 天已过午（供给过剩、设计锁死，正面入场即价格战）。</li>
+      <li>别忘了「能力适配」（Capability Fit）：没有匹配的差异化能力，D/N/S 再好也跟你无关——这是普通人入场前必须自我审查的一环。</li>
+      <li>现实应用：计算机专业仍在第四阶段且可能因叙事改变开新窗，并未"天已过午"；考公则需求收缩、叙事沦为避险神话、供给 98:1 严重过载，如同 2020 年高价买房；秦末起义中陈胜吴广太早、项羽设计过时，唯有刘邦踩准窗口并拿出"统一秩序+约法三章"两项新设计而胜出。</li>
+    </ol>
+
+    <h5>二、给个人的行动建议</h5>
+    <ol>
+      <li>把你正在犹豫的任何一个选择（转行、开店、创业、报专业）放进 D/N/S 框架，用一张纸写下三问：有没有人真的为它花钱？社会叙事走到了哪一步？已经有多少人在抢？据此判断它处于五阶段中的哪一阶段。</li>
+      <li>追问两个时点：这个领域的主导类别出现了吗（大家是否已统一称呼它、有没有对应岗位）？主导设计锁死了吗（好坏标准、头部玩家是否已定）？类别未成别急着教育市场，设计已锁先找差异化缝隙。</li>
+      <li>做一次"能力适配"自检：列出你比现有玩家明显强的一项（渠道、技术、关系、生态），写不出就默认窗口与你无关，先积累能力再谈入场。</li>
+      <li>把"众争勿往"这类格言换成数据：本周就为一个你关心的行业查三组数——需求增速（或消费数据）、供给密度（同行数量）、叙事阶段（媒体报道与招聘变化），用事实代替情绪判断。</li>
+      <li>对职业与学习投资，关注叙事迁移：计算机的叙事已从"会写代码"变为"与 AI 协同工作"，把学习预算投向新叙事下的能力（AI 协同、数据、安全、自动化），而不是抱着旧叙事不放。</li>
+      <li>警惕"避险型叙事"：像考公这类被神话化的避险选择，往往意味着供给严重过载。决策前先查硬数据（招录趋势、报名人数、竞争比），别让"大家都在做"替你做决定。</li>
+      <li>若判断自己处于暗流期或窗口未开，别硬闯：先"干别的"积累真实需求与资源，像高手一样在"风起于青萍之末"时悄悄积累能力与关系，等窗口临近再出手。</li>
+    </ol>
+
+    <h5>三、金句摘录</h5>
+    <div class="quote">"来早了，你是帮人家喂猪；来晚了，只能喝汤。只有在从'主导类别出现'到'主导设计出现'之间的那个机会窗口期入场，你才能赶上吃肉。"</div>
+    <div class="quote">"真正的问题不是'热不热'，而是热到了哪一步。"</div>
+    <div class="quote">"本质在于需求、叙事和供给的互动，在于这里有没有主导类别和主导设计。"</div>
+    <div class="quote">"能把潮声铸成制，方知英雄造势来。"</div>
+
+    <p class="foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<button id="topBtn" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+var bar=document.getElementById('progress');
+var topBtn=document.getElementById('topBtn');
+window.addEventListener('scroll',function(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  bar.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+  topBtn.style.display=window.scrollY>400?'flex':'none';
+});
+topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

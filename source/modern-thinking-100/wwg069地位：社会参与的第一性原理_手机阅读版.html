@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>地位：社会参与的第一性原理｜万维钢·现代思维工具100讲 第69讲</title>
+<style>
+  :root{
+    --bg:#faf7f1; --card:#fffdf9; --card-border:#e8e0d0; --text:#2b2620; --muted:#8a8277;
+    --accent:#8a5a2b; --accent-soft:#f3e9db; --quote-bg:#f5efe4; --quote-border:#c9a97c;
+    --divider:#d9cfbc; --sum-bg:#f4ead9; --sum-border:#c9a97c;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512; --card:#201c18; --card-border:#38322a; --text:#e8e2d8; --muted:#9b9286;
+      --accent:#c99a6a; --accent-soft:#2e261d; --quote-bg:#221d18; --quote-border:#7a5f3f;
+      --divider:#4a4237; --sum-bg:#241f18; --sum-border:#8a6a45;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px; line-height:1.82; text-align:justify;
+    -webkit-font-smoothing:antialiased;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:999;}
+  .wrap{max-width:700px;margin:0 auto;padding:28px 20px 60px;}
+  .tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.5px;color:var(--accent);
+    background:var(--accent-soft);border:1px solid var(--quote-border);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;
+  }
+  h1{font-size:24px;line-height:1.45;margin-bottom:12px;text-align:left;}
+  .meta{font-size:13px;color:var(--muted);margin-bottom:26px;text-align:left;}
+  .meta span{margin-right:14px;}
+  .divider{
+    text-align:center;color:var(--accent);font-size:16px;letter-spacing:10px;
+    margin:34px 0;opacity:.75;
+  }
+  .divider::before,.divider::after{content:"";display:inline-block;width:56px;height:1px;background:var(--divider);vertical-align:middle;margin:0 14px;}
+  h2{
+    font-size:19px;margin:38px 0 14px;padding-left:12px;border-left:4px solid var(--accent);
+    line-height:1.5;text-align:left;
+  }
+  h3{font-size:17px;margin:26px 0 10px;color:var(--accent);text-align:left;}
+  p{margin:0 0 14px;}
+  ul{margin:0 0 16px;padding-left:1.4em;}
+  li{margin-bottom:8px;}
+  .scene{
+    background:var(--card);border:1px solid var(--card-border);border-left:4px solid var(--quote-border);
+    border-radius:12px;padding:14px 16px;margin:16px 0;
+  }
+  .scene .sl{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;text-align:left;}
+  blockquote{
+    border-left:4px solid var(--quote-border);background:var(--quote-bg);color:var(--text);
+    border-radius:0 12px 12px 0;padding:12px 16px;margin:16px 0;font-weight:600;
+  }
+  .qa{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:14px 16px;margin:16px 0;
+  }
+  .qa .q{color:var(--accent);font-weight:700;margin-bottom:8px;text-align:left;}
+  .qa .a{text-align:justify;}
+  .qa .a p:last-child{margin-bottom:0;}
+  .notes{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:16px;margin:30px 0 0;
+  }
+  .notes h3{margin-top:0;font-size:15px;}
+  .notes ol{padding-left:1.4em;font-size:12.5px;color:var(--muted);line-height:1.7;}
+  .notes li{margin-bottom:7px;}
+  .comments{margin-top:34px;}
+  .cmt{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:16px 18px;margin-bottom:16px;
+  }
+  .cmt .ch{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;text-align:left;}
+  .cmt .cn{font-weight:700;font-size:15px;}
+  .cmt .ct{font-size:12px;color:var(--muted);}
+  .cmt p{font-size:15.5px;line-height:1.8;margin-bottom:10px;}
+  .cmt p:last-child{margin-bottom:0;}
+  .reply{
+    margin-top:12px;background:var(--accent-soft);border:1px dashed var(--quote-border);
+    border-radius:10px;padding:12px 14px;font-size:15px;
+  }
+  .reply .rl{font-size:12.5px;color:var(--accent);font-weight:700;margin-bottom:5px;text-align:left;}
+  #ai-summary{
+    margin-top:42px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:22px 20px;
+  }
+  #ai-summary .as-t{
+    font-size:18px;font-weight:800;color:var(--accent);text-align:center;margin-bottom:6px;letter-spacing:1px;
+  }
+  #ai-summary .as-sub{font-size:12.5px;color:var(--muted);text-align:center;margin-bottom:18px;}
+  #ai-summary h3{font-size:16px;margin:18px 0 10px;}
+  #ai-summary .one{font-weight:700;font-size:16px;margin-bottom:4px;text-align:left;}
+  #ai-summary ul{padding-left:1.4em;}
+  #ai-summary li{margin-bottom:8px;}
+  #ai-summary .foot{margin-top:18px;font-size:12px;color:var(--muted);text-align:center;border-top:1px solid var(--divider);padding-top:12px;}
+  #topBtn{
+    position:fixed;right:20px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:var(--bg);font-size:20px;line-height:1;
+    box-shadow:0 3px 12px rgba(0,0,0,.25);opacity:0;pointer-events:none;
+    transition:opacity .3s;z-index:998;display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto;}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="wrap">
+
+  <div class="tag">万维钢 · 现代思维工具100讲 · 第69讲</div>
+  <h1>地位：社会参与的第一性原理</h1>
+  <div class="meta"><span>作者：万维钢</span><span>讲次：第69讲</span><span>模块：社会与经济</span></div>
+
+  <p>这一讲开始咱们进入「社会与经济」模块。但我们不是宏观视角，我们设想你是一个参与者。</p>
+  <p>不管你是刚毕业的新人还是职场老油条，又或者只想享受家庭生活，在当今世界，你都不可能一个人闭门炼丹。你必定要参与这红尘大阵，你要跟人协作、组队、交易、竞争，甚至争斗，你需要一点经济学思维，你需要理解社会。</p>
+  <p>这一讲咱们先说一个观察社会的隐秘指标，它隐秘却极其重要，我愿称之为社会参与的第一性原理，那就是「地位（Social Status）」。</p>
+  <p>一群人聚在一起聊天互动，如果你不能在五分钟之内分辨出在场谁地位高、谁地位低，你恐怕不是一个合格的灵长类动物。</p>
+
+  <h2>凭什么说地位是第一性原理？</h2>
+  <p>那你说凭什么地位是第一性原理？人最想要的难道不是金钱、权力、安全、自由、真理和意义吗？那些东西的确比地位更基本，但往往只有当你面对自己，或者身处比如说经济困顿的极端情况的时候才显得格外重要。在日常的社会参与中，可能你自己都未必直接感受到，你会不自觉地在意地位。</p>
+
+  <p>比如说夫妻吵架：</p>
+  <div class="scene">
+    <span class="sl">场景一 · 家庭</span>
+    <p>晚上十点，妻子发现客厅里搁着半杯牛奶，地上扔着两只袜子，就开始抱怨："你就不能顺手收一下？"丈夫立即反击："我忙了一天那么累，好不容易安抚好客户，怎么回家还要被你骂？"妻子怒了："这不是你的家吗？"</p>
+  </div>
+  <p>你说这真的是在争论谁该做那点家务吗？其实两人争的是家庭主导权。妻子想通过让丈夫分担一点家务来证明自己不只是个做全职家务的。而丈夫听到的却是："我在外面拼命打怪，回来都没有一个英雄该有的特权，难道我就是个力工吗？"</p>
+
+  <p>再看职场：</p>
+  <div class="scene">
+    <span class="sl">场景二 · 职场</span>
+    <p>周会上，年轻的产品经理提议："这事可以接入 AI 大模型，用 Gemini 3 就行，咱们的效率绝对起飞。"老派主管眉头一皱："大模型不可控，以前也不是没试过，不行。"年轻人头铁："以前不行不代表现在不行，实在不行可以上 GPT-5.5，啥都能干！"主管脸色铁青："你先把基础业务逻辑摸透再来教我怎么做事！"</p>
+  </div>
+  <p>你说这是在探讨技术路线吗？两人其实是在争夺团队的认知解释权。</p>
+  <p>表面上的观点之争、品味之争、效率之争，甚至利益之争、正义之争，背后往往是地位之争。人在社会上的种种行为动机都带有追求地位的色调。</p>
+
+  <h2>地位是什么？</h2>
+  <p>地位，是社会对你的主观估值。它是别人愿意在多大程度上把你的话当真，进而把你的利益纳入共同体考量。我年少无知的时候曾经认为一句话的对错是客观的，它是谁说的完全不重要——现在我意识到，谁说的，往往是这句话好使不好使唯一重要的因素。</p>
+  <blockquote>说白了，地位就是在别人心里，你到底算老几。</blockquote>
+  <div class="divider">✵</div>
+
+  <p>你可能想不到，社会心理学家关于地位的研究是最近一二十年才变得热门。可能以前人们都觉得这是一个有点尴尬的话题，避而不谈。学术界当前的共识是，地位是一个人被他人尊重、钦佩和自愿让步的程度；追求地位是一种极其基础的人类动机。</p>
+  <p>关键词是「他人」和「自愿」：不管你怎么追求，你的地位都不是由你——而是由他人决定的。一切的悖论和麻烦就在这里。</p>
+  <p>你想要钱，至少可以攒钱；你想要好身材，至少可以锻炼。唯独地位，不是你自己追求就能得到的；有时候你越是追求，反而越得不到。</p>
+  <p>可是我们真的很在意地位。美国心理学家马克·利里（Mark Leary）提出一个「社会计量器理论（sociometer theory）」，认为所谓「自尊（self-esteem）」，其实是我们大脑里的一个雷达仪表盘，它在时刻监测自己的地位，评估自己是否在人群中被接纳，还是面临被踢出局的风险。这个仪表盘的读数会强烈影响你的自我感受。</p>
+  <ul>
+    <li>羞耻不是"因为我做错了"，而是"我在别人心中的价格暴跌"。</li>
+    <li>骄傲不是"因为我成功了"，而是"我的社会估值得到了确认"。</li>
+    <li>愤怒常常不是因为"我的利益受到损失"，而是"你凭什么调低我的评级？！"</li>
+  </ul>
+  <p>如果一个人正在为社会排名降低而焦虑，你很难让他"想开点"。早就有研究表明，人如果长期感到自己不被承认、没有价值，生理机能就会被推入一种充满皮质醇的慢性压力状态，以至于损害健康指标。低社会排名感甚至与抑郁症状、自杀的意念和自伤的风险之间都存在系统性的强关联。</p>
+  <p>这就是为什么那些总统、高官在位的时候一个个都红光满面，只要一下来，身体和精神就会迅速崩塌。很多人说这叫"权力是最好的春药"，但如果你仔细辨别，你会发现那不是权力，那是地位。你看那些明星都没有权力，但只要地位在就必定精神焕发。说什么"大丈夫不可一日无权，小丈夫不可一日无钱"，其实没权也行，没钱也行，但是不能没地位。</p>
+  <div class="divider">✵</div>
+
+  <h2>地位是排行榜，不是温度计</h2>
+  <p>一个特别有意思的性质是：地位永远是相对于你周围的人的，你并不在乎不相干的人比你高还是比你低——地位看的是相对位置，而不是绝对水平。</p>
+  <p>比如你年收入 100 万，这放在全国来说绝对是非常高的收入，可以说很富裕。可是你的幸福感更多地不是由绝对收入，而是由你在自己的亲友、在居住的小区的相对排名所决定的。如果你周围都是一些富豪，他们谈论的都是你未曾拥有的资产，你可能还是会感到很焦虑。</p>
+  <p>学术界称之为「本地阶梯效应（local-ladder effect）」：人的地位感来自面对面小群体、在意的小圈子里的尊重和钦佩。</p>
+  <p>所以地位不是温度计，而是排行榜。这就是为什么很多人宁做鸡头不做凤尾。</p>
+  <p>而且事实上做鸡头比做凤尾更有利于你的成长——包括能力本身的成长。举个例子，咱们设想有两个中学生：第一个学生的数学绝对实力是 90 分，但他是在一个普通中学读书，数学考试常年排第一；第二个学生的绝对实力是 95 分，但他身处一所著名中学的天才班，周围全是高手，自己只排在中下游。那么请问，这两个孩子将来谁更有可能在数学相关领域发展？</p>
+  <p>答案是第一个孩子。他的优势地位带来一个强烈的"我是数学天才"的自我暗示，形成正反馈效应，激励他去继续钻研数学。而第二个孩子虽然其实更擅长数学，但是地位常年被数学打击。</p>
+  <p>这是有研究证据支持的。2020 年的一篇论文就专门调查了"班级第一的重要性"，发现一个人长大后是否从事某个专业，跟他本人的绝对水平关系并不大，真正起作用的是他在班级里的「同辈排名（Ordinal Rank）」。</p>
+  <blockquote>平台给你资源，但地位叙事给你动力。你在地位坐标上的位置决定了你对世界的体感。</blockquote>
+  <p>这真是人世间一个残酷的设定。要知道坐标之争必定是零和的。科技再发展，社会再富裕，全班排第一的那个位置上也只有一个人。</p>
+  <div class="divider">✵</div>
+
+  <p>如果你班级排名不是那么好，这里有一个好消息：考试成绩并不能直接决定一个人在群体中的地位。有的尖子生只会学习，未必真的得到同学和老师的认可，如果成了"做题家"，发展空间恐怕也有限。</p>
+
+  <h2>两条地位路径：支配与声望</h2>
+  <div class="qa">
+    <div class="q">怎样才能真正成为一方豪杰、本地达人呢？</div>
+    <div class="a">
+      <p>过去二十多年间，演化人类学家约瑟夫·亨里奇（Joseph Henrich）等人提出一个经典理论，说争取地位有两条截然不同的途径：一个是「支配（dominance）」，一个是「声望（prestige）」。</p>
+      <p>支配型地位靠的是权力、资源和恐惧。比如高级官员、黑道大哥和那些通过重奖重罚彰显权威的霸道总裁。你听他的是因为你怕他。</p>
+      <p>声望型地位靠的却是能力、知识和慷慨。别人愿意听你的是因为你的判断经常正确，跟着你能学到真本事，而且你经常给集体做贡献。人们不但由衷地尊重你，而且想要模仿你。</p>
+    </div>
+  </div>
+  <blockquote>声望是一片引力场，支配是一口高压锅。理想情况下我们应该追求声望型地位。</blockquote>
+
+  <div class="qa">
+    <div class="q">那你说，声望这么好，为什么还有那么多人执迷于寻求支配呢？</div>
+    <div class="a">
+      <p>因为支配型地位也有自己的生态位。当局面危急、混乱和不确定的时候，人们会本能地呼唤"强人"，想要一个独断专行力排众议的统帅，相信唯有支配能高效解决问题。</p>
+      <p>所以支配可以说是一种战时模式。今天我们生活在和平之中，对支配很不舒服——但是人类历史上大部分时间就是处在危急、混乱和不确定之中，导致我们的支配本能明显强于声望本能。明明只是讨论个产品需求，这位领导非要搞得像黑帮火并；明明是团队协作，他非要搞服从性测试。有的人以为自己在扮演铁血统帅，其实不过是个令人窒息的办公室土皇帝。</p>
+    </div>
+  </div>
+
+  <h3>能力 × 温暖：一个二维坐标系</h3>
+  <p>你最好克服那个支配本能，走向「声望」。一个颗粒度更高的理论是这样的：当你想要提高地位的时候，你需要考虑两个维度：「能力（competence）」和「温暖（warmth）」：能力是你的本事，温暖是你的意图。它们构成一个二维直角坐标系——</p>
+  <ul>
+    <li><strong>能力高、温暖高</strong>：这是声望型地位。人们尊重你、亲近你，并且自愿追随你。</li>
+    <li><strong>能力高、温暖低</strong>：这是或多或少的支配型地位。人们羡慕你，但同时也警惕你，你的在场对他人是一个威胁。</li>
+    <li><strong>能力低、温暖高</strong>：人们会觉得你是个好人，但不信任你能做成事，所以不会给你多少地位。</li>
+    <li><strong>能力低、温暖低</strong>：这种人会被社会边缘化。</li>
+  </ul>
+  <p>我想特别提醒你注意"能力高、温暖低"这个象限。很多聪明人在社会上到处碰壁，就是因为他们位于这里。今天降维打击这个明天智商碾压那个，每次都能赢得辩论，但长期看，你被移出了群聊。</p>
+  <p>其实奢侈品的温暖也很低。团队聚会，你一身名牌出场，传达一个信号就是"我比你们贵"。这的确是一种地位展示，但你等于是在自己和他人之间建立了一道屏障，别人会觉得你冷漠不好亲近。</p>
+  <blockquote>记住，既要展示能力，更要展示善意。否则你收获的只是防御而不是声望。</blockquote>
+  <div class="divider">✵</div>
+
+  <h2>二阶效应：永远不要无故做空别人的地位</h2>
+  <p>你看出来没有？地位这个游戏有强烈的「二阶效应（second-order effect）」。一阶效应是每个人都想追求地位，但二阶效应是，在接收方，人们不喜欢你那些支配型的操作。</p>
+  <p>可是你往往只考虑到一阶，而没有考虑到二阶。</p>
+  <p>有的人对下属颐指气使，还洋洋自得，殊不知危险已经不远了；有的人把自己弄得珠光宝气，却不知在别人眼中那个形象很土。你再想想自己早年发过的那些尴尬的朋友圈……</p>
+  <p>在每一次社交互动中，你很关心自己是不是被看见了、自己的地位是否稳固——但别人也很关心他的地位是不是被你看见了，他的地位在你这里是否稳固。我们必须建立这种二阶思维，充分考虑别人的感受，才能在社会上顺畅行走。</p>
+  <blockquote>核心心法只有一句：永远不要无故做空别人的地位。可能你只是无意间做空，可是对他人却是巨大的伤害。</blockquote>
+  <p>婚姻专家约翰·戈特曼（John M. Gottman）早就有研究发现，要从一对夫妇的互动模式中判断他们未来是否可能离婚，批评、防御和冷战都属于危险信号——但是最危险的，是「蔑视（contempt）」：如果一方已经在蔑视另一方，那这段关系基本上就算完了。</p>
+  <p>蔑视是对对方地位的公开处刑。没事儿千万不要如此，你很难得到原谅。</p>
+  <p>不但不要蔑视，而且也不要让人难堪。这意味着不要当众指出他人的错误，想纠错最好私下交流。</p>
+  <div class="divider">✵</div>
+
+  <h2>地位饥饿：地位是个副产品</h2>
+  <div class="qa">
+    <div class="q">你说我不打击别人的地位，可如果别人打击了我的地位，我该怎么办呢？</div>
+    <div class="a">
+      <p>你可以展示自己的地位，但这里有个更重要的忠告，那就是不要陷入地位饥饿。</p>
+      <p>地位饥饿的人是丑陋的。别人提个不同意见他就觉得被冒犯；他不放过任何一个打压新人的机会；他把任何动作都变成了一场表演；他可能拼命讨好上级；也可能索性从社交中退出。</p>
+      <p>那是一种极度的不安全感。然而这里的悖论是，地位饥饿只会让人更没有地位。</p>
+    </div>
+  </div>
+  <p>你要知道地位是个副产品：地位是他人对你的估值，这个估值可能波动，可能被误判，那不是你能决定的。</p>
+  <blockquote>你能直接追求的是能耐和贡献。你无法直接抓住地位，但你可以成为一个值得拥有地位的人。</blockquote>
+
+  <h2>结语：这不是市侩，这是慈悲</h2>
+  <p>咱们中国是个熟人社会，面子和地位的权重可能就更大。有人调侃说哪怕霍金来中国也得站起来给领导敬酒——其实不至于。但现实是，即便他是霍金，而且不管在哪一国，他都得尊重别人的地位。</p>
+  <p>因为打击地位对人的伤害实在太大了。</p>
+  <blockquote>这不是市侩，这是慈悲。</blockquote>
+  <p>谦卑的我，只能讲出这些逻辑；而聪明的你，必然会有更深的感悟。</p>
+
+  <div class="notes">
+    <h3>注释</h3>
+    <ol>
+      <li>Anderson, Cameron, John Angus D. Hildreth, and Laura Howland. "Is the Desire for Status a Fundamental Human Motive? A Review of the Empirical Literature." <em>Psychological Bulletin</em> 141, no. 3 (2015): 574–601.</li>
+      <li>Leary, Mark R., Ellen S. Tambor, Sonja K. Terdal, and Deborah L. Downs. "Self-Esteem as an Interpersonal Monitor: The Sociometer Hypothesis." <em>Journal of Personality and Social Psychology</em> 68, no. 3 (1995): 518–530.</li>
+      <li>Zell, Ethan, Jason E. Strickhouser, and Zlatan Krizan. "Subjective Social Status and Health: A Meta-Analysis of Community and Society Ladders." <em>Health Psychology</em> 37, no. 10 (2018): 979–987.</li>
+      <li>Wetherall, Karen, Kathryn A. Robb, and Rory C. O'Connor. "Social Rank Theory of Depression: A Systematic Review of Self-Perceptions of Social Rank and Their Relationship with Depressive Symptoms and Suicide Risk." <em>Journal of Affective Disorders</em> 246 (2019): 300–319.</li>
+      <li>Tan, Jacinth J. X., Michael W. Kraus, Nichelle C. Carpenter, and Nancy E. Adler. "The Association Between Objective and Subjective Socioeconomic Status and Subjective Well-Being: A Meta-Analytic Review." <em>Psychological Bulletin</em> 146, no. 11 (2020): 970–1020.</li>
+      <li>Anderson, Cameron, Michael W. Kraus, Adam D. Galinsky, and Dacher Keltner. "The Local-Ladder Effect: Social Status and Subjective Well-Being." <em>Psychological Science</em> 23, no. 7 (2012): 764–771.</li>
+      <li>Murphy, Richard, and Felix Weinhardt. "Top of the Class: The Importance of Ordinal Rank." <em>The Review of Economic Studies</em> 87, no. 6 (2020): 2777–2826.</li>
+      <li>Henrich, Joseph, and Francisco J. Gil-White. "The Evolution of Prestige: Freely Conferred Deference as a Mechanism for Enhancing the Benefits of Cultural Transmission." <em>Evolution and Human Behavior</em> 22, no. 3 (2001): 165–196.</li>
+      <li>Cheng, Joey T., Jessica L. Tracy, Tom Foulsham, Alan Kingstone, and Joseph Henrich. "Two Ways to the Top: Evidence That Dominance and Prestige Are Distinct Yet Viable Avenues to Social Rank and Influence." <em>Journal of Personality and Social Psychology</em> 104, no. 1 (2013): 103–125.</li>
+      <li>Kakkar, Hemant, and Niro Sivanathan. "When the Appeal of a Dominant Leader Is Greater Than a Prestige Leader." <em>Proceedings of the National Academy of Sciences</em> 114, no. 26 (2017): 6734–6739.</li>
+      <li>Fiske, Susan T., Amy J. C. Cuddy, and Peter Glick. "Universal Dimensions of Social Cognition: Warmth and Competence." <em>Trends in Cognitive Sciences</em> 11, no. 2 (2007): 77–83.</li>
+      <li>Cannon, Christopher, and Derek D. Rucker. "The Dark Side of Luxury: Social Costs of Luxury Consumption." <em>Personality and Social Psychology Bulletin</em> 45, no. 5 (2019): 767–779.</li>
+      <li>Gottman, John Mordechai. 1994. <em>What Predicts Divorce? The Relationship Between Marital Processes and Marital Outcomes.</em> Hillsdale, NJ: Lawrence Erlbaum Associates.</li>
+    </ol>
+  </div>
+
+  <div class="comments">
+    <h2>用户留言</h2>
+
+    <div class="cmt">
+      <div class="ch"><span class="cn">至尊女宝</span><span class="ct">昨天 · 四川</span></div>
+      <p>专业课讲过「差分信号」，有意义的是两根线之间的电压差，不是对地的绝对值。地位也一样：你有多少钱、多高职位，那是对地电压，真正决定你社交体感的，是你跟身边人的压差。</p>
+      <p>我老家有个同学，我们那边的公务员，也已经是个科级干部吧，他在同学聚会上一坐，大家都自觉给他倒酒。为啥？因为他能帮你家孩子进好学校，能帮你亲戚办个事。他的"绝对电压"不高，但他在本地网络里是高电平。</p>
+      <p>反过来，也是我们的同学在深圳做程序员，工资是我们那边公务员的几倍，过年回老家同学聚会，他张嘴就是"我们这小城市节奏太慢，太落后"这类的话脱口而出，全场沉默。他的绝对电压高，但跟老同学的压差是负的，大家觉得他牛是真牛，但没人愿意跟他玩。</p>
+      <p>所以你看，什么社会地位，本质上是个本地排行榜。你在这个排行榜上的位置，决定了你是春风得意还是如坐针毡。地位这东西，跟幸福一样，是个副产品。你越追它，它跑得越快；你专心干实事，它反而会悄悄跟在后面。</p>
+      <p>说真心话吧，我年轻时候也做过不少领导夹菜我转桌，领导敬酒我不喝，领导开车我坐车的蠢事，本质上不是情商低，是没理解社会的底层协议。社会不是单机游戏，是个多人联网游戏。你的操作不仅要让自己爽，还要考虑会不会让别的玩家掉线。</p>
+      <p>小小的总结就三句话：1. 永远不在公开场合否定任何人。2. 能力要展示，但要带温度。3. 别跟别人的地位过不去。我们在别人心里的价格其实也不是自己标的，是别人愿意出的。我们唯一能做的，就是让自己值得那个价格，而不是天天举着喇叭喊。以上，一个从「夹菜转桌选手」艰难转型的钢铁直女的肺腑之言。</p>
+    </div>
+
+    <div class="cmt">
+      <div class="ch"><span class="cn">左星星</span><span class="ct">昨天 · 上海</span></div>
+      <p>我曾经参加过一个马拉松跑团。跑团里成绩最好的选手，当然会受到大家佩服，但真正拥有最高地位的人，却是配速员。他的成绩未必最顶尖，却总能稳定控制节奏，在关键时刻提醒大家补水、调整呼吸，在有人掉队时主动鼓励和等待。为了帮助别人完成目标，他甚至会放弃冲击自己的最佳成绩。比赛结束后，大家记住的不是谁跑得最快，而是谁带着大家一起跑到了终点。</p>
+      <p>一个人跑得快，大家会佩服；一个人带着大家都跑得更好，大家才会追随。</p>
+      <p>一部戏拍得好，观众往往记住演员和导演，却很少有人知道灯光师的名字。但在剧组内部，真正受尊重的，恰恰是这样的人。他不站在聚光灯下，不抢功劳，也不发号施令，却能通过自己专业的"调光"能力，让演员状态更好，让画面更有质感，让导演的创意得到更好的呈现。他的价值，不是自己发光，而是让别人发光。</p>
+      <p>地位其实是一种"社会信用"。支配型地位依靠的是让别人服从，而声望型地位依靠的是让别人受益。前者建立在压力之上，后者建立在信任之上。压力一旦消失，地位也可能随之消失；而信任会不断积累，最终形成一种稳定的影响力。</p>
+      <p>所以，与其执着于证明自己比别人强，不如努力成为那个能让团队更顺畅、让他人更出色的人。真正高级的地位，不是别人害怕你，而是别人需要你。</p>
+    </div>
+
+    <div class="cmt">
+      <div class="ch"><span class="cn">一叶而知秋</span><span class="ct">16小时前 · 内蒙古</span></div>
+      <p>【思维工具－地位】关于地位就是话语权，可能没有比身处某系统中的我感受更深了。以下是比故事还让人无语的真实经历。</p>
+      <p>第一个故事，关于赫鲁晓夫。那是我很小的时候，从某本书上看到的。说赫鲁晓夫在一次会议上批评一位艺术家的作品"看不懂"。艺术家反问他："您不懂艺术，凭什么批评我？"赫鲁晓夫当场拍桌子："我当基层干部的时候不懂，当中层干部的时候不懂，刚进政治局的时候也不懂。但现在我是总书记，我还能不懂吗？"</p>
+      <p>小时候我觉得这人真蠢——艺术和权力有什么关系？后来才明白，他说的是那个场域的"真实"：地位决定标准。艺术不重要，真理不重要，谁的地位高，谁的理解就是标准。很不幸，我后来也遇到了一位这样的领导。</p>
+      <p>第二个故事，关于我那位"赫鲁晓夫式"的领导。这领导学历不高，从乡镇一步步熬上来。协调和开会有一套，但文字功底真不算强。不知是否因为这个，他特别在意"改材料"这件事。一篇两页纸的常规汇报，到了他手里，非得翻来覆去改上十几遍。他的改法很特别——不喜欢正常的公文句式，非要写成"四六句"，带点顺口溜的味道，比如"上蹿下跳，能跑会要"。他常说这才"接地气"，可我们打交道的对象是企业家和上级部门。</p>
+      <p>虽然他改完的材料常常连主谓宾都混乱，但他特别自信，口头禅永远是别人的东西"糊糊擦擦"，就他的东西干脆精炼。每次他坐在那里指挥删掉一个"的"、加上一个"了"，然后满意地点头时，旁边的老员工只能无奈地苦笑一下，继续低头。</p>
+      <p>过去我评价他是刷存在感。听完万老师讲"地位是社会对你的主观估值"后才明白：他是在反复确认自己的地位。</p>
+      <p>有一次，某科长的一篇稿子被他要求改了接近二十遍，每次只说"不对"，又不告诉哪里对。科长红着眼眶来找我，拿着第一稿和改了十几稿的痕迹问："哥，你帮我看看，哪一稿更能说清问题？"我很了解这个科长。985 中文系毕业，文笔厚实，思路清晰，深得前任领导赏识。到了这位领导手下，却被反复挤兑。我拿过材料一看——一篇逻辑清晰、文字扎实的稿子，被改成了四不像：前后矛盾、主谓宾不全，硬塞进几个"四六句"充门面。</p>
+      <p>那一刻，我脑子里浮现出赫鲁晓夫拍桌子的画面。我意味深长地说："材料这东西，谁官大谁写得好。"科长苦笑："哥，你这句是假话，但对我比真话管用。"不再较真，走了。在这个场景里，"材料好不好"已经没有客观标准了——领导官大，他说的就是对的。</p>
+      <p>但有意思的是，地位是有保鲜期的。这位领导退休了。如今单位没有一个人说他好。那些被他长期穿小鞋的下属，在背后编了段子："凭溜须拍马得到的位子，凭实力把面子丢完。"我听到这句话时，心里生出一种悲悯。他忘了：他能获得那种支配地位，靠的是那个位置，而不是他自己。他以为他改材料是因为他"懂"，其实是因为他"有权"。他把支配型地位当成了声望型地位，误以为别人服从他是出于尊重，其实不过是出于恐惧。</p>
+      <p>这就引出了"二阶效应"。这位领导只算了一阶：他以为只要反复行使支配权，地位就会越来越稳固。他享受的是"我一开口，别人就得改"的快感。但他没算二阶：每一次他行使支配权，下属们表面上点头服从、加班改稿，心里却在发生微妙的变化——从最初的"他要求高"，到中间的"他根本不懂"，再到最后的"这人不行"。下属嘴上不说，但行动很诚实：表演性加班、偷偷用 AI 应付、能考走就考走。这种"表面服从、内心鄙视"的双轨状态，就是二阶崩塌最真实的写照。它不会当场爆发，而是像水滴石穿一样，一点点掏空他的声望地基。</p>
+      <p>一阶上，他赢了每一次改材料的战役。二阶上，他输掉了所有人对他的尊重。</p>
+      <p>我又想起了我的第一任领导。他退休时，当年的下属自费请吃饭，有人喝多了哭着说："你走了我们怎么办。"他不是因为官大才被尊重——改材料时，他会说"这个地方我想改成这样，你从专业角度看看行不行"；下属犯错时，他会关起门来说"下次注意"，从不当众羞辱。他没有赫鲁晓夫式的权力，但他有赫鲁晓夫永远换不来的东西：别人把他的话当真，不是因为他的位置，而是因为他这个人。</p>
+      <p>回到我那位赫鲁晓夫式的领导：退休之后，他说的每一句话，都没人再当真了。在位时以为自己是一阶的赢家，退休后才发现自己早就是二阶的输家。这大概就是支配型地位最大的讽刺。</p>
+      <div class="reply">
+        <div class="rl">作者回复</div>
+        <p>这种人都非常愚蠢，他们一生都在寻求心理补偿。可遗憾的是，这样的人偏偏就能当上领导。如果是我的话，宁可翻脸也不惯着他。</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="ai-summary">
+    <div class="as-t">AI 阅读总结</div>
+    <div class="as-sub">通读全讲 · 提炼核心与行动建议</div>
+
+    <p class="one">一句话概括：地位是社会对你的主观估值，它隐藏在日常一切争执的背后；与其追逐支配式的"我说了算"，不如用能力和温暖赢得声望，并永远不要无故做空别人的地位。</p>
+
+    <h3>一、核心内容总结</h3>
+    <ul>
+      <li><strong>地位是观察社会的第一性原理。</strong>夫妻吵架争的是家庭主导权，周会争执争的是认知解释权——观点之争、品味之争、效率之争、利益之争、正义之争，背后往往是地位之争；金钱、权力等虽更基本，但在日常社会参与中，人最不自觉在意的恰恰是地位。</li>
+      <li><strong>地位不由你决定，而由他人决定。</strong>它是"别人愿意在多大程度上把你的话当真"；"谁说的"往往比"说得对不对"更重要，而"越是追求越得不到"是它最深的悖论。</li>
+      <li><strong>自尊是社会计量器。</strong>利里的社会计量器理论认为自尊是大脑监测地位的雷达：羞耻是"我在别人心中的价格暴跌"，骄傲是"社会估值得到确认"，愤怒常源于"你凭什么调低我的评级"。</li>
+      <li><strong>低地位会实实在在地伤害健康。</strong>长期不被承认会进入皮质醇慢性压力状态，低社会排名感与抑郁、自杀意念强关联——官员下台后身心崩塌，不是因为失去权力，而是失去地位。</li>
+      <li><strong>地位看相对位置，不看绝对水平。</strong>本地阶梯效应说明地位感来自在意的小圈子；"宁做鸡头不做凤尾"不仅关乎心理，更关乎成长——班级同辈排名比绝对实力更能预测一个人是否深耕某个专业。</li>
+      <li><strong>争地位有两条路：支配与声望。</strong>支配靠权力、资源和恐惧，适合危急混乱的战时生态位；声望靠能力、知识和慷慨，让人尊重并想模仿——理想情况下应追求声望型地位。</li>
+      <li><strong>能力×温暖四象限，警惕"高能力低温暖"。</strong>能力高温暖高是声望；能力高温暖低只是支配，令人警惕；很多聪明人赢得每次辩论，却长期被移出群聊；奢侈品的"我比你们贵"同样是在自建屏障。</li>
+      <li><strong>地位游戏有二阶效应，核心心法是"永远不要无故做空别人的地位"。</strong>你关心自己被看见，别人同样关心自己的地位；蔑视是对地位的公开处刑，是婚姻破裂最危险的信号，纠错要私下进行；地位饥饿只会让人更没有地位，你无法直接抓住地位，但可以成为值得拥有地位的人。</li>
+    </ul>
+
+    <h3>二、给个人的行动建议</h3>
+    <ul>
+      <li><strong>给争论装一个"地位探测器"。</strong>本周遇到任何争执（哪怕只是点外卖、聊方案），先停三秒问自己：我们争的是事情本身，还是谁说了算？觉察到是地位之争，就主动把话题拉回事实，说一句"这个我们验证一下"。</li>
+      <li><strong>把一次公开纠错改成私下交流。</strong>当同事、家人或下属当众说错时，忍住不当场指出，改在事后单独说"刚才那个地方我有个不同看法，想跟你对一下"。这是最便宜的二阶思维练习。</li>
+      <li><strong>展示能力时主动"带温度"。</strong>本周在群里或会上分享成果时，刻意加一句对别人的感谢或对团队协作的归功；能力照样展示，但别让"我比你们强"成为你唯一的信号。</li>
+      <li><strong>盘点并停掉一个"做空别人"的动作。</strong>检视自己有没有习惯性抢话、泼冷水、阴阳怪气、晒优越（名牌、收入、孩子成绩）的行为，挑最明显的一个，本周刻意改掉，观察对方反应的变化。</li>
+      <li><strong>检查你的"本地排行榜"环境。</strong>如果你长期身处被反复打击的"凤尾"位置（团队、圈子），认真评估：是留下积累实力，还是主动换到一个你能当"鸡头"、获得正反馈的小环境？可以先用一个月试水。</li>
+      <li><strong>用"让别人发光"积累社会信用。</strong>本周主动做一件不被看见却实在的事：帮新人补一次台、把资源分享出去、在关键时刻稳定节奏当一次"配速员"。声望不是抢来的，是别人从你的贡献里认出来的。</li>
+      <li><strong>检查亲密关系里的"蔑视"。</strong>留意自己是否对家人用过嘲讽、翻白眼、贬低式语气；本周至少一次，把"你怎么连这都不懂"换成"这个我来帮你看"。蔑视是关系里最危险的信号，值得你专门防一防。</li>
+    </ul>
+
+    <h3>三、金句摘录</h3>
+    <blockquote>地位，就是在别人心里，你到底算老几。</blockquote>
+    <blockquote>声望是一片引力场，支配是一口高压锅。</blockquote>
+    <blockquote>核心心法只有一句：永远不要无故做空别人的地位。</blockquote>
+    <blockquote>你无法直接抓住地位，但你可以成为一个值得拥有地位的人。这不是市侩，这是慈悲。</blockquote>
+
+    <div class="foot">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</div>
+  </div>
+
+</div>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+<script>
+  var bar=document.getElementById('progress'),btn=document.getElementById('topBtn');
+  function onScroll(){
+    var h=document.documentElement;
+    bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    if(h.scrollTop>400){btn.classList.add('show');}else{btn.classList.remove('show');}
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>

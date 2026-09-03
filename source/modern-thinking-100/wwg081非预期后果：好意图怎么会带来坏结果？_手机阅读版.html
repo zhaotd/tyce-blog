@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>非预期后果：好意图怎么会带来坏结果？｜现代思维工具100讲·第81讲</title>
+<style>
+  :root{
+    --bg:#faf7f1;
+    --card-bg:#ffffff;
+    --text:#2b2620;
+    --text-soft:#6b6155;
+    --accent:#8a5a2b;
+    --accent-soft:#a97b4c;
+    --border:#e4dccd;
+    --quote-border:#c9a97c;
+    --quote-bg:#f5efe4;
+    --comment-bg:#f4f0e6;
+    --summary-bg:#f2ead9;
+    --summary-border:#c9a97c;
+    --shadow:0 1px 3px rgba(80,60,30,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --card-bg:#201d18;
+      --text:#e8e0d2;
+      --text-soft:#a89c8a;
+      --accent:#c9975e;
+      --accent-soft:#e0b98a;
+      --border:#3a342b;
+      --quote-border:#c9975e;
+      --quote-bg:#262117;
+      --comment-bg:#242019;
+      --summary-bg:#2a2318;
+      --summary-border:#c9975e;
+      --shadow:0 1px 3px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    text-align:justify;
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+    z-index:999;transition:width .1s linear;
+  }
+  #toTop{
+    position:fixed;right:18px;bottom:calc(24px + env(safe-area-inset-bottom));
+    width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#faf7f1;
+    border:none;font-size:20px;line-height:1;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+    opacity:0;pointer-events:none;transition:opacity .25s ease,transform .2s ease;
+    z-index:998;cursor:pointer;
+  }
+  #toTop.show{opacity:1;pointer-events:auto;}
+  #toTop:active{transform:scale(.92);}
+  .container{max-width:700px;margin:0 auto;}
+  header.doc-head{
+    padding:44px 4px 28px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:28px;
+  }
+  .course-tag{
+    display:inline-block;font-size:12.5px;letter-spacing:.08em;
+    color:var(--accent);background:var(--quote-bg);
+    border:1px solid var(--quote-border);
+    padding:4px 12px;border-radius:999px;margin-bottom:16px;
+  }
+  h1.title{
+    font-size:26px;line-height:1.45;font-weight:700;
+    letter-spacing:.01em;margin-bottom:14px;text-align:left;
+  }
+  .meta{
+    font-size:13px;color:var(--text-soft);
+    display:flex;flex-wrap:wrap;gap:6px 14px;text-align:left;
+  }
+  .meta span::before{content:"·";margin-right:14px;color:var(--accent);}
+  .meta span:first-child::before{content:"";margin:0;}
+  article.body{padding:0 4px;}
+  article.body > section{margin-bottom:34px;}
+  article.body > section:last-child{margin-bottom:0;}
+  h3.sec{
+    font-size:19px;font-weight:700;color:var(--accent);
+    margin:36px 0 14px;padding-left:12px;
+    border-left:4px solid var(--accent);
+    text-align:left;line-height:1.5;
+  }
+  section:first-of-type h3.sec{margin-top:0;}
+  p{margin:0 0 14px;}
+  ul.points{margin:0 0 16px;padding-left:22px;}
+  ul.points li{margin-bottom:10px;}
+  .lead{
+    font-size:17.5px;color:var(--accent);font-weight:600;
+    text-align:left;line-height:1.7;margin-bottom:16px;
+  }
+  blockquote{
+    margin:18px 0;padding:14px 18px;
+    border-left:4px solid var(--quote-border);
+    background:var(--quote-bg);
+    border-radius:0 12px 12px 0;
+    color:var(--text);font-style:normal;
+  }
+  blockquote .src{
+    display:block;margin-top:8px;font-size:13px;
+    color:var(--text-soft);text-align:right;font-style:normal;
+  }
+  .divider{
+    text-align:center;color:var(--accent-soft);
+    font-size:16px;letter-spacing:.5em;
+    margin:30px 0;user-select:none;
+  }
+  .qa{
+    margin:16px 0;border-radius:12px;overflow:hidden;
+    border:1px solid var(--border);box-shadow:var(--shadow);
+  }
+  .qa .q{
+    background:var(--comment-bg);padding:12px 16px;
+    font-weight:600;color:var(--accent);font-size:15.5px;
+    border-bottom:1px dashed var(--border);text-align:left;
+  }
+  .qa .a{padding:14px 16px;text-align:left;}
+  .flow-box{
+    background:var(--quote-bg);border:1px dashed var(--quote-border);
+    border-radius:12px;padding:14px 18px;margin:16px 0;
+  }
+  .flow-box .row{margin-bottom:8px;text-align:left;}
+  .flow-box .row:last-child{margin-bottom:0;}
+  .flow-box .lbl{
+    display:inline-block;font-size:12px;font-weight:600;
+    color:var(--accent);border:1px solid var(--quote-border);
+    border-radius:6px;padding:1px 8px;margin-right:8px;vertical-align:1px;
+  }
+  .flow-box .arrow{color:var(--accent-soft);}
+  /* 注释 */
+  section.notes{
+    background:var(--card-bg);border:1px solid var(--border);
+    border-radius:12px;padding:20px 20px 8px;box-shadow:var(--shadow);
+  }
+  section.notes h3{color:var(--accent);font-size:16px;margin-bottom:12px;text-align:left;}
+  section.notes ol{padding-left:20px;}
+  section.notes li{
+    font-size:13.5px;color:var(--text-soft);
+    line-height:1.7;margin-bottom:10px;text-align:left;
+    word-break:break-word;
+  }
+  /* 用户留言 */
+  section.comments h3{
+    font-size:17px;color:var(--accent);margin-bottom:14px;text-align:left;
+  }
+  .comment{
+    background:var(--comment-bg);border:1px solid var(--border);
+    border-radius:12px;padding:18px;margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  .comment .c-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:10px;flex-wrap:wrap;gap:4px 10px;
+  }
+  .comment .c-name{font-weight:700;font-size:15px;color:var(--accent);text-align:left;}
+  .comment .c-time{font-size:12px;color:var(--text-soft);text-align:right;}
+  .comment p{font-size:15px;margin-bottom:10px;text-align:left;}
+  .comment p:last-child{margin-bottom:0;}
+  .comment .reply{
+    margin-top:12px;padding:10px 14px;background:var(--quote-bg);
+    border-left:3px solid var(--quote-border);border-radius:0 8px 8px 0;
+    font-size:14.5px;
+  }
+  /* AI 总结 */
+  #ai-summary{
+    margin-top:44px;padding:26px 22px 20px;
+    background:var(--summary-bg);
+    border:2px solid var(--summary-border);
+    border-radius:12px;
+  }
+  #ai-summary .sum-tag{
+    display:inline-block;font-size:13px;font-weight:700;
+    color:#faf7f1;background:var(--accent);
+    padding:4px 14px;border-radius:999px;margin-bottom:16px;
+    letter-spacing:.1em;
+  }
+  #ai-summary .one-liner{
+    font-weight:700;font-size:16.5px;line-height:1.75;
+    margin-bottom:18px;text-align:left;
+  }
+  #ai-summary h4{
+    font-size:16px;color:var(--accent);margin:20px 0 10px;
+    text-align:left;
+  }
+  #ai-summary ol,#ai-summary ul{padding-left:22px;margin-bottom:6px;}
+  #ai-summary li{margin-bottom:9px;text-align:left;line-height:1.75;}
+  #ai-summary .quotes blockquote{margin:10px 0;}
+  #ai-summary .disclaimer{
+    margin-top:20px;padding-top:12px;border-top:1px dashed var(--summary-border);
+    font-size:12px;color:var(--text-soft);text-align:center;
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<div class="container">
+  <header class="doc-head">
+    <span class="course-tag">万维钢 · 现代思维工具100讲 · 第81讲</span>
+    <h1 class="title">非预期后果：好意图怎么会带来坏结果？</h1>
+    <div class="meta">
+      <span>作者：万维钢</span>
+      <span>得到 App《现代思维工具100讲》</span>
+      <span>讲稿手机阅读版</span>
+    </div>
+  </header>
+
+  <article class="body">
+
+    <!-- 开篇 -->
+    <section>
+      <h3 class="sec">开篇：权力者的本能冲动</h3>
+      <p>不管你是治理一个国家也好，经营一家公司也好，还是只是想管管你家小孩也好，当你手握权力的时候，你会有一个本能的冲动：我想要什么，我就奖励什么；我不想要什么，我就禁止什么；我担心什么，我就审批什么；我看重什么，我就考核什么。如果你这么想，你就默默地把社会当成了一台线性机器，你认为只要遥控器掌握在好人手里就行——而你，就是那个好人。</p>
+      <p>殊不知好的意图并不一定能带来好的结果。现实往往事与愿违，好心经常办坏事。</p>
+    </section>
+
+    <!-- 概念 -->
+    <section>
+      <h3 class="sec">一个概念：非预期后果</h3>
+      <p>类似「好心办坏事」的例子实在太多太多了。用社会学家罗伯特·默顿（Robert K. Merton）的话说，这叫有目的社会行动的「非预期后果（Unanticipated Consequences）」[5]。先看几个典型案例：</p>
+      <ul class="points">
+        <li><strong>旧金山房租管制（1994 年）</strong>：为了保护穷人租房，市政府对房租实行价格管制。结果房东一算账，租金已经不划算，索性把房子卖了或者改作他用——于是市场上的出租房供给减少了大约 15%，租金还提高了 5%，穷人反而更难租到房 [1]。</li>
+        <li><strong>美国《濒危物种法》（1973 年）</strong>：为了保护濒危动物，结果有些土地所有者担心自己土地上如果有濒危动物就会招来开发限制，于是干脆提前砍掉可能成为栖息地的林木 [2]。</li>
+        <li><strong>加州塑料袋禁令（2014 年）</strong>：为了减少白色污染，加州禁止超市提供传统的那种免费薄塑料袋。结果商家用收费的、更厚的「可重复使用」塑料袋替代——可是消费者还是把它当一次性袋子用完就扔。到 2022 年，全州填埋的塑料袋垃圾不降反升，从 15.7 万吨暴涨到 23.1 万吨 [3]。</li>
+        <li><strong>美国「旧车换现金」计划（2009 年）</strong>：为了刺激汽车消费，短期新车销量确实上去了——可后来的研究发现，绝大部分购买只是把本来过几个月要做的决定提前了：补贴一停，销量原地跌落 [4]。</li>
+      </ul>
+    </section>
+
+    <!-- 为什么 -->
+    <section>
+      <h3 class="sec">为什么会有非预期后果？</h3>
+      <p>为什么会有非预期后果呢？我们不能只是感慨「你有你的计划，世界另有计划」。经济学最重要的一个洞见就是「人会对激励做出反应」——尤其请注意：</p>
+      <blockquote>人们响应的是激励（incentives），而不是意图（intentions）。</blockquote>
+      <p>你要是认为你有一个良好的意图，人们就应该在你的号召之下努力实现那个意图，那你就把社会想得太简单了。哪怕你有再大的权力，可以随意出台任何政策，制定任何新的规则，你所能改变的也不是结果本身，而是局面。人们会根据这个局面重新行动，但未必是像你想的那样行动。</p>
+    </section>
+
+    <!-- 幼儿园实验 -->
+    <section>
+      <h3 class="sec">幼儿园罚款实验：道德被价格挤掉</h3>
+      <p>有家幼儿园，家长接孩子总是迟到，园方很头疼（意图），就定了条规矩（政策）：迟到罚款（激励局面）。结果家长对这个新局面的反应，是迟到的更多了。</p>
+      <p>为啥呢？罚款政策之前，准时接娃是一种道德义务，迟到了你会愧疚；有罚款之后，迟到成了一项明码标价的服务——我多付点钱，买你老师半小时加班，愧疚感一扫而空。</p>
+      <p>这是两位经济学家在以色列的几家幼儿园做的经典实验 [6]。后来园方认识到了政策失误，取消了罚款，可是迟到率却再也没降回去。那层道德感一旦被价格挤掉，就回不来了。</p>
+      <div class="flow-box">
+        <div class="row"><span class="lbl">你想的可能是</span>政策 → 行为改变 → 目标结果。</div>
+        <div class="row"><span class="lbl">真实世界却是</span><span class="arrow">政策 → 激励变化 + 预期变化 + 执行变形 → 人的行为再优化 → 系统反应 → 非预期结果。</span></div>
+      </div>
+      <p>要点是，人们会根据你那个新激励局面，对自己的行为进行再优化。</p>
+      <p>上面说的是意图，下面听到的是价格。<br>上面说的是价值观，下面看见的是收益表。<br>上面说的是方向，下面感受到的是约束条件。</p>
+      <p>这不是「群众觉悟低」。这是社会系统的基本物理学。用诺贝尔经济学奖得主罗伯特·卢卡斯（Robert Lucas）的话说：你不能拿旧制度下观察到的行为关系，去预测新政策的效果，因为新政策本身会改变人的预期和行为——人们称之为「卢卡斯批判（Lucas critique）」[7]。</p>
+      <blockquote>有权力，你可以选择你的政策，但你不能选择你政策的后果。</blockquote>
+    </section>
+
+    <div class="divider">✵</div>
+
+    <!-- 青苗法 -->
+    <section>
+      <h3 class="sec">历史重演：王安石与「青苗法」</h3>
+      <p>咱们看看在更严肃的场合中，好意图是怎么在往下传的过程中，一步步走向反面的。就说王安石变法的那个「青苗法」。</p>
+      <p>本意听着是很好的。本来，农民赶上青黄不接就只能去借民间高利贷，年利率高达 70%，十分艰难。王安石这个青苗法提供 40% 的低利率，又能救农民出高利贷的火坑，又给国库增收，岂不是一举两得？</p>
+      <p>这个政策首先在设计层面就有问题。按罗振宇老师在《文明之旅》节目中的分析 [8]，民间利率高有高的道理。农民还款能力低，对农民放贷本来就是一个非常高风险的事，很多债务根本收不回来，利率低了这门生意就不成立。你官府并不比民间那些乡绅更了解本地农民，你凭什么给人提供低利率呢？如果按正常市场逻辑，你这个生意肯定赔本。</p>
+      <p>也许王安石没考虑到这一点，也许人家早就想到了——不管怎么说，王安石的底气在于，这是官府经营的生意。</p>
+      <p>为了确保政策落地，王安石给地方官定了个考核：青苗钱放出去多少，算政绩。</p>
+      <p>那你想想，地方官会怎么做？有的农民借了青苗钱，但是还不上了，说能不能缓一年——你能同意吗？有的农民说我家收成挺好，我不需要借青苗钱——你能允许吗？你要是办青苗法不得力，不但考评不合格升迁没指望，而且你是在抵制改革！</p>
+      <p>隔壁那个知县发明了一个办法：把贷款指标硬摊到每家每户头上，再让乡绅和胥吏包办一部分，管他们怎么弄钱，反正第一年我给你们这么多钱，第二年你们必须给我拿回来外加四成利息！结果人家办成了。因为人家知道怎么有效利用官府这个暴力机器。</p>
+      <p>你学不学？官员不是对变法国富民强的意图做反应，官员是对激励做反应。</p>
+    </section>
+
+    <!-- 街头官僚 -->
+    <section>
+      <h3 class="sec">街头官僚：政策在基层变形</h3>
+      <p>美国政治学家迈克尔·利普斯基（Michael Lipsky）有个学说叫「街头官僚（street-level bureaucracy）」[9]，说让政策真正落地的，不是上峰的文件，而是那些在街头、在一线执行的基层公务员、警察、社工、教师等等，他们都有自己的资源限制、考核压力、自由裁量和自保动机。所以一条政策真正是什么样，不是看文件怎么写，而是看一线人员怎么办。</p>
+      <p>高层说的是宏大的目标：环保、公平、安全、减负。到了中层，目标被压缩成指标；到了基层，指标被翻译成动作。一层层传导下来，原来的公共目标，往往就变成了组织的自保目标。</p>
+      <p>上级要政绩，地方要交差，官吏要免责，百姓要活命，没有一个人觉得自己在作恶。就这样，一个挺好的初心，一群普通人正常上班，却偏偏就产生了坏结果。</p>
+    </section>
+
+    <div class="divider">✵</div>
+
+    <!-- 两个当代案例 -->
+    <section>
+      <h3 class="sec">两个当代案例：良好的意图 + 硬性的考核</h3>
+      <p>良好的意图 + 硬性的考核，就容易带来非预期后果。咱们看两个当代的例子。</p>
+      <p><strong>案例一：能耗双控与柴油发电机。</strong>2021 年，中国政府为了绿色发展、节能减排，推出了「能耗双控」政策。那么一些省份为了完成考核指标，就开始对企业拉闸限电。你完全可以说，我的意图仍然是好的，充分符合中央精神，我是逼高耗能企业升级或淘汰。</p>
+      <p>可你站在工厂主的角度想想：我手里压着一批马上要交货、一违约就赔到破产的订单，电网偏偏这时候不给电！我怎么办？——我自己买柴油机发电。一时间柴油发电机供不应求，相关概念股竟然涨停。指标是达标了，报表上的能耗是下去了，可是那些自备的小柴油机，比集中式电厂要脏得多。你说这算是实现了绿色发展吗？</p>
+      <p><strong>案例二：医院里的「论文工厂」。</strong>另一件事是我们讲「柠檬市场」的时候说过的：中国的医院，近年来制造了大量的假论文，在世界上都造成了重大影响。这是怎么回事呢？</p>
+      <p>可能是为了提升科研水平，中国早在 1986 年的卫生职称制度中，就把对论文、专著、经验总结的要求写进了副主任医师、主任医师的任职条件之中。后来各大医院就层层加码，对论文要求越来越高。有很多医院规定医生评职称必须发 SCI 论文。</p>
+      <p>可是临床医生天天泡在手术台上，哪来时间和精力做基础科研？他们无奈之下就只能买论文。于是「论文工厂」应运而生，专门给你提供论文代写服务。这种事情愈演愈烈，才有了后面的论文打假。</p>
+      <p>你能说这是医生的错吗？有的医生临床水平非常高，救人无数，可是因为没有论文，就评不上高级职称，门诊费就比别人低，这合理吗？</p>
+      <blockquote>系统本想选拔最卓越的医生。结果系统奖励的，却是伪装卓越的本事——会拿手术刀的不如会拿课题的。</blockquote>
+    </section>
+
+    <!-- 上有政策下有对策 -->
+    <section>
+      <h3 class="sec">「上有政策，下有对策」是人性的必然</h3>
+      <p>我以前听到「上有政策，下有对策」这句话，都是在谴责下面执行的人：上面的政策总是好的，是下面基层官员的执行走样了。可是现在看，非预期后果，难道不是人性的必然吗？你制造一个新局面，人们就找一条新出路；被硬堵住的需求往往会改道，奔向更坏的方向。</p>
+    </section>
+
+    <div class="divider">✵</div>
+
+    <!-- 怎么办 -->
+    <section>
+      <h3 class="sec">怎么防止非预期后果？</h3>
+      <p>怎样才能让后果和意图尽量一致，防止出现非预期后果呢？最基本的办法就是没事儿别折腾。</p>
+      <p>在西方，这个原则叫「切斯特顿的篱笆（Chesterton's Fence）」，出自英国作家吉尔伯特·切斯特顿（Gilbert K. Chesterton）[10]：</p>
+      <blockquote>一个改革家看见一道莫名其妙的篱笆横在路当中，张口就说「这玩意儿没用，拆了它」——那么一个更高明的人就应该拦住他：「正因为你看不出它有什么用，你才更不能拆——先回去想明白它当初为什么立在这儿，想通了再来。」</blockquote>
+      <p>简单说就是你要是不理解一个系统，就别假装自己能优化它。</p>
+      <p>其实切斯特顿说得过于温和了。历史作家谌旭彬有个更符合中国国情的说法，叫「司马光困境」[11]——</p>
+      <blockquote>「……所有生活在秦制时代而心系百姓的改革者，必会遭遇的一种困境——他们知道旧制度对百姓极为不利，需要改革；但他们同样也知道，只要改革措施仍然来自不受制约的权力，就很难给百姓带来真正的福利，改革可以利朝廷，可以利官，却很难利民，甚至会将百姓推向更恶劣的境遇。在良知的驱使下，这些人往往表现为既呼吁改革，但又反对具体的改革措施。」<span class="src">——谌旭彬，《大宋繁华》</span></blockquote>
+      <p>说的更直白一点，你的每一次折腾，最后无非是老百姓买单。</p>
+      <p>当然什么都不做也不行。但是理解了非预期后果，政府颁布政策之前，就应该先做一番红队推演，看看政策传导到下面会变形到什么程度。你得做好相应的保护措施，提供补偿机制，能不能给百姓带来好处先不说，先确保别让好人吃亏。</p>
+      <p>其实中国在改革开放时期有一个特别好的做法，那就是在重大政策出台之前，先找几个地方做小步的试点。然后你要跟踪反馈，允许纠错。绝不能先拍脑袋后拍桌子，设定指标层层加码……</p>
+    </section>
+
+    <div class="divider">✵</div>
+
+    <!-- 执行者的责任 -->
+    <section>
+      <h3 class="sec">在下面的人，更要想清楚上面的实际意图</h3>
+      <p>上面设定意图的人应该想想下面的人会怎么落实，而在下面负责落实的人，则更应该想想上面的实际意图。</p>
+      <p>你说我就是个基层公务员，我的任务就是完成上面给的指标——错了。当你负责落实政策的时候，你就不是一个普通的工具人，你是「为官一任，守土有责」的人。你是利普斯基说的街头官僚。</p>
+      <p>上面的人可能只看见报表，而你看见的是人；上面的人可能只想知道「政策已落实」，你看见的是政策变形之后的真实模样。这给了你一份责任——别动不动就把道德责任上移，说「这是上头定的」，否则你就陷入了政治理论家汉娜·阿伦特（Hannah Arendt）说的那个「平庸之恶（the banality of evil）」[12]。</p>
+      <p>现代系统很善于把一整个巨大的恶果，拆成许许多多看上去完全正常、甚至完全尽职的小动作。一个人只管完成放贷指标，一个人只管把报表填好看，一个人只管把不达标的往下压。在街头官僚眼里，对面可以不是一个「人」，而是一个「案例」、一个「指标」、一个「对象」——语言上把人改名为对象，良心就少了一层摩擦。每个人都能理直气壮地说：「我只是做好我的本职工作。」</p>
+      <p>但你的本职工作难道不是那个造福百姓的实际意图吗？</p>
+      <p>一个普通人其实可以做很多事：看见异常，记录它、反馈它，给政策对象留一点解释的余地，至少别帮着把那个谎言抹得更圆。积极一点，你可以提供詹姆斯·斯科特说的米提斯。最起码，你不必做链条上最锃亮的那颗螺丝钉，但你总可以回头问一句：这根链条，拖着的是个什么怪物？</p>
+    </section>
+
+    <div class="divider">✵</div>
+
+    <!-- 结尾 -->
+    <section>
+      <h3 class="sec">结尾：你不是你的意图，你是你的后果</h3>
+      <p>电影《V 字仇杀队》里有一句台词，适合作为这一讲的结尾。</p>
+      <p>一个女医生，曾经主持生物武器研究，对活人做实验并且制造出一种病毒。这种病毒被极权政府用于自导自演的恐怖袭击，害死了大批民众。反抗者 V 最后找到了她，要报复。女医生搬出奥本海默来为自己辩护，说作恶不是她的本意，现在这个后果也是她没想到的……</p>
+      <blockquote>但是 V 说：「我不是为你想做什么而来，我是为你做了什么而来。」<br>意图属于你自己，可是后果属于世界。<br><strong>你不是你的意图，你是你的后果。</strong></blockquote>
+    </section>
+
+    <!-- 注释 -->
+    <section class="notes">
+      <h3>注释</h3>
+      <ol>
+        <li>Rebecca Diamond, Tim McQuade, and Franklin Qian, "The Effects of Rent Control Expansion on Tenants, Landlords, and Inequality: Evidence from San Francisco," American Economic Review 109, no. 9 (2019): 3365–3394.</li>
+        <li>Dean Lueck and Jeffrey A. Michael, "Preemptive Habitat Destruction under the Endangered Species Act," Journal of Law and Economics 46, no. 1 (2003): 27–60.</li>
+        <li>California Department of Justice, "Single-Use Carryout Bag Ban (Proposition 67/SB 270)." https://oag.ca.gov/consumers/bag-ban</li>
+        <li>Atif Mian and Amir Sufi, "The Effects of Fiscal Stimulus: Evidence from the 2009 Cash for Clunkers Program," Quarterly Journal of Economics 127, no. 3 (2012): 1107–1142.</li>
+        <li>Robert K. Merton, "The Unanticipated Consequences of Purposive Social Action," American Sociological Review 1, no. 6 (1936): 894–904.</li>
+        <li>Uri Gneezy and Aldo Rustichini, "A Fine Is a Price," The Journal of Legal Studies 29, no. 1 (2000): 1–17.</li>
+        <li>Robert E. Lucas Jr., "Econometric Policy Evaluation: A Critique," Carnegie-Rochester Conference Series on Public Policy 1 (1976): 19–46.</li>
+        <li>罗振宇，《文明之旅》，公元 1069 年：王安石理财有可能成功吗？；公元 1071 年：新法是怎么龙种变跳蚤的？</li>
+        <li>Lipsky, Michael. Street-Level Bureaucracy: Dilemmas of the Individual in Public Services（Russell Sage Foundation）, 1980.</li>
+        <li>Chesterton, G. K. The Thing: Why I Am a Catholic. London: Sheed &amp; Ward, 1929.</li>
+        <li>谌旭彬，《大宋繁华：造极之世的表与里》，浙江人民出版社（2024）。得到电子书：https://d.dedao.cn/GIQHl4KVvWBShLzs</li>
+        <li>Hannah Arendt, Eichmann in Jerusalem: A Report on the Banality of Evil (New York: Viking Press, 1963).</li>
+      </ol>
+    </section>
+
+    <!-- 用户留言 -->
+    <section class="comments" style="margin-top:34px;">
+      <h3>用户留言</h3>
+
+      <div class="comment">
+        <div class="c-head">
+          <span class="c-name">一叶而知秋</span>
+          <span class="c-time">9 小时前 · 内蒙古</span>
+        </div>
+        <p>【思维工具－非预期后果】万老师这一讲，读的我有点忐忑。不是读不懂，而是在忐忑中辨认。辨认那些我每天看见、却从来没有说出口的东西。</p>
+        <p>作为一个体制内的人，万老师讲的这些，在我工作中不叫理论，叫日常。关于政绩冲动下的长官意志，那么多好心办了坏事的工程，我确实见怪不怪。这话说出来丢脸，但它是真的。</p>
+        <p>那就拿一篇公开报道说事。2020 年《经济参考报》头版，写的是我市一个物流园区：总控制面积 34 平方公里，四通八达的柏油马路空荡无车，写字楼、汽车城、发电厂烂尾其中，会展中心、农机市场、汽车经销店几十座建筑闲置，仅有零星几家企业在维持经营。64 岁的刘广才，大半辈子挣了 5000 万，全砸进「XX 国际农机市场」。400 多个门店只租出去 20 多个，大院空着，他让人家在院里晒玉米，「省得花钱雇人看门」。石治雄，卖了 20 年摩托车，被政府催着进园区。花 195 万买地，贷款近 2000 万建店。2019 年倒闭，欠债 700 多万，成了「老赖」。报道里写他站在积满灰尘的空店门前，什么也没说。开发商张满仓，累计投入 12 亿本金，财务成本加起来 30 亿，「每天一睁眼就背负 40 多万利息」。报道没写他们后来怎样了。但我认识这样的人，不止一个。</p>
+        <p>三个普通人倾尽半生的家业，没有败给市场竞争，没有败给经营失误，最终败给了频繁更迭的行政规划、朝令夕改的公共决策。政策可以推倒重来，普通人的人生不能。</p>
+        <p>这个园区的悲剧，不是单一决策的失误，而是十几年政策碎片化、换届短期化的必然结果。2005 年规划 PVC 项目，地征了，项目黄了；2007 年敲定行政东区，又因城市发展方向调整，彻底闲置；2008 年转型物流园区；2010 年推行「划行归市」，半年后换了领导就偃旗息鼓；2018 年，正式否决。2007 年至今，历经六任书记、五任市长，每一任都在推翻前任的规划，每一任都只求任期内的政绩痕迹，无人敬畏市场规律，无人为长远后果负责。</p>
+        <p>万老师说的「切斯特顿的篱笆」，核心意思是：不要轻易拆除你不懂的东西。可在这个园区，没人愿意追问——那些汽车农机店为什么能在市区活那么多年？市场自有市场的道理，也不能说体制内没有明白人。市辖区一位副区长事后说——他我认识，就是日常工作对接的对象，名字恕我不能写——他说：「违背了市场规律，选址是重大失误。」可决策的时候，算的本来就不是市场账。</p>
+        <p>万老师说的「激励压倒意图」，也在这里演了一遍。当时园区的承诺是「搬进去给你独门生意」。企业家们真金白银投进去，换了一任领导，承诺就没人认了。排他性没了，公交没通，土地被抵押了，产权证办不了——他们成了孤岛。</p>
+        <p>至于「平庸之恶」？园区办主任那句话就够了：「都是上面定的。」——这五个字是体制内最有效的护身符。它意味着免责，意味着执行的合法性，哪怕这执行正在把石治雄们推向深渊。在「上面定」和「下面办」之间，没有人觉得自己是凶手，大家都只是流水线上的操作工。</p>
+        <p>平心而论，当时做这些决策的人，没有一个故意作恶。换了我坐在那个位置上，未必能做得更好——履新第一年什么都不动，叫「守成」，叫「不担责」。动了，哪怕黄了，至少「我在任上推动过项目」。更何况，后任不会为前任的烂尾买单。纠正前任的错误没有收益，还可能得罪人。另起炉灶，才是最安全的政治选择。</p>
+        <p>我们算的是政治账，看不见完整的链条。我们都信一句话：「我的出发点是好的」——这句话可以豁免一切。可石治雄的债，谁来还？万老师说：你不是你的意图，你是你的后果。体制内的我读这句话，后背像被什么东西硌了一下——我们太习惯用意图为自己辩护了。每一次决策之前，总差多问一句：我正打算落下的这一步，会不会正好踩在谁身上？</p>
+        <p>所幸的是，这片历经十几年折腾的土地最终完成了转型，引进新能源企业后，2025 年产值突破 26.85 亿。系统有自我迭代的能力，报表上这叫「腾笼换鸟」，叫「转型成功」。这是好事。可「腾笼换鸟」四个字，被腾走的「旧鸟」去了哪里？光鲜的 GDP 背后，是几个普通人倾家荡产的人生。城市向前走了，但那些被政策洪流裹挟的人，永远留在了过去。只是不知道，刘广才的大院里，还晒不晒玉米？</p>
+        <p>我不知道怎么改变这个系统。但有件事我能做：下一次，当一份「划行归市」的文件摆到我面前，需要我画圈、会签或起草细则时，我不在沉默里麻木。我也许不敢在会上反驳，但我可以在落笔前停一分钟，想一想——这一步踩下去，会不会又多一个积满灰尘的空店门？这不是悲悯，这是防止自己变成流水线上没有知觉的那一环。</p>
+        <p>自大是人性的密码，而规律是上帝的准绳。可上帝，从来不喜欢比他聪明的人。意图是你的，后果是世界的。而世界，从不讲情面。</p>
+      </div>
+
+      <div class="comment">
+        <div class="c-head">
+          <span class="c-name">芊阅</span>
+          <span class="c-time">8 小时前 · 广东</span>
+        </div>
+        <p>上边发文件，要求「切实为基层减负，减少不必要的会议和报表」。这个意图够好了吧？关爱基层，实事求是。</p>
+        <p>可政策一下来，到了省里，省里开会传达：「要高度重视减负工作，各地市必须拿出具体方案。」到了市里，市里落实：「本周内各县区上报『减负台账』，细化到每一条整改措施。」到了县里，时间只剩一天了，乡镇必须连夜填表、拍照、留痕，证明自己「已经组织了学习减负精神的专题会议」。</p>
+        <p>结果，基层公务员干了一整夜，搞出一摞厚厚的「减负记录」，彩印的、装订的、带领导签字的。一位乡镇干部苦笑：「本来今天该下村去看贫困户的，结果在办公室造了一整天减负的假材料。」</p>
+        <p>你看，减负的意图，催生了更多的负担。上面看的是「文件传达了没有」，下面感受到的是「不搞这些留痕，年底考核就要扣分」。激励不是「让群众真满意」，而是「让检查台账真好看」。于是，真正该做的事，下田、入户、解决纠纷，全被应对上级挤占了。好心，就这么层层拧巴成了形式主义。</p>
+        <div class="reply"><strong>作者回复：</strong>是的，我也听说了。「减负」本身，就是一项新负担。</div>
+      </div>
+
+      <div class="comment">
+        <div class="c-head">
+          <span class="c-name">黄加伦—我叫张子鸣</span>
+          <span class="c-time">8 小时前 · 广东</span>
+        </div>
+        <p>现代思维工具 100 讲「非预期后果」，今天的内容，我就想起「数字脱贫」这个现象。这就是有些地方为了满足统计数字和报表，按照指标造了假。要没到现场核查，就被糊弄过去了。不过，中国那么大，检查并不是每一个地方的细节都检查得到。</p>
+        <p>例如明明易地安置工程进度缓慢，规划的 1324 套搬迁住房仅有 584 套达到了入住条件，却要求职能部门按住房主体建设完成率 100% 上报。不仅有这样夸大实际成效的，也有凭空捏造、无中生有让贫困户转眼「收入大增」的，还有借牛借羊临时凑出「养殖大户」的，等等。</p>
+        <p>原本应该得到的真帮扶变成了空口号，任凭如何变换花样，在百姓那里产生的后果是大同小异的：不但没有从实际上感受到摆脱贫困的「获得感」，反过来还有可能因相关干部的那些形式主义表演，损害党和政府在人们心目中的形象。</p>
+        <p>那要怎么做呢？2019 年诺贝尔经济学奖阿比吉特·班纳吉和埃斯特·迪弗洛曾经合著了一本书叫《贫穷的本质》。但是探索到最后的答案是：贫穷这个现象没有什么本质。每一个穷人都不一样，每一个地方的贫穷都有独特的原因。所以不是停留在「数字扶贫」上的「一刀切」，而要做到一户一策，就是具体到每一户的具体情境去解决问题。</p>
+        <p>同样是家里有精神病患者，有些贫困户需要把家人送去精神病院，有些不用。同样是家里有残疾人，智力上残疾和身体上残疾，帮扶的对策也不同。同样是单亲家庭，子女小的，尽量给妈妈安排好一点的工作；子女开始上大学的，要加大力度扶持子女读书就业。同样贷了款，有些适合自己做点生意，有些则建议他们投入村里的项目，享受分红。</p>
+        <p>这些需要每一个扶贫干部在现场，根据国家政策，还原成一个个落地的洞察。通过一个个小小的具体的帮扶行动，让一个个贫困家庭变好，让国家的贫困情况得到改善，这才是属于中国的科学扶贫。</p>
+      </div>
+    </section>
+
+    <!-- AI 阅读总结 -->
+    <section id="ai-summary">
+      <span class="sum-tag">AI 阅读总结</span>
+      <p class="one-liner">一句话概括：好的意图不等于好的结果——因为人们响应的是激励而不是意图，任何政策改变的都只是局面，人们会依据新局面重新优化自己的行为，于是好心常办坏事；而理解这一切的关键，是记住「你不是你的意图，你是你的后果」。</p>
+
+      <h4>一、核心内容总结</h4>
+      <ol>
+        <li><strong>非预期后果的定义与铁证。</strong>默顿提出「有目的社会行动的非预期后果」：旧金山房租管制让出租房供给减少约 15%、租金反涨 5%；《濒危物种法》让土地所有者提前砍林；加州禁塑料袋让填埋垃圾从 15.7 万吨涨到 23.1 万吨；「旧车换现金」只是把购车决定提前——好意图在现实中反复落空。</li>
+        <li><strong>最核心的机制：人们响应激励，而不是意图。</strong>政策制定者能改变的只有「局面」，人们会基于新局面重新行动，却未必按你的设想行动。这是社会系统的「基本物理学」，与群众觉悟无关。</li>
+        <li><strong>价格会挤掉道德。</strong>以色列幼儿园罚款实验：罚款把「准时接娃」从道德义务变成明码标价的服务，迟到率不降反升；取消罚款后道德感也回不来了。</li>
+        <li><strong>卢卡斯批判。</strong>不能用旧制度下观察到的行为关系预测新政策的效果——新政策本身会改变人的预期与行为。所以「有权力，你可以选择你的政策，但你不能选择你政策的后果」。</li>
+        <li><strong>历史案例：青苗法。</strong>40% 低利率看似救民增收，但地方官只对「放贷指标」这个激励做反应，把贷款硬摊到户、让乡绅胥吏包办，好政策在执行中走向反面——官员不是对意图做反应，是对激励做反应。</li>
+        <li><strong>街头官僚与指标变形。</strong>政策真正落地靠一线执行者：高层目标 → 中层指标 → 基层动作，公共目标往往变成组织自保目标。「良好意图 + 硬性考核」催生了能耗双控下的柴油发电机（更脏）、SCI 考核下的论文工厂（系统奖励伪装卓越的本事）。</li>
+        <li><strong>防止之道。</strong>「切斯特顿的篱笆」：不理解系统就别假装优化它；谌旭彬的「司马光困境」点出不受制约的权力难以利民；政府出台政策前应做红队推演、设补偿机制、小步试点、跟踪反馈允许纠错——总之没事别折腾。</li>
+        <li><strong>执行者的责任与平庸之恶。</strong>别把道德责任上移给「上头」；把人改名为「案例」「指标」「对象」会让良心少一层摩擦。普通人能做的：看见异常、记录反馈、给政策对象留余地，至少追问一句「这根链条拖着的是什么怪物」。结尾落到《V 字仇杀队》：意图属于你自己，后果属于世界。</li>
+      </ol>
+
+      <h4>二、给个人的行动建议</h4>
+      <ul>
+        <li>本周挑一条你正在推行的「好规定」（孩子的奖惩规则、团队的考核制度、家里的省钱计划），问自己三问：人们会怎样重新优化行为来应对它？最会钻空子的人会怎么做？如果被钻空子，规定会变成什么？</li>
+        <li>任何新规则落地前先做一次「红队推演」：站在最会钻空子的人角度走三步，再想想执行两三层后会变形到什么程度；想不清楚就先小范围试点，而不是一步到位。</li>
+        <li>把「意图 vs 后果」用进日常复盘：评价自己或别人时，先讲实际结果再讲出发点，练习用「你做了什么」代替「你想做什么」——每周至少一次。</li>
+        <li>如果你负责执行指标（KPI、报表、台账），每季度问一次：这个指标背后的真实目标是什么？我现在做的动作是在靠近它还是表演它？并把观察到的「指标变形」如实反馈给上级。</li>
+        <li>别让「这是上头定的」成为自己的免责挡箭牌：在落笔签字、转发文件、执行指令前停一分钟，想想这一步会踩在谁身上；做不到反驳，至少做到不把谎言抹得更圆。</li>
+        <li>建立一个「非预期后果清单」：把身边好心办坏事的例子（新闻、同事、家庭）记下来，写下意图、激励、实际后果三栏，坚持一个月，你会对系统运转多一层直觉。</li>
+        <li>遇到「被硬堵的需求」，别只谴责钻空子的人，先想想需求为什么改道——需求会流向更坏的方向，理解它才能提前给出更好的出口。</li>
+      </ul>
+
+      <h4>三、金句摘录</h4>
+      <div class="quotes">
+        <blockquote>人们响应的是激励（incentives），而不是意图（intentions）。</blockquote>
+        <blockquote>有权力，你可以选择你的政策，但你不能选择你政策的后果。</blockquote>
+        <blockquote>上面说的是意图，下面听到的是价格；上面说的是价值观，下面看见的是收益表。</blockquote>
+        <blockquote>你不是你的意图，你是你的后果。</blockquote>
+      </div>
+
+      <p class="disclaimer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+    </section>
+
+  </article>
+</div>
+
+<script>
+  (function(){
+    var bar=document.getElementById('progress');
+    var btn=document.getElementById('toTop');
+    function onScroll(){
+      var h=document.documentElement;
+      var max=h.scrollHeight-h.clientHeight;
+      var p=max>0?(h.scrollTop||document.body.scrollTop)/max:0;
+      bar.style.width=(p*100)+'%';
+      btn.classList.toggle('show',(h.scrollTop||document.body.scrollTop)>400);
+    }
+    btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+  })();
+</script>
+</body>
+</html>
