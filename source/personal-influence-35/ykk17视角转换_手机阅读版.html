@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第17讲 · 视角转换：怎样复制爆款内容？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第17讲</span>
+    <h1>视角转换：怎样复制爆款内容？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>前面几讲，我们学习了场景和故事，这两种提高爆款概率的原理。其实，有些内容不用你绞尽脑汁从 0 开始，只要换一个讲述的方式，就能把爆款选题再做一遍。这就是我们今天要讲的内容原理，视角。也就是，你要以什么身份、什么角度、面向谁来讲故事。</p>
+
+    <p>在讲视角之前，我想先问你一个问题：你有没有遇到过这种情况：看到一个爆款，你也想做，但又担心，别人都做过了，我再做还有意义吗？还能复制别人的成功吗？</p>
+
+    <p>答案是，当然可以！不过，需要说明一下，这里所谓的复制，绝对不是抄袭，而是学会视角的转换。</p>
+
+    <p>什么意思呢？我给你举个例子。</p>
+
+    <p>比如，“30 岁还没找到人生方向怎么办”这个选题：如果你用第一人称来讲，标题可能是“30 岁裸辞后，我用 3 个月找到了真正想做的事”。讲的是自己的亲身经历，真实感强，容易引发共鸣；但如果换成第二人称，标题就变成了“如果你 30 岁还迷茫，试试做这件事”。直接对话读者，代入感强，就像在给朋友提建议；再换成第三人称，标题又变成了“那些 30 岁找到方向的人，都经历了什么”。用旁观者的视角讲别人的故事，客观冷静，更有说服力。</p>
+
+    <p>你看，同一个选题，人称视角一变，内容的感染力、代入感、可信度都完全不同了。</p>
+
+    <p>那些特别会做内容的博主，就非常善于用视角转换，把验证过的爆款选题再做一遍。而且，因为选题已经被验证过了，数据效果一般都很不错。</p>
+
+    <p>这一讲，我们就来学学怎么进行视角的转换，来用于爆款选题的再创作。</p>
+
+    <h3>四种叙述视角</h3>
+
+    <p>叙述视角主要有四种：第一人称、第二人称、第三人称和全知视角。</p>
+
+    <p>我们一个一个来看看它们的特点。</p>
+
+    <p>第一人称，这个很好理解。就是用“我”来叙述，“我”讲的都是“我”知道的、“我”理解的，甚至就是“我自己的故事”。</p>
+
+    <p>用第一人称的好处很明显：让人感觉离叙述者本人更近，甚至满足了某种“窥探欲”。但坏处也很明显：描述的范围比较窄，只能聚焦在“我”看到和感受到的世界，是主观的、有限的。</p>
+
+    <p>所以，第一人称对内容的猎奇性或者共鸣感要求特别高。要么你是某个公共事件的主人公或当事人，要么你是名人，讲了一个特别能引起共鸣的故事，不然人们会困惑，凭什么我要听你的故事呢？</p>
+
+    <p>第⼆⼈称视⻆就是创作者⽤“你”来叙述，把用户拉进整个叙述中，使用户成为叙述的⼀个⻆⾊。</p>
+
+    <p>这个时候“我”这个讲述者就不重要了，重点是受众“你”。你在故事中有没有扮演什么角色？你有没有情感的波动？你有没有被激发出一些思考？</p>
+
+    <p>第⼆⼈称的对话感特别强，能把用户拉到了内容中，让用户有⼀种“这个内容与我有关”的感觉。可以说，这是距离用户最近的叙述视角。</p>
+
+    <p>但它的问题是，对受众的“侵入感”过强，有些用户可能会觉得不舒服。</p>
+
+    <p>第三人称就是用“他、她、他们”以及⼈物的名字来讲故事。叙述者更像一个转述人、记录者，只客观描述主要⻆⾊的⾏动、对话，不轻易评论，也不胡乱猜测。</p>
+
+    <p>相比前两种视角，第三人称的叙述范围更⼴。不仅仅局限在“我”或者“你”的故事，任何⼈的故事都可以拿来叙述。叙述者作为“中⽴⻆⾊”会显得更客观、更直⽩、更真实，更有说服⼒。</p>
+
+    <p>但这种视角也有限制，它没法深入描述角色的内心世界。</p>
+
+    <p>最后一种是“全知视角”，也就是我们常说的“上帝视角”。叙述者通常不在故事里，却全知全能，了解每个人、每件事，能进入不同人物的思想和感受，还可以自由跨越时空。</p>
+
+    <p>也就是说，全知视角的叙述者视野是不受限的，可以灵活调动“我”“你”“他”其他三种视角，就像上帝俯瞰芸芸众生一样。</p>
+
+    <p>这个视角的好处是，可以再造一个世界，让故事自动呈现出来，真实感很强。</p>
+
+    <p>但问题是“题材受限”。因为你很难找到几个选题，能让你在其中像上帝一样全知全能。</p>
+
+    <h3>用第二人称把所有内容重做一遍</h3>
+
+    <p>了解了四种视角的特点后，我来给你分享两个在自媒体中特别好用的视角转换技巧。</p>
+
+    <p>第一个技巧，大胆用第二人称把所有内容重做一遍。</p>
+
+    <p>如果你是做个人成长和知识分享类内容，我特别建议你试试这个方法。</p>
+
+    <p>先来说个人成长类。</p>
+
+    <p>“王潮歌”是一位大型演出的导演和编剧，她平时在自媒体上经常用第一人称分享自己的故事。但有一次，她发了一个第二人称的视频，火了。</p>
+
+    <p>题目是“顶级的孤独并不是一个人上医院、一个人旅行，而是一个人午睡醒来”。在视频里，王潮歌并没有像以往一样说，“我午睡醒来，感觉特别孤独”。而是这样说的，“你一定经历过这样一件事情，你突然之间醒来不知身在何处”。这个内容在评论区获得了广泛的讨论和共鸣，效果远远超过了她用第一人称讲述的内容。</p>
+
+    <p>所以，个人成长类的内容特别适合使用第二人称。当你发现内容很难用第二人称讲述下去，实际上暴露的是这个内容与受众的相关性太低，也许这个选题本来就不该做。</p>
+
+    <p>再说知识分享类内容。</p>
+
+    <p>第二人称也特别适合知识分享，能建立知识与受众的强相关性。</p>
+
+    <p>“解构小书”是一个建筑科普账号，2024 年才开始做，到 2025 年，发布的内容也不超过一百条，但已经有超过一百万的粉丝。这个账号所有的科普都使用“你”作为叙述视角。比如，讲东方明珠如何增加稳定性，博主说，“天才的你在底部增加了三根支撑柱”；介绍伦敦塔桥的设计，博主开头就说“这是一条大河，为了方便过河，你建造了一座桥……”。</p>
+
+    <p>可以说，第二人称解决了建筑类科普内容和用户相关性低的问题，甚至还为这类内容增添了戏剧效果，“解构小书”的评论区最多的评论就是“我怎么这么牛呢”“我能不能写到简历里”。</p>
+
+    <p>第二人称甚至还在社交媒体催生了一种新的内容类型：俗称“报备体”。</p>
+
+    <p>就是创作者以向男友或女友“报备”的视角，来分享日常生活。本质上这是一种生活 Vlog，但是因为采用了“你”这种第二人称，还明示或者暗示和用户的“男女朋友”关系，所以一下子调动起用户的代入感与窥视感。</p>
+
+    <p>这种报备体后来又从“男女朋友关系”延展到了“子女关系”“闺蜜关系”“老板与员工关系”等等，诞生了一大堆互联网兄弟姐妹、父亲母亲。</p>
+
+    <p>为什么这种内容这么火？就是因为第二人称视角的独特优势。这种叙事视角在传递信息的同时，形成了⼀种新的内容消费场景，使用户产生了双重身份：既是内容的对象，实现了代入感；又是旁观者，满足了围观感和窥探感。</p>
+
+    <h3>转换视角解读书影音类内容</h3>
+
+    <p>除了把所有的内容用第二人称重做一遍以外，我还给你总结了第二个技巧：通过转换视角，重新解读书影音类内容。</p>
+
+    <p>一般书影音的内容解读，都用第三人称，站在作品之外来描述内容，帮用户快速了解、节省时间。但随着人工智能的批量生产，这种单纯的解读账号越来越难做，不仅很难形成账号的品牌价值，流量也很不稳定。</p>
+
+    <p>但有一类解读方式一直很有吸引力，那就是用全知视角来解读。</p>
+
+    <p>“博然说电影”就是一个典型例子。他会用 10 集、每集 15 分钟的短视频，来拉片电影《活着》；用 17 集、平均每集 17 分钟的短视频，拉片电影《泰坦尼克号》，解读总时长都超过了电影原本的时长。</p>
+
+    <p>他也不是简单复述或者浓缩电影内容，而是加入了创作背景、电影所呈现的时代，增加了电影中主角、配角的行为动机与心理分析，还有博主自己的感悟。在视角上，他会用多种人称，在各个人物、在电影内外来回穿梭。</p>
+
+    <p>这个账号在 2024 年开始做，通过系列拉片收获了忠实粉丝，把增量信息有机地融入了电影解读类的内容。</p>
+
+    <p>除了用全知视角解读书影音类的内容，还有一种更有意思的解读方法：用作品中某个角色的视角重新讲故事。</p>
+
+    <p>比如，用孙悟空的视角解读《西游记》，用贾宝玉的视角解读《红楼梦》。</p>
+
+    <p>这类内容呈现了全新的看待文艺作品的视角，特别是角色的内心想法，也给用户带来全新的体验。如果你有兴趣，可以去搜索看看。</p>
+
+    <p>随着人工智能的发展，语音识别可以还原影视人物的声音，让这种视频类的解读更具有“真实感”和代入感。这种解读方式正在延伸到用综艺嘉宾视角解读综艺，用影视作品中的小配角解读主角故事等等，新鲜感十足，也非常容易出现爆款。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，这一讲我们聊了视角这个内容原理。</p>
+
+    <p>核心就是四种视角：第一人称、第二人称、第三人称和全知视角，这四种视角每种都有自己的优势和局限。</p>
+
+    <p>有两个在自媒体中特别好用的视角转换技巧：第一个技巧，大胆用第二人称把所有内容重做一遍，尤其是个人成长和知识分享类内容。</p>
+
+    <p>第二个技巧，用全知视角或者作品中某个角色的视角重新解读书影音类的内容。</p>
+
+    <p>掌握了视角转换的技巧，你就有了把爆款选题再做一遍的工具。视角转换不只是个技巧，更像是一种思维练习。视角一转，你会发现完全不同的世界。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>这一讲我们来练习用角色视角重新解读文艺作品：你可以选一个你自己喜爱且熟悉的作品，不限书影音。选择一个角色，主角或配角都行，用这个角色的第一人称“我”来重新解读这个作品，试试看，相信你会有新奇的发现。</p>
+
+    <p>欢迎你在评论区分享你的尝试。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，关于视角我们就讲到这里。下一讲，我们来聊聊怎么解决自媒体内容创作中的第三大挑战，活人感缺失的问题。</p>
+
+    <h3>划重点</h3>
+
+    <p>1.叙述视角主要有四种：第一人称、第二人称、第三人称和全知视角。</p>
+
+    <p>这四种视角每种都有自己的优势和局限。</p>
+
+    <p>2.在自媒体中，可以大胆用第二人称把所有内容重做一遍，尤其是个人成长和知识分享类内容。</p>
+
+    <p>3.用全知视角或者作品中某个角色的视角重新解读书影音类的内容，在自媒体内容中也特别好用。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">用四种叙述视角（我/你/他/全知）和两种转换技巧，把验证过的爆款选题再做一遍。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>第一人称真实共鸣、第二人称代入感最强、全知视角视野不受限。</li>
+      <li>大胆用第二人称把内容重做一遍，可催生报备体等新内容类型。</li>
+      <li>用全知视角或作品内角色视角重新解读书影音类内容，附加值极高。</li>
+      <li>视角转换是一种思维练习——视角一变，世界完全不同。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>挑一个你做过的爆款选题，分别用四种视角各写一版，看哪种最有感染力。</li>
+      <li>为你的知识共享类内容用第二人称重做一遍。</li>
+      <li>选一个熟悉的作品，用角色第一人称重新解读，发出来看反馈。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>视角转换不只是个技巧，更像是一种思维练习。</p></blockquote>
+    <blockquote><p>视角一转，你会发现完全不同的世界。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

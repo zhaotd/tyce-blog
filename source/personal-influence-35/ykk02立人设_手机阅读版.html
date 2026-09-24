@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第2讲 · 立人设：怎样设计有“活人感”的人设？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第2讲</span>
+    <h1>立人设：怎样设计有“活人感”的人设？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们介绍了自媒体的定位全景。人设、用户、内容、运营策略与品牌建设，共同构成了自媒体定位的五大基础要素。其中，人设是账号具有活人感和差异化的关键。</p>
+
+    <p>这一讲，我们就一起来学习到底该怎么立人设。</p>
+
+    <p>提到立人设，我发现周围做自媒体的朋友们遇到的问题还挺不一样的。大致上有两种情况，你可以看看自己属于哪一类：一种是，认为自己是普通人，没什么显著的特征，也没什么值得展示的标签。他们觉得，可以先发内容，说不定人设之后会浮出水面。</p>
+
+    <p>另一种是，希望面面俱到，把自己的社会成就、人格属性、教育背景等，一股脑写成自媒体账号的简介。发布内容的时候，也是东一头西一头，认为这样人设就立起来了。</p>
+
+    <p>坦白说，这两种都不是有效的立人设的方式。最后的结果大概率会是，账号内容发了一段时间，用户还是无法清晰感知到你是谁，因此内容缺乏稳定的受众、流量不稳定，账号也没有积累长期品牌价值、浪费了时间和精力。</p>
+
+    <p>那立人设的正确方法是什么呢？</p>
+
+    <p>答案是，基于真实的原则，分析和设计你自己。</p>
+
+    <p>真实，是确立自媒体人设的一个基本原则。因为，人设指的是一个自媒体展示出来的运营者的真实的人格，虚假或抄袭的人设是没法长久伪装的，迟早会露馅。</p>
+
+    <p>基于真实这个原则，我们就可以开始着手立人设了。两个步骤：第一，真实地分析自己；第二，真实地设计自己。</p>
+
+    <h3>第一步：真实地分析你自己</h3>
+
+    <p>先说第一步。</p>
+
+    <p>说到分析自己，很多朋友可能就都紧张了。这好像是在问“我是谁”，那答案可太复杂了。别担心，我们不回答哲学问题，只需要给出做自媒体需要的答案。</p>
+
+    <p>这里我介绍一个好用的工具：“人设分析清单”。</p>
+
+    <p>人设分析清单，是哈佛创意写作课里用来帮助小说家塑造角色的方法。清单里一共有七个问题，你可以像做问卷调查一样，回答清单中的问题、列出你的答案。</p>
+
+    <p>这七个问题，我把它们分成三组，方便你记忆和理解。</p>
+
+    <p>第一组和你的过去有关，包括两个问题。</p>
+
+    <p>1.你过去有哪些重要时刻？</p>
+
+    <p>什么叫重要时刻？就是那些给你带来震撼的时刻。可能发生在小时候，也可能是学生时期，或者参加工作以后。关键是，它让你的情感、人生选择，甚至价值观，发生了明显的转变。你可以暂停想一想，自己有哪些这样的时刻呢？</p>
+
+    <p>2.你的名声和留给别人的印象是什么？</p>
+
+    <p>这包括你的性格、为人处世的风格，还有职业名声。如果你在某个领域有一定积累，就要注意观察和回忆他人对你的评价。如果是行业小白，也可以从社交媒体、亲朋好友那里寻找反馈。</p>
+
+    <p>第二组问题和你的现在有关，包括三个问题。</p>
+
+    <p>1.你的关系网如何？</p>
+
+    <p>也就是，你所处的行业人脉、最常交往的圈子有什么特征。</p>
+
+    <p>2.你的天赋与能力是什么？</p>
+
+    <p>可以是已经被证明的天赋与能力。例如，写的书获奖，或者为人特别社牛，走到哪儿都不怯场。也可以是没有被证明过，但你希望挑战的能力。例如，每天读书、挑战全球旅居等等。</p>
+
+    <p>3.你的品位与偏好是什么？</p>
+
+    <p>这里的品味与偏好，可以不是你擅长的，甚至可以是一种非常个人化的取向。你可以从正向出发，选择一些积极的品味和爱好，例如非常爱吃、特别爱美。也可以从负面出发，选择你总是拒绝、想要逃离的处境或状态，例如社恐、不喜欢嘈杂、恐高等等。</p>
+
+    <p>第三组问题则与你的日常有关。</p>
+
+    <p>1.你的习惯与规律是什么？</p>
+
+    <p>也就是你早已习以为常的事情。比如，每天下班都骑行，每个周末都飞一个城市去吃美食。</p>
+
+    <p>2.你的风格是什么？</p>
+
+    <p>这无关美与丑这种主观判断，而是一种客观描述。例如，你的生理年龄和心理年龄多大，与他人的关系是更亲密还是更疏离，为人的风格更温婉还是更刚硬？</p>
+
+    <p>总结一下：立人设的第一步，是从你的过去、现在和日常这三个方面入手，回答上面七个问题，最后列一个自己的人设分析清单。</p>
+
+    <p>别小看这个清单，它的用处很大。</p>
+
+    <p>一方面，它能帮助你结构化自我，也就是形成更协调、系统的人设体系。它就像一个自我问卷调查，帮你梳理自己的过往和认知。特别能帮助那些觉得自己太普通、太平常的朋友，找到值得在社交媒体上展示的亮点。</p>
+
+    <p>这里，我想多说一点：自媒体因为是用户需求导向，具有私人性和日常感，所以，我不认为“普通”是一个弱点，它反而很可能因为是一种共性，而成为你更容易引发共鸣的优势。</p>
+
+    <p>另一方面，这个清单还可以帮你避免遗漏。每当说起做一个账号从哪里开始的时候，很多人的本能反应往往就是天赋与能力，也就是我擅长什么。假如纠结于这一个问题，往往会错失其他可能性。</p>
+
+    <p>我给你举个例子：有个叫程前的人，不知道你关注过没有。他原本是投资经理，每天的工作就是和创业者聊天，了解他们的生意经。周围聚集了一大批中小型创业者，这些都是他的人脉圈。后来他做了个自媒体账号，叫“程前的朋友圈”。你猜他做什么内容？</p>
+
+    <p>就是商业访谈，持续访问生意人，分享生意经。你看，他并不是主持人或记者出身，访谈也不是他的天赋与能力。他的人设设计的原点，其实来自他的关系网和过去的工作经历。</p>
+
+    <p>同理，你自媒体人设的核心，可能也藏在历史过往中，藏在当前的状态中，或藏在某些习惯里，而不只是单纯的天赋和能力。</p>
+
+    <h3>第二步：真实地设计你自己</h3>
+
+    <p>回答完人设分析清单上的问题，是立人设的第一步。接下来，就是要着手设计自我，也就是刚才说的“真实地设计自己”。</p>
+
+    <p>很多朋友一想到人设，就想面面俱到。但在自媒体中，人设需要明确、清晰、简洁、锐利。这就要对清单的答案进行归纳分析，排列组合，精选出人设的关键要素。</p>
+
+    <p>这里我总结了四个要点：扁平化、反差感、小缺点、价值观。</p>
+
+    <p>先说扁平化。</p>
+
+    <p>扁平化的意思就是，挑选自己身上少而精的特点，把自己塑造成类似文学作品中的扁平人物，也就是性格单一却让人记忆深刻的配角。这些扁平特征是中性的，优点缺点并存。比如《西游记》里的猪八戒，贪吃好色，但有趣。或者像《水浒传》中的武松，仗义慷慨，但有点鲁莽。不管是什么，一定要鲜明有特色，让用户印象深刻。因为在自媒体环境下，用户精神容易涣散，能记住的信息非常有限。</p>
+
+    <p>扁平、明确的人设，更容易给人留下深刻的记忆点。</p>
+
+    <p>再说反差感。</p>
+
+    <p>它指的是，要在人设上制造一些反差，勾起用户的好奇心。比如，你的人设核心是一个喜爱独处的文艺青年。如果从自我分析清单里串联起一些基础特征，比如喜欢养花弄草、喝茶写诗，只会让用户觉得符合文艺青年的人设，不会有记忆点。</p>
+
+    <p>但如果再设置一点反差呢？比如，这个爱独处的文艺青年，却认识一大帮创业圈的人。这种又入世又出世的反差，就特别让人印象深刻。</p>
+
+    <p>接下来就是小缺点。</p>
+
+    <p>它指的是，要适当在人设中给用户袒露自己的缺点。自媒体账号的人设，真实比完美更重要。那些没什么大毛病的小缺点，反而会让人觉得亲切可爱。为什么呢？</p>
+
+    <p>因为用户看到有缺点的博主时，一方面，能从他们的缺点中找到自己的影子，感到真实；另一方面，又会在心理上隐约占据高位，对博主产生一种亲近感。</p>
+
+    <p>最后，要在人设中体现自己的价值观，这是让人设有灵魂的关键。</p>
+
+    <p>很多朋友往往把人设理解为教育背景、职业身份、MBTI 等标签，然后把这些标签列在自己自媒体的简介中。这样当然也有价值。但是，一个真正可以让用户感知并且记住的人设，关键不在这里，而在于你的每一条内容是否传递出你的欲望、困境与厌弃，也就是你厌恶或者抗拒的东西。只有这些设计体现出了你这个人物的价值观，才会唤起用户的情感。</p>
+
+    <p>我给你举个例子：有个女孩做了个自媒体账号，叫“丑穷女孩陈浪浪”。这个女孩怎么介绍自己呢？</p>
+
+    <p>三本、长得普通、家境一般。她分享的内容也很泛，职场、成长、变美技巧、情感话题都有。但就是这样一个看起来定位很泛的账号，人设却非常锐利。为什么呢？因为这个女孩把自己的欲望和困境埋在了几乎每一条内容里。</p>
+
+    <p>她会说，自己虽然三本，但进了大厂。她会分享在原生家庭里遇到的困境，在情感中付出的努力。她从来不掩饰自己的普通，但也从来没丢弃靠生命力去获得美好生活的欲望。正是每一条内容中体现出的这些欲望、困境，让她的人设具备了穿透力。吸引了更多和她一样，“普通但并不想放弃”的用户。</p>
+
+    <p>好，我们再回顾一下设计人设的四个要点：扁平化、反差感、小缺点、价值观。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>立人设的方法，到这里就讲完了。我来总结一下：用人设来串连你的自媒体定位，是今天让自媒体实现差异化的几乎唯一的方法，也是打造你个人影响力的灵魂。</p>
+
+    <p>人设的原则是真实。要有效找到你的自媒体人设，首先要用人设分析清单中的七个问题真实地分析你自己，然后从扁平化、反差感、小缺点、价值观这四个维度入手，对答案进行归纳分析、排列组合，设计你自己。</p>
+
+    <h3>本讲行动</h3>
+
+    <p>现在，你可以对照人设分析清单里的七个问题，写下你的答案。欢迎在评论区分享，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>人设这个话题是比较复杂的，因为人要清晰地认识自我并不容易。况且，这个自我是否可以作为一个内容产品，在社交媒体上受到欢迎，也很难判断。所以接下来，我会用两讲的时间，来跟你聊聊人设的进阶问题：到底什么样的人设会受到用户的欢迎？</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">立人设要真实地分析自己再设计自己，扁平、反差、小缺点、价值观四要素缺一不可。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>立人设的正确方式是"基于真实"——先分析自己再设计自己，虚假人设迟早露馅。</li>
+      <li>人设分析清单包含七个问题，分过去、现在、日常三组。</li>
+      <li>设计人设四要点：扁平化（少而精）、反差感（勾起好奇）、小缺点（真实比完美重要）、价值观（注入灵魂）。</li>
+      <li>真正让人设穿透的内容，是每条都在传递你的欲望、困境与厌弃。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>用人设分析清单的七个问题做一份自我问卷调查。</li>
+      <li>从答案中提炼 1-2 个最锐利的人格关键词。</li>
+      <li>设计一个反差点和一个小缺点，写进账号简介或固定栏目。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>在做自己的赛道上，没人与你竞争。</p></blockquote>
+    <blockquote><p>真实比完美更重要。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第1讲 · 找定位：怎样像创业一样规划个人 IP？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第1讲</span>
+    <h1>找定位：怎样像创业一样规划个人 IP？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>今天是我们课程的第一讲，也是第一个模块“战略定位”的导论。这一讲，我们不谈理论，也不说方法，而是帮你先在脑海里画一幅自媒体定位的全景图。</p>
+
+    <p>在开始之前，我想先问你一个问题：在你打算开始做自媒体的时候，你首先想到的是什么？很多朋友的答案可能会是，“发什么内容”，自媒体不就是发内容嘛，“记录美好生活”。这个答案，放到2019 年前没毛病，而且中国的社交媒体平台就是靠着用户旺盛的分享欲一步步走到今天的。</p>
+
+    <p>但是，今天的格局已经不同往日。简单说，我们正处于自媒体内容高度内卷的时代，靠本能的分享欲去发内容，做成一个有长期品牌影响力和商业价值的自媒体账号，直至构建个人影响力，几乎没有可能了。</p>
+
+    <p>这听上去有点扎心。但就像我在发刊词里说到的，成为自媒体创作者，仍然是AI 时代普通人的最佳选择。所以，正视内卷的现实，掌握突破的技能，才是帮我们脱颖而出的核心竞争力。</p>
+
+    <p>具体怎么做呢？</p>
+
+    <p>在定位策略上，你要站得更高，去了解当前趋势背后的底层逻辑，进而把握它的发展方向；在方法论层面，要做得更扎实，用更科学和专业的方式开始你的自媒体账号。</p>
+
+    <h3>自媒体的三个发展阶段</h3>
+
+    <p>我先来帮你捋一捋当前自媒体的趋势：在我看来，中国的自媒体行业从诞生至今，大致可以分为三个阶段：第一阶段是 2010 年-2019 年，平台与自媒体创作者野蛮生长的阶段；第二阶段是 2019 年-2022 年，流量高速增长，自媒体空前繁荣；第三阶段是 2022 年至今，我叫它高度内卷的阶段。</p>
+
+    <h3>现阶段自媒体的三大特点</h3>
+
+    <p>今天我们正处于内卷阶段，内卷阶段的自媒体又有三个非常明显的特点。</p>
+
+    <p>第一，网红难再复制，职人层出不穷。</p>
+
+    <p>“职”就是职业的职，“职人”就是拥有专业技能、深耕垂直领域的创作者。你应该有感觉，自 2022 年之后，各大社交媒体平台的流量好像都捉襟见肘。不太能出现前几年那种动不动就几千万、甚至过亿粉丝的大 V、大网红了。但是一些粉丝几万、几十万的垂直门类或者垂直人群账号，比如母婴类、教育类、法律类，却层出不穷。他们看似各占一摊儿，但活得也都挺不错。</p>
+
+    <p>为什么会这样呢？</p>
+
+    <p>主要原因是，自 2019 到 2022 年，中国居民的手机普及率急剧增加，移动互联网用户暴增。能上网的都上网了，导致 2022 年之后，平台几乎没有新增流量。</p>
+
+    <p>换句话说，平台新用户增长已经见顶了。</p>
+
+    <p>这时候，平台就需要开始重新分配流量，让老用户继续活跃，让新的创作者也有成长空间，从而提升平台存量流量的分配效率，为平台创造价值。</p>
+
+    <p>而独占鳌头的大流量网红，与平台的这个策略就不相符了。对平台来说，大网红就像春节的庙会，人山人海，热闹非凡，但人们逛完就走，这种流量效率很低。</p>
+
+    <p>而集内容、用户与商业模式于一体的职人，也就是垂直门类或者垂直人群账号，则不一样。它们更像购物中心里的精品专卖店，虽然不像庙会那样人山人海，但吸引来的每个人都是目的明确的潜在消费者，粘性也更高，对平台来说，这种流量效率更高。</p>
+
+    <p>这个变化，意味着当你在今天开始做自媒体时，定位需要更精准。那种模模糊糊的、追求“泛流量”的账号，与平台分配流量的趋势背道而驰，属于逆水行舟。</p>
+
+    <p>当前自媒体的第二个特点是，账号的工具属性在减弱，人格价值在提升。</p>
+
+    <p>在自媒体刚刚诞生时，“干货类”账号很受欢迎。例如，各种“三分钟读一本书”或“怎么做 PPT”等，它们普遍把解决问题、提供资讯、拓展视野作为核心定位。</p>
+
+    <p>但 2022 年之后，这类账号普遍面临前所未有的内卷和同质化。人工智能在信息整理上的能力，也让干货账号很容易复制，这就进一步加剧了这类账号的竞争。</p>
+
+    <p>也意味着，如果你的自媒体只卷干货，只为用户提供实用价值，最终会进入同质化的沼泽。</p>
+
+    <p>在这种背景下，自媒体的“人格属性”反而成为让账号脱颖而出的关键。在保留内容对用户有用的基础上，那些注入博主的个人背景、价值观和独特人格魅力的账号，更有锐度，也更能让粉丝印象深刻、粘性也更高。这也正应了那句话，“在做自己的赛道上，没人与你竞争”。</p>
+
+    <p>当前自媒体的第三个特点是，自媒体商业模式日渐成熟，重转化胜过重流量。</p>
+
+    <p>今天很少有人单纯把自媒体当作网络日志，相反，自媒体已经是一个可以为你增加收入的副业甚至主业。它的商业模式也不再局限于传统的“流量广告变现”，也就是先积累流量，再接品牌广告。而是发展出了多种新的形态，比如短视频或直播带货、为服务或者咨询导流等等。这些越来越多元的商业模式，意味着自媒体账号正在从追求“流量规模”转向追求“转化效率”。</p>
+
+    <p>这就意味着在自媒体账号定位初期，你需要有意识地思考对你的账号有认知、有粘性、有喜爱甚至愿意购买的人群是谁，来适应精准流量转化的商业模式变迁。</p>
+
+    <p>好，简单总结一下：自媒体正在进入职人时代，账号突出人格属性，重转化胜过重流量，这就是如今自媒体非常明显的三个特点。</p>
+
+    <h3>自媒体定位的五大要素</h3>
+
+    <p>这三个特点也造就了一个我们现在常常说的“内卷感”。所以做自媒体不能简单地“发内容就完了”，而是需要在初期就明确五个要素：第一，明确你的人设。也就是你作为自媒体账号背后的那个“活人”，你的风格、偏好、趣味、价值观与人格魅力。我把人设放到第一位，是因为人设极为特殊，它是自媒体与其他内容形态最大的差异，也是个人影响力构建的原点。</p>
+
+    <p>第二，明确账号的用户。也就是，什么样的人会想要看你的内容，并持续关注你，甚至未来会为你买单。</p>
+
+    <p>第三，明确你的内容方向，以及这个领域的竞争情况。例如你想做家居博主，那么这个领域都有些什么大号，此刻正处于什么现状，要知己知彼。</p>
+
+    <p>第四，明确账号的运营策略。也就是，你计划在什么平台发布内容，如何持续获得流量增长。</p>
+
+    <p>第五，明确账号的品牌。也就是，你账号的风格与特点是什么。这决定了你的账号是否可以长久走下去，能否做成一个内容品牌，最终成为你个人影响力的线上名片。</p>
+
+    <p>人设、用户、内容、运营和品牌这五个要素，共同构成了自媒体的定位五维度。</p>
+
+    <p>就像创业一样，“定位定生死”，它们共同决定了你账号的起始走向、竞争格局、流量的天花板，以及未来的商业价值。</p>
+
+    <h3>模块一的学习路径</h3>
+
+    <p>基于自媒体的三大特点，和定位的五个维度，我设计了课程的第一个模块，帮你去打好地基。下面我来介绍一下这个模块都有哪些内容，以及学习的重点分别什么：首先我们先来构建人设。我会用一讲的篇幅，来帮你找到你的自媒体人设，之后两讲，我会结合自媒体的现状总结 14种经典人物原型，来帮你去查阅、对照和调整人设，形成独特的人格魅力。</p>
+
+    <p>然后我们再来看看用户是谁。在用户这一讲，我会为你介绍目标用户的三个分层以及获取方式，避免你目标用户模模糊糊，或者设定的目标用户人群过窄，过早陷入流量瓶颈。</p>
+
+    <p>接下来我们才开始规划内容。也就是你的自媒体选题从何而来，又可以用什么方式进行结构化的整理与组织，最终选题能够源源不断甚至自我生长。</p>
+
+    <p>之后我们一起来正视一下账号在哪里发和怎么发的问题，也就是布局运营。这既是定位中需要解决的传播策略与运营策略，也是在今天自媒体环境下必须做出的“取舍”。因为全网一键分发的时代一去不复返，如何在不同平台分别适配，是今天自媒体的运营策略的核心。</p>
+
+    <p>在自媒体定位的最后，我们来审视一下你的账号设计是否具备成为 IP 的潜力。</p>
+
+    <p>我会用品牌营销的科学方法论来帮你矫正你的账号定位，并预埋一些品牌建设的小技巧。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，这就是“战略定位”模块的导论。之所以这样设计，首先是基于我的一些观察和判断，那就是：自媒体正在进入职人时代、账号突出人格属性、重转化胜过重流量。</p>
+
+    <p>因此运营一个有品牌影响力和商业价值的自媒体，越来越类似小型创业，在定位阶段就需要解决五个问题：人设、用户、内容、运营和品牌。</p>
+
+    <p>这是我们课程的第一模块会帮你解决的五大问题，也是做自媒体必须打好的地基。</p>
+
+    <p>建议你把这一讲当作一个索引，在后续的学习中不断回来对照，当作你的长期自查清单，说不定会在不同阶段，你会有新的启发。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>听到这里，也许你脑子里已经出现了一幅自媒体定位的全景图。假设自己现在要做一个账号，你会如何梳理上面这些问题呢？欢迎你在评论区以思维导图或者文字等方式分享出来，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>自媒体定位的全景图就画完了。接下来，我们就开始一个一个解决自媒体账号的定位问题吧。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">自媒体已进入职人时代，定位要像创业一样系统规划五大要素。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>自媒体历经野蛮生长、流量繁荣，已进入高度内卷阶段，平台流量增长见顶。</li>
+      <li>当下三大特点：网红难复制、职人崛起；工具属性减弱、人格价值提升；重转化胜过重流量。</li>
+      <li>精准流量胜过泛流量，平台要的是精品专卖店式的精准用户。</li>
+      <li>像创业一样规划定位，明确五大要素：人设、用户、内容、运营、品牌。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>用一句话写出账号定位：我是谁+为谁+提供什么独特价值。</li>
+      <li>调研你所选领域的对标账号，明确竞争格局与差异化空间。</li>
+      <li>把五大定位要素当长期自查清单，定期回看。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>自媒体正在进入职人时代，账号突出人格属性，重转化胜过重流量。</p></blockquote>
+    <blockquote><p>定位定生死。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

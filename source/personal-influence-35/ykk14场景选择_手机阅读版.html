@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第14讲 · 场景选择：怎样在短时间内把信息密度拉满？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第14讲</span>
+    <h1>场景选择：怎样在短时间内把信息密度拉满？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>前面三讲，我们用结构、冲突与悬念、时间这三大内容原理，回应了自媒体内容创作的第一大挑战，注意力缺失的问题。从这一讲开始，我们聚焦自媒体内容创作的第二大挑战，来看看怎么解决爆款依赖和创作倦怠的问题。</p>
+
+    <p>我们先假定一个情境：你刚刚去了一趟海边，无意中来到一处人迹罕至的海边悬崖，你深受触动，赶紧拿出手机，拍了一段海浪拍打悬崖的视频。之后你把它编辑成10 秒小视频，精心配了抒情的 BGM，还用 AI 做了漂亮花字，发到抖音上，几天之后，你获得了 10 个点赞。</p>
+
+    <p>而另外一个博主，也发布了一段海边悬崖的 9 秒短视频。他把镜头先对准脚，然后慢慢抬起，镜头越过悬崖朝向海面，然后镜头静止。画面里可以听到博主的呼吸声，风吹动草的悉悉嗦嗦声，和海浪拍打悬崖的声音。视频也没有其他花里胡哨的包装。他也把这段视频发布到了抖音平台。你猜，他的点赞量有多少？截至目前，抖音上有接近 1500 万点赞，预估播放量过亿。这不是我胡乱编造的，而是一个真实存在的案例。</p>
+
+    <p>2023 年，一个叫作“三融在东帝汶”的博主发布了这条视频，至今为止，都是抖音点赞量最高的短视频之一。</p>
+
+    <p>为什么同样是在海边悬崖拍摄的超短视频，获得的关注和点赞就差这么多呢？</p>
+
+    <p>背后的关键，就在于场景。</p>
+
+    <h3>场景是自媒体爆款内容的最⼩单元</h3>
+
+    <p>场景到底是什么呢？</p>
+
+    <p>我给它起了一个外号，叫作“自媒体爆款内容的最⼩单元”。为什么这么说呢？</p>
+
+    <p>你可以想想，你在读书和刷短视频的时候，你心态上最大的区别是什么？是耐心。</p>
+
+    <p>读书的时候，你能沉浸进去，有耐心慢慢看，所以内容可以有留白，信息密度不高也没关系。但刷短视频就不一样了，你很可能没什么耐心，可选择的内容又特别多，这个内容必须在很短的时间里，给到足够多的信息，不能磨磨蹭蹭，否则你就会划走。</p>
+
+    <p>因此，对于自媒体内容来说，单位时间内的信息密度越高，才越有可能成为爆款。</p>
+
+    <p>怎么才能把内容的信息密度在短时间内拉满呢？最有效的方法就是在场景中做文章。</p>
+
+    <h3>场景的七要素</h3>
+
+    <p>场景是构成内容的最小单元，它包含七个要素。</p>
+
+    <p>第一个要素是时间。你可以通过点明时间、放置时钟、展示光线等⽅式，让用户感受到内容发生的时间。</p>
+
+    <p>第二个要素是地点与环境。</p>
+
+    <p>也就是通过点明地点、展示周边物品等⽅式，让用户知道内容发生在哪里。</p>
+
+    <p>第三是人物关系。</p>
+
+    <p>也就是内容中展现出的⼈物之间到底是什么关系。</p>
+
+    <p>第四是动作。</p>
+
+    <p>如果你的场景里有人物，就需要设置人物动作。比如走路、摘眼镜，甚至静止不动，也是一种动作。</p>
+
+    <p>第五是服装、化妆与道具。</p>
+
+    <p>如果你的内容里有人物元素，那往往就会涉及服化道，来塑造⼈物⾝份或者营造氛围调性。</p>
+
+    <p>第六是用户关系。</p>
+
+    <p>如果说⼈物关系指的是场景内部⼈物之间的关系，那么用户关系指的就是内容的叙述者，也就是作为博主的你，与用户之间的关系。</p>
+
+    <p>第七是氛围调性。</p>
+
+    <p>具备时间、地点、人物、动作、服化道、用户关系等多元素的场景，往往会形成⼀种“氛围”。这个氛围你可以用文本的形式呈现，也可以通过光线、特效等画面的方式来呈现。</p>
+
+    <h3>9 秒海边视频为什么能成为爆款</h3>
+
+    <p>好，了解了场景的七要素，我们就能回过头来分析：为什么我们开头提到的那条视频能成为爆款了。</p>
+
+    <p>如果你仔细看，会发现它在短时间内具备了场景中的多个要素：首先是“动作”。博主通过运镜还原了自己从坐在草丛到望向海面的过程；其次是“用户关系”。镜头像博主的眼睛，镜头静止的时候我们还能听到博主的呼吸声，这会让用户很有代入感；再次是环境。视频没有其他花里胡哨的包装，因此账号名称“三融在东帝汶”就非常容易被看到，这就明确了内容发生在一个充满异域风情的地点，“东帝汶”；最后是氛围。被海风吹拂的草地、平静的海面、昏暗的光线等元素，共同塑造了一种自由的氛围，所以很多用户在评论区会说，“这才是真正的远方”。</p>
+
+    <p>你看，动作、用户关系、环境、氛围，这些都是“场景”的组成要素，它们叠加和浓缩在这个 9 秒的视频里，这也是这个视频与你随手一拍、信息密度很低的海边视频，最本质的差异。</p>
+
+    <h3>场景七要素的运用</h3>
+
+    <p>那么，在实操中，你应该怎么运用场景七要素，在短时间内提升内容的信息密度呢？</p>
+
+    <p>这里我给你介绍两种用法。一种是“全都要”，七要素齐备；另一种是“抓重点”，强化单一要素。</p>
+
+    <p>先来说第一种用法，七要素齐备。</p>
+
+    <p>有一个博主叫作“范大山”，“二舅治好了我的精神内耗”这条爆款视频就是他创作的。2024 年，他又开创了新的视频系列，“夫妻夜话”。</p>
+
+    <p>别看它的名字叫“夫妻夜话”，内容却是硬核的文化科普。几乎每一期“夫妻夜话”都包含了全部的场景要素：视频通过灯光、床、以及慵懒的对话语气，展示了时间是晚上；人物关系是夫妻，地点是卧室；博主语气轻柔、动作和缓，穿着简单的家居服，营造出了一种温馨平和的氛围。</p>
+
+    <p>更巧妙的是，“夫妻夜话”这个视角还让用户产生了一种窥探感，拉近了与用户的关系。</p>
+
+    <p>这就让“范大山”与那些只有单一场景要素的知识博主拉开了距离。</p>
+
+    <p>第二种用法，不追求七要素的完整，而是通过强化某一个或某几个要素，让信息密度提升，这种方式也可以诞生爆款内容。</p>
+
+    <p>首先你可以强化场景中的“铺陈”。</p>
+
+    <p>也就是说强化地点、服化道、氛围等背景类的要素。</p>
+
+    <p>开头我们提到的“三融在东帝汶”就属于这类。视频里没说人物是谁，也没有服化道。但是通过运镜，让用户特别有身临其境的感觉。再加上现场的风声、海浪声、画面、氛围，还有“东帝汶”这个账号名。这些加在一起，就把“铺陈”强化到了极致。</p>
+
+    <p>你还可以强化人物的“行动”。</p>
+
+    <p>很多剧情类内容都以人物的行动为主线展开，也就是什么原因，促使谁，做了什么事。</p>
+
+    <p>有个短视频博主叫“过期罐头”。他有条爆款，设置了这么几个行动：先是男主角一拳狠狠砸向了一个扔在垃圾桶里的玩偶，嘴里骂着“去他妈的爱情”，然后镜头猛地一转，男主角又骑上了电动车，后座上载着的，居然就是刚才那个被它咒骂、被丢弃在垃圾桶里的玩偶。这时候，刘若英的歌声切入，“后来我终于学会了如何去爱”，故事的主线在歌词出现的瞬间被完全点亮，那就是爱情让人失望，但也让人成长。</p>
+
+    <p>这个短视频全是靠行动串起来的，但你看完不会觉得莫名其妙，反而觉得短小精悍，还意犹未尽。</p>
+
+    <p>你也可以把瞬间的行动当插件，直接放进内容里。用户可能搞不清来龙去脉，但就是能被吸引，甚至勾起悬念。</p>
+
+    <p>这种行动插件法，几乎适用于所有自媒体类型。有个 Vlog 博主叫“罗大雄”，她经常在记录全球旅居的短视频里，快速切换各种行动：吃早餐、跑步、洗衣服、上课。这种方式甚至一度成为生活 Vlog 类的模板。</p>
+
+    <p>除了强化铺陈和人物行动，第三种是强化人物的“反应”。</p>
+
+    <p>也就是说，在场景里，人物对某件事或某个人，表达了什么情感，说了什么观点。</p>
+
+    <p>我给你举个例子。有个短视频账号叫“疯产姐妹”。这个账号几乎所有视频都在强调姐妹俩的闺蜜关系。通过对话、故事、冲突，还有出镜博主的表现力，来强化第三方对内容的反应。这就增强了内容的猎奇感和偷窥感。</p>
+
+    <p>这种强化人物反应的视频，每隔一段时间就会冒出一批爆款。所谓“人生没有观众，但网友有很多监控”。各种“围观式”爆款短视频层出不穷。比如拍围观菜市场吵架的人群，这种视频受欢迎的程度，都超过了拍吵架本身。</p>
+
+    <p>强化反应甚至自成一派，变成了一种独立的内容类型：反应视频。就是博主针对某本书、某个电影、某个热点事件进行解读。但视频的重点不是被解读的对象，而是博主的反应。</p>
+
+    <p>反应视频在自媒体里可以说是异军突起。这跟社交媒体强调用户关系、重视跟用户互动有关。强化反应场景有点像让博主变成了用户的“嘴替”，所以特别容易受到喜爱。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，关于场景与爆款的关系、场景的七要素，以及七要素在自媒体中的运用方法，就讲完了。</p>
+
+    <p>我来总结一下：首先，场景是自媒体爆款内容的最小单元，能在短时间内拉高内容的信息密度。</p>
+
+    <p>其次，场景包含七个要素：时间、地点与环境、人物关系、用户关系、动作、服化道、氛围调性。</p>
+
+    <p>最后，通过场景提升内容的信息密度有两种方法：一种是七要素齐备，二是强化单一要素，包括强化铺陈、强化行动、强化反应。</p>
+
+    <p>从根本上来说，学习场景这个内容原理，更像把内容拆碎为更小的单元，理解每个单元的含义。这样，你就可以对内容进行大胆地拆分、细化和叠加。即使内容时间短，信息量还可以做得足够大，增加内容的爆款概率。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>这一讲我们继续实操。建议你走出家门，记录或拍摄你的一天。之后选取这一天中你印象最深刻的一个场景，对照场景七要素的清单，分析一下：1.这个场景中包含了哪些场景要素？</p>
+
+    <p>2.你认为最适合强化哪个或哪几个要素？</p>
+
+    <p>3.如果强化这些要素，你会怎么做？</p>
+
+    <p>欢迎在评论区分享你的练习成果，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，关于场景我们就讲到这里。下一讲，我们来聊制造爆款内容的另外一个原理，故事。</p>
+
+    <p>1.场景是自媒体爆款内容的最小单元，能在短时间内拉高内容的信息密度。</p>
+
+    <p>2.场景包含七个要素：时间、地点与环境、人物关系、用户关系、动作、服化道、氛围调性。</p>
+
+    <p>3.通过场景提升内容的信息密度有两种方法：一种是七要素齐备，二是强化单一要素，包括强化铺陈、强化行动、强化反应。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">场景是爆款内容的最小单元，用七要素叠加或强化单一要素，把信息密度拉满。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>场景是构成内容的最小单元，能在短时间内拉高信息密度。</li>
+      <li>场景七要素：时间、地点与环境、人物关系、用户关系、动作、服化道、氛围调性。</li>
+      <li>七要素齐备可大幅提高爆款概率（参见三融在东帝汶案例）。</li>
+      <li>强化单一要素（铺陈/行动/反应）也能在低成本下制造爆款。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>记录你一天中的某个场景，对照七要素逐一标注。</li>
+      <li>挑一个要素重点强化，刻意做一版对比原版看效果。</li>
+      <li>在 Vlog 中多切行动片段，或在反应视频中强化博主反应。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>场景是构成内容的最小单元，能在短时间内拉高信息密度。</p></blockquote>
+    <blockquote><p>人生没有观众，但网友有很多监控。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

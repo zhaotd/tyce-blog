@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第5讲 · 找目标用户：怎样吸引真用户而不是假流量？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第5讲</span>
+    <h1>找目标用户：怎样吸引真用户而不是假流量？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>前面我们用三讲的内容，讲了自媒体定位的灵魂——人设。这一讲，我们来解决自媒体定位的另一个基础问题：你的目标用户是谁？</p>
+
+    <p>先问你一个问题：当你发了一条爆款内容，一下子涨了几千粉丝，你会怎么想？</p>
+
+    <p>很多朋友的第一反应可能是：太好了！赶紧复制这个爆款，继续涨粉。</p>
+
+    <p>这种想法乍一听没毛病，但是在实操中，如果仅仅从爆款选题出发做内容，你很快就会发现，要么爆款出现得非常偶然，不能持续复制；要么为了追求爆款，不断抓热点、换选题，最后连用户也搞不清楚你的账号到底要干嘛。所以，从爆款内容出发做自媒体，不仅会让你手忙脚乱，长期来看，你的账号也会遇到增长瓶颈。</p>
+
+    <p>那应该怎么做呢？</p>
+
+    <p>我的建议是，提前搞明白目标用户。只有从思考“怎么做爆款内容”深入一层，去思考“为谁生产内容”，才能获得用户持续增长的复利，实现个人品牌的塑造和账号的商业变现。</p>
+
+    <p>为什么“虚荣流量”会拖垮你的账号？</p>
+
+    <p>在学习怎么弄清楚目标用户之前，我们得看看哪些是必须排除的非目标用户。</p>
+
+    <p>答案就是四个字，“虚荣流量”。</p>
+
+    <p>什么叫虚荣流量？简单说，就是看似数据挺高，但对你的账号长期价值很低的流量。</p>
+
+    <p>比如，为了猎奇点进来，看一眼就走的用户，或者被标题吸引，却对你的内容毫无兴趣的用户。看似这些用户为你贡献了点阅量或者播放量，甚至在评论区留下一连串大拇指。但实际上，这些互动数据对你的账号很可能弊大于利。</p>
+
+    <p>因为从虚荣心角度，你可能会为了留住这些流量，陷入复制的陷阱，渐渐地，就会迷失定位。接着，算法也会对你的账号感到“迷失”。因为算法的本质是匹配，也就是把内容高效率地推荐给可能感兴趣的用户，再根据用户的点击、停留和互动等数据判断是否继续推荐。如果你的内容吸引了大量非目标用户，或者你的内容始终没有明确的用户画像，算法就缺乏推荐的持续逻辑，你的内容流量就会变得非常偶发和随机。</p>
+
+    <p>比如，你做职场干货账号，偶然发了一条宠物视频爆了。但这些粉丝是来看宠物的，当你继续发职场内容时，他们要么沉默，要么取关。更糟的是，算法会根据用户行为判断你的内容价值。如果用户互动率低，算法会觉得你的内容质量差，反而减少推荐。这就形成了一个流量持续走低的恶性循环。</p>
+
+    <p>今天我们用内容能力来做自媒体，是为了获得同频共振人群的认可、打造个人影响力。要达成这一目标，永远都要心中有用户、手里也有用户，而不是迷恋几个爆款。</p>
+
+    <h3>用“三层同心圆”拆分出有效用户</h3>
+
+    <p>既然虚荣流量不可靠，那么如何搞清楚你的目标用户呢？这里我给你一个好用的工具：“三层同心圆”模型。</p>
+
+    <p>这个模型把目标用户分成三层，从里到外分别是核心人群、辐射人群和潜在人群。</p>
+
+    <h3>“三层同心圆”模型</h3>
+
+    <p>第一层，也是最里面的一层，是你账号的核心人群。</p>
+
+    <p>他们是与你的账号绑定最紧的用户，是你的基本盘。</p>
+
+    <p>判断核心人群有两个标准：如果你只做内容，核心人群就是对你的内容进行持续点击、互动、关注的人；如果你有变现目标，核心人群就是付费用户或有潜在付费意愿的用户。</p>
+
+    <p>举个例子，职场博主“姜 Dora 在此”，账号定位是“为年轻职场人提供精神力量和解决方案”，这个账号的核心人群就是“有困惑的年轻职场人”。所以，她在账号运营初期，几乎每条内容开头都重复一句话，“为-1 到 4 岁的职场人提供解决方案”，以此保证核心用户的精准。她的内容也多聚焦在年轻职场人的问题上，精准戳中核心人群的迫切需求。所以，她虽然算不上国民级大号，但用户黏性极高。</p>
+
+    <p>第二层，也就是中间一层，是你账号的辐射人群。</p>
+
+    <p>辐射人群是那些暂时还不是核心用户，但会被你的内容吸引、愿意互动的人。他们可能和核心人群有相似的身份，但暂时对你内容的需求没那么强烈。</p>
+
+    <p>还是以“姜 Dora 在此”为例。这个账号的辐射人群，就是那些对职场发展有兴趣但还待在舒适区的普通上班族。所以，当账号进入稳定期后，博主开始拓展选题，例如“不同人生可能性的探讨”“人生只有一件事：别拧巴”等。这些话题切口更大、更泛化，可以用来吸引辐射人群，逐步实现用户增长。</p>
+
+    <p>“同心圆模型”的第三层，也就是最外层，是你账号的潜在人群。</p>
+
+    <p>潜在人群是那些暂时没关注你，但未来可能被转化的人群。他们和核心人群的直接关联度不高，但很可能被账号的某种其他价值所吸引。</p>
+
+    <p>以“夏萌人”这个账号为例。它的核心人群是数字游民，辐射人群是对精神自由与个人成长敏感的职场人，潜在人群可能是喜欢旅行的人。当这个账号的用户增长出现瓶颈时，这些潜在人群里就藏着她可以拓展的新选题。</p>
+
+    <p>核心人群、辐射人群和潜在人群，与账号的关系由强到弱，但三者之间可以实现动态转化。比如，潜在人群可能因为某些原因变成你的辐射人群，辐射人群可能因为需求的变化成为你的核心人群。因此，三者都可以是你的有效用户。</p>
+
+    <h3>以用户成长思维经营动态用户池</h3>
+
+    <p>目标用户从来不是一成不变的数字，而是会流动、会成长的活生生的人。他们可能从新用户变成老用户，也可能从活跃用户变成流失用户。所以，光是弄清楚目标用户还不够，还要去经营你的目标用户。而这需要建立起用户成长思维，把用户当成一个动态池来经营。</p>
+
+    <p>在经营这个动态池时，我们可以在账号的不同发展时期选择不同的策略。</p>
+
+    <p>我先来说说冷启动期，也就是账号刚起步的时候。</p>
+
+    <p>在这个时期，你发布的所有内容都是为了“找对人”。千万不要急着追求虚荣流量，而是要耐着性子找到你的目标用户。具体来说，有三个步骤：第一步，做目标用户的预设。</p>
+
+    <p>不能拍脑袋想“我要吸引年轻人”，而是要具体，例如说具体到“年龄 25-30岁，一线城市职场新人，面临租房、通勤、职场压力的年轻人”。更重要的是，分析他们的欲望，明确他们的障碍，找到他们的恐惧。</p>
+
+    <p>第二步，为你的内容做少量投放测试。</p>
+
+    <p>你可以使用平台的投放工具，比如抖音的“DOU+定向相似达人”、微信视频号的“朋友圈定向投放”，把内容推给同类账号的粉丝，用少量资金，测试你的内容与目标用户预设到底是不是匹配。</p>
+
+    <p>第三步，拥抱调整。</p>
+
+    <p>如果测试结果显示，吸引来的用户和预设不符，千万别固执。比如，你想做“女性成长”账号，结果发现男性用户占比很高，这时候，可以微调内容，增加一些女性视角的故事，再看看效果；或者干脆接受新的用户画像，把账号从女性成长调整成不限性别的新定位。</p>
+
+    <p>总之，冷启动期的核心是试错，通过小范围测试，找到你的目标用户。</p>
+
+    <p>接下来是稳定期。</p>
+
+    <p>账号有一定量用户后，就进入了稳定期。稳定期的策略是，通过内容设计，兼顾目标用户中的核心人群、辐射人群和潜在人群的需求。我的建议是：以满足核心人群需求的内容保底，适当发布一些吸引辐射人群的内容，破一破圈。</p>
+
+    <p>具体来说，发布的内容中，紧扣核心人群需求的内容占六七成，解决他们的痛点。</p>
+
+    <p>同时，围绕辐射人群兴趣的内容占两三成，拓展内容边界。另外还有大约一成的内容可以用来拓展更广的边界，吸引潜在用户。当然，这个比例不是固定的，你可以根据账号所处的阶段不断调整。</p>
+
+    <p>最后是流失期。</p>
+
+    <p>账号在运营的过程中，难免有用户流失，但如果用户流失数量持续超过新增数量，这时候就要警惕了。你可以做几件事进行补救：第一，复盘流失原因。通过内容分析，或者查看评论区有没有集中的负面反馈，比如“内容变水了”“不接地气了”等评论，明确问题根源，优化选题方向和内容质量。</p>
+
+    <p>第二，用户召回。面对潜在的流失用户，比如 30 天没有互动的粉丝，可以密集发布回归内容。具体怎么做呢？你可以复用之前的爆款选题进行二次创作，或者增加“账号历史回顾”这一类具有老用户共鸣的选题，用他们曾经关注的话题重新激活他们的兴趣。</p>
+
+    <p>第三，重新进行账号定位。假如很多努力都不奏效，用户流失数量持续超过新增数量，建议你认真审视一下目前账号的定位、你的人设，看看它们是否符合当下主流社交媒体平台的用户趋势，当断则断，重新进行账号定位。</p>
+
+    <p>总之，用户成长思维的本质，就是把用户当成伙伴，而非数字，让他们和你的账号一起成长。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，今天我们聊了如何搞清楚目标用户，核心观点可以总结为三点：第一，警惕虚荣流量的陷阱，始终心系活生生的人；第二，画好用户的“三层同心圆”，分层兼顾目标用户；第三，用成长思维经营用户池，让用户和账号一起成长。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在请你拿出纸和笔，用“三层同心圆”模型，画出你的目标用户。欢迎把你的答案分享到评论区，我们一起交流。也许，你还能发现忽略掉的用户机会。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，现在你已经建立了用户思维，有了找到目标用户的方法。那么下一讲，我们就来聊聊内容，看看怎样才能找到源源不断的自媒体选题。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">用三层同心圆模型定位真用户，拒绝虚荣流量、积累同频资产。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>虚荣流量数据高但长期价值低，还会扰乱算法对账号画像的判断。</li>
+      <li>三层同心圆模型：核心人群（基本盘/付费用户）、辐射人群（会被吸引但未深度绑定）、潜在人群（更大范围）。</li>
+      <li>三层之间可动态转化，要心中有用户、手里有用户。</li>
+      <li>精准目标用户才能让算法稳定推荐，形成复利型增长。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>给核心用户画一个心理画像，写出他们的欲望、障碍、恐惧。</li>
+      <li>复盘最近 10 条内容，分别标注它们对应的同心圆层级。</li>
+      <li>在账号开头或简介中固定一句话，明确告诉用户这是为谁做的。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>永远都要心中有用户、手里也有用户，而不是迷恋几个爆款。</p></blockquote>
+    <blockquote><p>那些愿意留下来的人，自然会留下来。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

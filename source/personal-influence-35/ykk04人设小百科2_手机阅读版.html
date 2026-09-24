@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第4讲 · 人设小百科 2：怎样让人设持续进化？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第4讲</span>
+    <h1>人设小百科 2：怎样让人设持续进化？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们介绍了适合在自媒体中应用的七种女性人物原型。这一讲，我们一起来了解七种男性人物原型。</p>
+
+    <p>如果你是男性博主，一定要好好听听。</p>
+
+    <p>这七种男性原型，我也把它们分成三组，方便你记忆和理解。</p>
+
+    <h3>第一组：事业驱动型</h3>
+
+    <p>第一组，事业驱动型。这一组包括三个原型，他们的共同特点是：以成就和目标为中心，通过事业来定义自己。</p>
+
+    <p>第一个原型叫“商人”。</p>
+
+    <p>听名字就很好理解，原型人物是那种忙于工作的商界人士，他们关心自己的事业版图，善于规划，是个战略高手。性格上自尊自信，逻辑性强，但可能会显得有些强势，过于利己，不怎么热爱生活。</p>
+
+    <p>今天，商人形象在社交媒体中被应用得最充分的，应该就是马斯克。他在社交媒体上，不断强化商人的决断力与判断力，面对争议也直面冲突，从不展示动摇或脆弱。他还喜欢强调 SpaceX 探索外太空的人类使命，为他的商人形象增加利他色彩。</p>
+
+    <p>第二个原型叫“国王”。</p>
+
+    <p>这个原型，需要一个家庭、团队或公司来让他管理。他非常喜欢自己的力量感，也享受别人的崇拜、尊敬，对于朋友和家人相当慷慨，善于拉拢盟友，为人果断自信。缺点是控制欲太强，不善于表达情感，也不喜欢寻求帮助，容易变成一个独裁者。</p>
+
+    <p>在社交媒体历史上，现象级自媒体“辛巴”就命中了“国王”这个人物原型。辛巴在快手直播带货，是直播电商红利的首批获利者，之后建立“818 家族”，开启团队带货模式。在辛巴的带货发展史中，我们能看到几个关键词——家族、集团、师徒。辛巴一直致力于展现团队的凝聚力，享受徒弟们的崇拜，俨然是一个国王型人物。</p>
+
+    <p>第三个原型叫“艺术家”。</p>
+
+    <p>这个原型的特质是敏感、情绪化，往往虚无感较重、安全感较差。但喜欢创造，具有追求，直觉敏锐，情感充盈。</p>
+
+    <p>短视频博主“亲爱的安先生”是具有“艺术家”原型特质的账号。在账号早期，他的内容注重美学观念、生活哲思的分享，画面注重光影美感，从而唤起用户情绪。他本人长发文艺男青年的形象，也符合一般人对艺术家的印象。</p>
+
+    <p>事业驱动型的原型就介绍完了。我们再回顾一下：商人、国王、艺术家。</p>
+
+    <p>他们的共同特点是，以成就和目标为中心，通过事业来定义自己。</p>
+
+    <h3>第二组：关系导向型</h3>
+
+    <p>接下来，我们来说说第二组，关系导向型。这一组包括两个原型，他们的共同特点是：以他人为中心，在关系中获得价值感。</p>
+
+    <p>第一个原型叫“保护者”。</p>
+
+    <p>简而言之，就是对于保护自己的朋友、家人责无旁贷的一种人，往往为人热情，正义感很强。</p>
+
+    <p>在社交媒体中，命中这个原型的自媒体是国民级账号、在抖音平台首个粉丝破亿的个人博主，“疯狂小杨哥”。他的短视频，看似是搞笑的剧情类内容，但你仔细看就会发现，自从账号转型为家庭情景剧视频后，他的“保护者”基调就越来越明显。家庭是这个账号始终的背景，不论疯狂小杨哥如何与大杨哥整蛊父亲，忌惮母亲，或者表现出妻管严的特点，他的视频都在传递着“保护者”的价值选择：一切是为了关系，特别是家庭关系。</p>
+
+    <p>这种内在驱动力，让这个账号的普适性放大了，它命中人们守望家庭和家族的底层情感，与通俗的搞笑内容叠加，造就了这个国民级账号。</p>
+
+    <p>这里我想多说一点：因为影响力与商业模式类似，“疯狂小杨哥”常常被人与“辛巴”放在一起比较，但他们的本质却是两种不同的人物原型底色。辛巴是“国王”，小杨哥是“保护者”，这决定了他们完全不同的账号走向。</p>
+
+    <p>第二个原型叫“妇女之友”。</p>
+
+    <p>顾名思义，这个原型人物是站在女性身边的忠诚伙伴，往往非常健谈，奉行性别平等。</p>
+
+    <p>举个例子：起源于 B 站的视频博主“炽焰男孩”，就以“妇女之友”作为账号人设的核心定位。他的早期内容贯穿一个主线：站在男性视角，解读情感话题，为女性提供建议。这种女性友好的账号定位，是他能够很快破圈的重要原因。</p>
+
+    <p>好，关系导向型的原型也介绍完了。回顾一下：保护者、妇女之友。他们的共同特点是，以他人为中心，在关系中获得价值感。</p>
+
+    <h3>第三组：自由精神型</h3>
+
+    <p>最后，我们来说说第三组，自由精神型。这一组也包括两个原型，他们的共同特点是：以内心世界为中心，追求精神自由。</p>
+
+    <p>第一个原型叫“隐士”。</p>
+
+    <p>他们内心世界丰富，有创造精神，喜欢独处。但因为过于陷入自我世界，会表现得拘谨，不愿意冒险；或者非常具有边界感，维护个人隐私。</p>
+
+    <p>需要说明的是：“隐士”不一定需要隐居。学者或知识分子的社交媒体账号，常常呈现“隐士”的特征。我给你举个例子：华东师范大学教授刘擎老师在 B 站的短视频账号“刘擎教授”，虽然较少展示生活，但是他的哲思，儒雅的气质，不疾不徐的表达，都透露出“隐士”的特质。</p>
+
+    <p>第二个原型叫“彼得潘”。</p>
+
+    <p>这种人，内心就是一个长不大的小男孩，在乎自由、来去如风，喜欢挑战和恶作剧。他很迷人、很有意思，想象力丰富，但是也冲动鲁莽，不喜欢负责任。</p>
+
+    <p>不是所有男性都愿意直接展示自己男孩的一面，因为孩童感缺乏力量，也意味着缺乏责任感。但仍然有人以这个原型在社交媒体中被人熟知，比如因为偶然被拍摄照片而走红的西藏男孩丁真。纯真、喜欢冒险等特征，让他持续受到人们的关注。</p>
+
+    <p>自由精神型的原型也介绍完了。我们回顾一下：隐士、彼得潘。他们的共同特点是，以内心世界为中心，追求精神自由。</p>
+
+    <p>到这里，自媒体中，比较容易为大众接受的七个女性原型和七个男性原型就讲完了。</p>
+
+    <h3>人物原型的四大用法</h3>
+
+    <p>了解了这些人物原型，在实践中怎么应用呢？</p>
+
+    <p>这里我给你四个关键词：对照、叠加、进化、平衡。</p>
+
+    <p>第一个关键词，对照。</p>
+
+    <p>我希望你将人物原型当成一个“人设小百科”来使用。也就是，在初步确定了自己的自媒体人设之后，拿这些经久不衰的原型来进行对照，甚至调整。</p>
+
+    <p>请注意，不要逼着自己往人物原型上硬靠，甚至虚构出一个符合原型理论的人设。对照的核心是，用原型来检验你的人设是否具备集体共鸣的潜力，而不是用原型造一个虚假的人设。</p>
+
+    <p>第二个关键词，叠加。</p>
+
+    <p>人物原型不是单选题，而是多选题。</p>
+
+    <p>你可以混合应用人物原型。也就是说，自媒体账号可以同时具备两个或者两个以上原型特质。但前提是，不能互相冲突，给人物造成撕裂感。</p>
+
+    <p>例如，之前提到的短视频博主“亲爱的安先生”，以“艺术家”为原型，但他直播也很频繁，并且通过直播带货取得了不俗的商业成绩，这让他身上也表现出了“商人”的一面。不过，他在作为“商人”直播带货时，又始终透露着“艺术家”底色。这种艺术家原型的内核，让他的商人身份也变得很独特。</p>
+
+    <p>第三个关键词，进化。</p>
+
+    <p>尽管人物原型命中了集体潜意识，但它需要紧跟社会风尚的变迁，适时进化。</p>
+
+    <p>比如，上一讲提到的“诱人缪斯”这个人物原型，在今天的全球文化语境中，就会有过时的感觉。前面提到的“国王”这个原型也是一样。今天的社交媒体环境，不论平台还是用户，都对于控制性强、具有压迫感的账号比较抵触，“国王”这个原型也不再成为主流。</p>
+
+    <p>所以，进化的核心是，理解当下的社会风潮，选择或提炼符合时代精神的原型特征。</p>
+
+    <p>第四个关键词，平衡。</p>
+
+    <p>任何原型，都具备正面特征与负面特征。</p>
+
+    <p>应用原型时，需要不断强化正面特征，同时注意把负向特征扭转为人格魅力。</p>
+
+    <p>就像马斯克的“商人”原型，他强势、咄咄逼人，这是负面特征。但他是怎么做的呢？他大多数情况都直面冲突，从不回避，爹味很浅；同时，在商人底色中持续强调探索外太空的人类使命，为“商人”增加利他色彩。这样一来，咄咄逼人反而成了他人格魅力的一部分——这就是将负面特征扭转的典型案例。</p>
+
+    <p>所以，平衡的核心是，不要试图塑造一个完美无缺的人设，而是让正面特征足够鲜明，让负面特征变得可接受。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，简单总结一下：这一讲，我们学习了适合在自媒体中应用的七种男性人物原型，他们是商人、国王、艺术家、保护者、妇女之友、隐士和彼得潘。</p>
+
+    <p>在应用包括男性和女性在内的 14 种人物原型时，要记住四个关键词：对照、叠加、进化和平衡。</p>
+
+    <p>归根结底，人物原型仍旧是一个外部工具，请不要脱离自身硬套原型。</p>
+
+    <p>当你思考人设这个问题时，做自己永远是初心、原点。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>最后，留给你一个作业：请对照七种女性原型和七种男性原型，看看你的人设分析清单命中了哪一个或哪几个原型。你也可以在评论区分享你的答案，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，我们用三讲的时间，学习了自媒体定位的灵魂，“人设”。下一讲，我们进入自媒体定位的第二个关键要素：用户。</p>
+
+    <p>1.有七种男性人物原型适合在自媒体中应用，分别是商人、国王、艺术家、保护者、妇女之友、隐士、彼得潘。</p>
+
+    <p>2.在应用包括男性和女性在内的 14 种人物原型时，要记住四个关键词：对照、叠加、进化和平衡。</p>
+
+    <p>3.人物原型是一个外部工具，不能脱离自身硬套原型，做自己永远是初心、原点。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">七种男性原型与四大用法，让男性人设既有共鸣又不僵化。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>事业驱动型男性原型：商人、国王、艺术家——以成就定义自己。</li>
+      <li>关系导向型男性原型：保护者、妇女之友——以他人为中心获得价值感。</li>
+      <li>自由精神型男性原型：隐士、彼得潘——追求精神自由。</li>
+      <li>应用原型的四个关键词：对照、叠加、进化、平衡。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>对照 14 种原型，看自己命中了哪一种或哪几种。</li>
+      <li>尝试叠加一个不冲突的辅助原型，但守住主原型不变。</li>
+      <li>把负面特征重新包装为人格魅力，而非追求完美人设。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>做自己永远是初心、原点。</p></blockquote>
+    <blockquote><p>不要试图塑造完美人设，而是让正面特征足够鲜明，让负面特征变得可接受。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

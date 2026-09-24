@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第13讲 · 时间锚点：怎么让用户“忘记时间”？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第13讲</span>
+    <h1>时间锚点：怎么让用户“忘记时间”？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>前面几讲，我们学习了结构、冲突与悬念，这些内容原理的共同目的都是为了锁定用户越来越涣散的注意力。说白了，就是让用户忘记时间。这一讲，我们就来直面与“时间”相关的内容原理，看看有哪些方法和技巧，可以让你在这场注意力的争夺战里，有更多获胜的筹码。</p>
+
+    <p>你有没有这种体验，刷某些视频的时候，明明只是想看一眼，结果一抬头发现半小时过去了？</p>
+
+    <p>这背后的秘密是什么？</p>
+
+    <p>是内容创作者对时间感知的操控力。</p>
+
+    <p>关于时间，今天我为你介绍两个在自媒体中相当好用的内容原理。一是时态，也就是我们常说的过去时、现在时或者将来时；二是时距，也就是故事实际发生经历的时间和你讲这个故事用的时间，两者之间的差距。</p>
+
+    <p>时态和时距，都是在⽂学和电影创作里被证明过的内容技巧，不过，因为自媒体的内容有它自己的特点和情绪，所以，如果要把这两个原理运用在自媒体中，需要有一定的章法。</p>
+
+    <h3>现在时态：让用户感觉“正在发生”</h3>
+
+    <p>我先从时态说起。</p>
+
+    <p>一般情况下，我们讲述当下发生的事会使用现在时态，讲述过去发生的事会使用过去时态。但在自媒体的环境里，现在时态，或者说“让用户感觉故事正在发生”的叙述方式，正在成为自媒体世界的“统治时态”。</p>
+
+    <p>为什么现在时态在社交媒体上这么受欢迎？</p>
+
+    <p>这里有三个原因。</p>
+
+    <p>首先，现在时态能给用户一种真实感。现在时态里⼈物有一种动作感，环境有一种在地性，这无形中会给用户营造出强烈的⾝临其境的感觉。</p>
+
+    <p>其次，现在时态能给用户一种紧迫感。在叙述的过程里强调“此刻”“正在”，会⽆形中给用户⼀种转瞬即逝的错觉，让内容的紧迫性增强，提升用户注意⼒的强度。</p>
+
+    <p>最后，现在时态会给用户一种代入感。在现在时态里，叙述者，往往就是博主本人，会呈现出急迫的分享欲，这就能够与用户建⽴更强的情感和交互链接，⽆形中增添了用户的代⼊感。</p>
+
+    <p>你看，真实感、紧迫感和代入感，有了这些加持，现在时态显然更能让用户忘记时间。</p>
+
+    <h3>营造现在时态的三个技巧</h3>
+
+    <p>那么，在自媒体创作的时候应该怎么营造现在时态呢？</p>
+
+    <p>这里我给你总结了三个应⽤技巧，不管你的自媒体内容是什么类型，都可以应用。</p>
+
+    <p>第一个技巧是，叠加环境和动作。</p>
+
+    <p>你可以在叙述中，通过“环境+动作”的叠加，给用户营造一种正在发生的错觉。</p>
+
+    <p>这么说你可能会觉得有点抽象，咱们举个例子。</p>
+
+    <p>有一种自媒体博主叫作“口播博主”，一般会真人出镜、直接面对镜头进行口头表达。但是，很多⼝播博主，都是在静态环境里进行静态叙述，也就是在同一个空间里静止不动，只是单纯地面向镜头讲话。这其实会导致内容的真实感、紧迫性和代⼊感不足，以致于整体内容看起来⽐较平庸。</p>
+
+    <p>如果用“环境+动作”叠加的方式，效果就会很不一样。</p>
+
+    <p>比如，很多口播博主都把拍摄环境从室内搬到了户外，在路边、在商场里、在公园等地方边走边说，营造出一种临场感，这就是一个最简单的“环境+动作”叠加。当然，还有一些更复杂叠加方式，比如把环境换到课堂、演讲现场，或者故事发生的现场，博主再以动态的方式入镜，开始口播，就能给用户一种事件正在发生的错觉。</p>
+
+    <p>环境和动作叠加的方式可以应用在各种类型的自媒体内容里，但应用在口播类短视频中，效果会更加立竿见影。</p>
+
+    <p>第二个营造现在时态的技巧是，变换叙述视角。</p>
+
+    <p>你可以灵活地变换叙述视角，制造现在时态的临场感，甚至是“直播感”。</p>
+
+    <p>举个例子。伍迪·艾伦有一部电影叫《安妮霍尔》，电影里的主角演着演着，忽然开始对着镜头外的观众说话。在电影里，这种主⻆忽然与观众交流的⽅式被叫做“打破第四堵墙”，观众会忽然从一个电影故事的旁观者，被拉进电影主角的故事里，变成故事的参与者，情绪也就被调动了起来。</p>
+
+    <p>在自媒体的世界里，这种表现手法也非常适合用来营造临场感。尤其是在故事讲述类的视频里，如果画面中的人物，突然面向用户讲话，就能一下子把用户拉进故事人物的世界，给人以“现在时态”的错觉。</p>
+
+    <p>比如，有个自媒体账号“林晨同学”，他有一条视频叫作“深山里的监狱”。视频里他先是用自己的视角呈现了这座废弃的监狱，然后镜头就转向了一位住在这里的中年男子，由这位男子面向用户开始了他的自述。他说，这里曾经是一个有两万人定居的汞矿小镇，今天只有他自己一个人居住，他很盼望儿子回来等等。</p>
+
+    <p>这种视角的转换制造出了一种直播感，让用户不自觉地被代入了这个中年男子的世界，对他的孤独同身受，这所被废弃的深山监狱的萧索感也更具象化。</p>
+
+    <p>在你的内容创作中，也完全可以借鉴这种方式，通过变换叙述视⻆来营造一种正在发生的感觉。</p>
+
+    <p>第三个营造现在时态的技巧是，放置时钟。</p>
+
+    <p>在⽂学创作里有个箴⾔：当⼀个故事拖拖拉拉，显得平庸没有波澜的时候，你可以拿出⼀个工具——时钟。</p>
+
+    <p>什么意思呢？我还是给你举个例子：有些旅⾏博主会⽤这种⽅式开场，“现在是⼏点钟，我在某某地方。”还有⼀些带货主播会在视频⾥强调“这是刚摘下来的⽔果”等等，这些博主做的，就是在内容里“放置时钟”，也就是明确甚至强化时间。这种做法会让用户有一种紧迫感，好像这个故事此刻正在发生。</p>
+
+    <p>在做自媒体内容的时候，你也可以不断强化时间的变化；还可以像这些博主一样，在内容里直接告诉用户你当前的时间地点，然后再叙述要讲的内容。</p>
+
+    <p>好，我们再回顾一下强化现在时态的三个技巧：叠加环境和动作、变换叙述视角、放置时钟。</p>
+
+    <h3>时距加速：在短时间里制造高密度</h3>
+
+    <p>时态的技巧我们就讲完了。接下来，我们来聊聊关于时间的另一个内容原理：时距。</p>
+
+    <p>时距是指故事时间和叙述时间之间的距离。</p>
+
+    <p>所谓故事时间，是指事件从开始到结束经历的时间，⽤秒、分钟、⼩时、天、⽉、年表⽰；而叙述时间，则是指叙述这件事需要的实际时间。如果你是用文字叙述的，那叙述时间就用字数、行、页来表示；如果你是用视频来叙述的，叙述时间就用秒、分钟、⼩时来表⽰。</p>
+
+    <p>也就是说，一个持续时间为一年的故事，叙述时间可能是 2 分钟；一个只持续了 30 秒的故事，也可以用半个小时的时间去叙述。</p>
+
+    <p>所以，时距就好像是讲故事的速度，它可以加速，也可以减速。⽐如《鲁滨逊漂流记》⾥，用一本书的时间讲述了鲁滨逊为时 27 年的荒岛求⽣之旅，却只⽤短短⼏⾏字就概述了鲁滨逊离开荒岛以后多年的家庭⽣活。</p>
+
+    <p>在自媒体中，应该怎么应用时距这个技巧，让用户可以沉浸在内容里呢？</p>
+
+    <p>答案是，在短时间里加速叙事。</p>
+
+    <p>加速的时距，因为超强的浓缩能力、信息密度与时间感，反而能不断诞生各种各样的爆款内容。</p>
+
+    <p>这里具体有两种加速时距的方法。</p>
+
+    <p>先来说第一种，用极短时间记录较长时间的变化。</p>
+
+    <p>你肯定刷到过“3 分钟记录 3 个月”或者“从 135 斤到 100 斤的一年”这一类的视频，还有各式各样记录一段时间成长与变化的视频，比如在社交媒体一度非常流行的视频模版——十年体，这个模版一度成为自媒体博主的标配，很多博主都会在首页置顶一条视频，在其中浓缩自己过去十年或者更长时间里的经历。</p>
+
+    <p>这一类内容，无一例外都在强化故事时间的长和叙述时间的短，从而给用户一种强烈的心理暗示：这个内容虽然很短，但含金量很高，时间跨度大，信息密度强，值得一看。</p>
+
+    <p>第二种方法，强化超长的内容制作时间。</p>
+
+    <p>2025 年，抖音一度出现一种长视频奇观，例如“450 分钟解读红楼梦”“333分钟解读过去 100 年的物理学”等等。这类内容，看似违反了时距的加速原则，但它们无一例外都在开头明确告知用户：本视频耗时 2 个月、5 个月，甚至一年。</p>
+
+    <p>这样一来，就让看似很长的内容在超长的制作时间面前显得很短。这种强化对比，也是在利用“时距”加速的原理，营造用户对于时间感知的错觉。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，关于时间的内容原理就讲到这里，我总结一下：这一讲介绍了两个好用的内容原理：一是时态。在自媒体中，现在时态是最能让用户有真实感、紧迫感和代入感的时态。通过叠加环境和动作、转换视角、放置时钟，可以强化现在时态。</p>
+
+    <p>二是时距。加速的时距能让用户在短时间里有强烈的获得感。我们可以在极短时间记录较长时间的变化，也可以强化内容超长的制作周期，营造内容含金量极高的错觉。</p>
+
+    <p>所有内容产品，本质上都是在争夺用户的时间。在社交媒体诞生以后，时间变得更具象，也更紧迫。希望你能利用这些技巧去“争夺”用户的时间，也能善用这些技巧，不浪费所有人的时间。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，根据你的内容定位，我们二选一做以下两个练习：第一个练习，结合“现在时态”的技巧，创作一条内容，目标是让用户感觉故事此刻正在发生。</p>
+
+    <p>第二个练习，记录一段你过去的经历，运用时距加速的技巧，用短小的篇幅浓缩较长的时间跨度，并在内容中强化出这种长与短的对比。</p>
+
+    <p>你也可以在评论区分享你的练习成果，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，结构、冲突与悬念、时间，这三个关于如何抓取用户注意力的内容原理，我们就讲完了。下一讲，我们来解决自媒体内容创作的第二大挑战，爆款依赖与创作倦怠。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">善用时态和时距两大时间工具，让用户感觉正在发生、感受到时间的含金量。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>现在时态是社交媒体的统治时态，能带来真实感、紧迫感、代入感。</li>
+      <li>营造现在时态的三个技巧：环境+动作叠加、变换叙述视角（含打破第四墙）。</li>
+      <li>时距：故事时间与叙述时间的差距，可用加速时距或放慢时距改变感受。</li>
+      <li>对时间焦虑的用户，与其让他们忘记时间，不如让他们觉得时间花得值。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>口播时把环境从室内搬到户外，边走边说，营造临场感。</li>
+      <li>用加速时距把长时间记录浓缩进短视频，凸显时间的力量。</li>
+      <li>强调内容的制作周期，让用户感受到分量。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>让用户忘记时间，是内容产品争夺用户时间的终极目标。</p></blockquote>
+    <blockquote><p>时间花得值，是比忘记时间更高的标准。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

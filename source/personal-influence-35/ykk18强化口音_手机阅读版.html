@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第18讲 · 强化口音：怎样让你的内容有“活人感”？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第18讲</span>
+    <h1>强化口音：怎样让你的内容有“活人感”？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>前面，我们用四讲的内容，回应了爆款依赖和创作倦怠的问题。从这一讲开始，我们就来解决自媒体创作中的最后一个挑战，活人感缺失。</p>
+
+    <p>在刷社交媒体的时候，不知道你有没有遇到过这么两种情况：一，博主的内容很有料，你很认真地看完了，也收藏了，但是就是没有关注这位博主的欲望；二，博主的内容你觉得不错，顺手关注了，但过了一段时间，翻看关注列表的时候，完全想不起来这个人是谁、当初为什么要关注。</p>
+
+    <p>这两种情况共同指向了同一个问题：你的账号没有个性，本质上就是“没有口音”。 这里的“口音”，并不指方言，它指的是你账号独特的个性，是用户对你的语言风格、情绪特点和价值判断的综合感受。</p>
+
+    <p>那应该怎么找到并且向用户传递你的“口音”呢？这一讲，我们就来回答这个问题。</p>
+
+    <h3>口音的三大特点</h3>
+
+    <p>在讲具体的方法之前，我们先来看看一个拥有独特口音、个性鲜明的好内容，应该具有什么特点。</p>
+
+    <p>美国作家玛丽·卡尔说过：“创作者的⼝⾳，即是你的所思、所想、所疑、所谋、所厌。”根据这个定义，我把口音的特点总结为三个关键词：真实人格、情绪传递、用户一致。</p>
+
+    <p>口音是真实人格的体现。它是你的“所思、所想”，浓缩了你的成长经历和对世界的价值判断。</p>
+
+    <p>口音通过情绪来传递。它是你的“所疑、所谋、所厌”，一个没有情绪的账号，就像一个没有表情的人，很难让人有情感链接。</p>
+
+    <p>口音还要和目标用户一致。能让用户感知到的口音才是有效的，甚至你也可以通过口音去反向筛选你的目标用户。</p>
+
+    <p>真实人格、情绪传递、用户一致，这就是口音的三大特点。接下来，我们就来看看怎么找到并且向用户传递你的口音。</p>
+
+    <h3>口音的两大来源</h3>
+
+    <p>我帮你总结了口音的两个来源，一个是你的人设，一个是你的目标用户。</p>
+
+    <p>先来说人设。</p>
+
+    <p>口音可以从你的人设中来。</p>
+
+    <p>我们拿两个女性博主比对来看：一个是博主“房琪 kiki”，一个是博主“姑的 idea”。她们都做过一条和“爱情”主题有关的视频，但是表达出来的口音却完全不同。</p>
+
+    <p>“房琪 kiki”的口音是对世界充满希望的“乐观者”：她的形象、语气和画面风格，都透露着对世界的憧憬。所以，在她的视频里，虽然也描述了爱情里的波折，但对爱情都是赞美和歌颂。</p>
+
+    <p>相比之下，“姑的 idea”的口音更像是对世界敏感多疑的“批判者”：她的形象塑造、语言方式以及视频风格，始终如一地体现着对传统两性关系的反叛和对世界的质疑。所以在爱情主题的视频里，她对爱情的态度要更犹豫和悲观一些。</p>
+
+    <p>之所以她们在口音上有这么大的差别，核心原因就在于她们的人设，也就是成长背景、过往经历，还有价值观等等的不同。</p>
+
+    <p>既然口音来源于人设，那人设应该怎么确定呢？这就要回到我们课程第一模块有关“人设”的那一讲了。如果你忘了其中的内容，可以点击文稿的链接复习一下。</p>
+
+    <p>你的口音也可以从你的目标用户中来。</p>
+
+    <p>本质上，自媒体的⼝⾳就是用户怎么说话，你就怎么说话。又或者，用户希望你怎么和他说话，你就怎么和他说话。</p>
+
+    <p>这个方法非常好用。你会发现，在某个圈层被津津乐道的博主，都带着他目标用户的口音。</p>
+
+    <p>我给你举两个例子：博主“建筑师马尧”，他主要面向精英知识分子，分享建筑师眼里的设计知识。所以，你从他的口音里会感受到一种恰到好处、又不招人讨厌的知识分子的小骄傲。还有一个博主是“八零徐姥姥”，她主要面向对东北文化或者乡村生活有兴趣的用户，分享东北的乡村生活，所以她的口音里就带着“土地为大”的淳朴表达。</p>
+
+    <p>从目标用户里找口音，有两个原则需要注意：第一，你不能为了讨好所有用户，去试图迎合每一种圈层的语言习惯，那样只会让你的口音变得模糊不清。</p>
+
+    <p>第二，你的口音不能和目标用户的语言习惯错位，否则就是“坏口音”。</p>
+
+    <p>关于目标用户的确定，你也可以点击文稿区的链接，回到“用户”这一讲去复习。</p>
+
+    <h3>如何传递口音</h3>
+
+    <p>好了，明白了口音的两大来源——人设和目标用户，接下来我们来看看，怎么高效地把口音传递出去。</p>
+
+    <p>前面我们说到，口音是用户对叙述者语言风格、情绪特点和价值判断的综合感受。所以，你完全可以通过你的观点、你的语言风格去传递口音。</p>
+
+    <p>但如果说我最推荐哪种方式，那一定是情绪。</p>
+
+    <p>情绪是口音传递的加速器。</p>
+
+    <p>⼀个生动有趣并且让⼈印象深刻的内容创作者，都不吝啬在内容中传递情绪。这里，我把自媒体中能够承载并且比较容易表现的情绪分成六种，并简单介绍一下它们的优势和劣势，你可以对照来看：第一种是快乐。社交媒体上，多数用户浏览内容很多是为了找乐子、想放松，所以快乐也成为了社交媒体平台最⼴泛的⼀种情绪。你会发现，大量以娱乐用户为定位的自媒体账号，博主往往都是带着兴高采烈的口音。</p>
+
+    <p>第二种是焦虑。焦虑是⼀种不安、惊恐的情绪。目前很多的自媒体内容，都是先唤起用户焦虑，再提出解决⽅案，帮助用户缓解焦虑。焦虑情绪还可以帮助博主传递⼀种“愤世嫉俗”的⼝⾳。比如，博主“姑的 idea”。</p>
+
+    <p>焦虑情绪也可以以微妙的⽅式演变为“忧伤”，从而传递出一种“孤独疏离”的口音。</p>
+
+    <p>第三种是引发钦佩。一般情况下，博主会通过讲述个体的优秀，比如令⼈向往的职业成就或者⼈⽣经历，对世界的深度认知，通过这些来引发用户的钦佩之情。</p>
+
+    <p>我给你举个例子：华东师范大学刘擎教授，他在 B 站的视频账号里，虽然很少展示个人生活或个人成就，但是他丰富的哲思、通俗易懂又不疾不徐的表达，还有儒雅的气质，都传递出了让人尊敬且钦佩的“口音”。</p>
+
+    <p>用引发钦佩的情绪与口音结合的时候，要特别注意，要避免所谓的“爹味”。这里刘擎老师的账号也可以给我们启发，那就是：讲述见解的时候要言之有物，不要空喊结论；讲述个人经历的时候要诚恳，不要炫耀。</p>
+
+    <p>第四种情绪是引发羡慕。羡慕和钦佩是两种不同的情绪。钦佩是⼀种⼒量的展⽰，会引发人们发自内心的尊重；但羡慕仅仅是想要某⼀样东西，或者某⼀个⻓处，是⼀种更轻微的情绪。</p>
+
+    <p>自媒体中，唤起用户的羡慕情绪很普遍。在和口音结合的时候，要注意：羡慕情绪具备⼀种“反噬性”，如果博主太过得意，反⽽会引发用户反感，从而走向嫉妒。所以，用引人羡慕的情绪传递⼝⾳的时候，需要特别注意叠加“自嘲”的技巧。</p>
+
+    <p>第五种是传递美学体验。这是⼀种与审美相伴随的特定情绪，满⾜了⼈们的⼀种审美渴求，这种情绪可以传递“⽂艺浪漫”感的⼝⾳。艺术类博主“意公子”就属于这类。</p>
+
+    <p>第六种是刺激。刺激是一种比较强烈的情绪感受，会让人产生相应的应激反应，比如激动、兴奋、恐惧等等。刺激这种情绪传递出的口音，可能是活力四射的，也可能是过度夸张的。下面我举个正面的例子。女性成长博主“张⼤碗⼦”，她分享的内容范围很广，但一以贯之的是她活力四射的口音，这源自博主的生命力、视听表现力，以及她本人在口音塑造上的自觉。</p>
+
+    <p>好，我们再回顾一下这六种情绪：快乐、焦虑、引发钦佩、引发羡慕、传递美学体验、刺激。</p>
+
+    <p>情绪是口音传递的加速器，它简单又好用。但需要注意的是，情绪不等于口音。情绪可以强化口音，并帮助你加深在用户那里的辨识度和记忆度，但它仍旧需要基于你的人设或目标用户来展开。人设和目标用户才是口音的根源。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲到这里就讲完了。我来总结一下：口音是用户对你的语言风格、情绪特点和价值判断的综合感受。它有三大特点：来自真实人格、辅以情绪传递、与目标用户一致。</p>
+
+    <p>口音有两个来源：人设和目标用户。人设是口音最重要的来源，它决定了你的深层表达方式；而目标用户则能帮你确定用什么样的语言风格和你的受众对话。</p>
+
+    <p>传递口音最有效的方式是情绪。但需要记住，情绪是口音传递的加速器，人设与目标用户才是口音的来源。</p>
+
+    <p>今天的社交媒体，很忌讳“没有口音”，因为它会让你的账号呈现出一种模模糊糊的，甚至像机器人一样冰冷的状态。换句话说，没有活人感。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>围绕口音，今天我们一起来做一个练习：写一段你希望在自媒体中分享的内容，选取两种不同的情绪来讲给你的亲朋好友听，之后听听他们给你的反馈。你可以在评论区分享你的实验结果，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们会进入自媒体创作的最后一个内容原理，意义。</p>
+
+    <h3>划重点</h3>
+
+    <h3>添加到笔记</h3>
+
+    <p>1.口音是用户对你的语言风格、情绪特点和价值判断的综合感受。它有三大特点：来自真实人格、辅以情绪传递、与目标用户一致。</p>
+
+    <p>2.口音有两个来源：人设和目标用户。人设是口音最重要的来源，它决定了你的深层表达方式；而目标用户则能帮你确定用什么样的语言风格和你的受众对话。</p>
+
+    <p>3.情绪是口音传递的加速器，自媒体中能够承载并且比较容易表现的情绪包括六种：快乐、焦虑、引发钦佩、引发羡慕、传递美学体验、刺激。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">口音是账号独特的个性表达，由真实人格、情绪传递和与目标用户一致三个特点共同构成。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>口音的三大特点：来自真实人格、辅以情绪传递、与目标用户一致，本质是用户对账号语言风格、情绪特点和价值判断的综合感受。</li>
+      <li>口音的两种来源：人设（成长经历、价值观）决定深层表达方式；目标用户决定语言对话方式，两者结合形成独特口音。</li>
+      <li>六种常被自媒体承载的情绪：快乐、焦虑、引发钦佩、引发羡慕、传递美学体验、刺激，是传递口音的加速器。</li>
+      <li>口音与情绪的关系：情绪不等于口音，人设和目标用户才是口音的根源，情绪用来强化辨识度和记忆度。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>写下你坚信的三个观点和你厌恶的三个现象，浓缩成可用于内容表达的“个人立场清单”。</li>
+      <li>观察并记录你目标用户的口头禅、圈层黑话和典型句式，有意识地把它们融进文案语言。</li>
+      <li>选一个熟悉选题，分别用“快乐”和“焦虑”两种情绪各写一版开头，对比感受差别。</li>
+      <li>每季度做一次口音自检：随机抽3条旧内容，问“陌生人能否通过这几条内容记住我是谁”。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>创作者的口音，即是你的所思、所想、所疑、所谋、所厌。</p></blockquote>
+    <blockquote><p>没有口音的账号，就像一个没有表情的人，很难让人有情感链接。</p></blockquote>
+    <blockquote><p>情绪是口音传递的加速器，人设与目标用户才是口音的根源。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第21讲 · 开头改造：怎样让用户忍不住往下看？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第21讲</span>
+    <h1>开头改造：怎样让用户忍不住往下看？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容打磨</p>
+  </header>
+
+  <article>
+
+    <p>好标题是内容的“流量入口”，在很大程度上影响了内容的点击率。不过，影响点击率的可不止标题，还有开头。而且如果没有好的开头吸引和留住用户，哪怕标题再精彩，用户也会快速划走。</p>
+
+    <p>对自媒体内容来说，一个好的开头应该是什么样的？怎么才能做出来呢？这一讲我们就来回答这些问题。</p>
+
+    <h3>好开头的四个目标</h3>
+
+    <p>在社交媒体中，一个好的开头不是问候，而是一次精准的捕捉。它必须在有限的时间里实现以下四个目标：第一，与用户建立联结。</p>
+
+    <p>刷手机的用户会本能地问一个问题，“这个内容关我什么事？”所以，好的开头必须让用户感知到“内容与我有关”。例如，一篇关于时间管理的内容，开头与其说“如何提高效率”，不如直接说，“如果你也经常加班到深夜，却觉得事情永远做不完，那么今天这三个方法，可能会帮你夺回对时间的掌控权。” 这个开头就点明了用户的具体困境，让用户有兴趣继续看下去。</p>
+
+    <p>第二，介绍人物，引发共鸣和代入感。</p>
+
+    <p>在社交媒体中，抽象的概念很难打动人，但具体的人可以。你可以在开头介绍内容里的主角，也可以点明内容的受众。比如，说“职场压力大”时，它是模糊的。但你说“李薇，31 岁，深夜改方案”时，它立刻变成了用户可以代入的对象。代入成本极低，共鸣速度更快。</p>
+
+    <p>第三，奠定基调，将用户拉入内容的世界。</p>
+
+    <p>基调是内容的情绪滤镜。社交媒体用户需要在最短时间内感知到内容是温情动人的，还是冷静客观的，是幽默的，还是犀利的，以此判断是否符合自己当下的心理期待。比如，“深夜，最后一个关灯离开公司时，我在想：这一切真的值得吗？”这个开头就奠定了一种淡淡的忧伤和反思的基调。明确的基调能让用户迅速进入内容预设的场景和情绪中。</p>
+
+    <p>第四，在感官或心理上抓住用户注意力。</p>
+
+    <p>开头是创作者对抗碎片化浏览和注意力分散的第一道防线，所以你可以用一些小招在感官或心理上抓住用户，让他们留下来。一个语气平静，理中客的口播短视频，瞬间的感官吸引力，就是比不上一个表情丰富、情感充沛的讲述。</p>
+
+    <p>当然，这四个目标不一定都要同时满足，但如果一个都不能满足，那就一定不是好的开头。</p>
+
+    <p>知道了什么是好的开头，那应该怎么创作呢？接下来，我们就围绕这四个目标，一个一个来说。</p>
+
+    <h3>建立与用户的联结</h3>
+
+    <p>先来说开头的第一个目标，建立与用户的联结。</p>
+
+    <p>我给你总结了两个方法：方法一，直抒胸臆，摆明需求。也就是在开头表明这个内容能解答用户什么疑问，帮助解决什么问题。</p>
+
+    <p>我给你举个例子。曾经有个现象级自媒体账号，叫“打工仔小张”。她的短视频内容主要是介绍生活小窍门，比如怎么坐地铁，怎么办理港澳通行证等等。</p>
+
+    <p>她有条视频的开头是这样的：“第一次坐地铁不知道怎么买票？看这条</p>
+
+    <h3>就够了。”</h3>
+
+    <p>你看，这就叫“直抒胸臆，摆明需求”。对不知道怎么买地铁票的用户来说，这个开头 直接、明确、有用。</p>
+
+    <p>说句题外话，“打工仔小张”的刚刚火起来的时候，让很多自媒体从业者“如梦初醒”，大家才更多地意识到：世界就是一个巨大的折叠，那些我们习以为常的生活常识和忽略掉的细节，背后藏着的是另外一群人的真实需求。</p>
+
+    <p>与用户建立联结的另一种方法是，树立权威。</p>
+
+    <p>当用户感知到你的专业性和可信度时，就会产生“这个人说的话值得听”的信任感，这种信任感就是最强的联结。</p>
+
+    <p>你可以用职业或行动给自己背书，直接在开头表明你的权威性。比如，读书博主常用“一年读了 100 本书”来开头，告诉用户自己在读书上耗费了多少时间、精力与行动，以表明推荐书籍的权威性。职场博主会说“我在大厂做了 10 年 HR”，通过职场经验表明自己具备分享的资格。</p>
+
+    <p>你也可以在开头展示专业术语，但不用详细展开，点到为止，让用户在短时间内感受到你的专业度即可。比如，艺术博主开头就会用“RGB比值为 0:47:167 的颜色”这样的描述，快速展现了作者的权威性。</p>
+
+    <p>除了这些，你还可以通过制造反差树立权威。</p>
+
+    <p>比如在开头显得骄纵或傻气，降低用户预期，然后迅速转折，营造反差，树立更高的权威。很多短视频，在工地唱歌、外卖员跳舞、农村大姐唱Rap 等等，其实都是使用了制造反差、树立权威的方法。但这里我想多说一点：不能为了反差而反差，核心还是要内容足够好、足够权威和真诚。</p>
+
+    <p>好，直抒胸臆、摆明需求和树立权威，这两种与用户建立联结的方法就讲完了。它们的共同目的，都是在开头就给出用户必须看下去的理由，建立起内容与用户之间的强联结。</p>
+
+    <h3>点明人物，引发共鸣和代入感</h3>
+
+    <p>好，我们再来看开头的第二个目标：点明人物，引发共鸣和代入感。</p>
+
+    <p>这里有两种开头的方向：方向一，直接叫出用户的名字，圈定用户范围。</p>
+
+    <p>这个方法很直白，就是在开头明确告诉用户“这个内容是为哪些人准备的”。</p>
+
+    <p>比如，情感博主的视频开头：“结婚七年的女生，如果你也遇到了这些问题，一定要看完这条视频。”这个开头精准圈定了用户范围——“结婚七年的女生”，目标感明确，还营造了“我懂你”的亲近感。</p>
+
+    <p>方向二，展示主人公的标志性时刻。</p>
+
+    <p>我举个例子。《人物》杂志的特稿，《邵艺辉 轻盈一跃》，开头是这样的：“一切原本可能就在那一刻结束了。10 万块钱，卡在 10 万块钱……邵艺辉卖掉《爱情神话》的剧本，后来故事的可能性就此剪断。”你看，这个文章就选择了主人公人生的关键抉择作为开头：究竟是卖掉剧本拿钱，还是坚持自己当导演。这个抉择也是主人公人格塑造的关键时刻，通过她的选择，用户可以快速地对主人公的价值观建立感知。</p>
+
+    <p>好，在开头“点明人物”的两个方向就讲完了，分别是直接叫出用户的名字、展示主人公的标志性时刻。它们的共同点是，都通过“人”来开头，拉近与用户的距离，甚至筛选和明确目标用户。</p>
+
+    <h3>奠定基调</h3>
+
+    <p>好，讲完了前两个目标，我们再来看开头要达到的第三个目标：奠定基调。</p>
+
+    <p>什么样的开头可以奠定内容的基调，迅速将用户拉进内容所构建的世界呢？这里有两个方法。</p>
+
+    <p>一，还原内容的典型场景。</p>
+
+    <p>你可以用场景迅速勾勒内容的“世界观”或“氛围”。</p>
+
+    <p>比如，强化场景中的铺陈，也就是强化地点、服化道、氛围等要素，用这些可感知的细节构建一个感性的世界。农村题材短视频博主“张同学”就是这样做的，他的视频开头经常是：清晨的农村小院，破旧的木门，院子里堆着的柴火……这个开头就是通过强化场景的铺陈，构建了一个东北农村的清晨，用户很自然地就被拉进了这个世界。</p>
+
+    <p>除了铺陈场景，你还可以用强化人物的行动来开头，也就是用动作或动态开场。就像美食博主常以“咔嚓”一声切开食材，或“滋啦”一声下锅的动作开场，正是利用了动作的天然吸引力。</p>
+
+    <p>在开头强化人物反应，也是一种很好的方式。一条讲故事的视频，用人与人之间的冲突开场，效果就远胜于传统的“很久很久以前”。</p>
+
+    <p>强化场景的铺陈、强化人物行动、强化人物反应，都在开头迅速还原内容最经典的场面，奠定内容的基调，把用户拉进内容的世界。</p>
+
+    <p>在开头奠定内容基调的第二个方向是，把情绪外化。</p>
+
+    <p>你完全可以在开头直接表达你的私人感受和个人情绪，让用户了解“这个内容究竟是什么调性的”。</p>
+
+    <p>比如情感婚恋博主“糯米大兔子”有条视频的开头：她怼脸对着镜头，眼睛瞪得大大的，带着一种夸张的惊讶和委屈，说：“他们都谈恋爱了？</p>
+
+    <h3>就剩我了！”</h3>
+
+    <p>这个开头没有直接讲道理，而是先表达了一种情绪，既奠定了内容“轻松自嘲”的基调，又让用户觉得很亲近。</p>
+
+    <p>好，还原内容的典型场景，在开头直接进行情绪化表达，“奠定基调”的两个方向就讲完了。它们的共同目的，都是迅速将用户拉进内容所构建的世界，让用户不只是“看”内容，而是“进入”内容。</p>
+
+    <h3>在开头给用户感官或者心理刺激</h3>
+
+    <p>最后，我们来看看在开头这个关键位置，如何使用一点感官或心理刺激技巧，让精神涣散的用户停下来观看。</p>
+
+    <p>这里有两个方向：一，五感唤起法。在“标题”这一讲我们也提到了这个方法，这里我简单补充一下。</p>
+
+    <p>五感唤起特别适用于那些具备丰富视听元素的内容，例如美食、好物种草、或音乐娱乐类内容。</p>
+
+    <p>比如视觉唤起，你可以调用对颜色、轮廓、形状、甚至前后反差等感官体验，在开头给到用户视觉冲击，美妆博主或变装博主 的开头就经常使用这种方法。</p>
+
+    <p>你还可以在开头直接用拟声词，例如美食博主喜欢用的“咔嚓”“滋啦”等拟声词。图文内容中也可以使用听觉唤起的方法，比如注重使用文法的韵脚，从而带给用户韵律感。</p>
+
+    <p>味觉唤起需要使用通感的技巧。比如，美食博主“邓不馋”，有条视频的开头：一块红烧肉在筷子的夹持下微微颤动，当筷子轻轻一碰，肉块就软软地塌下去，你仿佛能感受到那种入口即化的口感。</p>
+
+    <p>除了以上三种，还有嗅觉和触觉的唤起。原理和上一讲提到的相同，这里我就不详细展开了。</p>
+
+    <p>如果说五感唤起是唤起人们的生理注意力，那么有一种方法可以唤起人们的心理注意力，那就是陌生化。</p>
+
+    <p>这个方法我们上一讲也讲过。主要是将人们耳熟能详的事物，与完全不相干的事物并置，从而形成的一种心理效果。</p>
+
+    <p>五感唤起和陌生化，它们的共同目的，都是在开头这个关键位置，给精神涣散的用户来一个“响指”。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲到这里就讲完了。我来总结一下：一个好的开头需要满足四个目标：建立内容和用户的联结，点明人物、引发用户的共鸣和代入感，奠定基调、把用户拉进内容中去，在生理或心理上唤起用户的注意力。</p>
+
+    <p>这四个目标不一定都要同时满足，但至少要满足其中一个或多个。</p>
+
+    <p>最后，我想多说一点：这些开头的技巧不是模版或公式，而是思维方向。</p>
+
+    <p>根据你的具体内容，你可以灵活使用任意方向，甚至可以组合使用多个方向。</p>
+
+    <p>更进一步，当你和人工智能协同时，这些开头类型还可以作为提示词，帮助你训练 AI，让它定向生产出更符合你需求的好开头，也可以帮你去判断 AI 给出的开头究竟是好是坏。</p>
+
+    <h3>本讲行动</h3>
+
+    <p>现在，我想请你做一个小练习：拿起手头的一个内容，对你的内容来一次“开头改造”。欢迎在评论区分享你的改造成果，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>关于开头我们就讲到这里。下一讲，我们就来讲讲节奏，看看怎么才能让用户不仅愿意点进来，还能津津有味地把你的内容看完。</p>
+
+    <h3>划重点</h3>
+
+    <p>1.在开头与用户建立联结的两个方法：直抒胸臆、摆明需求，树立权威。</p>
+
+    <p>2.在开头点明人物的两个方法：直接叫出用户的名字、展示主人公的标志性时刻。</p>
+
+    <p>3.在开头奠定基调的两个方法：还原内容的典型场景，在开头直接进行情绪化表达。</p>
+
+    <p>4.在生理或心理上唤起用户注意力的方法：五感唤起法，陌生化。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">好开头不是问候而是一次精准捕捉，需要在有限时间里同时满足联结、人物、基调、注意力四个目标。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>好开头的四个目标：与用户建立联结、介绍人物引发代入、奠定基调拉用户入内容、在感官或心理上抓住注意力。</li>
+      <li>建立联结两种方法：直抒胸臆摆明需求（点出用户痛点）、树立权威（职业/数量/专业术语/反差感）。</li>
+      <li>奠定基调两种方法：还原内容典型场景（强化铺陈/行动/反应）或直接外化私人情绪。</li>
+      <li>在头几秒抓住注意力：五感唤起法（视觉、听觉、嗅觉、触觉、味觉）+ 陌生化（日常事物与无关事物并置）。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>拿一条现存内容做“开头改造”：对照四目标，看至少命中了几项。</li>
+      <li>下一条内容开头尝试用一个拟声词或一组色彩词，启动五感唤起。</li>
+      <li>把开头类型整理成AI提示词，让AI生成2到3版开头并择优。</li>
+      <li>避免在开头做长时间问候或自我介绍，让前5秒直接进入内容主题。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>对自媒体内容来说，一个好的开头不是问候，而是一次精准的捕捉。</p></blockquote>
+    <blockquote><p>抽象的概念很难打动人，但具体的人可以。</p></blockquote>
+    <blockquote><p>好的开头要让用户不只是看内容，而是进入内容。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

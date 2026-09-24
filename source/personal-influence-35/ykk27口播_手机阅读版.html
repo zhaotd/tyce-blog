@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第27讲 · 口播：普通人怎样做好口播视频？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第27讲</span>
+    <h1>口播：普通人怎样做好口播视频？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：实战演练</p>
+  </header>
+
+  <article>
+
+    <p>前面我们学习了自媒体的定位、内容原理和以小搏大的招式技法，从这一讲开始，我们开启一个全新的模块，从应用场景入手，看看自媒体那些流行的内容类型，到底该怎么做。</p>
+
+    <p>今天，我们先来讲“口播”。</p>
+
+    <p>打开短视频平台，你可能会有一种感觉：好像人人都在做口播。从知识分享到生活感悟，一个人、一部手机、一段讲述，就是一个作品。</p>
+
+    <p>所以，很多人看到后跃跃欲试，但真到要拍时，又会被一个念头卡住：</p>
+
+    <h3>“我口才普通，也没有镜头感，真的能行吗？”</h3>
+
+    <p>其实，你在屏幕上看到的那些“好口才”，绝大多数并非天赋，而是精心设计的结果。那些让你觉得“讲得真好”的博主，他们的流畅表达、精准停顿、引人入胜的节奏，背后往往是一套可拆解、可学习的方法论。</p>
+
+    <p>口播考验的，从来不是即兴演讲的天赋，而是系统性设计内容的能力。</p>
+
+    <p>这一讲，我就给你六个让口播更有表现力的技巧。</p>
+
+    <p>这六个技巧，我把它们分成两组：第一组是内容层，也就是“说什么”。</p>
+
+    <p>第二组是表达层，也就是“怎么说”。</p>
+
+    <p>我先来说内容层，有三个技巧。</p>
+
+    <h3>内容层的三个技巧</h3>
+
+    <p>第一个技巧，在口播中插入有意蕴的故事。</p>
+
+    <p>你肯定听过《一千零一夜》的传说吧？一个国王生性残暴，每天娶一个少女，第二天又杀掉。这时候，有一位少女决定用讲故事的方式吸引国王的注意力，每次讲到精彩的地方天刚好就亮了，国王还想听，那就第二天接着讲……于是少女的故事讲了一千零一夜，国王也不再杀戮。</p>
+
+    <p>可以说，《一千零一夜》就是用故事来推动“口播”的最原始形态了。</p>
+
+    <p>在古阿拉伯，会不会讲故事关乎生死，在口播短视频里也差不多是这样。</p>
+
+    <p>我给你举个例子：我之前无意中刷到过两个几乎一模一样的口播选题，都是宋英宗次女宝安公主和北宋画家王诜的故事。形式也都是口播，但两位博主却用了不一样的讲法，结果数据天差地别。</p>
+
+    <p>第一个博主，他按照时间顺序，原原本本地把这段历史讲了一遍。就像在背课文，平铺直叙。这个视频只有 800 多个点赞，算不上爆款。</p>
+
+    <p>第二个博主就不一样了，他运用了“故事原理”，按照主人公的平静被打破，主人公为了突破现状做出了巨大努力、最终获得爱情的顺序，重新安排了故事的结构。此外还把二人相遇、对赐婚的抗争等重要的场景还原了出来，强化了故事的冲突。最终把这段历史讲成了有情感浓度、甚至有现实映射的爱情故事。这条视频的点赞有多少呢？接近 10 万。</p>
+
+    <p>你看，同样的选题，只要插入有意蕴的故事，数据就能翻 100 多倍。</p>
+
+    <p>对你来说，每次准备口播脚本时，不管是什么类型的内容，都可以问自己：我有没有可能把一个观点、知识或经历，包装成一个有开头、有冲突、有结局的微型故事？</p>
+
+    <p>接下来是口播的第二个技巧，应用冰山理论，制造“潜在内容”。</p>
+
+    <p>冰山理论来自心理学家弗洛伊德，他说很多事物有你“看得见的部分”，就像水面上的冰山，非常具象；同时也有隐藏在水面之下的“看不见的部分”，这部分往往体量巨大，含有更多的意蕴。</p>
+
+    <p>具体到口播，“看得见的部分”就是你说的话、展示的画面，“看不见的部分”就是你的留白、停顿或者你想卖的关子。</p>
+
+    <p>我给你举个简单的例子：有个博主讲分手的故事，她没有直接说“我们分手了，我很难过”，而是说“那天我收拾东西的时候，发现他送的那个杯子还在”，然后就是明显的几秒停顿。你看，她没说难过，但这里的停顿却让用户感受到的情绪更真切了。</p>
+
+    <p>2024 年在视频号出现了一个现象级账号叫“闪电制片厂”，就特别善于用对话制造潜在内容。有兴趣的话，你可以去看看。</p>
+
+    <p>好，口播的第二个技巧我们就讲完了。你会发现，不说出来的，有时候比说出来的更有力量。在口播中学会克制地表达，不试图把每一个道理、每一个细节都说尽，把一部分理解和感受的空间留给用户，他们的代入感会更强。</p>
+
+    <p>接下来是第三个技巧，发起内部对话，而非内心独白。</p>
+
+    <p>内心独白是什么？就是“我今天很累”。</p>
+
+    <p>内部对话是什么？就是“我今天很累，但我又想，累又怎样呢？”说白了，内心独白就是你自己在那儿唠叨，用户看着没意思；内部对话是你自己跟自己辩论，你内心两个声音在打架，能勾着用户不断往下看。</p>
+
+    <p>我给你举个例子：短视频账号“程前 Jason”，他几乎所有的口播，都会拆分不同时期的想法，然后用“内部对话”的方式来呈现。你经常能在他的口播里听到：之前我是怎么想的，跟人聊完之后，或者看完某本书之后，我又发生了什么变化。</p>
+
+    <p>发起“内部对话”的这种技巧，就是在口播中制造冲突。通过不断否定自己，带着用户继续看下去，从而呈现出观点最终形成的过程。你在创作时，可以刻意模仿这种“自我辩论”的结构。 不要只呈现一个最终完美的结论，而是把你的思考过程、其中的纠结和转变展现出来。</p>
+
+    <p>好，口播在内容层的三个技巧我就讲完了。我们再回顾一下：插入有意蕴的故事、应用冰山理论、发起内部对话。</p>
+
+    <p>讲完了内容层，接下来我们来看表达层，也就是你该怎么讲。表达层也有三个技巧。</p>
+
+    <h3>表达层的三个技巧</h3>
+
+    <p>第一个技巧是，把口播放置在场景中。</p>
+
+    <p>还记得我们在“场景”这一讲说过的三种强化场景的方式吗？</p>
+
+    <p>第一是“强化行动”，也就是强化人物的动作；第二是“强化反应”，也就是强化人物的关系和人物的情绪；第三是“强化铺陈”，就是强化地点、服化道、环境和氛围。这三种场景强化方式，也非常适合用来改造口播环境，让你的口播更有画面的层次感。</p>
+
+    <p>比如你可以“强化行动”，在活动中口播，边走边讲，或者在事件过程中口播。</p>
+
+    <p>你还可以“强化反应”。“丁远”是一个以口播形式为主的短视频账号，它的很多数据特别好的视频，都在开头植入了一个“反应场景”。博主一人分饰两角，表达截然相反的观点，这就增加了口播内容的冲突感和视频的表现力。</p>
+
+    <p>当然，你还可以在口播环境上做文章，也就是“强化铺陈”。它的关键，就是要充分利用铺陈场景的暗示性，把你要讲的内容放在与主题相关的环境中。比如，母婴类口播，就可以在背景里放置婴儿床，强化作为“母亲”的身份。</p>
+
+    <p>总之，“善用场景”远不止布置一个好看的背景，而是要让你的口播场景，为你讲的口播内容服务，让你的画面更有信息密度。</p>
+
+    <p>表达层的第二个技巧是，调整口吻进行口播。</p>
+
+    <p>口播的时候，虽然你独自面对镜头，但你的对话对象永远是用户。于是有个问题就不得不去思考，面对用户，你扮演的是什么角色？</p>
+
+    <p>答案大多逃不过三类：家长、成人、孩子。</p>
+
+    <p>“家长”是指充满权威的角色，可以制定规则，提出要求；“成人”是心态平衡、情绪稳定、充满理性的角色，表现出“让我们客观看待问题”的态度；“孩子”则是情绪化、自我、爱发牢骚的角色。</p>
+
+    <p>在口播中，你可以选择这三种角色中的一种，用这个角色的口吻来讲述内容。你甚至还可以在一条口播视频中，转换不同的角色，增强冲突感。</p>
+
+    <p>财经博主“九才小白”就特别擅长角色转换，经常在口播视频中一人分饰两角。比如一条关于“苹果手机生产线搬到印度”的视频，她先是以孩子的口吻问道：“巴老爷子（巴菲特）发怒了，他说苹果手机生产线搬迁到印度是个愚蠢的选择，你怎么看？”接着，她又换了身成熟的装扮，以“家长”的口吻专业地回答问题。</p>
+
+    <p>你看，通过角色转换，不仅降低了专业内容的疏离感，还增加了口播内容的吸引力。</p>
+
+    <p>不过，这里要特别注意：调整口吻的核心，不是让你装，而是让你根据内容需要，灵活切换角色。一个实用的方法是：在写口播脚本时，为不同的段落或观点，标注上不同的语气。比如，“用朋友吐槽的语气”、“用老师讲解的语气”或“用专家总结的语气”，这会让你在录制时有更明确的表现方向。</p>
+
+    <p>口播表达层的最后一个技巧是，砍掉内容中的累赘。</p>
+
+    <p>既然选择做口播，那就别说废话。</p>
+
+    <p>那怎么判断什么是废话呢？</p>
+
+    <p>从思维层面来说，一句话是不是废话，得看你的账号定位和目标用户。</p>
+
+    <p>对一群人来说是常识甚至是废话的东西，对另一群人可能字字珠玑。所以你得回到账号的定位、用户和人设，审视每一条口播的内容，问自己：我是在跟我的目标用户说话吗？</p>
+
+    <p>我说的是他们需要的、能听懂的、有新信息的话吗？</p>
+
+    <p>如果不是，你就要删掉。</p>
+
+    <p>此外，你还可以用一些表面技巧。比如，写口播脚本的时候，把起承转合、承上启下的段落，统统删掉。这好像违背了写文章的原理，但却很适合口播视频。因为用户看口播 ，不像看书不能扫读，也很少会重复看，所以创作者必须砍掉所有连接和铺垫，只保留最核心的观点或故事，并进行高强度地推进。比如知识科普博主“安森垚（yáo）”和“严伯钧”，他们的口播视频，几乎每一句话都是干货，没有一句废话，语速也很快，甚至快到“让用户反应不过来”。</p>
+
+    <p>好，口播表达层的三个技巧我们就讲完了。我们再回顾一下：你要把口播放置在场景中、你可以调整口吻、你还必须砍掉累赘。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲我们讲了六个让口播更有表现力的技巧。</p>
+
+    <p>一个是内容层的技巧，包括插入有意蕴的故事、应用冰山理论、发起内部对话；另一个是表达层的技巧，包括善用场景、调整口吻、砍掉累赘。</p>
+
+    <p>这些技巧，肯定不是做好口播的所有技巧，但确实是被验证过的、好用的方法论。口播短视频会在很长的时间里持续存在，如果你选择了这种竞争白热化的形式，那就要在实践中应用这些技巧，全力以赴做到极致。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，我想请你做一个小练习：第一步，选择你最近想做的一个口播选题。</p>
+
+    <p>第二步，从今天讲的六个技巧中，选一个你觉得最适合的。</p>
+
+    <p>第三步，写一段 30 秒的口播脚本，把这个技巧用进去。</p>
+
+    <p>第四步，对着镜头试讲一遍，看看效果如何。</p>
+
+    <p>欢迎在评论区分享你的脚本和使用的技巧，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们来看另一个很流行的社交媒体内容类型——Vlog。</p>
+
+    <h3>划重点</h3>
+
+    <p>1.增强口播表现力的内容技巧：插入有意蕴的故事、应用冰山理论、发起内部对话。</p>
+
+    <p>2.增强口播表现力的表达技巧：善用场景、调整口吻、砍掉累赘。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">口播考验的不是口才天赋而是系统性设计能力，六大技巧分为内容层与表达层各三招。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>内容层三技巧：插入有意蕴的故事（同样选题数据能差100倍）、应用冰山理论制造潜在内容、用内部对话代替内心独白。</li>
+      <li>表达层三技巧：善用场景（铺陈为内容服务）、调整口吻（家长/成人/孩子三种角色可切换）、砍掉累赘。</li>
+      <li>冰山理论在口播中的体现：停顿和留白比直白表达更有感染力，未说出来的部分往往更有力量。</li>
+      <li>砍掉累赘的方法：每句话问自己是否给目标用户带来新信息，把起承转合的连接段落统统删除。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>选一个口播选题，从六大技巧里挑一个最合适的写一段30秒脚本并试讲。</li>
+      <li>写口播脚本时为每段标注不同的语气（如朋友吐槽/老师讲解/专家总结）。</li>
+      <li>对一条既有口播视频做砍累赘练习：每句话问“对目标用户有用吗”，没用的删。</li>
+      <li>下一条口播视频尝试一次角色切换，比如孩子口吻提问、家长口吻回答。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>屏幕上看起来的好口才，绝大多数并非天赋，而是精心设计的结果。</p></blockquote>
+    <blockquote><p>不说出来的，有时候比说出来的更有力量。</p></blockquote>
+    <blockquote><p>既然选择做口播，那就别说废话。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

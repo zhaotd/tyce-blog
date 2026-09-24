@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第15讲 · 故事原理 1：怎样增加内容的爆款概率？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第15讲</span>
+    <h1>故事原理 1：怎样增加内容的爆款概率？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们学习了制造爆款的第一个原理，场景。今天这一讲，我们来看看怎么用故事来增加爆款的概率。</p>
+
+    <p>听到“故事”这个词，你可能心里会冒出问号：只有做剧情号才需要讲故事吧？我是做知识科普的，只要有理有据、言之有物就可以了；或者我是做好物分享的，客观详实地讲清楚物品的优势劣势就好了呀。</p>
+
+    <p>如果这样想，你可能就把故事给理解窄了。故事在社交媒体中的应用场景其实非常广泛，而且一旦用好了它，对内容的加持非常大。</p>
+
+    <p>什么是故事？故事为什么能增加爆款概率？怎么才能在自媒体中讲好故事？这一讲，我们就来回答这些问题。</p>
+
+    <h3>故事的定义与好处</h3>
+
+    <p>先来看看，什么是故事。</p>
+
+    <p>好莱坞编剧大师罗伯特・麦基在他的经典著作《故事》里，对故事下过一个定义，他说，“故事的本质，是通过有意义的冲突与行动，展现角</p>
+
+    <h3>色在困境中的变化与成长，最终让受众产生情感共鸣。”</h3>
+
+    <p>你注意到了吗？这个定义里有三个关键词：第一个是角色；第二个是有意义的冲突与行动，我们可以叫它“事件”；第三个是“情感共鸣”，我把它总结为“能打动人心的结局”。</p>
+
+    <p>这三个要素，后面我会一一来讲解。</p>
+
+    <h3>故事的应用场景</h3>
+
+    <p>了解了故事的定义，那在社交媒体中，它可以应用在哪些地方呢？</p>
+
+    <p>就像我们开头说的，故事的应用场景其实非常广泛。</p>
+
+    <p>首先，它可以用于知识科普类内容的创作。</p>
+
+    <p>你可能觉得，知识科普就是把道理讲清楚，但其实，用故事来讲知识，效果会好得多。</p>
+
+    <p>艺术科普账号“何老师在发呆”就是这么做的，并且因此成为现象级账号。他之前发艺术口播，怎么说都不火。直到 2023 年，他突发奇想，做了一期视频，介绍画家杜尚的知名画作《下楼梯的女人》。视频里，他一个人分饰两角，又当画家又当模特，给用户还原了这幅画的创作全过程。结果呢？点赞快 500 万。从此以后，他就专心用讲故事的方式聊艺术，引来众多博主争相效仿。</p>
+
+    <p>你看，原本理解门槛非常高的艺术知识，因为博主本人的故事演绎，就把用户带回到了历史现场，知识就在不知不觉中进到了脑子里。</p>
+
+    <p>故事还可以应用在好物分享类的内容里，从而赋予商品新的属性。</p>
+
+    <p>有一个农产品推介账号，叫“我是拉不拉⾦”。它原本是一个卖橙⼦的自媒体，不温不火。有一天，博主偶然发现，有一条视频的用户反馈特别好，这条视频讲的啥呢？讲的是一个“⾦⽑摘橙⼦”的故事。金毛就是这个博主家里的一只金毛狗。</p>
+
+    <p>凭借金毛摘橙子的故事，这个账号，慢慢地从单纯的卖橙子的账号成为了一个具有故事感的品牌。同时，“⽑⽑摘的橙⼦”也成为⼀个新的⼦品类，⼴受用户欢迎。</p>
+
+    <p>你看，故事在这里既宣传了品牌，还扩充出⼀种新产品。</p>
+
+    <p>最后，故事也催生了一种 Vlog 类型，我先给它起个名字叫“行动 100”吧。</p>
+
+    <p>“池早是我”这个账号就是其中的代表，她发起了“辞职体验 100 种职业”的内容系列，引起了一系列博主的模仿。比如“去 100 个陌生人家吃饭”“拜访 100 个财富自由的 90 后”等等。</p>
+
+    <p>在这种新型 Vlog 里，博主没有记录流水账生活，而是旱地拔葱发起了一个行动，对这些行动的连续记录就形成了一组故事，它像真人秀一样，对用户产生极大的吸引力。</p>
+
+    <p>所以，故事的应用场景非常广泛，且持续造就爆款。</p>
+
+    <p>那你应该怎么在自媒体中讲好故事呢？</p>
+
+    <p>为了方便理解和应用，我帮你总结了故事的三要素：角色、事件和结局。</p>
+
+    <p>掌握了这三要素，你就能把故事这个强大的内容原理用起来了。</p>
+
+    <h3>故事的第一个核心要素：角色</h3>
+
+    <p>我先来说说故事中的“角色”。</p>
+
+    <p>角色是故事的原点。有没有角色，是判断一个内容是否具备“故事感”的关键。</p>
+
+    <p>比如，刚才提到的艺术科普账号“何老师在发呆”，原本理解门槛非常高的艺术知识，因为博主本人的角色扮演，叙事就出现了。“我是拉不拉⾦”这个农产品推介账号，也是在商品售卖内容中“无中生有”了一个角色——金毛，才形成了故事感。</p>
+
+    <p>不过，光有角色还不够。一个从头到尾没有变化的角色，就像一个木偶，既推动不了故事，也打动不了观众。</p>
+
+    <p>角色必须经历转变。</p>
+
+    <p>那怎么才能让角色经历转变呢？</p>
+
+    <p>要有转变的内驱力。这种内驱力，可以是正向的，例如欲望，角色想要获得什么；也可以是负向的，例如阻碍，角色想要挣脱或战胜什么。</p>
+
+    <p>我们前面提到的账号“池早是我”，我们就可以清晰地感知到博主本人，她是有欲望的——她希望找到自己的职业方向；她也是有障碍的——她毕业后干过多份工作都无疾而终、始终迷茫。</p>
+
+    <p>正是这种想要走出迷茫、找到职业方向的内驱力，才让她有了辞职体验100 种职业的行动。</p>
+
+    <h3>除了设置角色，并且让角色经历转变之外，</h3>
+
+    <p>你也可以设置多个角色，增加故事的丰富度。角色可以有主角、配角、盟友或者敌人，这样一来，主角的内驱力就可以通过他人的对照被强化，也可以丰富故事的厚度。</p>
+
+    <h3>故事的第二个核心要素：事件</h3>
+
+    <p>讲完了角色，再来看故事的第二个核心要素：事件。</p>
+
+    <p>事件不是“已经发生的事实”，也不是生活流水账，它的核⼼是“变化”。</p>
+
+    <p>这种变化具有对立的二元特征，比如⽣与死，爱与恨，勇敢与懦弱等。</p>
+
+    <p>不能表现这种变化的就不能叫作事件。</p>
+
+    <p>以变化为核心的事件应该怎么展开呢？这里有一个基本的范本：首先，事件打破角色原本的生活轨迹，迫使角色做出选择。接着，角色会通过行动不断努力，想要回到原有状态，但过程中总有意外发生。最后，这些意外推动角色做出新的行动，角色也在这个过程中完成了转变。</p>
+
+    <p>这个范本可以用在很多内容形态里，大大提升你内容的吸引力。</p>
+
+    <p>比如，直到现在都很流行的“十年体”短视频为例，很多人都只是流水账一样地罗列自己的经历，其实没有几个人爱看。但有的博主就把“事件”的范本运用在了“十年回顾”的内容里。他先是挑出了人生中的几个“里程碑事件”，可能是抓住了一个机会，或者摔了一个大跟头，这些事让他不得不作出选择，让他的价值观甚至整个人生发生了改变。你看，运用了事件范本的内容，明显要比流水账式的叙述更加吸引人，既吸引了用户的注意力，还能传递博主的价值观。</p>
+
+    <h3>故事的第三个核心要素：结局</h3>
+
+    <p>最后，我们来看故事的第三个核心要素：结局。</p>
+
+    <p>事件推进到一定程度，需要一个关于结局的交代，否则故事就不完整，用户也会感到不满足。</p>
+
+    <p>不过，故事的结局不能草草了结，必须用心设计。要让用户明确感受到故事的氛围，还要给人传递一种容易理解的价值观，让用户看完以后能有情感共鸣，有意犹未尽的感觉。</p>
+
+    <p>这里我们可以借用《故事》这本书里的“主控思想”理论。</p>
+
+    <p>“主控思想”也被称为“主题”或者“核心论点”。好的故事结局，一般有三种“主控思想”：第一种是理想主义的主控思想。</p>
+
+    <p>在这种主控思想的引领下，故事一般会向外传递正面观点，如乐观主义、希望、梦想等，结局也一般会“上扬”。这类结局能给用户带来希望和力量，所以特别受欢迎，也是自媒体内容的主流。我们前面提到的博主“池早是我”，她辞职体验 100 种职业，最终找到职业方向，就是典型的理想主义结局。</p>
+
+    <p>第二种是悲观主义的主控思想。</p>
+
+    <p>这种主控思想的情感更负面，常常表达人世的无常、人性的阴暗。例如，年轻人对工作伦理、内卷的反思，对亲密关系和原生家庭的困惑。</p>
+
+    <p>这些内容命中了时代情绪，唤起广泛共鸣，也正在形成了一种普遍的社交媒体趋势。</p>
+
+    <p>第三种主控思想比较复杂，叫反讽主义主控思想。</p>
+
+    <p>相比理想主义和悲观主义，反讽主义既不是纯粹的好，也不是纯粹的坏，而是把生活的复杂性真实地呈现出来。这类作品的基调和结局，往往是上扬和低落相互交织。</p>
+
+    <p>有个博主叫“草匠匠匠匠”，她抖音发布了一条点赞近百万的短片，叫“不可说的事”，讲的是一个女性在成长过程中面临的性凝视与性羞耻。</p>
+
+    <p>画面和叙述里，没有否定，也没有肯定，只是呈现了悲观与乐观交织的故事，展示了女性面临的性命题的复杂。</p>
+
+    <p>这种复杂故事在抖音娱乐化、短小化的平台氛围中，之所以仍然受到喜欢，是因为复杂性反而更接近真实。当你不给出简单的“好”或“坏”的判断，而是呈现生活本来的矛盾与纠结时，那些有相似经历的用户会产生强烈的共鸣。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，我来总结一下：故事的应用范围很广。要讲好一个故事，需要把握住三个核心要素：角色、事件和结局。你可以把故事作为自己的主体内容，也可以像插件一样放置在各种内容类型中 ，提升内容的爆款概率。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>这一讲，我希望跟你一起来练习一下用故事改造非剧情类的内容。</p>
+
+    <p>你可以找一个你已经发布或者正在创作的知识分享、好物介绍或者生活Vlog，然后：第一，设置至少一个角色，想想这个角色有什么内驱力；第二，设计一个事件的转折，让角色经历变化；第三，选择一种主控思想作为结局，传递你的价值观。</p>
+
+    <p>我们来看看你可以将内容改造成什么样。欢迎在评论区分享，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>除了“角色、事件和结局”之外，故事还有一个重要的构成，就是情感。</p>
+
+    <p>一个好故事必须能够唤起人们的共同的情感，打动人心。</p>
+
+    <p>那么下一讲，我就用“故事母题”来帮你解读，如何讲出一个有情感的、深入人心的好故事。</p>
+
+    <p>1.要讲好一个故事，需要把握住三个核心要素：角色、事件和结局。</p>
+
+    <p>2.角色是故事的原点。有没有角色，是判断一个内容是否具备“故事感”的关键。</p>
+
+    <p>3.事件的核⼼是“变化”。这种变化具有对立的二元特征，不能表现这种变化的就不能叫作事件。</p>
+
+    <p>4.好的故事结局，一般有三种“主控思想”：理想主义、悲观主义和反讽主义。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">故事不止用于剧情号，用好角色、事件、结局三要素可把任何内容改造成爆款。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>故事是刻在人类基因里的接收模式，能让内容过目不忘。</li>
+      <li>故事可应用在知识科普（如何老师在发呆）、好物分享（如毛毛摘橙子）、Vlog（如行动 100）。</li>
+      <li>角色必须有内驱力与转变，否则只是木偶。</li>
+      <li>事件核心是变化；结局有三种主控思想：理想主义、悲观主义、反讽主义。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>为你的知识共享或好物分享设计一个角色，赋予其内驱力。</li>
+      <li>挑一个事件范本，给你的十年回顾或转折经历做改造。</li>
+      <li>为这条内容选一种主控思想作为结局。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>事件的核心是变化。没有变化，就没有事件。</p></blockquote>
+    <blockquote><p>故事的结局必须用心设计，让用户感受到氛围与价值观。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

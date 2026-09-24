@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第9讲 · IP 打造：怎样建立有价值的个人品牌？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第9讲</span>
+    <h1>IP 打造：怎样建立有价值的个人品牌？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们聊了自媒体定位的一个重要问题——运营策略。这一讲，我们一起聊聊怎么通过自媒体打造个人品牌，也就是个人 IP。</p>
+
+    <p>你觉得什么样的自媒体账号算是做成了 IP 呢？</p>
+
+    <p>很多人的第一反应可能是：“我在视频里露脸了，就是 IP 了吧？”还有人会说：“我粉丝都超过 10 万了，肯定算 IP 了吧？”其实，露脸和流量都不是 IP 的核心。</p>
+
+    <p>那 IP 的核心是什么呢？怎样才算通过自媒体做成个人 IP 呢？这一讲，我们就来把这些问题说清楚。</p>
+
+    <h3>自媒体 IP 的三大特征</h3>
+
+    <p>个人 IP 是通过做自媒体能达到的一种最好的结果，它意味着你的自媒体账号已经成为了你的个人品牌和资产。</p>
+
+    <p>听起来有点抽象，对吧？我来给你解释一下。一个真正的 IP，不论是商业品牌或是个人品牌，必须具备三个特征：第一，占领用户心智。</p>
+
+    <p>你可以想想，看到猫头鹰的 logo，你会想到什么？得到 App。提到乡间古风自媒体，你脑海里浮现的是谁？李子柒。这就是占领用户心智——用户一想到某个领域或某种风格，就能立刻联想到你。</p>
+
+    <p>第二，提供明确可感知的价值。</p>
+
+    <p>可以是实用价值，也可以是情绪价值。但无论是哪种类型，这种价值必须稳定、持久，让用户对你的内容有确定感。</p>
+
+    <p>第三，有穿越周期的生命力。</p>
+
+    <p>也就是说，IP 的品牌价值与商业价值足够高，能在投入产出上支撑足够长的时间。</p>
+
+    <p>以通过自媒体建设来打造个人 IP 为例。</p>
+
+    <p>品牌价值，意味着你的账号获客成本很低，能在较长时间内持续吸引用户。即便停更，复出的时候仍然会有大量粉丝回归。李子柒就是一个例子。</p>
+
+    <p>商业价值，意味着粉丝对账号的认可度与粘性很高，在商业转化上，长时间处于良性循环。</p>
+
+    <p>所以，如果你的自媒体账号能够做到这三点：占领用户心智、提供明确可感知的价值、有穿越周期的生命力，那你就称得上做成了个人 IP。</p>
+
+    <p>应该怎么通过自媒体打造个人 IP 呢？换句话说，怎么做才能让自媒体账号具备以上三个特点呢？</p>
+
+    <p>实话说，这几乎要用到《个人影响力打造 35 讲》中的所有技能，甚至还要叠加一些运气。但如果在前期定位阶段就能做对四件事，确实可以帮助你事半功倍。</p>
+
+    <p>我把这四件事总结成了四个关键词。</p>
+
+    <h3>一致性</h3>
+
+    <p>第一个关键词，一致性。</p>
+
+    <p>也就是，账号提供的内容价值、人设传递的人格价值观，要持续一致。</p>
+
+    <p>我给你举个反面例子：2023 年，很久没有大 V 诞生的抖音，猛地出现了一个叫“于文亮”的现象级账号：一个高中男生 10 天内涨粉破百万。他发布的内容是什么呢？一些生活日常的 Vlog。这些内容在评论区引起了普通人的共鸣，让人们觉得自己也可以通过展示日常生活被人看到。</p>
+
+    <p>听起来挺励志的，对吧？但很快，于文亮就陷入了争议。他在后续的视频里并没有持续提供这种唤起共鸣的内容，而是显得很随性。更致命的是，他在直播中透露出“想圈钱”的意图，把核心用户置于韭菜的位置。</p>
+
+    <p>结果呢？这个账号很快就哑火了。</p>
+
+    <p>像“于文亮”这样一夜爆火又烟消云散的账号还有很多，其中的核心原因，往往就是提供的内容价值、人设传递的价值观，前后不一致。</p>
+
+    <h3>差异化</h3>
+
+    <p>第二个关键词是，差异化。</p>
+
+    <p>在你的自媒体账号带给用户明确感知之后，仍然需要通过差异化来脱颖而出。如何找到差异化？品牌营销学中常用两种手法，我们做自媒体可以借鉴：手法一，在现有属性上强调差异化特征。</p>
+
+    <p>比如，汽车品牌都在做车，但宝马强调驾驶体验，沃尔沃强调安全性能，劳斯莱斯强调奢华。</p>
+
+    <p>手法二，在原有属性中引入新的属性。</p>
+
+    <p>比如，苹果早期的彩色蛋形 Mac，就是在家用电脑属性中，添加特殊颜色与形态，或者说添加了玩具属性。</p>
+
+    <p>自媒体中，两种属性叠加非常好用，相当于掌握了两个筹码。比如，各种领域的“颜值+”博主。颜值+美食的博主“文森特别饿”，颜值+剧情的博主“王七叶”等等，都是成功案例。</p>
+
+    <p>不过，这里我也得提醒一点：两种属性一定要有侧重之分。你需要牢牢守住原有的定位，辅助添加新的属性。否则，用户将会感知混乱。</p>
+
+    <h3>阶梯式</h3>
+
+    <p>第三个关键词是，阶梯式。</p>
+
+    <p>也就是，和用户建立良好的关系，像爬台阶一样，逐步推动用户从陌生到忠诚，最终成为账号的忠实粉丝。具体怎么做呢？关于这一点，品牌营销理论其实已经有了很成熟的方法总结，具体分为六个阶段：一，知晓。用户首先要知道你的品牌。来到自媒体场景下，需要你频繁且一致地传递给用户一种内容风格，一种视觉元素，或一个记忆点。</p>
+
+    <p>二，了解。用户愿意投入时间和精力去了解品牌提供的产品与服务。在自媒体场景下，意味着用户对你的内容有一定的兴趣，并进行了浏览。</p>
+
+    <p>三，喜欢。用户对你的产品产生了积极的情绪，但是在同类产品中，不一定会选择你。对应到自媒体中，意味着用户点赞、收藏了你的内容，但还没有持续关注你的账号。</p>
+
+    <p>四，偏好。用户在相似产品中更偏向选择你。对应到自媒体意味着，在同类账号中，用户更偏好你的内容，并持续关注你的账号。</p>
+
+    <p>五，信念。用户对品牌产生了强烈认同，赞同品牌传递的价值观，比如果粉与苹果的关系。在自媒体中，意味着用户不只是喜欢你的内容，更认同你这个人。</p>
+
+    <p>六，行动。在品牌营销中，行动意味着购买。而自媒体场景下，意味着用户成为了你的忠实粉丝，或者购买了你推荐的产品。</p>
+
+    <p>要让目标用户变成对你的个人品牌有感知甚至有情感的忠粉，需要推动他们对你的账号实现从知晓、了解、喜欢、偏好到产生信念，最终采取行动的转变。</p>
+
+    <h3>有立场</h3>
+
+    <p>第四个自媒体 IP 化关键词是：有立场。</p>
+
+    <p>也就是，直面冲突，表达倾向。</p>
+
+    <p>在自媒体定位中，特别是立人设的时候，特别容易犯的一个错误是：想讨好所有人。但你要知道，社交媒体上的用户，恰恰是基于“互相迥异甚至冲突的倾向”被区隔开。所以，自媒体 IP 所引发的用户忠诚，不仅藏在你赞同什么中，也往往藏在你反对什么中。</p>
+
+    <p>因此，直面冲突，甚至将冲突演变为内容规划中的一条线索，人格设计中的一条价值观，是打造自媒体 IP 的一个非常好用的技巧。</p>
+
+    <p>一致性、差异化、阶梯式和有立场，是在定位阶段打造自媒体 IP 的四个要点，也是决定你的自媒体 IP 能否最终建成的关键要素。</p>
+
+    <h3>关注账号的品牌符号</h3>
+
+    <p>在做好以上四点的前提下，如果还有余力，我建议你关注一下自己账号的品牌符号，主要包括：账号名称、视觉符号、品牌箴言和某些持续的视觉元素等。它们虽然对你的品牌打造没有决定性作用，但如果做好了，是一件锦上添花的事情。</p>
+
+    <p>我一一来介绍一下：第一，账号名称。</p>
+
+    <p>自媒体的账号名称完全可以随意一些，只要简单好记、不易引发误解、便于搜索就行。你可以是随性派，用你的姓名做账号；也可以是规整派，让账号名体现出你的定位，比如“韩秀云讲经济”“老肖说财经”。</p>
+
+    <p>第二，视觉符号。</p>
+
+    <p>可以选择固定的色调、道具或场景，让用户在视觉上有熟悉感和确认感。</p>
+
+    <p>这种重复，甚至会成为视觉记忆的加分项。例如，社科科普账号“傻白呀”，博主总是头戴一只鸭子头套面向镜头口播，后来他做过一次测试，发现没有头套的短视频流量明显下滑。</p>
+
+    <p>第三，品牌箴言，也就是我们常说的 slogan。</p>
+
+    <p>你可以把账号的核心价值或者人设的价值观浓缩到一句话里。例如，职场博主“姜 Dora 在此”，在账号简介中有一句话，“祝你早日成为自己喜欢的大人”，强化了账号为用户提供的核心价值。</p>
+
+    <p>不过，假如你一时没有想法也没关系。与 slogan 相比，你的账号持续提供的内容风格、你持之以恒的价值观，以及你的有所为与有所不为，才更深层次地影响一个账号的用户感知。</p>
+
+    <p>账号名称、视觉符号、品牌箴言，以上这些品牌符号也可以重复出现，在内容封面、开头、账号简介里反复用，让用户看久了形成记忆。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，在定位阶段打造自媒体 IP 的方法论就讲完了。</p>
+
+    <p>我们再回顾一下：首先，通过自媒体建立的个人 IP 有三大核心特点：占领用户心智、提供明确可感知的价值、具有穿越周期的生命力。</p>
+
+    <p>其次，在自媒体定位阶段打造个人 IP 有四大要点：一致性、差异化、阶梯式和有立场。</p>
+
+    <p>最后，通过自媒体建设个人 IP 还可以在品牌符号上下一些功夫。</p>
+
+    <p>IP 是一个持续运营叠加时间复利之后的结果，在定位阶段谈 IP，有点像是“以终为始”。所以，这些要点的使用方法，更像是一个“定位自查小技巧”，帮助你在定位初期，或者账号运营过程中，不断自查和调整自己的定位，少走弯路，做成一个有价值、能持续的个人品牌。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，我想请你做一个小练习，试着回答下面这三个问题：1.你的账号持续为用户提供的核心价值是什么？</p>
+
+    <p>2.你的人设的强烈倾向是什么？也就是你赞同什么，反对什么？</p>
+
+    <p>3.你的账号与同类型相比，最核心的差异是什么？</p>
+
+    <p>可以把你的答案写在评论区，我们一起交流讨论。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>到这里，我们课程的第一模块就讲完了，这个模块相当于打地基，帮你在自媒体运营前期就选对方向、找准策略、夯实基础。接下来，我们即将来到课程的第二个模块：内容创作。</p>
+
+    <p>1.通过自媒体建立的个人 IP 有三大核心特点：占领用户心智、提供明确可感知的价值、具有穿越周期的生命力。</p>
+
+    <p>2.在自媒体定位阶段打造个人 IP 有四大要点：一致性、差异化、阶梯式和有立场。</p>
+
+    <p>3.账号名称、视觉符号、品牌箴言和持续的视觉元素等，如果做好了，对打造个人 IP 是一件锦上添花的事情。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">真正个人 IP 具备三大特征，靠一致性、差异化、阶梯式、有立场四要点打造。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>个人 IP 三大特征：占领用户心智、提供明确可感知的价值、具有穿越周期的生命力。</li>
+      <li>一致性：内容价值与人设价值观持续一致，不轻易动摇。</li>
+      <li>差异化：在原有属性上强调特征或叠加新属性（如颜值+）。</li>
+      <li>有立场：直面冲突、表达倾向，IP 忠诚藏在你反对什么中。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>回答：你的账号持续为用户提供什么核心价值。</li>
+      <li>写出你赞同什么、反对什么，把它表达在简介或固定栏目。</li>
+      <li>在原有定位基础上叠加一种属性作为差异化的筹码。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>IP 是一个持续运营叠加时间复利之后的结果。</p></blockquote>
+    <blockquote><p>想讨好所有人，往往是 IP 失败的开端。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第8讲 · 全平台运营：怎样真正实现“一鱼多吃”？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第8讲</span>
+    <h1>全平台运营：怎样真正实现“一鱼多吃”？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们了解了选题，也就是自媒体内容创作的核心难题，这一讲，我们继续说自媒体定位的另一个关键要素——运营策略，一起来看看怎样才能做好社交媒体全平台的运营。</p>
+
+    <p>主流的中文社交媒体平台就那么几个，很多人为了充分利用内容，追求流量最大化，上来就是全平台分发，直接复制账号内容，一键同步到抖音、视频号、小红书等平台。甚至使用自动分发工具，批量把内容投放到多个平台。</p>
+
+    <p>但今天的情况有点不一样，每个平台越来越各自为政，各有各的脾气。</p>
+
+    <p>简单来说，抖音用户更偏爱快节奏的视觉冲击，小红书用户喜欢真实的体验分享，B 站用户则偏爱深度干货，微信平台仍旧依赖小圈子文化带来的社交转发。</p>
+
+    <p>所以，在今天，同样的内容一键分发的结果，大概率会是在抖音很受欢迎，但搬到小红书就可能无人问津。</p>
+
+    <p>因此，好的全平台运营的策略，不是分发，而是适配。</p>
+
+    <p>要做好适配，首先得弄清楚各大平台的特点，下面我来分别讲讲。</p>
+
+    <p>从用户规模和特性来看，主流的中文社交媒体平台可以分为两类：国民级平台和垂直平台。</p>
+
+    <p>它们的运营策略并不相同。</p>
+
+    <h3>国民级平台的运营逻辑</h3>
+
+    <p>在我看来，国民级平台主要有抖音、视频号、微信公众号，它们的用户覆盖全年龄段、全地域。优点是总用户量足够大，总有你的目标用户，缺点是竞争激烈，需要精准适配才能突围，获取有效用户的成本高。</p>
+
+    <p>针对这个特点，在国民级平台运营的关键是：在人设、内容与用户这三大定位要素明确的基础上，理解平台的用户喜好，做内容形式与风格的微调。</p>
+
+    <p>具体怎么做呢？</p>
+
+    <p>我们先来看抖音。</p>
+
+    <p>尽管过去几年，抖音的图文内容和直播逐渐增多，知识类、生活服务类内容增速也很快，但总的来讲，抖音依然是一个相对偏娱乐化、用户偏下沉的平台。用户刷抖音，就像逛夜市，走马观花，你的内容必须在短时间内抓住用户的注意力。</p>
+
+    <p>在抖音发内容，极度依赖开头，内容讲究节奏快。因此，同样的内容发抖音，你要特别在开头做出调整，便于打开第一层的用户流量。主体部分也要拉快节奏，避免内容石沉大海。</p>
+
+    <p>再来说微信视频号。</p>
+
+    <p>视频号有个特别的地方——它长在微信里，像是朋友圈里的小广场。这意味着什么呢？你分享的内容，要让朋友愿意转发，愿意为你站台。</p>
+
+    <p>你可以想想，什么样的内容你愿意转发到朋友圈呢？无非三种：这个内容说出了你的观点，体现了你的兴趣爱好，或者特别实用，具备利他的属性。</p>
+
+    <p>所以，在视频号发内容，你要特别呈现强烈的观点与情感表达，或者明确传递出内容的干货价值，这样才容易在视频号熟人生态中打开局面。</p>
+
+    <p>最后是微信公众号。</p>
+
+    <p>这里是长图文的最后阵地。虽然很多人说公众号流量下滑，但它的用户基础依然广泛。以往公众号一家独大时，它可以承载的内容类型五花八门。但在目前的社交媒体环境下，我认为只有一种类型的微信公众号可以高效获取用户，那就是符合用户的深度阅读习惯，有逻辑、有信息增量的内容。</p>
+
+    <p>微信公众号非常依赖标题，熟人转发及社交裂变带来的流量。因此，假如你具备深度图文内容输出的能力，建议你放一定精力做微信公众号，同时在标题上格外下功夫。</p>
+
+    <h3>垂直平台的运营逻辑</h3>
+
+    <p>好，国民级平台说完了。我们接下来看垂直平台。</p>
+
+    <p>在我看来，B 站、小红书都属于这类。它们的用户画像相对清晰，社区氛围独特，一旦你账号的目标用户匹配上这些平台的主要人群，账号会起得很快，用户粘性会极高。但内容一旦不合群，就容易被排斥，运营账号的性价比就不高了。</p>
+
+    <p>所以，垂直平台的运营策略跟国民级平台正好反过来：在决定是否、以及什么时候去垂直平台之前，你需要审视自己的目标用户与内容定位，是否契合这些平台的主流用户特征。</p>
+
+    <p>这里我想多说一点：不是说这些平台不存在全年龄段泛用户。但是如果你的目标用户不是垂直平台的主流用户，要找到他们需要耗费更多的时间、精力，甚至金钱成本，很可能在账号运营初期得不偿失。</p>
+
+    <p>下面我就分别说说这两个垂直平台。</p>
+
+    <p>先来看 B 站。</p>
+
+    <p>它是 Z 世代，也就是 1995 年至 2009 年出生的一代人的聚集地，主流用户喜欢有个性、有态度、有趣味的深度内容，反感敷衍性的科普、流量的套路，以及无趣的人设。</p>
+
+    <p>如果你的目标用户符合这些特点，内容又是“干货+中长视频”，还兼具猎奇性和趣味感，你本人的人设也挺有趣，B 站就是你的主战场。如果不符合呢？建议先缓缓，等做出一定的品牌力再说。</p>
+
+    <p>小红书呢？</p>
+
+    <p>思路跟 B 站差不多。目前小红书的 slogan，由 2022 年的“你的生活指南”改为“你的生活兴趣社区”，意味着在原有的“生活百科+种草社区”基础上，扩展了更广泛的生活分享类内容。</p>
+
+    <p>这让小红书的主流内容具备如下特点：消费与生活方式分享是主流，注重真实感与活人感。所以，如果你的内容定位符合上述特征，小红书绝对值得一做。反之，在早期建议不要抱快速增长的期待。</p>
+
+    <h3>全平台多形态适配</h3>
+
+    <p>了解了目前中文主流社交媒体平台的特性，我们接下来看看如何在目标用户明确、内容方向清晰的基础上，抓住内核，调整外壳，全平台适配，将各个平台的特点利用到极致。</p>
+
+    <p>说到这里，我给你举个特别值得学习的例子。</p>
+
+    <p>2025 年，中国原创设计师品牌“山下有松”发布了一条广告，邀请演员蒋奇明做主演，电影《宇宙探索编辑部》的主演兼编剧王一通做导演，拍了一个叫《我自成风》的广告片。广告以风为核心意象，讲述一个成长故事。</p>
+
+    <p>按照传统广告投放逻辑，大概率会把广告一键分发到各大社交媒体平台，甚至覆盖电视、电梯、地铁等场景。</p>
+
+    <p>他们的确这样做了，但更重要的是，他们在传统广告投放逻辑之外，开始了一系列的后续操作。我看到的时候，真的觉得，这才是今天社交媒体全平台运营该有的样子。我们看他们怎么做的：首先，主创蒋奇明和王一通去了小宇宙播客，接受周轶君的访谈，这期节目在小宇宙火了；同时，这期播客的视频版上了 B 站，继续传递品牌价值；接着，蒋奇明在小红书发了生活化的 Vlog，讲拍广告的趣事。这种活人感，特别符合小红书用户的口味，又破圈了一次；最后，品牌还办了线下艺术展，主题也是“我自成风”。参展的 KOL和用户又把内容带回小红书，引发新一轮传播。</p>
+
+    <p>看完这个案例，是不是很有启发？</p>
+
+    <p>这个案例，虽然不是来自某个自媒体，却非常值得我们学习，因为它充分体现了今天全平台运营的全新特点：第一，明确目标用户，以目标用户为标尺选择运营平台。</p>
+
+    <p>山下有松的用户是谁？一二线城市有审美追求的白领。所以，这个品牌重点选了小红书、小宇宙、B 站，这些平台是品牌的目标用户最集中的地方。它们没有追求全网分发的虚假繁荣，而是重点突破，自然破圈。</p>
+
+    <p>第二，抓住内容核心，在全平台保持不变。</p>
+
+    <p>你注意到没有？无论在哪个平台，这个品牌营销的核心都是风这个意象，都在讲成长和美学。蒋奇明和王一通也一直作为标志性符号出现，让用户在不同平台看到碎片内容时，也能完整感受到品牌想说什么。</p>
+
+    <p>第三，内容和形式适配平台特点。</p>
+
+    <p>小红书上是幕后 Vlog，B 站上是长视频播客，小宇宙上是长音频。形式不一样，但都符合各平台的用户习惯。</p>
+
+    <p>通过这一系列操作，同一内核的内容在不同平台各放异彩，既加深了品牌印象，又契合了各平台用户的浏览偏好，最大化地保证了传播效果。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，全平台运营的策略，到这里就讲完了。我们再回顾一下这一讲的核心观点：在今天，全平台运营，不是一键分发，而是多平台、分形态适配。</p>
+
+    <p>具体怎么做？记住三个关键词：第一，会抉择。不要平均分配精力，而是根据你的目标用户、内容定位和你的人设，确定优先级最高的平台。甚至可以在账号早期，战略性放弃某些平台，待到冷启动成功后，再根据你的特点决定是否进军全平台。</p>
+
+    <p>第二，抓内核。提炼出内容的内核，保持内容定位、目标用户与账号人设在全平台的一致性，为形成个人品牌埋下伏笔，而不是僵化地为平台打工。</p>
+
+    <p>第三，调形式。根据平台的不同特点调整形式，节省内容生产的成本，真正做到一鱼多吃。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，我想请你做一个小练习。别担心，不复杂，但肯定有用。选一条你最近发布或者计划发布的内容，问自己几个问题：1.这条内容的目标用户是谁？他们最可能在哪个平台活跃？</p>
+
+    <p>2.对照这一讲的平台特征，你会重点运营哪个平台？放弃哪个平台？</p>
+
+    <p>3.针对不同平台，你会怎么调整标题、开头或呈现形式？</p>
+
+    <p>你可以在评论区分享你的答案，我们一起交流优化。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们来到自媒体定位的最后一个要素——品牌建设。看看如何让用户记住你、认可你，甚至非你不可。</p>
+
+    <p>1.今天的全平台运营，不是一键分发，而是多平台、分形态适配。</p>
+
+    <p>2.主流的中文社交媒体平台可以分为国民级平台和垂直平台，它们的运营逻辑各不相同。</p>
+
+    <p>3.全平台运营需要做到三点：以目标用户为标尺选择运营平台，抓住内容核心，内容和形式适配平台特点。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">全平台运营不是一键分发而是多平台分形态适配：会抉择、抓内核、调形式。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>国民级平台（抖音、视频号、公众号）与垂直平台（B 站、小红书）的运营逻辑截然不同。</li>
+      <li>抖音重开头与节奏，视频号重观点与转发，公众号依赖标题与深度阅读。</li>
+      <li>B 站适合有态度的深度干货，小红书重真实分享与种草。</li>
+      <li>山下有松案例：抓住内核（风的意象）、适配不同平台形式，做到一鱼多吃。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>用目标用户作标尺，挑出 1-2 个最匹配的平台作为主阵地。</li>
+      <li>提炼一条内容内核，在所有平台保持一致。</li>
+      <li>对每条内容为不同平台做开头、节奏或形式的微调。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>今天的全平台运营，不是一键分发，而是多平台、分形态适配。</p></blockquote>
+    <blockquote><p>目标用户为标尺选择运营平台，抓住内容核心，内容和形式适配平台特点。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第3讲 · 人设小百科 1：怎样打造高共鸣人设？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第3讲</span>
+    <h1>人设小百科 1：怎样打造高共鸣人设？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们聊了立人设的两个步骤，也就真实地分析和设计自我。不过，这还属于立人设的初级阶段，解决的是人设怎么产生的问题。</p>
+
+    <p>接下来两讲，我们来到进阶阶段：一起来看看什么样的人设才能引起共鸣、获得认同。</p>
+
+    <p>很多朋友都会遇到这样的困境：找到了自我身上清晰、明确的人格特征，也在自媒体中应用了，但是做了一段时间就发现，这个人设穿透力不足——要么是没有让用户感知到，用户看完就忘，根本记不住；要么是无法获得广泛的认同、收获忠诚粉丝。</p>
+
+    <p>那么，是否存在能够明确传递人设特点，又能让人设的魅力广泛传播的“人设科学”呢？</p>
+
+    <p>我觉得，“人物原型”理论就是这个问题的答案。</p>
+
+    <h3>什么是人物原型</h3>
+
+    <p>人物原型理论并不是我的发明，而是《经典人物原型 45 种》这本书中的观点。</p>
+
+    <p>甚至这个原型理论也不是书作者的发明，而是作者对出现在神话传说、文学、戏剧或电影中的经典人物形象的总结。</p>
+
+    <p>什么是人物原型呢？</p>
+
+    <p>瑞士心理学家卡尔·荣格发现，一些古代神话传说中存在的意象，会在不同地域和文化里反复出现，比如英雄、母亲、少女等等。由此，他提出了“集体无意识”这个概念。</p>
+
+    <p>人物原型，就是这种集体无意识的具象化，是一种超越了文化边界、无意识的形象模式。它就像是我们潜意识里的心理指纹。有些人格特质，你暂时想不起来，但一遇到你就会感到熟悉。这种心理学机制，让人物原型可以命中人类集体最古老的欲望和需求，而且经久不衰。</p>
+
+    <p>我给你举个例子：有一种人物原型叫作“国王”。当我们看到一个国王角色时，无论他是英勇的、挣扎的还是堕落的，内心都会唤起对秩序与安全的渴望、对自我实现与完整的追求。电影《教父》中的两代教父角色，都命中了“国王”这个人物原型。而这种人物原型，在电影《中国合伙人》里也再次浮现。你看，不同文化、不同时代的作品，只要命中了同一个原型，就能引发相似的共鸣。</p>
+
+    <p>这里我借助他人的智慧，结合当前中文语境下的传播趋势，提炼总结了 14 种适合应用在自媒体人设中的人物原型。我把它们按照男性原型和女性原型进行了拆分。</p>
+
+    <p>这一讲，我们先说女性人物原型。如果你是女性博主，建议你好好听听。</p>
+
+    <h3>第一组：自我展现型</h3>
+
+    <p>女性人物原型包括七种，为了方便记忆和理解，我把它们分成了三组：第一组是自我展现型。她们的共同特点是：以自我为中心，通过展示自己来获得认同。这一组包括三个原型。</p>
+
+    <p>第一个原型叫做“诱人缪斯”。</p>
+
+    <p>她的主要特征是：具备女性魅力，喜欢成为众人焦点，注重表达自我，富有创造力。当然，也有一些缺点，比如自我主体意识较弱，缺乏思考和执行力，有点恋爱脑，也容易移情别恋。</p>
+
+    <p>看到这里，你会想到谁？有没有想到美国电影明星玛丽莲·梦露？在社交媒体早期，命中“诱人缪斯”的账号很多。其中一个代表就是短视频博主“痞幼”。她凭借颜值，结合机车元素，获得广泛关注，被网友称为“机车女神”。</p>
+
+    <p>第二个原型叫做“少女”。</p>
+
+    <p>既然叫少女，关键词就是快乐。无论多大年龄，都保持着纯真，充满青春活力。</p>
+
+    <p>非常爱玩，爱笑，兴趣广泛，但就是三分钟热度，很容易对人对事失去兴趣。</p>
+
+    <p>在自媒体中，博主“拉宏桑”是“少女”原型的典型代表。她作为一个生活博主，之所以广受欢迎，核心原因正是命中了少女原型。她面对世界的好奇心、热情与趣味，使人倍受感染。</p>
+
+    <p>第三个原型叫“神秘主义者”。</p>
+
+    <p>它指的是神秘宁静的女性，喜欢独处，经常沉浸在自己的思绪里，精神世界丰富，推崇极简主义，最好能够远离人群、远离竞争，过着慢生活。</p>
+
+    <p>听到这里，你会不会想到一个自媒体博主？没错，就是“李子柒”。她的短视频在全球范围内备受欢迎，主旨都是远离人群，隐居山林，呈现自给自足的生活与安静慢节奏的画面。更多课程 持续更新 微foufoushu今天，在自媒体中，“神秘主义者”会演化为多种形态。她们可能满怀生命力，或者在城市游走，但在内核上却厌倦集体，追求自我满足和自我价值实现。比如近年来流行的数字游民类自媒体。</p>
+
+    <p>好，自我展现型的三个原型介绍完了。回顾一下：诱人缪斯、少女、神秘主义者。</p>
+
+    <p>她们共同特点是以自我为中心，通过展示自己来获得关注。</p>
+
+    <h3>第二组：关系导向型</h3>
+
+    <p>接下来，我们说第二组，关系导向型。她们的共同特点是：以他人或家庭为中心，在关系中定义自己。</p>
+
+    <p>这一组也包括三个原型：第一个原型叫“养育者”。</p>
+
+    <p>这是非常有母性特质的一个原型，她愿意花很多时间跟孩子、学生或需要她照顾的人相处，有奉献精神，乐于助人，甚至会忽略自己的利益。但往往也因此过于牺牲自己，不懂拒绝别人。</p>
+
+    <p>现实生活中，著名的慈善工作者特蕾莎修女是这个原型的代表人物。在社交媒体中，“养育者”原型与一类自媒体账号不谋而合，就是母婴类自媒体。</p>
+
+    <p>第二个原型叫“父亲的女儿”。</p>
+
+    <p>从名字上你就能感受到，她站在男人身边。确切地说，慕强的她总是跟那些能够帮助她实现目标的男性在一起。她可能聪明、自信，有战略眼光。不过，在别人眼里，常常显得有点紧绷，不够放松，很少或者说很难，展现出女性化的特质。</p>
+
+    <p>有一位自媒体博主，可以叫作“父亲的女儿”，那就是李佳琦的助理朱旺旺。她一开始是李佳琦所在公司的运营，后来靠实力转去做招商，最后成为李佳琦的助理。李佳琦评价她说：旺旺用尽一切手段来我们公司上班，又用尽一切手段坐在我的旁边，然后就不走了。现在，朱旺旺已经成为独当一面的成熟主播。结合她的个人成长经历看，她的人设与“父亲的女儿”很吻合，聪明、好强，同时也并不避讳站在有力量的男性一边，来实现自己的目标。</p>
+
+    <p>第三个原型叫“女族长”。</p>
+
+    <p>这是中国影视剧里经常出现的一种原型，就是那种当家大奶奶。她维护婚姻，全心全意地对待丈夫和家庭，喜欢张罗家里大大小小的事情。她把自己的身份和整个家族捆绑在一起，在她眼里，家庭最重要，她最不能接受丈夫和其他家人的背叛和抛弃，会自觉不自觉地争夺家中的控制权。</p>
+
+    <p>比如《红楼梦》中的贾母，就符合这个原型人物特质。网络上，有一个具有“女族长”特质的自媒体博主，叫作“杨珈珈”。她的账号内容，主要围绕情感故事、管理家庭事务、个人生活经验等展开。虽然广泛，但有一个主线，就是围绕家庭，她的价值观也传递了捍卫婚姻的态度。</p>
+
+    <p>关系导向型的原型也介绍完了。我们回顾一下：养育者、父亲的女儿、女族长。</p>
+
+    <p>她们的共同特点是，以他人或家庭为中心，在关系中定义自己。</p>
+
+    <h3>第三组：力量主导型</h3>
+
+    <p>最后，我们来说说第三组，力量主导型。这组只有一个原型，但它是当下最重要的原型，叫做“亚马逊女子”。</p>
+
+    <p>整体而言，她是一个自立自强的女性，主体意识强，热衷搞事业，勇于接受挑战，不害怕竞争。当然，也有缺点，比如过于固执，目标感太强，以至于忽略其他东西，甚至表现得有点咄咄逼人。</p>
+
+    <p>今天的社交媒体传播环境就是“亚马逊女子”的时代，命中这个人物原型的账号也越来越多，这与中国女性自我意识与个人成长的发展有关。账号“Alex 绝对是个妞儿”，就是典型代表。她既展示自己的生活，也传播女性议题的观点，还开设了固定栏目“国际月经简报”进行女性议题的资讯介绍。</p>
+
+    <h3>人物原型的三大特点</h3>
+
+    <p>到这里，在社交媒体中比较容易为大众接受、且相对正面的七个女性原型介绍完了。你会发现，她们有几个共同的特点：第一，她们描述的，是一个人物的内在驱动力与人格底色，而非人物的表层。</p>
+
+    <p>第二，原型至少有两面，正面特征与负面特征并存，很少有单一伟光正的原型。</p>
+
+    <p>第三，原型会随着时代趋势发生演变。比如“女族长”这个人物原型，往往就和今天多元的婚恋价值观不兼容。博主“痞幼”，也因为“诱人缪斯”的这个原型受到桎梏，显得后劲不足。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲到这里就结束了，总结一下：人物原型理论，可以帮你在立人设的时候解决用户共鸣的问题。</p>
+
+    <p>有七种女性人物原型适合在自媒体中应用，分别是诱人缪斯、少女、神秘主义者、养育者、父亲的女儿、女族长和亚马逊女子。她们的共同特点是，有显著的人格底色、有正反两面、会随时代演变。</p>
+
+    <h3>本讲行动</h3>
+
+    <p>最后，建议你去阅读一下创意写作书《经典人物原型 45 种》。即使书中并没有涉及到自媒体与人设打造，但阅读的时候，你会获得关于人物原型更厚重、丰富的历史。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我会给你介绍七种男性人物原型。同时，我也会综合讲解一下，如何在自媒体人设中具体应用人物原型理论。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">用七种女性人物原型检验人设，命中集体潜意识、获得广泛共鸣。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>人物原型是集体无意识的具象化，能命中人类最古老的欲望和需求。</li>
+      <li>自我展现型：诱人缪斯、少女、神秘主义者——以自我为中心获得认同。</li>
+      <li>关系导向型：养育者、父亲的女儿、女族长——在关系中定义自己。</li>
+      <li>力量主导型：亚马逊女子——自立自强，是当下最重要的原型。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>对照七种女性原型，看自己的人设清单命中了哪一类或哪几类。</li>
+      <li>用原型的正反两面自我检查，避免硬靠或回避负面特征。</li>
+      <li>阅读《经典人物原型 45 种》加深对原型历史的理解。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>人物原型，就像我们潜意识里的心理指纹。</p></blockquote>
+    <blockquote><p>不论平台还是用户，对单一伟光正的人设愈发警惕。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

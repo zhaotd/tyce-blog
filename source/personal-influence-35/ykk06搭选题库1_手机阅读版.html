@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第6讲 · 搭选题库 1：怎样避免陷入选题枯竭？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第6讲</span>
+    <h1>搭选题库 1：怎样避免陷入选题枯竭？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们学习了厘清目标用户的方法，接下来，我们讲讲自媒体定位的另一个要素——内容。</p>
+
+    <p>你肯定知道，选题是内容的起点，也是自媒体内容创作的核心难题，所以我们这一讲主要解决选题的问题。</p>
+
+    <p>我身边有很多做自媒体的朋友，他们几乎都遇到过这样的困境：一开始凭着一股热情和几个不错的灵感，的确能产出几条爆款内容，但兴奋劲儿一过，就陷入了选题枯竭。该做的好像都做了，以至于每天都在为发什么内容发愁。这种选题荒就像一个隐形的天花板，导致很多账号做到一定阶段就停滞不前，甚至慢慢沉寂。</p>
+
+    <p>那么，到底怎么才能避免陷入选题枯竭呢？</p>
+
+    <p>答案是，建立一个“纺锤结构选题库”。</p>
+
+    <h3>搭建自媒体的选题框架</h3>
+
+    <p>纺锤是纺织用的工具，两端窄、中间宽。我们要建立的自媒体选题库也是这样的结构：两端是选题的两个来源，为选题提供源头活水；中间是选题的组织方式，让选题自动生长。三者结合，你的选题就能源源不断。</p>
+
+    <p>纺锤结构的一端，是用户需求。</p>
+
+    <p>用户需求是选题的一大来源。因为自媒体内容有着强烈的用户需求导向，它不能是自说自话的日记，而是要给用户提供价值——可以是信息、观点、情绪慰藉，也可以是解决问题的方法。</p>
+
+    <p>纺锤结构的另一端是什么呢？是你的自媒体人设。</p>
+
+    <p>我们前面讲过，人设是今天做自媒体的灵魂。但其实，它还有一个重要的作用，就是帮助你获得源源不断的选题。</p>
+
+    <p>而纺锤结构的中间部分，是选题的组织方式。</p>
+
+    <p>它可以是树状的，也可以是线性的，甚至可以由热点来串联。恰到好处的组织方式，可以让选题不断自动生长，甚至自我繁衍。</p>
+
+    <p>依靠纺锤结构选题库的三个坐标，我们就可以搭建起系统化的选题框架。</p>
+
+    <p>它既是一个标尺，帮我们弄明白什么选题符合目标用户的需求和账号人设，更像一汪活水，持续不断地带给我们新的选题灵感。</p>
+
+    <p>现在问题来了，怎样建立这样的纺锤结构选题库呢？</p>
+
+    <p>这一讲，我们先来看怎么搭建纺锤结构的两端；下一讲，再详细介绍中间部分的搭建方法。</p>
+
+    <h3>从用户需求中找选题</h3>
+
+    <p>刚才说了，“纺锤结构选题库”的两端分别是用户需求和自媒体人设。</p>
+
+    <p>用户需求这一端，很好理解，就是怎么从用户需求中寻找选题。具体有这么五种方法：第一，基于用户画像，尤其是用户的心理画像发现选题。</p>
+
+    <p>用户画像，包括用户的年龄、性别、职业这些基本信息。你可以使用一些平台的数据分析工具去收集，我在文稿区末尾放了一些工具的链接，你可以查看。</p>
+
+    <p>在画像之下，你需要特别关注用户更本质的心理画像。</p>
+
+    <p>具体来说，就是用户的欲望、障碍、恐惧。</p>
+
+    <p>什么意思呢？</p>
+
+    <p>欲望，是指用户想要什么，可能是升职加薪、变美、获得情感认同。障碍，是指用户在满足欲望的路上，客观上遇到了什么困难，比如时间不够、方法不对、资源不足等等。恐惧，指的是用户主观上害怕什么，可能是怕被淘汰、被孤立或者错过机会。找到了这三个点，选题就有了。</p>
+
+    <p>职场教育账号“崔璀优势星球”就非常善于通过用户画像确定选题。这个账号的目标用户是 25+的职场人。分析用户的心理画像会发现，目标用户的欲望是“提升职场竞争力”，障碍是“能力不足”，恐惧是“裁员”“失业”。它怎么做的呢？这个账号根据用户的心理画像创作了一系列内容，例如一个爆款选题，叫作“如何用 AI 提高生产力”。这条视频直接戳中了目标用户的欲望，就是想通过学习 AI 提高职场竞争力；内容中提到，“很多人担心被 AI 取代”，这就回应了目标用户怕被裁员的恐惧；内容还指出，很多人面临“工具太多不知道怎么选”的问题，这又指向了用户客观面临的障碍。</p>
+
+    <p>当然，这只是其中一个例子，这个账号的选题几乎全部围绕用户的欲望、障碍与恐惧展开，几乎每条都能引发很多共鸣。感兴趣你也可以去看看。</p>
+
+    <p>从用户需求中寻找选题的第二个方法是，在描画“人物小传”的基础上提出选题。</p>
+
+    <p>自媒体用户，不是一个模糊的群体或数字，而是一个个具体的人。想要精准切中用户需求，就要像小说家塑造角色那样，给你的目标用户写一份小传。你可以想一想：他的生活场景是什么？每天会遇到什么问题？</p>
+
+    <p>快乐和隐忧来自哪里？</p>
+
+    <p>如何获取这种小传呢？方法有很多：你可以做小规模的用户访谈，甚至可以在有一定用户基础的情况下，观察或回应评论区的用户需求，反向为用户生产内容。比如，你正在做一个年轻人成长认知类的账号，讲了一期“某些消费是为了获得内心平静”的内容，评论区竟然引发了很多职场人提问。有人是这么问的，“我如何转型才能为他人提供情绪价值呢？”你看，这就是新的选题来源。这时候，你就可以利用自己的手机备忘录，将用户的只言片语整理成一些具体的场景或者问题，提出新的选题。</p>
+
+    <p>第三个方法，找到“对标账号”，进行选题的二次创作。</p>
+
+    <p>也就是，找几个和你领域相似、做得好的账号，定期看它们的选题。这绝对不是让你抄袭，而是为了分析账号的目标用户现在正在关注什么。</p>
+
+    <p>然后，你可以用自己的视角和知识储备，针对同一个用户需求去做二次创作。</p>
+
+    <p>以“提高职场沟通技能”这个用户需求为例，对标账号可能讲的是“和领导沟通的 3 个技巧”，你二次创作时，就可以结合自己的经验，讲“新人怎么避免沟通中的‘学生气’”，既借了话题的热度，又有自己的特色。</p>
+
+    <p>第四个方法，让行业知识和最新动态成为你的选题来源。</p>
+
+    <p>行业知识和最新动态，天然就是你目标用户注意力的焦点，这里也藏着你的选题。依旧以职场类自媒体为例：当退休年限、社保政策，或者与就业相关的数据动态出台时，其中往往就藏着用户关心的内容。</p>
+
+    <p>第五个方法，巧妙在公共热点中输出你的独特视角。</p>
+
+    <p>公共热点往往意味着强烈的用户关注度，是天然的好选题来源。但这里的蹭热点，不是简单把事件复述一遍，或者急着表态站队，而是结合你的内容定位、目标用户和你的人设，找到热点中的专业视角。</p>
+
+    <p>有一个艺术科普账号叫作“杨藩讲艺术”，一度成为用专业知识蹭热点的标志性账号，甚至还有一个合集，专门收录了在冬奥会等热点发生时进行的相关艺术科普。这个账号不是简单重复这些事件，而是将热点和艺术史、社会心理结合起来。既借了热度，又输出了自己的专业内容。</p>
+
+    <p>好，了解了从用户需求这一端找选题的方法，我们再来看看纺锤结构选题库的另一端，也就是如何从人设中找选题。</p>
+
+    <h3>从人设中找选题</h3>
+
+    <p>还记得前面讲过的“人设分析清单”吗？这个清单，不仅可以帮助你挖掘自我，明确账号的人设，还可以变成选题的来源。</p>
+
+    <p>你可以梳理对你来说的重要时刻。</p>
+
+    <p>比如，那些让你三观受到冲击、人生选择发生改变的瞬间。围绕这些时刻设置选题，就能让用户通过你的成长轨迹看到你的价值观和思考方式的变化，产生共鸣。其实，很多博主做的“十年体”视频，就聚焦在“十年前因为一句话改变了职业方向”“十年前的一次失败教会了我什么”这些有情感重量的瞬间。这些选题，不仅符合人设，还特别能打动人。</p>
+
+    <p>你还可以从你的名声与关系网中寻找选题的线索。</p>
+
+    <p>职场博主“姜 Dora 在此”早期经常访谈 HR，因为她曾经是一个 HR，身边这个领域的人很多。同理，你的人脉圈、别人对你的评价，比如“靠谱的职场前辈”就是选题的重要来源，也天然与你的人设匹配。</p>
+
+    <p>除此之外，你的天赋、能力、习惯、品位，这些人设分析清单上的其他类别，也都可以成为你选题的来源。</p>
+
+    <p>这里，我们看一个将自我分析清单运用得特别棒的博主——“丑穷女孩陈浪浪”。博主在对自己进行全方位的洞察后，形成了这样一个人物小传：出身普通、学历不高，但从未放弃努力过上美好生活的年轻女孩。</p>
+
+    <p>这个账号在冷启动阶段的选题，几乎全部来自她对自己经历的观察和总结：比如，普通院校毕业怎么进大厂？相貌普通要不要整容？原生家庭带来的困扰怎么解决？这种以自我分析清单为基础展开的选题，具体又真实，能让一些有相似经历的用户感到共鸣。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>总结一下，今天我们讲了“纺锤结构选题库”的两端：一端是用户需求，通过挖掘用户的画像，描画具体的人物小传，参考对标账号，结合行业动态和热点，能持续找到用户真正关心的选题；另一端是自我人设，从过去的重要时刻、名声、关系网、天赋能力、品味与习惯出发，也能挖掘出持续不断且符合人设的选题。</p>
+
+    <p>这两个支点就像两个泉眼，只要不断深挖，就能源源不断地冒出新的话题与灵感。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，请给你的目标用户画一个心理画像，写出他们的欲望、障碍和恐惧，之后再将它们演化成选题。欢迎把你的答案分享到评论区，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>纺锤结构选题库由三个部分组成，用户需求和自我人设是其中的两端，中间部分应该怎么搭建呢？下一讲，我们就来详细讲讲。</p>
+
+    <h3>自媒体平台数据分析工具清单</h3>
+
+    <p>各大平台创作者中心后台（免费）：抖音创作者中心：https://creator.douyin.com/小红书创作者后台：https://creator.xiaohongshu.com/微信公众平台：</p>
+
+    <h3>https://mp.weixin.qq.com/</h3>
+
+    <p>视频号助手：https://channels.weixin.qq.com/B 站创作中心：https://member.bilibili.com/适合进行精细化运营的工具（付费）：蝉妈妈：</p>
+
+    <h3>https://www.chanmama.com/</h3>
+
+    <p>飞瓜数据：</p>
+
+    <h3>https://www.feigua.cn/</h3>
+
+    <p>新榜：</p>
+
+    <h3>https://www.newrank.cn/</h3>
+
+    <p>魔镜洞察：</p>
+
+    <h3>https://www.mktindex.com/</h3>
+
+    <p>1.纺锤结构选题库的两端是用户需求和自我人设，它们为选题提供源头活水；中间是选题的组织方式，能让选题自动生长。</p>
+
+    <p>2.通过挖掘用户的画像，描画具体的人物小传，参考对标账号，结合行业动态和热点，能持续找到用户真正关心的选题。</p>
+
+    <p>3.从过去的重要时刻、名声、关系网、天赋能力、品味与习惯出发，也能挖掘出持续不断且符合人设的选题。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">建立纺锤结构选题库，从用户需求与人设两端开源，让选题不再是挤牙膏。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>选题荒是账号停滞的隐形天花板，靠灵感不可持续，要靠系统。</li>
+      <li>纺锤结构：两端是用户需求与人设，中间是组织方式，三者结合才能让选题自动生长。</li>
+      <li>从用户需求找选题的五种方法：心理画像、人物小传、对标账号、行业动态、蹭热点。</li>
+      <li>从人设找选题：重要时刻、名声、关系网、天赋、品味、习惯都是富矿。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>为目标用户写一份心理画像：列出欲望、障碍、恐惧，再各自演化成选题。</li>
+      <li>盘点你的人设分析清单，看哪些维度还没有被开发成选题。</li>
+      <li>建立一份选题原始记录表，把灵感随时记下来。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>两个支点就像两个泉眼，只要不断深挖，就能源源不断地冒出新的话题与灵感。</p></blockquote>
+    <blockquote><p>基于用户心理画像创作内容，几乎每条都能引发共鸣。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

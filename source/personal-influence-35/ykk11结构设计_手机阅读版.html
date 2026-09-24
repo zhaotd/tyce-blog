@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第11讲 · 结构设计：怎样高效抓住用户注意力？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第11讲</span>
+    <h1>结构设计：怎样高效抓住用户注意力？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容原理</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们介绍了自媒体内容创作目前面临的三大挑战。这一讲，我们就来解决第一大挑战，也就是用户注意力缺失的问题。</p>
+
+    <p>美国小说家雷蒙德·钱德勒有一句打趣的话，他是这么说的：“内容创作者需要摄住受众的心神，让他们沉醉在故事世界中，跟随形形色色的人物和情节一同起伏，直至完结。”这句话适用于几乎所有面向用户的内容产品，对自媒体来说更是如此，因为自媒体用户精神更加涣散、缺乏耐心。</p>
+
+    <p>从头到尾牢牢抓住用户的注意力，是关乎账号生死存亡的问题。</p>
+
+    <p>就像我们上一讲说的，用户的注意力需要清晰的路径，否则就会迷失，而一个强大的结构，能铺好一条“无需思考”的流畅轨道，让注意力自然沉浸。</p>
+
+    <p>好的结构，对内能支撑起内容，把一盘散沙组织起来，降低用户理解的门槛；对外还能强化节点，用视觉插画、分割符号或者音效对内容进行切分，持续抓住用户的注意力。</p>
+
+    <p>接下来，我会给你总结六种在自媒体中比较好用的经典结构。</p>
+
+    <p>这里需要说明一点，这里总结的结构，有的来自文学电影的反复验证，有的是社交媒体原生的流行类型。它们是一些“大概率好用”的类型，但结构不是僵化的，你完全可以灵活运用。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>下面我就来一一讲解一下。</p>
+
+    <h3>清单结构</h3>
+
+    <p>第一种是清单结构。</p>
+
+    <p>它的基本形式，就是把信息用相似的密度并行排列，不强调转承启合，只注重信息的区隔。它的要素很简单，就是“目标+信息要点”。</p>
+
+    <p>清单结构可以适用于几乎所有的自媒体类型。比如知识分享类，种草类，甚至是剧情类。</p>
+
+    <p>例如在小红书，清单结构常见于知识分享，“日本设计师纪录片合集”“N 个经典好莱坞电影开头分享”。清单结构也常见于好物种草，比如“5 个不踩雷 bistro 小酒馆”“N 个国产护肤好物”等。清单结构也可以是纯视觉的。在抖音平台一度流行的短视频模版，“三种对异性丧失兴趣的生活方式”，这就是使用了视觉化清单结构。甚至你可以用清单结构讲故事。剧情短视频账号“潇潇学姐”拍过一条老师批改假期作业的视频，博主扮演多个角色，展现语文、英语、数学老师改假期作业的差异化场景，用清单结构罗列了冲突。</p>
+
+    <p>为什么清单结构在自媒体中这么好用呢？因为这种结构信息明确，满足了自媒体用户寻求获得感的要求；同时，切碎了信息，符合用户注意力碎片化的特点。说白了，它迎合了用户一边精神涣散，一边寻求确定性的矛盾心理。</p>
+
+    <h3>⽇记结构</h3>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>第二种是⽇记结构。</p>
+
+    <p>它的要素可以总结为，“观点+故事+情感”。这种结构往往从⼀个抽象的观念开始，比如观点吐槽、热点评论或者是⼀种顿悟，之后展开故事，最后用情感表达收尾。</p>
+
+    <p>Vlog 就非常适合使用日记结构。</p>
+
+    <p>很多人拍 Vlog 就是记录一天干了什么，看着特别无聊。但有了日记结构，你就可以把普通的日常生活凝练为相对普世的观点，在开头抓住用户，然后再用故事强化日常生活的戏剧性，最后用情感结尾，让你的vlog 唤起用户的共鸣。</p>
+
+    <p>观点分享类内容也很适合用日记结构。</p>
+
+    <p>我给你举个例子。有个读书博主叫“这个月”，她的很多爆款内容，用的就是“观点+故事+情感”这种标准日记结构。她不像一般读书类博主只聚焦观点或说理，而是用故事来展开观点。比如，她会引经据典，这承接了她的读书定位；也会讲个人经历，这强化了她的人设。这种日记结构让她的分享更有温度。</p>
+
+    <h3>三幕剧结构</h3>
+
+    <p>第三种是三幕剧结构。</p>
+
+    <p>三幕剧顾名思义，一共有三个部分：触发、冲突、解决。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>“触发”，就是交代事情的起因和背景，或者抛出一个需要被解决的问题。</p>
+
+    <p>“冲突”，是把用户关心的矛盾对立双方表现出来，或是把主人公面对的障碍、挑战、对手展示出来。</p>
+
+    <p>“解决”，就是把事情或者问题的结局展现出来，调动用户的情绪或者思考。</p>
+
+    <p>这个结构主要适用于剧情类或者故事讲述类的内容。它看似简单，却可以帮你解决在叙述过程中常犯的错误，比如故事没有触发点，让人摸不着头脑；或者缺乏冲突，显得平淡；又或者问题最后没有解决，让用户感到不满足。</p>
+
+    <h3>3W 结构</h3>
+
+    <p>第四个经典结构是 3W 结构。</p>
+
+    <p>就是 What（是什么）、Why（为什么）、How（怎么办）这三个问题的组合。</p>
+
+    <p>这个咱们很熟悉了。What 也就是对事物的定义，讲的是特点。Why是指为什么要做这个事情，也就是目标、使命、理念或愿景。How 则是指要怎么干这个事情，指方法和路径。</p>
+
+    <p>在自媒体环境下，这三个 W 的顺序不同，适⽤的内容场景也不同。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>如果按照“是什么、为什么、怎么办”的顺序组合，那就适⽤于问题解析、名词解释或科普类的理性内容，我们可以把这种组合叫作“理性组合”。</p>
+
+    <p>比如社会学教授沈奕斐的自媒体账号，发布过《社会学恋爱思维》的系列视频，其中有一条讲“为什么脱单这么难”。开头就说，现在年轻人很多都脱单困难，对应“是什么”；接着给出分析，对应“为什么”；最后给出了怎么脱单的实用指南，即“怎么办”。</p>
+
+    <p>当然，你还可以按照“为什么、怎么办、是什么”的顺序重新组合。这种组合方式，情感唤起浓度高，特别能引起共鸣，我们就把它叫作“感性组合”。</p>
+
+    <p>乔布斯的演讲就常常使用这种结构。他一般会先用讲故事的方式表达自己为什么干这个事，然后再告诉大家中间他做了什么努力，最后告诉大家这是一个改变世界的伟大产品，也就是“是什么”，来唤起共鸣。在自媒体中，这种组合尤其适合种草类内容，特别是一些情绪价值要求较高的产品推广。</p>
+
+    <h3>LOCK 结构</h3>
+
+    <p>第五个我想介绍给你的是 LOCK 结构。</p>
+
+    <p>L、O、C、K 四个字母都有特定的含义：L 即 Lead，代表主人公的特征；O 即 Objective，代表主人公的目标，这个目标可以是一种愿景，也可以是摆脱某种困境；C 即 Confrontation，代表对抗，也就是反面势力</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>与主人公的对抗；K 即 Knockout，代表结局，也就是给出一个让用户心满意足的结果。</p>
+
+    <p>所以 LOCK 结构的结构模版就是：人物+目标+对抗+结局。</p>
+
+    <p>因为聚焦于人，在自媒体中，LOCK 结构最适合用于人物小传和人物访谈类的内容。</p>
+
+    <p>我给你举个例子。短视频账号“程前朋友圈”的访谈类视频，几乎全部都使用了 LOCK 结构。一般他在开篇都用大字表明主人公的身份与创业成就，然后围绕主人公创业目标展开故事，接着不断交织各种曲折坎坷，最后给出上扬的结局。这种结构对于塑造人物性格、推进故事、吸引用户持续关注，都非常有效。</p>
+
+    <h3>神话结构</h3>
+
+    <p>第六种经典结构是神话结构，它可以看作是人物塑造类结构的复杂版。</p>
+
+    <p>这是电影《星球大战》火爆以后，带动起来的一种结构，它的模版一般是这样的：现实世界里的普通人，受到某种“召唤”，感知到自己使命，决定离开平凡普通的生活，接受一系列“任务和挑战”。过程中，会有他的“领路人”“盟友”和“ 对手”以及赋予他力量的“法宝”，然后他会遇到“终极考验”。当他结束决定胜负的战斗后，主人公会带着好消息回归到普通人的世界。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>这个结构概括来说就是：召唤 → 接受使命 → 遇到挑战 → 获得帮助→ 终极考验 → 带着收获归来。</p>
+
+    <p>《人物》杂志流传较广的人物特稿几乎都采用了神话结构。有篇文章叫作《邵艺辉 轻盈一跃》，它从导演邵艺辉受到“支持女性力量”的召唤开始讲起，然后讲她在电影创作中遭遇的挑战，还有她从领路人徐峥、盟友叶婷以及母亲那里得到的支持，最终在拍摄电影《好东西》这个“终极考验”中，她完成了一次自我寻找和自我实现。</p>
+
+    <p>好了，六种在自媒体中比较好用的经典结构就讲完了。</p>
+
+    <p>这六种结构主要是对内容本身进行整合，把一盘散沙组织起来。而在自媒体创作中，还有一种特殊的结构使用方式，就是在内容外部强化结构节点。</p>
+
+    <p>如果你仔细分析很多内容，不论是短图文、长图文还是视频，就会发现，精通结构的创作者，会在结构的节点处，通过表情包、画面、音效或者BGM 卡点等多种要素，来强化节点。它的作用非常浅显：形成内容的节奏感，甚至悬念感，推动内容向前。当用户注意力进入停顿或者倦怠时，结构节点的强化可以重新抓住用户注意力。</p>
+
+    <p>这算是使用结构的一个“雕虫小技”吧。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好了，今天我们一起学习了六种在自媒体中特别好用的经典结构，清单结构、日记结构、三幕剧结构、3W 结构、LOCK 结构和神话结构。它们各有绝招、适用于不同的内容类型。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+    <p>这些结构不仅能在内容内部搭建骨架，为用户铺好一条“无需思考”的流畅通道，还可以通过外部强化节点的方式，形成内容的节奏感，持续抓住用户注意力。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，我建议你拿出手头已经完成的内容，重新审视一下：它属于哪种内容类型？适合用哪种结构？如果重新用今天学到的结构来布局，会有什么不同呢？</p>
+
+    <p>你可以在评论区分享你的思考和调整，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>好了，关于结构我们就讲到这里。下一讲，我们来聊聊抓住用户注意力的另一个内容原理：冲突与悬念。</p>
+
+    <h3>每日更新 微foufoushu</h3>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">六种经典结构为用户铺好无需思考的注意力轨道，各有适用场景。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>清单结构：信息并行排列，迎合用户涣散与寻求确定的双重心理。</li>
+      <li>日记结构：观点+故事+情感，适合 Vlog 与观点分享。</li>
+      <li>三幕剧结构：触发+冲突+解决，适合剧情或故事讲述。</li>
+      <li>3W 结构（是什么/为什么/怎么办）：理性组合适合科普，感性组合适合种草。</li>
+      <li>LOCK 结构（人物+目标+对抗+结局）：适合人物小传与访谈。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>挑一条已发布的内容，判断它属于哪种类型、最适合哪种结构。</li>
+      <li>用今天学到的结构重新布局，看效果差异。</li>
+      <li>在结构节点处用音效、转场或表情包强化节奏。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>结构能为用户的注意力铺好一条流畅的轨道。</p></blockquote>
+    <blockquote><p>清单结构迎合了用户一边精神涣散、一边寻求确定性的矛盾心理。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

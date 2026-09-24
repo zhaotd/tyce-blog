@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第31讲 · 理解算法 1：怎样做出算法爱推的内容？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第31讲</span>
+    <h1>理解算法 1：怎样做出算法爱推的内容？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：与算法共舞</p>
+  </header>
+
+  <article>
+
+    <p>从今天开始，我们进入课程的最后一个模块——与算法共舞。</p>
+
+    <p>算法就是社交媒体平台用来分析用户数据、推荐内容的一整套计算规则，是你的内容从上传到平台到抵达用户，必然经过的一个环节。</p>
+
+    <p>但一提到“算法”，很多朋友容易产生两种极端心态：一种是恐惧。觉得它像个黑箱，所以干脆听天由命，数据好坏全看运气；另一种是轻视。觉得算法不过如此，试图通过刷数据、蹭热点、标题党这些短期技巧蒙骗算法获得流量。</p>
+
+    <p>这两种心态都有问题。恐惧让你失去主动权，轻视则让你陷入短期陷阱。</p>
+
+    <p>那应该怎么办呢？</p>
+
+    <p>答案是：理解算法。</p>
+
+    <p>算法没那么神秘。它有自己的目标，也有自己的规则。只要你理解了这些，就能跟算法“协同作战”。</p>
+
+    <p>我曾经在一家中型互联网公司担任运营副总裁，负责用户增长。那几年，我跟公司的算法总架构师、CTO 交流非常多，甚至因为业务的原因，我们还经常争执。我要流量，推爆款，拉新用户；他要平衡生态，防止劣币驱逐良币，保护内容多样性。</p>
+
+    <p>这段经历，让我对算法有了很多认知。今天，我就把我积累的这些认知分享给你。我不会教你过于技术性的东西，而是会讲清楚算法的底层逻辑，从根源上让算法和数据成为你内容创作的助力。</p>
+
+    <p>算法到底想干什么？</p>
+
+    <p>要理解算法，首先得搞清楚它的目标。</p>
+
+    <p>字节跳动早期产品负责人闫泽华说过，从社交媒体平台的视角来看，算法的核心目标是：在特定场景下，让人和信息更高效地连接。</p>
+
+    <p>你可以记住三个关键词：信息、人、效率。</p>
+
+    <p>在算法眼中，“信息”其实比我们想象的要丰富得多。</p>
+
+    <p>信息包括各种形式。文字、图片、视频、声音，都是信息。但同时，信息不只是内容本身。标题、标签、摘要、封面，这些辅助信息也都是算法识别的对象。信息还包括你看不见的东西。比如，一条视频的风格是欢快还是阴郁？画面是明亮还是昏暗？甚至，哪怕你通篇没提某个人的名字，但如果你描述了这个人的特征，算法也能通过内容理解、识别出来。</p>
+
+    <p>第二个关键词，人。</p>
+
+    <p>算法不仅要理解信息，还要理解人，也就是用户。</p>
+
+    <p>用户可以被算法识别的特征，主要有两类：一类是静态用户画像。也就是相对稳定的属性，比如性别、年龄、学历、婚育状况、常住位置等等。</p>
+
+    <p>另一类是动态用户画像。也就是用户在平台上的行为。这又分两种：显性行为，就是你能看见的，比如点赞、评论、分享、关注。</p>
+
+    <p>隐性行为，就是你看不见的，比如停留时长、滑动速度、是否重复观看。</p>
+
+    <p>通常，显性行为的权重要高于隐性行为。但因为毕竟不是每条内容用户都会点赞、评论、转发，所以算法还需要隐性行为来补充判断。</p>
+
+    <p>第三个关键词，效率。</p>
+
+    <p>算法必须做两件事：一是准确推荐。也就是把内容推荐给喜爱它的用户。</p>
+
+    <p>二是覆盖推荐。也就是算法不仅要推荐用户确定喜欢的，还要推荐用户可能喜欢但还不明确的。</p>
+
+    <p>准确度是“给你明确想要的”，覆盖度是“给你可能想要的”。两者结合，才叫高效率。</p>
+
+    <p>信息、人、效率，左边是信息，右边是人，算法要做的，就是高效地把两边连接起来。</p>
+
+    <h3>算法的三层工作</h3>
+
+    <p>那算法是怎么实现这个目标的呢？</p>
+
+    <p>简单说，算法要做三层工作：第一层是识别。算法要先识别信息和人，知道“这是什么”“那是谁”；第二层是匹配。算法要找到合适的人来看合适的内容，实现“高效的”连接；第三层是调控。算法要平衡不同内容的推荐机制，实现“多样”覆盖；同时引入某些规则，保证平台生态健康。</p>
+
+    <h3>算法的识别工作</h3>
+
+    <p>我们先说第一层，识别。</p>
+
+    <p>为了尽可能准确地识别信息和人，算法会做一件事情，那就是打标签。</p>
+
+    <p>就是给复杂的事物贴上准确且特征单一的标记。</p>
+
+    <p>你可以把它想象成图书馆的分类系统。一本书有几十万字，但图书馆不可能把每个字都做标记。它会抽象出一些单一不可拆解、同时又可以准确定义与分类的标签，比如“悬疑”“爱情”“文学”等等。算法也是这样，它需要给内容和人都打上标签，方便信息的准确匹配。</p>
+
+    <p>标签既可以打在内容上，也可以打在人上。比如，一本书叫《爱的艺术》，标签可能是：作者弗洛姆、心理学、哲学、豆瓣 8.8 分。一个人，比如画家黄永玉老先生，标签可能是：画家、“猴票”设计者、老顽童等等。</p>
+
+    <h3>算法的匹配工作</h3>
+
+    <p>我们再来看第二层，匹配。</p>
+
+    <p>给信息和人打好标签之后，算法就要开始对它们做匹配工作了。这一层有两条原则：首先是物以类聚。</p>
+
+    <p>什么意思？就是算法会根据内容的相似性进行推荐。</p>
+
+    <p>算法会分析你喜欢的内容本身的特征，比如它的标签、关键词、主题，然后推荐特征相似的其他内容给你。比如你喜欢带“滑雪”标签的视频，算法就会推荐其他“滑雪”视频给你。</p>
+
+    <p>除了“物以类聚”，算法还会通过“人以群分”来进行匹配工作。</p>
+
+    <p>就是把跟你相似的用户也喜欢的内容，推荐给你。听起有点抽象，我来给你打个比方。就好比你去餐厅吃饭，服务员说：“跟您口味相似的客人，都点了这道菜，您要不要尝尝？”这就是人以群分。</p>
+
+    <h3>算法的调控工作</h3>
+
+    <p>打好了标签，做好了匹配，还有一个事情需要解决，那就是根据实际情况，去调控内容与人群匹配的数量。这就是我们说的调控层。这一层有三条规则。</p>
+
+    <p>首先是冷启动。</p>
+
+    <p>你可以把冷启动想象成“试吃”。你开了家餐厅，算法先让 100 个人免费试吃。如果大家都说好吃，就让 1000 人来试；如果还是好评如潮，就让 10000 人来。但如果第一批 100 人都说难吃，那对不起，你的餐厅就没机会了。</p>
+
+    <p>冷启动的逻辑也类似。当内容刚刚发布时，算法会根据内容标签和作者标签，将内容推荐给少量匹配人群，根据用户反馈决定下一步流量的多寡。</p>
+
+    <p>如果内容得不到足够的正面反馈，系统就会认为这条内容不受欢迎，就会逐步降低推荐量。反之，如果内容在冷启动过程中顺利找到了自己的目标人群，收获了很高的用户反馈数据，就有可能被推荐系统快速放大，具有成为爆款的可能。</p>
+
+    <p>所以，“冷启动决定一条内容的命运”，这个说法丝毫不为过。</p>
+
+    <p>如果你关注算法，可能听过“赛马机制”这个说法。就是你的内容会跟其他同类型内容进行比拼，谁跑赢了，就给谁流量。</p>
+
+    <p>这说的就是调控层的第二条规则：排序。</p>
+
+    <p>算法会根据多个指标给内容打分，然后排序。这些指标包括：完播率、点赞率、评论率、收藏率、分享率、停留时长等等。</p>
+
+    <p>但这里有个关键：不同指标的权重是会变化的。也就是说，算法在给内容打分时，每个指标占的比重不一样，而且这个权重分配会变化。</p>
+
+    <p>首先，它根据平台不同阶段调整。</p>
+
+    <p>比如在早期阶段，为了繁荣内容生态鼓励创作者，平台可能会把播放量、点赞量这些显性数据的权重调高：只要有人看、有人点赞，就给流量。</p>
+
+    <p>而在中期，可能为了树立某种领域的标杆，会把粉丝关注数的权重加强。</p>
+
+    <p>因此，大 V 的内容更容易获得推荐。</p>
+
+    <p>到了后期，平台有可能为了加强算法推荐的覆盖度，反而会降低粉丝关注数的权重，引入“铁粉”，也就是非常忠诚的粉丝这个概念，提高铁粉互动的权重，平衡大 V 和新创作者的流量分配。</p>
+
+    <p>其次，指标的权重分配也会根据实时情况动态调整。</p>
+
+    <p>这时候算法就开始自动排序，排序规则也很难一言以蔽之。所以那些声称找到算法规则，能帮你拿到流量的人，很可能是在忽悠你。</p>
+
+    <p>最后一条规则，叫重排序。</p>
+
+    <p>效率是算法的目标，我们一开始就讲过这个理念。但算法要考虑的，不仅仅是效率。因为数据是无意识形态的，当以效率为唯一目标时，常常会触及人性的边界，有可能让这些人性的阴暗面被放大。这时候就需要引入重排序。也就是平台通过引入某些规则来矫正算法，让推荐不只看效率，还要符合法律、道德、生态健康的要求。</p>
+
+    <p>重排序是与数据最远的一个算法规则，往往都是社交媒体平台的运营方来制定和执行。</p>
+
+    <p>这些规则可能包括：跟法律法规有关的规则，比如违禁词；跟生态健康有关的，比如限流抄袭和搬运；跟公序良俗有关的，比如针对即将失控的热点进行降权；或者跟阶段目标有关的，比如限制娱乐类内容、鼓励知识类内容等等。</p>
+
+    <p>好，调控层的三条规则就讲完了。我们再回顾一下：算法通过冷启动测试内容质量，决定初始推荐力度；通过排序持续调整推荐力度；通过引入重排序，矫正算法，保证平台生态健康。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这讲到这里就讲完了，我来总结一下：算法的核心目标是：在特定场景下，让人和信息更高效地连接。</p>
+
+    <p>算法要做三层工作，每一层遵循相应的规则：识别层，遵循打标签规则，从而识别你的内容和你的目标用户；匹配层，遵循物以类聚和人以群分两个规则，实现内容和人的高效匹配；调控层，遵循冷启动、排序和重排序的原则，决定推荐和调整的力度。</p>
+
+    <p>了解这些目标和规则，你就能建立对算法的整体认知，才能跟算法协同一致，知道该做什么、不该做什么。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>如果学习完之后还有余力，我建议你去阅读闫泽华的《内容算法》这本书。</p>
+
+    <p>这本书虽然写得比较早，但讲的是基础原理，而且是站在“内容”角度讲算法，对正在做自媒体的你很有帮助。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们继续聊算法。</p>
+
+    <h3>划重点</h3>
+
+    <p>1.算法的核心目标是：在特定场景下，让人和信息更高效地连接。</p>
+
+    <p>2.算法在识别层遵循打标签的规则，从而识别你的内容和你的目标用户。</p>
+
+    <p>3.算法在匹配层遵循物以类聚和人以群分两个规则，实现内容和人的高效匹配。</p>
+
+    <p>4.算法在调控层遵循冷启动、排序和重排序的原则，决定推荐和调整的力度。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">算法的核心目标是在特定场景下高效连接人和信息，遵循识别—匹配—调控的三层规则体系。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>算法核心目标三关键词：信息（形式多样+辅助信息+隐性风格都可识别）、人（静态+动态两种画像）、效率（准确度+覆盖度）。</li>
+      <li>算法三层工作：识别（打标签）、匹配（物以类聚+人以群分）、调控（冷启动+排序+重排序）。</li>
+      <li>冷启动决定内容命运：发布后用小批量用户测试，根据反馈决定后续推荐力度，初始数据差就直接停推。</li>
+      <li>排序权重随平台阶段和实时情况动态调整，声称找到算法漏洞的人很可能在忽悠你，最终都会失效。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>把内容拆成显性信息（标题/封面/标签）和隐性信息（风格/情绪/未提但可识别的人），帮算法打更准的标签。</li>
+      <li>定期关注完播率、点赞率、评论率、收藏率、分享率、停留时长六大数据，看哪类指标自己最该提升。</li>
+      <li>警惕“找到算法漏洞能帮你拿流量”的人——算法权重实时变化，他们的技巧很快就会失效。</li>
+      <li>入门级延伸阅读：闫泽华《内容算法》，从内容角度理解算法。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>算法的核心目标：在特定场景下，让人和信息更高效地连接。</p></blockquote>
+    <blockquote><p>冷启动决定一条内容的命运，这个说法丝毫不为过。</p></blockquote>
+    <blockquote><p>试图蒙骗算法获得流量，最终还是会被算法抛弃。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

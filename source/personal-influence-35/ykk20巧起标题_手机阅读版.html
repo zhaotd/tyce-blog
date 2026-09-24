@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第20讲 · 巧起标题：怎样让内容不被标题所困？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第20讲</span>
+    <h1>巧起标题：怎样让内容不被标题所困？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：内容打磨</p>
+  </header>
+
+  <article>
+
+    <p>欢迎回到《个人影响力打造 35 讲》。</p>
+
+    <p>今天，我们正式进入第三模块，一起来学习让你的自媒体内容更出彩的六个招式。</p>
+
+    <p>如果说上一模块的“内容原理”修炼的是内功，决定了你能不能做出一盘“好菜”，那么这个模块要学习的就是具体的招式，让你为这道好菜锦上添花。</p>
+
+    <p>需要强调的是，内功决定下限，招式决定上限，先学第二模块把“内功”练扎实，再学这个模块的“招式”才能发挥威力。</p>
+
+    <p>在所有招式技法中，最具决定性的，莫过于标题。一个好内容如果被平庸的标题所困，那么它 90%的价值都可能被封印。在一定程度上，我们甚至可以说，社交媒体的标题直接决定了内容的点击率。</p>
+
+    <p>什么才是好的标题？怎么才能给内容起一个好标题呢？这一讲我们就来解决这些问题。</p>
+
+    <h3>好标题的两大标准</h3>
+
+    <p>我们先来看看好标题有哪些标准，我帮你总结了两条，它们相辅相成：第一，吸睛。</p>
+
+    <p>一个好标题，必须能够吸引足够多的目标用户的注意力，才能打开内容的流量局面。但一定要避免标题党，在社交媒体竞争白热化的今天，标题党只会引起用户的厌倦甚至反感。</p>
+
+    <p>第二，表里如一。</p>
+
+    <p>一个好标题除了吸引用户注意力之外，还需要与内容有强相关性，否则就会损害内容的品质与账号的口碑。</p>
+
+    <p>吸睛、表里如一，围绕这两个标准，我给你总结了三大好用的标题类型，分别是实用型标题、悬念型标题和共鸣型标题。</p>
+
+    <h3>实用型标题</h3>
+
+    <p>先来说实用型标题。这种类型的标题就是奔着用户的痛点和问题来的。</p>
+
+    <p>首先要让用户一眼看出“这个内容跟我有关”，这是实用型标题的起点。</p>
+
+    <p>最直接的做法就是在标题里点明问题。有个标题是“被同事冒犯，一个回复思路帮你回击”。你看，这个问题一摆出来，有类似困扰的用户立刻就会被吸引。</p>
+
+    <p>你也可以在标题里点明目标用户，让他们产生“这是为我准备的”感觉。</p>
+
+    <p>比如这个标题：“干货！艺术生都在看的 4 个 app，高效提升审美”。</p>
+
+    <p>“艺术生”这个身份标签一出现，目标用户就知道这个内容是给自己看的。</p>
+
+    <p>除此之外，你还可以从负向的焦虑出发，唤起缺失感。比如这个标题：“开肩开错，小心肩峰撞击综合征，肩脱臼！”这个标题通过指出错误做法可能带来的严重后果，反而激发了用户想要规避风险的心理需求。</p>
+
+    <p>明确了问题，接下来就要告诉用户，我能帮你怎么解决。</p>
+
+    <p>还是刚才那个例子：“被同事冒犯，一个回复思路帮你回击”。“一个回复思路”就是解决方案。</p>
+
+    <p>在标题里强调解决方案的时候，你可以通过数字或者细节，来增加用户的确定感。比如这个标题：“9 部纪录片，提升财富思维，30 岁前 n刷”。你看，“9 部”“30 岁”“n 刷”这些具体的数字和细节，就能让用户感知到内容有明确的行动指南。</p>
+
+    <p>你也可以在标题中直接告诉用户“能得到什么”。举个例子：“掉 55斤分享，早知道早瘦的能量心法”，这种结果导向的标题更能激发用户的行动欲望。</p>
+
+    <p>关于实用型标题，用户还会有一个疑问：“我为什么要相信你？”这就需要在标题里建立信任感。</p>
+
+    <p>最常用的方法是展示你的努力和专业度。</p>
+
+    <p>比如这个标题：“去年试用了 500 多款产品，这 10 件更提升幸福感”。</p>
+
+    <p>“试用了 500 多款”这个细节，就让用户感受到博主的用心和专业度。</p>
+
+    <p>另一种建立信任的方法是名人背书。你可以把目标用户耳熟能详的名人植入标题，唤起用户的信任感，增加内容的权威性。</p>
+
+    <p>好，实用型标题的技巧就讲完了。它的核心，是让用户快速判断“这个内容对我有用”。具体来说，就是要在标题里回答用户的疑问：这跟我有关吗？你能帮我怎么解决？解决了有什么好处？我为什么要相信你？</p>
+
+    <p>在实际应用中，你不需要在一个标题里回答以上所有问题，选择其中两到三个灵活组合就可以了。</p>
+
+    <h3>悬念型标题</h3>
+
+    <p>接下来，我们来说说第二种好用的标题类型，悬念型标题。</p>
+
+    <p>悬念型标题的核心是唤起好奇心。要做到这一点，主要有两种方式：一是制造信息缺口，让用户想知道更多；二是制造认知冲突，让用户觉得“这不对劲”。</p>
+
+    <p>我们先来说第一种方式，制造信息缺口。</p>
+
+    <p>“三联生活周刊”公众号有个标题：“豆瓣 9.0，今年最下饭的动画为何是它？”这个标题给出了最吸引人的要点——豆瓣评分、最下饭和动画，但是把谜底藏在了内容里。这种“说了又没完全说”的方式，就是在制造信息缺口。</p>
+
+    <p>你还可以在标题中放入关键的情节或者情感转折，让用户渴望知道背后的故事。</p>
+
+    <p>视频公众号“一条”有一个标题是这样的，“高考过后，他们 3 小时进账过亿”。“高考过后”和“3 小时进账过亿”之间的巨大反差，就形成了一种情节张力，让人忍不住想点进去看看。</p>
+
+    <p>还有一种制造信息缺口的方式，是用问题带动内容。也就是通过提出一个对目标用户来说具有吸引力的问题，激发他们的好奇心和求知欲。</p>
+
+    <p>除了制造信息缺口，你还可以通过制造认知冲突来打造悬念型标题。</p>
+
+    <p>最常用的技巧是把用户熟悉的事物“陌生化”。老牌公众号“新世相”近期也开始发力做短视频，其中一条比较火的视频，封面上只有两行字：“不要放弃想念大象，不要放弃想象自己”。“想念”“大象”“想象”“自己”其实都是熟悉的词，但把它们放在一起就显得很陌生，很能引起用户的好奇心。</p>
+
+    <p>类似的做法还有否定式悬念。也就是通过否定某一种常规的观念，来激发用户对另一种可能性的好奇和想象。博主“丑穷女孩陈浪浪”有条标题：“情绪稳定的对象，最可怕！”这个标题就否定了我们通常认为的情绪稳定是正面特质的常规看法，激发了用户想要了解背后真相的欲望。</p>
+
+    <p>还有一种比较特殊，叫无厘头标题。</p>
+
+    <p>“支付宝”的公众号，就常常使用这样的标题。例如有一个推送，标题只有两个字：“如图”，还配了一个语焉不详的图片，简单甚至简陋。</p>
+
+    <p>不过，无厘头标题更适合已经建立了一定人设和拥有稳定用户群体的创作者。</p>
+
+    <p>好，悬念型标题的方法就讲完了。它的核心，是唤起用户的好奇心，让用户忍不住想知道“到底是什么”。具体来说，有两种方式：一是制造信息缺口，二是制造认知冲突。在实际应用中，关键是把握好“说与不说”的分寸。不能故弄玄虚，只是把用户骗进来。</p>
+
+    <h3>共鸣型标题</h3>
+
+    <p>最后，我们来说说第三个类型，共鸣型标题。</p>
+
+    <p>共鸣型标题的核心，是让用户感到“说到我心坎里了”。</p>
+
+    <p>要做到这一点，最直接的方法是表达私人体验与个人感受。</p>
+
+    <p>“新世相”有个公众号标题：“没人能伤害我，因为我是废物，嘻嘻”。</p>
+
+    <p>你看，这个标题就以一种个人化的、自嘲而幽默的方式，表达了作者内心的无力与自我否定，激起了有相似体验的用户的共鸣。</p>
+
+    <p>除了表达私人体验，你还可以瞄准目标用户的普遍情感来起标题。</p>
+
+    <p>具体来说，就是通过挖掘一个群体共同关心的问题、共有的时代回忆以及共同的情感，来唤起一个群体普遍的情绪。</p>
+
+    <p>此外，你还可以用“五感唤起”的方法来起标题，通过直接的身体感受，来引起用户的共鸣。</p>
+
+    <p>先说视觉唤起。</p>
+
+    <p>公众号“企鹅吃喝指南”有个标题“大大大大大大大大大型捡漏现场”。</p>
+
+    <p>通过重复的“大”字，对用户形成了一种强烈的视觉冲击。</p>
+
+    <p>这个标题同时也使用了听觉唤起的方法。在这个标题里，作者通过重复的“大”字，模拟了一种节奏感，让读者仿佛听到了一种连续而有力的声响，增强了标题的吸引力。</p>
+
+    <p>再说嗅觉唤起。小红书博主推荐香水时使用了一个标题，“寺庙里烧香的味道…”。这就迅速唤起了人们对寺庙这个场景的嗅觉记忆，也激发了用户对这款香水可能带来的相似体验的好奇。</p>
+
+    <p>触觉唤起也很好用。比如，一位小红书博主在标题中形容护肤品的使用感受，“舒芙蕾云朵般柔软触感居然在这”。这个标题将护肤品的触感比喻为舒芙蕾和云朵，激发了用户对产品触感的好奇。</p>
+
+    <p>最后是味觉唤起。小红书上形容美食的标题，你可以看到“香到颤抖”“味蕾跳跃”，让人很难不点开。</p>
+
+    <p>好，共鸣型标题的技巧就讲完了。共鸣型标题的核心，是让用户感到“说到我心里了”。具体来说，就是通过表达私人体验、浓缩普遍情感、唤起身体感受，来触发用户的情感共鸣。</p>
+
+    <p>在实际应用中，关键是要真诚，不要为了煽情而煽情，要让情感表达建立在真实体验的基础上。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲到这里就讲完了。总结一下：第一，标题很大程度上决定了内容的点击率，是自媒体内容的“流量入口”。</p>
+
+    <p>第二，好标题有两大标准：吸睛和表里如一，它们相辅相成。</p>
+
+    <p>第三，有三种好用的标题类型，分别是实用型标题、悬念型标题和共鸣型标题。</p>
+
+    <p>你可以根据我给你的方法，自行完成标题的撰写，也可以把这些技巧作为提示词，让 AI 帮助你生成更优秀的标题。当然，这里分享的标题类型与技巧并无法涵盖世间所有的标题，仅仅是希望为你的工具箱增添一些新的工具。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>你可以选取三到五个近期准备发布的内容，根据本讲给出的技巧，指挥AI 帮你起标题。欢迎在评论区分享你和 AI 协作的成果。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们再来学习另外一个虽然很小，影响却很大的内容技巧：开头。</p>
+
+    <p>1.实用型标题的核心，是让用户快速判断“这个内容对我有用”。具体来说，是要在标题里回答用户的疑问：这跟我有关吗？你能帮我怎么解决？我为什么要相信你？</p>
+
+    <p>2.悬念型标题的核心是唤起用户的好奇心，具体来说，有两种方式：一是制造信息缺口，二是制造认知冲突。</p>
+
+    <p>3.共鸣型标题的核心，是让用户感到“说到我心里了”。具体来说，就是通过表达私人体验、浓缩普遍情感、唤起身体感受，来触发用户的情感共鸣。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">好标题由吸睛和表里如一两个标准构成，三种类型（实用、悬念、共鸣）各有可用技法。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>好标题的两大标准：吸睛（抓住注意力）和表里如一（与内容强相关），避免标题党。</li>
+      <li>实用型标题：通过点问题、点用户身份、点严重后果唤醒需求，并用数字/细节建立信任，解决“我凭什么信你”。</li>
+      <li>悬念型标题：制造信息缺口（说一半留一半）或制造认知冲突（颠覆常识）。无厘头标题只适合有人设的老账号。</li>
+      <li>共鸣型标题：用私人体验、浓缩普遍情感、调用五感（视觉、听觉、嗅觉、触觉、味觉）唤起情感共鸣。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>选3到5条待发内容，对照三种标题类型各拟一版并比较择优。</li>
+      <li>把本讲的标题生成技巧整理成提示词，用AI起5版标题再人工优化。</li>
+      <li>自检现有标题：能否同时满足吸睛+表里如一两个标准，二选一的要再优化。</li>
+      <li>为共鸣型标题储备“私人金句库”和“五感素材库”，遇到选题快速调用。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>悬念型标题的关键，是把握好说与不说的分寸，不能故弄玄虚把用户骗进来。</p></blockquote>
+    <blockquote><p>共鸣型标题的核心，是让用户感到说到我心坎里了。</p></blockquote>
+    <blockquote><p>一个好标题除了吸引注意力，还需要与内容有强相关性。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

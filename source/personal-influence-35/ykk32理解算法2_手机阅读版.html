@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第32讲 · 理解算法 2：怎样让算法成为你的助推器？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第32讲</span>
+    <h1>理解算法 2：怎样让算法成为你的助推器？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：与算法共舞</p>
+  </header>
+
+  <article>
+
+    <p>上一讲我们一起了解了推荐算法的目标和基本规则，这一讲我们接着说说，作为内容创作者，作为推荐算法规则的参与方，你到底该怎么做，才能与算法共赢。</p>
+
+    <p>你有没有刷到过这种视频：“掌握这个技巧，完播率提升 30%！”“2秒跳出率降低的秘密！”“赞粉比达到这个数字，流量暴涨！”这类教程看起来很诱人，对吧？你照着做了，可能短时间内确实也有点效果。</p>
+
+    <p>但就像我们上一讲说的，算法的模型会根据用户数据和平台走向实时调整，所以很快你就会发现：这个月有用的技巧，下个月就失效了。</p>
+
+    <p>那有没有持久有效的方法呢？</p>
+
+    <p>当然有。我给你总结了六条与算法共赢的“行为法则”。为了方便你记忆和理解，我把它们分成了三组：第一组，让算法认识你；第二组，让算法信任你；第三组，与算法保持边界。</p>
+
+    <p>我们一个一个来看。</p>
+
+    <h3>让算法认识你</h3>
+
+    <p>先说第一组，让算法认识你。</p>
+
+    <p>这里你要做两件事：第一，注重“打标签”，让算法认识你的内容。</p>
+
+    <p>上一讲我们说过，打标签是算法认识内容的第一步。如果你的标签模糊不清，算法就不知道该把你推荐给谁。</p>
+
+    <p>所以，有意识地为内容打上标签，是自媒体内容创作者的份内工作。</p>
+
+    <p>这里我给你一个好用的工具：标签自查清单。我把它放在文稿区了，你可以停下来看看。</p>
+
+    <h3>标签自查清单</h3>
+
+    <p>1.账号名称是否有标签？</p>
+
+    <p>2.内容本体是否有标签？</p>
+
+    <p>3.辅助信息是否有标签？</p>
+
+    <p>4.隐性信息是否有标签？</p>
+
+    <p>5.所有标签是否指向同一个主线？</p>
+
+    <p>这个清单包括五个检查项，你可以在每次发布内容前，对照这个清单检查一遍。</p>
+
+    <p>第二，主动帮算法识别用户，让它帮你找到更多精准粉丝。</p>
+
+    <p>你的每一个粉丝，都在告诉算法：“这类人喜欢这个账号”。算法会分析这些人的特征——他们的年龄、职业、兴趣、在平台上的行为习惯，然后去找更多类似的人，把你的内容推荐给他们。</p>
+
+    <p>那怎么帮算法识别用户呢？两个方向：首先，提升用户数据质量，让算法看清“谁真正喜欢你”。</p>
+
+    <p>算法识别用户，主要看用户针对你的内容产生的互动行为，比如点击、播放、停留时长、完播、点赞、评论、收藏等等。这些数据，每一项都在告诉算法：这个内容受不受欢迎，哪些人真正喜欢它。</p>
+
+    <p>所以，你要从用户视角出发，思考怎么让用户愿意看完、愿意点赞、愿意收藏。数据越好，算法对你用户的识别就越清晰，就越能找到更多类似的精准用户。</p>
+
+    <p>其次，聚焦人群垂直，让算法找到“一群相似的人”。</p>
+
+    <p>上一讲我们讲过，算法有“人以群分”的规则，也就是找到那些跟你口味相似的人群，然后把这一人群喜欢的东西推荐给你。</p>
+
+    <p>这带来一个重要的定位策略：从账号角度，你完全可以不追求内容垂直，而是聚焦人群垂直。</p>
+
+    <p>什么意思呢？我给你举个例子。</p>
+
+    <p>有个博主叫“丑穷女孩陈浪浪”，我在课程中多次提到过她。她的账号定位聚焦“年轻职场打工人”，但内容类型很多样：既可以发布职场生存知识，也可以发布副业赚钱技巧，还可以给出年轻人情感建议。</p>
+
+    <p>你看，她的内容不垂直，但人群垂直。因为算法发现，喜欢她职场内容的人，也喜欢她的副业内容，还喜欢她的情感内容。算法会判断：这些人都是“年轻职场打工人”，他们的需求是多元的。</p>
+
+    <p>所以，这种内容不垂直但人群垂直的做法，帮算法更清晰地识别出了一群特征明确的用户，从而帮你获得更高效的用户增长。</p>
+
+    <p>好，让算法认识你的规则就讲完了，我们来回顾一下。</p>
+
+    <p>你需要做好两件事情：一，注重打标签，让算法能更好地识别你的内容；二，保持用户的精准，互动数据越高越好，让算法能更好地识别你的用户。</p>
+
+    <h3>让算法信任你</h3>
+
+    <p>好，与算法共赢的第一组法则就讲完了。我们再来看第二组，让算法信任你。</p>
+
+    <p>具体来说，也有两件事要做。</p>
+
+    <p>首先是提升账号品牌价值。</p>
+
+    <p>上一讲我们说过，算法规则是复杂的，排序的权重也在不断地改变，但在社交媒体平台，有一个公认的不变的权重，那就是“账号品牌价值”。</p>
+
+    <p>说白了，品牌价值就是你在算法那里的“信用额度”。信用越高，算法越愿意给你机会。</p>
+
+    <p>那怎么提升账号品牌价值呢？</p>
+
+    <p>这里我给你一个工具，账号健康四维度：第一，原创度。</p>
+
+    <p>算法鼓励原创，排斥抄袭和搬运。所以，你的内容必须是原创的，即使是二次创作，也要有自己的视角和价值增量。</p>
+
+    <p>第二，关注度。</p>
+
+    <p>这主要取决于你的粉丝绝对数量和活跃情况。一个粉丝多且活跃的账号，所获得的流量权重，通常要比粉丝少、活跃度低的账号要大。</p>
+
+    <p>第三，健康度。</p>
+
+    <p>这里指的是用户的正反馈，尤其是用户的互动行为。点赞、转发、收藏、评论等，它们是不是一直保持稳定。简单说，就是你的内容是不是持续受欢迎。</p>
+
+    <p>第四，持续度。</p>
+
+    <p>也就是优质的内容是否持续发布，如果长时间停更，算法有可能为你降权。</p>
+
+    <p>你可以对照这四个维度，持续提升你的账号价值。</p>
+
+    <p>要让算法信任你，除了提升账号品牌价值，还要守住底线，不挑战平台规则，不钻算法漏洞。</p>
+
+    <p>先说不要挑战平台规则。</p>
+
+    <p>你可以把社交媒体平台想象成一个巨大的城市，在这个城市里，遵纪守法、尊重公序良俗是基本的行为规则。但不知道为什么，总有一些朋友一来到社交媒体平台就变了个人，置法律法规和公序良俗于不顾。这一点我们必须要注意。</p>
+
+    <p>再说不要钻算法的漏洞。</p>
+
+    <p>在社交媒体上鼓吹“蒙骗算法”技巧的那些人，声称可以找到算法或平台漏洞的人，他们或许短期内可以得到一些流量，但随着算法规则的实时变动和迭代，这些所谓的技巧最终还是会失效。</p>
+
+    <p>关于让算法信任你的两个方法就讲完了，我们再回顾一下。</p>
+
+    <p>你需要做两件事：一，提升账号品牌价值；二，守住底线，不挑战平台规则，也不钻算法的漏洞。</p>
+
+    <h3>与算法保持边界</h3>
+
+    <p>好，与算法协同的第二组规则讲完了。最后我们来看第三组，与算法保持边界。</p>
+
+    <p>前面我们说了怎么配合算法、让算法信任你。但这里有个度的问题：配合不等于讨好，信任不等于依赖。</p>
+
+    <p>与算法保持边界，本质上是保持创作的主动权。需要你做两件事：一，要对数据指标保持平常心。</p>
+
+    <p>把数据当作内容迭代的工具，而不是撬动算法的秘籍。</p>
+
+    <p>在自媒体运营过程中，我们很容易把后台的数据指标当成撬动算法的突破口。这个不难理解，毕竟一些数据的确会影响算法。但问题是，算法的规则复杂而庞大，且实时变动，绝不是数据后台就可以涵盖的。</p>
+
+    <p>举个例子。</p>
+
+    <p>我们都知道，在抖音，如果你沉浸式刷视频，是看不到封面和标题的。</p>
+
+    <p>所以，为了精准识别用户对“主题”的偏好，抖音在 2023 年新增了“2秒跳出率”这个数据指标。所以，如果你的内容 2 秒跳出率很高，只能说明你的选题可能不够吸引人，或者开头没有抓住用户注意力。如果 2秒跳出率低，也不能说明你的内容就一定能成为爆款。因为一个内容火与不火，绝不是由一个具体指标决定的，而是由综合原因构成的。但在2023 年，很多人却把这个数据当作撬动算法的突破口，试图在 2 秒内拼贴热门 BGM、动效或其他方法，期待带来更大的流量。</p>
+
+    <p>事实上，数据后台的作用只有一个，那就是帮助创作者从数据角度理解内容的优劣和账号的健康程度，作为内容迭代的依据。</p>
+
+    <p>二，忘记算法，回到内容和用户。</p>
+
+    <p>讲到这，你可能会困惑了。怎么？刚才学习了那么多算法目标、规则，还有与算法协同的原理、方法，怎么现在要忘记算法？</p>
+
+    <p>这不矛盾。</p>
+
+    <p>理解算法，是为了更好地与它协作；但忘记算法，是为了保持创作的主动权。</p>
+
+    <p>具体来说，就是要有一个平常心。偶然出现了一个爆款，当然值得高兴；但接下来另一条数据平平，也不是什么大不了的事。因为运营一个自媒体账号，关键在于持续发布相似品质的内容。只要你保持稳定的输出，最终会获得“均值回归”，得到持久的算法推荐和流量。</p>
+
+    <p>回到我们开篇说的：算法的核心目标是高效地连接人和信息。算法虽然“大权在握”，但也仅仅是信息和人之间的撮合者。</p>
+
+    <p>所以，我们对算法的心态应该是：尊重它的规则，配合它的逻辑，但不被它的每一次波动裹挟。最终，还是要回归到优秀的内容，回归到真正的用户需求。</p>
+
+    <p>好，与算法保持边界，你需要做两件事：一是对数据指标保持平常心；二是忘记算法，回到内容和用户。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，关于算法我们就讲完了，我来总结一下：与算法共赢，你需要做到：一，让算法认识你。主动打标签，保持用户的高活跃度，帮算法识别你的内容和用户；二，让算法信任你。提升账号品牌价值，守住底线不挑战规则；三，与算法保持边界。对数据保持平常心，忘记算法，回到内容和用户。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>现在，我想请你做一个小练习。</p>
+
+    <p>选择你最近发布的一条内容，用标签自查清单进行自查，看看你的内容是否很容易被打上标签。</p>
+
+    <p>把你的分析分享到评论区，我们一起交流。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们就来讲讲“爆款模型”，理解了这个模型，爆款就不是听天由命的“偶然”。</p>
+
+    <h3>划重点</h3>
+
+    <p>1.让算法认识你：主动打标签，保持用户的高活跃度，帮算法识别你的内容和用户。</p>
+
+    <p>2.让算法信任你：提升账号品牌价值，守住底线不挑战规则。</p>
+
+    <p>3.与算法保持边界：对数据保持平常心，忘记算法，回到内容和用户。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">与算法共赢有六条行为法则——让算法认识你、信任你，并保持边界，不被数据绑架。</p>
+
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>让算法认识你两件事：主动打标签（用标签自查清单五项）、帮算法识别用户（提升互动数据+人群垂直）。</li>
+      <li>让算法信任你两件事：提升账号品牌价值（原创度+专业度+活跃度+独特性）、守住底线不挑战规则。</li>
+      <li>与算法保持边界两件事：对数据指标保持平常心、忘记算法回到内容和用户。</li>
+      <li>关键策略启示：内容不垂直但人群垂直——只要人群特征明确，算法会帮你匹配多元需求。</li>
+    </ul>
+
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>用标签自查清单五项（账号/本体/辅助/隐性/主线一致）检查下一次发布内容。</li>
+      <li>自检账号定位：内容可以多样，但人群必须清晰垂直。</li>
+      <li>爆款或数据低迷时自问：是迭代信号还是平台波动？保持平常心。</li>
+      <li>远离“蒙骗算法”类短期技巧，把精力放回内容本身。</li>
+    </ul>
+
+    <h5>三、金句摘录</h5>
+    <blockquote><p>配合不等于讨好，信任不等于依赖。</p></blockquote>
+    <blockquote><p>理解算法是为了更好地与它协作；忘记算法是为了保持创作的主动权。</p></blockquote>
+    <blockquote><p>数据后台的作用只有一个——帮助创作者理解内容的优劣和账号的健康程度。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

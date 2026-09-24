@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第7讲 · 搭选题库 2：怎样让选题持续“自动繁衍”？</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 第7讲</span>
+    <h1>搭选题库 2：怎样让选题持续“自动繁衍”？</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：战略定位</p>
+  </header>
+
+  <article>
+
+    <p>上一讲，我们讲了纺锤结构选题库的两端，了解了两个选题的来源。这一讲，我们聚焦纺锤结构选题库中间的部分，说说选题的组织方式。</p>
+
+    <p>你可能会有这样的困惑：我挖掘了一些用户关心、也符合我人设的选题，可以做的内容的确变多了，但这些选题像一堆散落的珠子，看起来杂乱无章；更麻烦的是，做着做着，好像能做的选题都做过了，又陷入了选题荒。</p>
+
+    <p>这时候，把选题结构化就变得非常重要。</p>
+
+    <p>我给你举个例子：财经类媒体，一般会把内容分为宏观经济、投资理财等不同的板块。投资理财板块下，还会设置基金定投、股票分析等子栏目。股票分析栏目下，又可以有龙头板块追踪、热点题材解析这样的子栏目。这样一层层分下来，选题架构就非常清晰、系统。有了结构，你从用户需求和自我人设里获得的零散选题，就能被有序地安放，还能顺着结构自然延伸出更多新选题。这样，选题库就真正“活”起来了。</p>
+
+    <p>接下来，我就聊聊把选题结构化的几种形式，以及如何借助工具来构建它。</p>
+
+    <h3>选题结构的两种常见形式</h3>
+
+    <p>常见的选题结构，一般有两种形式：线性结构和树状结构。</p>
+
+    <p>什么是线性结构呢？</p>
+
+    <p>就是有一个核心主题，像一条主线贯穿始终，所有内容都围绕这个核心主题展开。</p>
+
+    <p>比如短视频账号“都靓读书”，它核心主题就是“读书”。看起来很简单对吧？</p>
+
+    <p>但读书这个主题的容量足够大：可以给用户推荐具体的书单，也可以讲一本书背后的历史故事，还可以分享读书方法，甚至可以拆解读书中的人生哲理。</p>
+
+    <p>你看，所有内容都沿着读书这条主线延伸，用户一提到这个账号，就会想到“这是一个与读书相关的账号”。</p>
+
+    <p>线性结构的好处是内容垂直，能让你的账号定位非常清晰，用户很容易记住你。</p>
+
+    <p>但要注意，这条主线不能太细，得有足够的容量和延展性。如果你只讲“科幻小说推荐”，选题库就有点不够丰富了。</p>
+
+    <p>再说树状结构。</p>
+
+    <p>它是从一个目标用户的核心需求出发，形成一个中心主题，再衍生出多个分支主题。</p>
+
+    <p>还记得我们之前提到的账号“丑穷女孩陈浪浪”吗？这个账号的核心，是满足普通女孩渴望成长的需求，整个账号围绕这个核心需求衍生出多个分支主题，包括职场生存技巧、女性成长、情感话题。每个大的分支下又可以延展出小的分支。</p>
+
+    <p>比如，在职场生存技巧这个大分支下，她会讲怎样进大厂、如何处理同事关系；女性成长这个大分支下，她会聊容貌焦虑、原生家庭。你看，这些分支都服务于“普通女孩成长”这个核心需求，又各自覆盖了目标用户的不同场景。</p>
+
+    <p>树状结构的好处是丰富，能满足用户的多样化需求，也让你的内容有更多可能性。</p>
+
+    <p>但要注意，分支不能太散，必须和目标用户的需求紧密相关，否则就会变成大杂烩。</p>
+
+    <p>好了，以就是选题结构的两种基本的形式：线性结构和树状结构。在实际操作中，你还可以在这两种形式的基础上，灵活衍生出更多变化，做更细致的规划。</p>
+
+    <p>比如，正反方向的衍生。什么意思呢？假定说你做的是一个健康领域的账号，那么选题既可以从正面出发，分享“健康饮食的 5 个建议”；也可以从反面出发，揭露“毁掉健康的 3 个坏习惯”。以此类推。</p>
+
+    <h3>选题结构化的好处</h3>
+
+    <p>那么心中有了选题结构的思维，有什么好处呢？</p>
+
+    <p>你会发现，你的选题库从一潭死水变成了源头活水。</p>
+
+    <p>首先，你的选题可以自动繁衍，变得可持续了。</p>
+
+    <p>结构就像一张地图，它把你写过的选题归纳到一起，告诉你哪些地方已经去过，哪些地方还没探索，藏着你可以继续挖掘的新选题。</p>
+
+    <p>比如，你做“亲子教育”的账号，使用了树状选题结构，其中一个分支是“幼儿习惯培养”。那么，当写完“3 岁孩子如何养成规律作息”，自然就会想到“怎么让孩子吃饭不挑食”，顺着结构就能找到新的选题。</p>
+
+    <p>你看，选题就这样自己长出来了。</p>
+
+    <p>接下来，你还会发现，自己的内容变得更有层次和深度了。</p>
+
+    <p>没有结构的选题，往往是想到哪写到哪，同一个话题可能反复说，却总在表面打转。而把选题结构化，就能深耕某个领域。</p>
+
+    <p>比如聊“职场沟通”，线性结构可以按照“和领导沟通”“和同事沟通”“和下属沟通”展开；树状结构可以延伸到“沟通中的非语言信号”“不同性格的沟通技巧”等分支。选题有了结构，用户能感觉到“这个人是真的懂，不是随便说说”。</p>
+
+    <p>结构化的选题能带给你的用户非常直接的确定感。</p>
+
+    <p>什么意思呢？用户关注一个账号，是希望持续获得某类价值。结构化的选题，能让用户知道“这个账号未来会发什么”“我能从这里获得什么”。比如，用户知道“都靓读书”这个账号，主要聊读书相关的内容，那么当他想看读书推荐或解读时，就会主动想到这个账号。这种确定性能增强用户对你的信任和粘性。</p>
+
+    <p>最后，它还能帮助你拓展内容边界。</p>
+
+    <p>很多人担心“结构化会限制灵感”，其实恰恰相反，结构反倒能帮你在确定的领域内拓展选题。比如，你原本只写“职场技能”，有了树状结构后，会发现“职场人的穿搭”“职场人的情绪管理”这些和目标用户相关的话题，也可以纳入内容体系。这样既不偏离人设，又丰富了选题，还可以带来新增用户。</p>
+
+    <h3>借助“营销日历”实现内容结构化</h3>
+
+    <p>讲完选题结构的形式和好处，接下来，我想给你介绍一个好用的结构化选题的工具：营销日历。</p>
+
+    <p>这个工具已经被很多专业自媒体机构或广告公司常规使用，它能帮助你快速实现选题的结构化，特别适合刚开始做自媒体的朋友。</p>
+
+    <p>什么是营销日历呢？简单说，就是利用特定日期规划选题和内容。你要做的，是把分散的日期和你的选题结构结合起来，提前布局选题。这样既借助了特定日期的热度，又拓展了选题的来源。</p>
+
+    <p>具体怎么操作呢？</p>
+
+    <p>首先，在日历上标记“通用的热点日期”。</p>
+
+    <p>比如，春节、情人节、端午节等等，3.8 妇女节、6.1 儿童节，还有一些社会关注度高的日期，比如高考、双十一等。这些日期自带流量，提前规划相关选题，就能借到热点的东风。</p>
+
+    <p>其次，在日历上标记出“行业特殊日期”。</p>
+
+    <p>每个领域都有一些专属节日或重要事件。比如，你想做健康领域，“4 月 7 日世界卫生日”“9 月 20 日全国爱牙日”就是你要重视的日期；你想做教育领域，就要关注“4 月 23 日世界读书日”“9 月 10 日教师节”。关注这些日期是你专业度的体现，围绕它们做选题，就能吸引领域内的精准用户。</p>
+
+    <p>最后，把日期和选题结构结合起来。</p>
+
+    <p>把通用的热点和行业日期标记好以后，你就可以结合选题结构补充选题了。你可以思考，“这个日期适合哪个线性结构下的主题”，或者“这个日期适合哪个树状结构的内容分支”。</p>
+
+    <p>使用营销日历的好处是，可以让你提前规划，避免临时抱佛脚。但要注意，营销日历只是辅助工具，不能为了蹭特殊日期的热点而硬做选题，否则会显得生硬，反而让用户反感。</p>
+
+    <h3>本讲总结</h3>
+
+    <p>好，这一讲到这里就结束了，我来总结一下：选题结构是纺锤结构选题库的第三个坐标，也是选题的另一个来源。它能让选题更可持续，还能让内容更有层次，增强用户的确定性，并且拓展你的内容边界。</p>
+
+    <p>常见的内容结构有线性结构和树状结构两种形式。线性结构，适合内容垂直的账号；树状结构，适合用户人群垂直并且内容丰富的账号。在这两种基本形式的基础上，还可以灵活衍生出更多变化。</p>
+
+    <p>最后，作为一个自媒体新手，你可以借助营销日历，简单快速地实现内容的结构化。</p>
+
+    <p>有了用户需求、自我人设两个选题来源，再加上选题的结构化，你的纺锤结构选题库就真正建成了。</p>
+
+    <h3>本讲练习</h3>
+
+    <p>好，那现在就来试着做一个属于你的营销日历吧。</p>
+
+    <p>你可以现在打开日历，标记出未来 3 个月你觉得值得关注的日期，可以是通用的节日，也可以是行业的特殊日期，并试着给每个日期都匹配一个选题。</p>
+
+    <p>欢迎在评论区晒出你的营销日历，我们一起来交流讨论。</p>
+
+    <h3>下讲预告</h3>
+
+    <p>下一讲，我们进入自媒体定位的第四个要素——运营策略。看看同样的内容，在抖音、小红书、微信等不同的社交媒体平台到底应该怎么发？</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">用线性或树状结构把零散选题组织起来，让选题库自动繁衍。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>线性结构：一条主线贯穿所有内容，定位清晰但需要主线有足够容量。</li>
+      <li>树状结构：从核心需求延伸出多个分支主题，丰富但要避免过散。</li>
+      <li>灵活变体：正反衍生、新旧组合、热点串联，让结构不断生长。</li>
+      <li>结构化让选题可持续、让内容有层次与深度、便于复用对标。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>为你的账号选一种主导结构，明确核心主题或核心需求。</li>
+      <li>为每个分支预填 5-10 个具体选题，看是否与核心强相关。</li>
+      <li>对照对标账号，看它们的结构如何布局、自己能否借鉴。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>结构不是限制灵感，而是让灵感有地方生长。</p></blockquote>
+    <blockquote><p>营销日历可以让结构与公共节奏对齐，让选题自然涌现。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

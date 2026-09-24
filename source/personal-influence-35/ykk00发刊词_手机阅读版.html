@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>发刊词 · 用内容能力构建人生护城河</title>
+<style>
+
+  :root{
+    --bg:#faf7f1;
+    --fg:#2b2723;
+    --muted:#7a6f63;
+    --accent:#8a5a2b;
+    --card:#ffffff;
+    --card-border:#e8dfd2;
+    --quote-border:#c9a876;
+    --sum-bg:#f6ecdd;
+    --sum-border:#8a5a2b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#171512;
+      --fg:#e8e0d5;
+      --muted:#a99e8f;
+      --accent:#d0a06b;
+      --card:#211e19;
+      --card-border:#38332b;
+      --quote-border:#a97c48;
+      --sum-bg:#2b2316;
+      --sum-border:#d0a06b;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    font-size:16.5px;
+    line-height:1.82;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:90px;
+  }
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:1000}
+  #topBtn{
+    position:fixed;right:18px;bottom:30px;width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#fff;border:none;font-size:20px;cursor:pointer;z-index:999;
+    opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 2px 10px rgba(0,0,0,.28);
+    display:flex;align-items:center;justify-content:center;
+  }
+  #topBtn.show{opacity:1;pointer-events:auto}
+  .wrap{max-width:700px;margin:0 auto;padding:0 18px}
+
+  header{padding:36px 0 8px}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--accent);
+    border:1px solid var(--accent);border-radius:20px;padding:3px 13px;margin-bottom:16px;letter-spacing:.5px;
+  }
+  h1{font-size:24px;line-height:1.45;font-weight:700;margin-bottom:12px}
+  .meta{font-size:13px;color:var(--muted)}
+
+  article{padding-top:18px}
+  article p{margin-bottom:1em;text-align:justify}
+  h3{
+    font-size:18px;font-weight:700;margin:2em 0 .85em;position:relative;padding-left:13px;line-height:1.5;
+  }
+  h3::before{
+    content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:4px;border-radius:2px;background:var(--accent);
+  }
+  h4{font-size:16px;font-weight:700;margin:1.4em 0 .6em}
+  ul{margin:0 0 1em;padding-left:1.35em}
+  li{margin-bottom:.5em;text-align:justify}
+  blockquote{
+    margin:1.2em 0;padding:12px 16px;border-left:4px solid var(--quote-border);
+    background:var(--card);border-radius:0 12px 12px 0;color:var(--fg);
+  }
+  blockquote p{margin:0}
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:14px;margin:2.1em 0;color:var(--accent);font-size:15px;
+  }
+  .divider::before,.divider::after{content:"";height:1px;width:56px;background:var(--card-border)}
+
+  .poem{
+    background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:26px 20px;margin:1.6em 0;text-align:center;line-height:2.15;
+  }
+  .poem p{margin-bottom:.4em;text-align:center}
+
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin:1.6em 0}
+  .box h4{font-size:15px;margin-top:0;margin-bottom:12px;color:var(--accent)}
+  .box p{font-size:15px;margin-bottom:.8em}
+  .box p:last-child{margin-bottom:0}
+
+  .notes{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:20px;margin-top:30px}
+  .notes h4{font-size:15px;margin-bottom:12px;color:var(--accent)}
+  .notes p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:.7em;text-align:justify}
+  .notes p:last-child{margin-bottom:0}
+  .notes a{color:var(--accent);word-break:break-all}
+
+  .comments{margin-top:30px}
+  .comments>h4{font-size:17px;margin-bottom:14px}
+  .cmt{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  .cmt .who{font-weight:600;font-size:14.5px}
+  .cmt .cmt-meta{font-size:12px;color:var(--muted);margin:2px 0 10px}
+  .cmt p{font-size:14.5px;line-height:1.78;text-align:justify}
+  .cmt .likes{font-size:12px;color:var(--muted);margin-top:10px}
+
+  #ai-summary{
+    margin-top:34px;background:var(--sum-bg);border:2px solid var(--sum-border);
+    border-radius:14px;padding:24px 22px 16px;
+  }
+  #ai-summary h4{font-size:17px;color:var(--accent);margin-bottom:14px}
+  #ai-summary h5{font-size:15.5px;margin:1.2em 0 .5em;color:var(--accent)}
+  #ai-summary p,#ai-summary li{font-size:15px;line-height:1.8;text-align:justify}
+  #ai-summary ul{padding-left:1.35em}
+  #ai-summary li{margin-bottom:.55em}
+  #ai-summary .one-liner{font-weight:700;margin-bottom:.8em}
+  #ai-summary .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<div class="wrap">
+  <header>
+    <span class="tag">于困困 · 个人影响力打造35讲 · 发刊词</span>
+    <h1>用内容能力构建人生护城河</h1>
+    <p class="meta">作者：于困困 ｜ 栏目：个人影响力打造35讲 ｜ 板块：起点</p>
+  </header>
+
+  <article>
+
+    <p>相信很多人都有这样的感觉，我们正站在一个历史性的拐点。</p>
+
+    <p>AI 正在以惊人的速度发展。昨天我们还觉得它很遥远，今天就已经无处不在，可以给你写稿、编程、甚至诊断疾病了。所以，我们必须面对一个非常紧迫的问题：当人工智能愈发“聪明”，什么才是“人”独一无二的优势？</p>
+
+    <p>我认为，答案藏在“变”与“不变”之间。</p>
+
+    <p>技术日新月异，但人性深处对链接的渴望、对价值的追求和对信任的依赖，从来没有变过。</p>
+
+    <p>所以，我建议你打造 “个人影响力”。它不是为了去获得虚名，而是帮你把这些不变的人性特质，转化为真实的吸引力和信任感，让你在快速变化的世界里，成为那个稳定的中心。</p>
+
+    <h3>为什么要打造个人影响力</h3>
+
+    <p>“个人影响力”这个词，你肯定已经很熟悉了。同样的能力，那些拥有个人影响力的人，可能获得 10 倍甚至更多的回报，我们反复见证这样的故事。只不过，在过去，“个人影响力”只是一小部分人的“特权”；但在往后的时代，它有可能成为所有普通人穿越周期的“诺亚方舟”。</p>
+
+    <p>为什么这么讲？我给你三个理由。</p>
+
+    <p>第一个理由，在 AI 席卷一切的时代，个人影响力是为数不多的、坚实可靠的“资产”。</p>
+
+    <p>我相信你已经亲眼看到，有的行业正在被重构，有的公司已经被淘汰。这让人难免焦虑：明天的裁员名单上，会不会有我的名字？ 这种焦虑的根源在于，在传统的职场生存逻辑里，职场人的价值容器是“岗位”。一旦岗位消失，你依附其上的能力、关系、人脉，往往也就随之蒸发。而打造个人影响力，本质上是在为你自己打造一个能随身携带的价值容器。它不随公司的兴衰而清零，不随行业的更替而失效。如果说这个时代还有“铁饭碗”，那就是个人影响力了。</p>
+
+    <p>第二个理由，AI 让个人影响力成为所有人的机会，而非少数人的特权。</p>
+
+    <p>以往，似乎只有明星、大 V，或者那些拥有特殊资源和渠道的人，才能拥有放大声音的舞台。如今，大模型带来了真正的专业平权，过去需要一个团队完成的工作，如今，只需要一个人加上 AI。你不必再担心专业能力不够、人手不足，你只需要操心一件事：找到一件真正值得做，并且非你不可的事。然后你和 AI 负责把事做成，个人影响力负责让世界看到你。</p>
+
+    <p>第三，AI 时代，独特性是你唯一无法被替代的竞争力。</p>
+
+    <p>这不是我一个人的观点。2026 年初，在我准备这门课程的时候，有一个人的长文章火爆美国，单篇阅读量超过 1 亿，他的名字叫丹·科伊（Dan Koe）。这个人不是什么科技大佬，也不是知名作家，他是一个社交媒体内容创作者。他文章中提到的一个概念，触动了很多人。他说，我们正在经历“第二次文艺复兴”。</p>
+
+    <p>什么意思呢？工业时代的逻辑，是将人变成“专业化的零件”，而 AI 最擅长的就是替代这些标准化的零件。但“第二次文艺复兴”不一样，你的好奇心、多维度的兴趣以及独特的人生经历，将成为更有价值的东西。因为它难以被批量复制，也更难被 AI 真正替代。而这些独特性，通过个人影响力，可以被更多人看见、认可和信任，转化为实际的机会、资源和资产。</p>
+
+    <p>因此，在未来的时代，拥有个人影响力，不会再是少数人的特权，也不是可有可无的选择题，而是会成为你和我的必答题。</p>
+
+    <h3>用内容能力打造个人影响力</h3>
+
+    <p>那怎么去打造个人影响力呢？</p>
+
+    <p>传统的方式有攒履历、攒 Title、进圈子。</p>
+
+    <p>作为一个老媒体人，我教不了你这些。我能够跟你分享的，是我的老本行，内容创作。</p>
+
+    <p>今天是社交媒体的大繁荣时代，每个人或多或少都有在朋友圈、抖音、小红书等平台发布内容的经验，对内容创作都不算陌生。所以我想说，通过自媒体进行内容创作，是你最唾手可得的工具，也是撬动个人影响力的最佳杠杆。</p>
+
+    <p>说到这里，有必要澄清一个误解。很多人以为，做自媒体，就是做个号，做流量，做网红。但在我看来，通过自媒体打造个人影响力，它的本质，不只是被看见，更是被信任。你应该追求的，不是让多少人记住你，而是让更多人信任你。</p>
+
+    <h3>我是谁</h3>
+
+    <p>我是一个老媒体人，做媒体有 20 年了，我亲历了中国媒体行业几乎所有的形态变化。前 10 年，我在《三联生活周刊》《GQ》中文版担任主笔，在《纽约时报中文网》做文化版主编，那是传统媒体的黄金时代，我们追求的是深度与质感。</p>
+
+    <p>后 10 年，我投身社交媒体创业，也在大型互联网公司做内容生态和用户增长，那是算法与流量的时代，我们追求的是效率与链接。</p>
+
+    <p>这 20 年，我见过太多平台的起落，见过无数爆款账号出现又消失。但我更看到，有一些人始终活得很好。他们不是最会追热点的，也不是最会玩流量的，但他们有一个共同点：那就是掌握了真正的内容能力。这种能力让他们可以从纸媒迁移到网媒，从图文迁移到视频。无论媒介形态如何剧变，他们总能快速适应，持续积累自己的个人影响力和信用资产。</p>
+
+    <p>在这门课中，我想要交付给你的，正是这套能够穿越周期的内容能力，我希望无论未来平台怎么变，你都能心里有底。</p>
+
+    <h3>我会怎么讲</h3>
+
+    <p>在这门课里，我不会塞给你零散的“爆款技巧”，而是要帮你搭建一套完整的内容创作系统。这套系统由五个模块构成，带你从战略到实战，从原理到应用：第一模块“战略定位”。我会帮你解决最根本的问题：如何找到一个既能发挥你优势，又能持续产出的自媒体定位？如何设计一个有“活人感”的人设？怎么找到你的目标用户？又如何在不同平台间进行内容的适配？这是你的地基，地基不牢，一切枉然。</p>
+
+    <p>第二模块“内容创作”。我会为你拆解经过文学、戏剧、电影验证，并在社交媒体传播环境里淬炼过的八个内容原理——结构、冲突与悬念、时间、场景、故事、视角、口音、意义。掌握了这些，你就掌握了内容的“底层方法”。</p>
+
+    <p>第三模块“内容打磨”。我们会进入微观层面，一起打磨标题、开头、结尾和节奏。别小看这些细节，魔鬼就藏在这些细节里，它们往往决定了内容的生死。</p>
+
+    <p>第四模块“实战演练”。我会针对口播、Vlog、访谈、种草这四种比较流行的内容形态，为你总结创作心法和实操指南，让你拿来就能用。</p>
+
+    <p>第五模块“与算法共舞”。在这个模块，我会教你建立一套科学的数据反馈系统，让你看懂算法，但不迎合算法；从“凭感觉”创作，走向“有依据”的决策。</p>
+
+    <h3>你应该怎么学习这门课</h3>
+
+    <p>你可以怎么学习这门课呢？</p>
+
+    <p>首先，我建议你带着你正在运营的自媒体账号来学。这会让你在学习的每个环节，都能立刻联想到应用场景，实现“即学即用”。</p>
+
+    <p>其次，请务必完成每讲后的“刻意练习”。内容能力不是“听”出来的，是“练”出来的。这些练习设计的目的，就是帮你把知识内化成你的本能。</p>
+
+    <p>最后，建立起你的“内容系统思维”。不要孤立地看待每一讲。当你学习“人设”时，要想到它如何影响你的“口音”；当你运用“故事”时，要思考它如何强化你的“意义”。这个系统一旦在你脑中形成，你面对任何内容挑战时，都将思路清晰，游刃有余。</p>
+
+    <p>最后我想说的是，今天 AI 正在重塑一切。你永远无法预知，这场重塑会深入到什么程度。 但有一件事可以确定：即便未来 AI 无所不能，你的个人影响力、你积累的信任，才是真正属于自己、可以穿越周期的终身资产。</p>
+
+    <p>这趟旅程结束后，希望你收获的不仅仅是一个数据更好的自媒体账号，更是一种深厚的底气：无论趋势如何更迭，平台怎样变迁，你都能依靠这套内容体系，有力表达，建立链接，持续创造。</p>
+
+  </article>
+
+  <section id="ai-summary">
+    <h4>AI 阅读总结</h4>
+    <p class="one-liner">AI 时代个人影响力是唯一能随身携带、不被替代的终身资产。</p>
+    <h5>一、核心要点</h5>
+    <ul>
+      <li>AI 让个人影响力从少数人的特权变成普通人的机会；一个人加 AI 就能撬动舞台。</li>
+      <li>影响力是能随身携带的价值容器，不随岗位、公司、行业兴衰而清零。</li>
+      <li>内容能力是把不变的人性特质——链接、价值、信任——转化为吸引力的最佳杠杆。</li>
+      <li>课程由五个模块构成：战略定位、内容创作、内容打磨、实战演练、与算法共舞。</li>
+    </ul>
+    <h5>二、行动建议</h5>
+    <ul>
+      <li>带着你正在运营的账号学习，每讲立刻联想到自己的应用场景。</li>
+      <li>每讲后认真完成刻意练习，把知识内化成创作本能。</li>
+      <li>建立内容系统思维：学人设时想到口音，用故事时想到意义。</li>
+    </ul>
+    <h5>三、金句摘录</h5>
+    <blockquote><p>即便未来 AI 无所不能，你的个人影响力、你积累的信任，才是真正属于自己、可以穿越周期的终身资产。</p></blockquote>
+    <blockquote><p>通过自媒体打造个人影响力，它的本质，不只是被看见，更是被信任。</p></blockquote>
+    <p class="footer">本总结由 AI 通读全文后生成，正文版权归原作者所有，仅供个人学习</p>
+  </section>
+
+</div>
+
+<script>
+  var bar = document.getElementById('progress');
+  var topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', function () {
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    bar.style.width = (max > 0 ? (d.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', d.scrollTop > 300);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
